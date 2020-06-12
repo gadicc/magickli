@@ -1,13 +1,8 @@
-# siviyoga app
+# magick.li
 
-Pictures and content Copyright (c) 2020 Sivahn Gottlieb.
-App and code Copyright (c) 2020 Gadi Cohen.
+*Open-source magick reference PWA*
 
-## Content
-
-* [`public/pics`](./public/pics) - pose pictures
-* [`src/poses.js`](./src/poses.js) - corresponding info
-* [`src/sequences.js`](./src/sequences.js) - built in sequence info
+Copyright (c) 2020 Gadi Cohen.  MIT licensed.
 
 ## Development
 

@@ -10,7 +10,6 @@ import Link from '../../../src/Link';
 import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
-import sequences from '../../../src/sequences';
 
 import sephirot from '../../../data/kabbalah/sephirot';
 
@@ -43,7 +42,7 @@ export default function Sephirot() {
           <table>
             {
               Object.keys(sephirah).map(key => (
-                <tr>
+                <tr key={key}>
                   <td>{key}</td>
                   <td>{sephirah[key]}</td>
                 </tr>

@@ -7,7 +7,6 @@ import Link from '../src/Link';
 import Copyright from '../src/Copyright';
 
 import AppBar from '../components/AppBar';
-import sequences from '../src/sequences';
 
 export default function Sequence() {
   return (
