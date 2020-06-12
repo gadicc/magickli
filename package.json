@@ -1,0 +1,18 @@
+{
+  "name": "siviyoga",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
+    "next": "9.4.0",
+    "next-pwa": "^2.4.1",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
+}
