@@ -23,13 +23,17 @@ export async function getStaticProps({ params: { id } }) {
 }
 
 export default function Sephirot() {
-  const router = useRouter();
-  const { id } = router.query;
+  const navParts = [ { title: 'Sephirot', url: '/kabbalah/sephirot' } ];
 
-  if (!id) return null;
+  const router = useRouter();
+
+  const { id } = router.query;
+  if (!id)
+    return null;
 
   const sephirah = sephirot.find(sephirah => sephirah.id === id);
-  const navParts = [ { title: 'Sephirot', url: '/kabbalah/sephirot' } ];
+  if (!sephirah)
+    return null;
 
   return (
     <>
