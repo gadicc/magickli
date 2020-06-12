@@ -14,7 +14,7 @@ import AppBar from '../../../components/AppBar';
 import sephirot from '../../../data/kabbalah/sephirot';
 
 export async function getStaticPaths() {
-  const paths = sephirot.map(sephirah => `/kabbalah/sephirah/{$sephirah.name}`);
+  const paths = sephirot.map(sephirah => '/kabbalah/sephirah/' + sephirah.id);
   return { paths, fallback: true };
 }
 
@@ -25,6 +25,9 @@ export async function getStaticProps({ params: { id } }) {
 export default function Sephirot() {
   const router = useRouter();
   const { id } = router.query;
+
+  if (!id) return null;
+
   const sephirah = sephirot.find(sephirah => sephirah.id === id);
   const navParts = [ { title: 'Sephirot', url: '/kabbalah/sephirot' } ];
 
