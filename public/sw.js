@@ -1,1 +1,125 @@
-if(!self.define){const e=e=>{"require"!==e&&(e+=".js");let a=Promise.resolve();return i[e]||(a=new Promise(async a=>{if("document"in self){const i=document.createElement("script");i.src=e,document.head.appendChild(i),i.onload=a}else importScripts(e),a()})),a.then(()=>{if(!i[e])throw new Error(`Module ${e} didn’t register its module`);return i[e]})},a=(a,i)=>{Promise.all(a.map(e)).then(e=>i(1===e.length?e[0]:e))},i={require:Promise.resolve(a)};self.define=(a,n,c)=>{i[a]||(i[a]=Promise.resolve().then(()=>{let i={};const s={uri:location.origin+a.slice(1)};return Promise.all(n.map(a=>{switch(a){case"exports":return i;case"module":return s;default:return e(a)}})).then(e=>{const a=c(...e);return i.default||(i.default=a),i})}))}}define("./sw.js",["./workbox-e032be30"],(function(e){"use strict";importScripts(),e.skipWaiting(),e.clientsClaim(),e.precacheAndRoute([{url:"/",revision:"NlBgmZMXMz-_kEOTzh9mQ"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/_buildManifest.js",revision:"6deab8904208572660fde3328a818d3a"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/_ssgManifest.js",revision:"abee47769bf307639ace4945f9cfd4ff"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/_app.js",revision:"e54826223d30016c7315df0707881d44"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/_error.js",revision:"979f1b6bc266a93f8f7850fa398a6d94"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/about.js",revision:"de8375a4f5c14b4decc77da1975723fb"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/index.js",revision:"0225c71e8f34513a8a5966bce9873a1d"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/kabbalah.js",revision:"7b356b5084fc6472aab8a688b509d55d"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/kabbalah/sephirah/[id].js",revision:"df41efa3b1b7533bca6d26676c25d809"},{url:"/_next/static/NlBgmZMXMz-_kEOTzh9mQ/pages/kabbalah/sephirot.js",revision:"6ed457826cfeea575998a9cf669637ff"},{url:"/_next/static/chunks/30e1435c7f8edeac1939496f16f5e3afe5e8a72c.670208923344ed8d4d44.js",revision:"f58289b466c85856251067fe195b7481"},{url:"/_next/static/chunks/39b27c694a3a71007ea12dfedda5b8915021059c.7cf5d38963ee8f1ed190.js",revision:"2705f3a6d69a10df35e0a6a452d94d9c"},{url:"/_next/static/chunks/9a5716f28fa3320781abdec9c30fe523b6e6d3bb.d1143df6308bcf8483ef.js",revision:"a02b6f643521e0cce10183a11177fac3"},{url:"/_next/static/chunks/commons.04448986172abcdf9360.js",revision:"faa31dd361d3c1b3d43f71d0ed7e3f37"},{url:"/_next/static/chunks/framework.96c24fa20c3269268be5.js",revision:"8e6204793e3d11a8bedf359bfb6e110d"},{url:"/_next/static/runtime/main-ae2e1f38131acbb38829.js",revision:"163c929de09612f10315c38776725b1d"},{url:"/_next/static/runtime/polyfills-ef2e70825645abea5f89.js",revision:"8e758659e7935614f024b719539ffdca"},{url:"/_next/static/runtime/webpack-c212667a5f965e81e004.js",revision:"f5e6e2fca3144cc944812cfa3547f475"},{url:"/favicons/android-icon-144x144.png",revision:"2a431aceeb54ecf008cf40267303a219"},{url:"/favicons/android-icon-192x192.png",revision:"09f2d7ad59959027007408d31c43d9d1"},{url:"/favicons/android-icon-36x36.png",revision:"5e4300dc45d7fb2cdd128e098eaa78a8"},{url:"/favicons/android-icon-48x48.png",revision:"22062ddca1f2559a3201ccdc134d3529"},{url:"/favicons/android-icon-72x72.png",revision:"197a422270cfeb19c292dab88497de26"},{url:"/favicons/android-icon-96x96.png",revision:"21951cfc0088228524148f241f568770"},{url:"/favicons/apple-icon-114x114.png",revision:"53eb5d1e6d55566e5c30f575e4baf41c"},{url:"/favicons/apple-icon-120x120.png",revision:"11c4a5e54c5440f8e8d1a8ab0c102a95"},{url:"/favicons/apple-icon-144x144.png",revision:"ce528fba0faa0256f1f0e264e6c98d2e"},{url:"/favicons/apple-icon-152x152.png",revision:"5a9738e451ecb63e346a36ac64ae937b"},{url:"/favicons/apple-icon-180x180.png",revision:"1b22dc60565bc1ff01701b66fcc972f2"},{url:"/favicons/apple-icon-57x57.png",revision:"0f4b4542ce37cf7ba05391bc8f8fe15f"},{url:"/favicons/apple-icon-60x60.png",revision:"6b7ef850d71b4020d815734f5153c31d"},{url:"/favicons/apple-icon-72x72.png",revision:"8f5b6c5c538dd1f38e27b2578e45154f"},{url:"/favicons/apple-icon-76x76.png",revision:"d51f68f02492a4c765e9eb36793c692d"},{url:"/favicons/apple-icon-precomposed.png",revision:"683f9115845fbc87d05fe0ade3e8a057"},{url:"/favicons/apple-icon.png",revision:"14da29967dde1c9a6e698b0d19767b2d"},{url:"/favicons/browserconfig.xml",revision:"9e50db4ff4605d38a736a2952894ef06"},{url:"/favicons/favicon-16x16.png",revision:"4030bdda84cd567f6ff42b21c31f6cdc"},{url:"/favicons/favicon-32x32.png",revision:"dc70da2d22c35bead42c8f608bb4721e"},{url:"/favicons/favicon-96x96.png",revision:"347eded3d5745bfd8484a3682a1c9ded"},{url:"/favicons/favicon.ico",revision:"2bd9c90f316c7458b8f0af5bf6b24440"},{url:"/favicons/manifest.json",revision:"18973e59b86fe3cbb4b99220374784f1"},{url:"/favicons/ms-icon-144x144.png",revision:"9086d0d24356f76ed100a6fe7320bc70"},{url:"/favicons/ms-icon-150x150.png",revision:"0c106391d64257939563ad9eacb97bc9"},{url:"/favicons/ms-icon-310x310.png",revision:"8c904910ae9c612916cf919362c1ec9b"},{url:"/favicons/ms-icon-70x70.png",revision:"166f931d2352a2b98c7d4ceed8e79e0c"},{url:"/manifest.json",revision:"688128be216cc2f753fe641590f2fcd3"},{url:"/pentagram.png",revision:"b8d21a83c6e52f1b274680b8c9494eca"},{url:"/pics/about.png",revision:"59ddf346abc159a353840e38e7a50588"},{url:"/pics/treeOfLife.jpg",revision:"7a70d6197e7900f090bd9dacbfd67622"},{url:"/vercel.svg",revision:"0222c3eef0be0734c8cd707b37c55d7e"}],{ignoreURLParametersMatching:[]}),e.cleanupOutdatedCaches(),e.registerRoute(/^https:\/\/fonts\.(?:googleapis|gstatic)\.com\/.*/i,new e.CacheFirst({cacheName:"google-fonts",plugins:[new e.ExpirationPlugin({maxEntries:4,maxAgeSeconds:31536e3,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/^https:\/\/use\.fontawesome\.com\/releases\/.*/i,new e.CacheFirst({cacheName:"font-awesome",plugins:[new e.ExpirationPlugin({maxEntries:1,maxAgeSeconds:31536e3,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/\.(?:eot|otf|ttc|ttf|woff|woff2|font.css)$/i,new e.StaleWhileRevalidate({cacheName:"static-font-assets",plugins:[new e.ExpirationPlugin({maxEntries:4,maxAgeSeconds:604800,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/\.(?:jpg|jpeg|gif|png|svg|ico|webp)$/i,new e.StaleWhileRevalidate({cacheName:"static-image-assets",plugins:[new e.ExpirationPlugin({maxEntries:64,maxAgeSeconds:86400,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/\.(?:js)$/i,new e.StaleWhileRevalidate({cacheName:"static-js-assets",plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/\.(?:css|less)$/i,new e.StaleWhileRevalidate({cacheName:"static-style-assets",plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/\.(?:json|xml|csv)$/i,new e.StaleWhileRevalidate({cacheName:"static-data-assets",plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400,purgeOnQuotaError:!0})]}),"GET"),e.registerRoute(/.*/i,new e.StaleWhileRevalidate({cacheName:"others",plugins:[new e.ExpirationPlugin({maxEntries:16,maxAgeSeconds:86400,purgeOnQuotaError:!0})]}),"GET")}));
+/**
+ * Copyright 2018 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// If the loader is already loaded, just stop.
+if (!self.define) {
+  const singleRequire = name => {
+    if (name !== 'require') {
+      name = name + '.js';
+    }
+    let promise = Promise.resolve();
+    if (!registry[name]) {
+      
+        promise = new Promise(async resolve => {
+          if ("document" in self) {
+            const script = document.createElement("script");
+            script.src = name;
+            document.head.appendChild(script);
+            script.onload = resolve;
+          } else {
+            importScripts(name);
+            resolve();
+          }
+        });
+      
+    }
+    return promise.then(() => {
+      if (!registry[name]) {
+        throw new Error(`Module ${name} didn’t register its module`);
+      }
+      return registry[name];
+    });
+  };
+
+  const require = (names, resolve) => {
+    Promise.all(names.map(singleRequire))
+      .then(modules => resolve(modules.length === 1 ? modules[0] : modules));
+  };
+  
+  const registry = {
+    require: Promise.resolve(require)
+  };
+
+  self.define = (moduleName, depsNames, factory) => {
+    if (registry[moduleName]) {
+      // Module is already loading or loaded.
+      return;
+    }
+    registry[moduleName] = Promise.resolve().then(() => {
+      let exports = {};
+      const module = {
+        uri: location.origin + moduleName.slice(1)
+      };
+      return Promise.all(
+        depsNames.map(depName => {
+          switch(depName) {
+            case "exports":
+              return exports;
+            case "module":
+              return module;
+            default:
+              return singleRequire(depName);
+          }
+        })
+      ).then(deps => {
+        const facValue = factory(...deps);
+        if(!exports.default) {
+          exports.default = facValue;
+        }
+        return exports;
+      });
+    });
+  };
+}
+define("./sw.js",['./workbox-b90066a8'], function (workbox) { 'use strict';
+
+  /**
+  * Welcome to your Workbox-powered service worker!
+  *
+  * You'll need to register this file in your web app.
+  * See https://goo.gl/nhQhGp
+  *
+  * The rest of the code is auto-generated. Please don't update this file
+  * directly; instead, make changes to your Workbox build configuration
+  * and re-run your build process.
+  * See https://goo.gl/2aRDsh
+  */
+
+  importScripts();
+  workbox.skipWaiting();
+  workbox.clientsClaim();
+  /**
+   * The precacheAndRoute() method efficiently caches and responds to
+   * requests for URLs in the manifest.
+   * See https://goo.gl/S9QRab
+   */
+
+  workbox.precacheAndRoute([{
+    "url": "/_next/static/runtime/amp.js",
+    "revision": "f27c9f07cc8bb6f2f704afb715b135f6"
+  }, {
+    "url": "/_next/static/runtime/polyfills.js",
+    "revision": "d0229676bc063342ab7d9564f33827d1"
+  }, {
+    "url": "/_next/static/runtime/react-refresh.js",
+    "revision": "9d11ea7095b60a828f2db49ed1004ade"
+  }, {
+    "url": "/_next/static/runtime/webpack.js",
+    "revision": "ec3be286d315dd6dc40eaaff8144a1ee"
+  }], {
+    "ignoreURLParametersMatching": [/ts/]
+  });
+  workbox.cleanupOutdatedCaches();
+
+});
+//# sourceMappingURL=sw.js.map
