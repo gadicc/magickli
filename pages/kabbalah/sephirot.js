@@ -7,14 +7,15 @@ import Link from '../../src/Link';
 import Copyright from '../../src/Copyright';
 
 import AppBar from '../../components/AppBar';
-import sephirot from '../../data/kabbalah/sephirot';
+import sephirot from '../../data/kabbalah/sephirotGraph';
 import TreeOfLife from '../../components/kabbalah/TreeOfLife';
 
 export default function Sephirot() {
+  const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
 
   return (
     <>
-      <AppBar title="Sephirot" />
+      <AppBar title="Sephirot" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
           <TreeOfLife />
@@ -33,9 +34,9 @@ export default function Sephirot() {
           <ol>
             {
               sephirot.map(sephirah => (
-                <li>
+                <li key={sephirah.id}>
                   <Link href={"/kabbalah/sephirah/"+sephirah.id} color="secondary">
-                    {sephirah.name}
+                    {sephirah.name.romanization}
                   </Link>
                 </li>
               ))

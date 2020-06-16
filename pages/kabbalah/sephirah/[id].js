@@ -11,7 +11,9 @@ import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
 
-import sephirot from '../../../data/kabbalah/sephirot';
+//import sephirot from '../../../data/kabbalah/sephirot';
+import sephirot from '../../../data/kabbalah/sephirotGraph';
+//console.log(sephirot);
 
 export async function getStaticPaths() {
   const paths = sephirot.map(sephirah => '/kabbalah/sephirah/' + sephirah.id);
@@ -37,12 +39,12 @@ export default function Sephirot() {
 
   return (
     <>
-      <AppBar title={sephirah.name} navParts={navParts} />
+      <AppBar title={sephirah.name.romanization} navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
           <p>
             <i>
-              {sephirah.name}
+              {sephirah.name.romanization}
             </i>
           </p>
 
@@ -51,7 +53,7 @@ export default function Sephirot() {
               Object.keys(sephirah).map(key => (
                 <tr key={key}>
                   <td>{key}</td>
-                  <td>{sephirah[key]}</td>
+                  <td>{JSON.stringify(sephirah[key])}</td>
                 </tr>
               ))
             }

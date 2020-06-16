@@ -11,7 +11,7 @@ import AppBar from '../components/AppBar';
 
 const tileData = [
   {
-    img: '/pics/treeOfLife.jpg',
+    img: '/pics/Tree_of_Life,_Medieval.jpg',
     title: 'Kabbalah',
     to: '/kabbalah'
   },
