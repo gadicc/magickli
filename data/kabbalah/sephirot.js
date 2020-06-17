@@ -9,7 +9,8 @@ export default [
       en: 'Crown',
     },
     color: {
-      queen: 'white'
+      queen: 'white',
+      queenWeb: 'white',
     },
     chakra: 'crown',
     godNameId: 'ehiyeh',
@@ -18,7 +19,7 @@ export default [
     planets: '1st Swirlings',
     stone: 'diamond',
     archangelId: 'metatron',
-    soulId: 'yechidah',
+    soul: 'yechidah',
     angelicOrderId: 'chayot-hakodesh',
   },
 
@@ -31,7 +32,8 @@ export default [
       romanization: 'Chochmah',
     },
     color: {
-      queen: 'gray'
+      queen: 'gray',
+      queenWeb: 'gray',
     },
     scent: 'musk',
     chakra: 'third-eye',
@@ -53,7 +55,8 @@ export default [
       romanization: 'Binah',
     },
     color: {
-      queen: 'black'
+      queen: 'black',
+      queenWeb: '#222',
     },
     chakra: 'throat',
     godNameId: 'yhvh-elohim',
@@ -62,7 +65,7 @@ export default [
     planets: '',
     stone: '',
     archangel: '',
-    soul: '',
+    soul: 'neshama',
     angelicOrderId: 'aralim',
   },
 
@@ -75,7 +78,8 @@ export default [
       romanization: 'Chesed',
     },
     color: {
-      queen: 'blue'
+      queen: 'blue',
+      queenWeb: '#4444ff',
     },
     chakra: null,
     godNameId: 'el',
@@ -97,7 +101,8 @@ export default [
       romanization: 'Gevurah',
     },
     color: {
-      queen: 'scarlet'
+      queen: 'scarlet',
+      queenWeb: '#ff2400',
     },
     chakra: 'heart',
     godNameId: 'elohim-gibor',
@@ -107,7 +112,7 @@ export default [
     stone: '',
     archangel: '',
     soul: '',
-    angelicOrderId: 'serafim',
+    angelicOrderId: 'seraphim',
   },
 
   {
@@ -119,7 +124,8 @@ export default [
       romanization: 'Tiferet',
     },
     color: {
-      queen: 'gold'
+      queen: 'gold',
+      queenWeb: 'gold',
     },
     chakra: null,
     godNameId: 'yhvh-eloha-vedaat',
@@ -128,7 +134,7 @@ export default [
     planets: '',
     stone: '',
     archangel: '',
-    soul: '',
+    soul: 'ruach',
     angelicOrderId: 'malachim',
   },
 
@@ -141,7 +147,8 @@ export default [
       romanization: 'Netzach',
     },
     color: {
-      queen: 'emerald'
+      queen: 'emerald',
+      queenWeb: '#50C878',
     },
     chakra: 'solar-plexus',
     godNameId: 'yhvh-tzvaot',
@@ -163,7 +170,8 @@ export default [
       romanization: 'Hod',
     },
     color: {
-      queen: 'orange'
+      queen: 'orange',
+      queenWeb: 'orange',
     },
     chakra: 'genitals',
     godNameId: 'elohim-tzvaot',
@@ -185,7 +193,8 @@ export default [
       romanization: 'Yesod',
     },
     color: {
-      queen: 'violet'
+      queen: 'violet',
+      queenWeb: 'violet',
     },
     chakra: 'root',
     godNameId: 'shadi-el-chai',
@@ -194,7 +203,7 @@ export default [
     planets: '',
     stone: '',
     archangel: '',
-    soul: '',
+    soul: 'nephesh',
     angelicOrderId: 'kerubim',
   },
 
@@ -207,7 +216,8 @@ export default [
       romanization: 'Malchut',
     },
     color: {
-      queen: 'citrine,brown,olive,black'
+      queen: 'citrine,brown,olive,black',
+      queenWeb: 'brown',
     },
     chakra: null,
     godNameId: 'adonai-melech',
@@ -216,7 +226,7 @@ export default [
     planets: '',
     stone: '',
     archangel: '',
-    soul: '',
+    soul: 'guph',
     angelicOrderId: 'ashim',
   },
 

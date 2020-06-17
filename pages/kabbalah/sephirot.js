@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -8,28 +8,54 @@ import Copyright from '../../src/Copyright';
 
 import AppBar from '../../components/AppBar';
 import sephirot from '../../data/kabbalah/sephirotGraph';
-import TreeOfLife from '../../components/kabbalah/TreeOfLife';
+import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
 
 export default function Sephirot() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
+
+  const [ field, setField ] = useState('index');
+  const fields = [
+    'index',
+    'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
+    'archangel',
+    'body',
+    'chakra',
+    'godName.name.en', 'godName.name.he', 'godName.name.romanization',
+    'name.en', 'name.he', 'name.romanization',
+    'planets',
+    'scent',
+    'stone',
+    'soul',
+  ];
 
   return (
     <>
       <AppBar title="Sephirot" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
-          <TreeOfLife />
 
-          <div>
-            <b>Image credit:</b>
-            {" "}
-            <a href="https://commons.wikimedia.org/wiki/File:Tree_of_life_hebrew.svg">
-              Tree_of_life_hebrew.svg
-            </a>
-            {" "}
-            from Wikimedia Commons, released under CC-BY-SA 2.5, and modified
-            for use in this app.
+          <div style={{textAlign:'center'}}>
+            <select name="field" value={field}
+                onChange={ e => e.preventDefault() || setField(e.target.value) }>
+              {
+                fields.map(f => (
+                  <option key={f} value={f}>{f}</option>
+                ))
+              }
+            </select>
+
+            <span>&nbsp;&nbsp;&nbsp;</span>
+
+            <span>
+              Color: <select name="colorScale">
+                <option value="queen">Queen Scale</option>
+              </select>
+            </span>
           </div>
+
+          <br />
+
+          <TreeOfLife field={field} />
 
           <ol>
             {
@@ -42,6 +68,16 @@ export default function Sephirot() {
               ))
             }
           </ol>
+
+          <div>
+            <b>Image credit:</b> Modified version of
+            {" "}
+            <a href="https://commons.wikimedia.org/wiki/File:Tree_of_life_bahir_Hebrew.svg">
+              Tree of life bahir Hebrew.svg
+            </a>
+            {" "}
+            from Wikimedia Commons, released under CC-BY-SA 2.5.
+          </div>
 
         </Box>
       </Container>
