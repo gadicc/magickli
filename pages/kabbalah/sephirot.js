@@ -13,7 +13,8 @@ import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
 export default function Sephirot() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
 
-  const [ field, setField ] = useState('index');
+  const [ field, setField ] = useState('name.romanization');
+  const [ topText, setTopText ] = useState('index');
   const fields = [
     'index',
     'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
@@ -35,7 +36,7 @@ export default function Sephirot() {
         <Box my={4}>
 
           <div style={{textAlign:'center'}}>
-            <select name="field" value={field}
+            Label: <select name="field" value={field}
                 onChange={ e => e.preventDefault() || setField(e.target.value) }>
               {
                 fields.map(f => (
@@ -43,6 +44,17 @@ export default function Sephirot() {
                 ))
               }
             </select>
+            <br />
+
+            Top text: <select name="topText" value={topText}
+                onChange={ e => e.preventDefault() || setTopText(e.target.value) }>
+              {
+                fields.map(f => (
+                  <option key={f} value={f}>{f}</option>
+                ))
+              }
+            </select>
+            <br />
 
             <span>&nbsp;&nbsp;&nbsp;</span>
 
@@ -55,7 +67,7 @@ export default function Sephirot() {
 
           <br />
 
-          <TreeOfLife field={field} />
+          <TreeOfLife field={field} topText={topText} />
 
           <ol>
             {

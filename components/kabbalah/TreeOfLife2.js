@@ -3,13 +3,15 @@ import dotProp from 'dot-prop';
 
 import _sephirot from '../../data/kabbalah/sephirot';
 
-function TreeOfLife({ width, height, labels, color, field }) {
+function TreeOfLife({ width, height, labels, color, field, topText = 'index' }) {
   width = width || '100%';
   field = field || 'index';
   color = color || 'queenWeb';
 
   if (!labels)
     labels = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], field));
+
+  topText = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], topText));
 
   const fontSizeFromFieldName = {
     'index': 32,
@@ -32,7 +34,7 @@ function TreeOfLife({ width, height, labels, color, field }) {
   const sephirot = [
     { x: pillar[1].x, y: rowStart+rowGap*0, data: _sephirot[0], color: _sephirot[0].color[color], text: labels[0] },
     { x: pillar[2].x, y: rowStart+rowGap*1, data: _sephirot[1], color: _sephirot[1].color[color], text: labels[1] },
-    { x: pillar[0].x, y: rowStart+rowGap*1, data: _sephirot[2], color: _sephirot[2].color[color], text: labels[2] },
+    { x: pillar[0].x, y: rowStart+rowGap*1, data: _sephirot[2], color: _sephirot[2].color[color], text: labels[2], textColor: '#ccc'  },
     { x: pillar[2].x, y: rowStart+rowGap*3, data: _sephirot[3], color: _sephirot[3].color[color], text: labels[3] },
     { x: pillar[0].x, y: rowStart+rowGap*3, data: _sephirot[4], color: _sephirot[4].color[color], text: labels[4] },
     { x: pillar[1].x, y: rowStart+rowGap*4, data: _sephirot[5], color: _sephirot[5].color[color], text: labels[5] },
@@ -121,7 +123,7 @@ function TreeOfLife({ width, height, labels, color, field }) {
               <text key={i}
                 x={s.x}
                 y={s.y}
-                fill="#000"
+                fill={s.textColor || 'black'}
                 fillOpacity="1"
                 stroke="none"
                 strokeLinecap="butt"
@@ -149,6 +151,31 @@ function TreeOfLife({ width, height, labels, color, field }) {
                   { s.text }
                 </tspan>
               </text>
+
+              <path
+                 d={"M "
+                  + (s.x - 27) + ","
+                  + (s.y - 14) + " c 1.5,-34 56.5,-34 58,0"}
+                 transform="rotate(29)"
+                 style={{
+                   transformBox: 'fill-box', transformOrigin:"50% 100%",
+                   fill:'none',stroke:'none'}}
+                 id={"ic"+i} />
+
+              <text
+                 y="0"
+                 x="26.8589"
+                 id="text923"
+                 style={{
+                    fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
+                    letterSpacing:'-1.5px', wordSpacing:'0px',
+                    fill:s.textColor||'black',fillOpacity:1,
+                    stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}
+                 xmlSpace="preserve"><textPath
+                   style={{textAlign:'center',textAnchor:'middle'}}
+                   id="textPath945"
+                   xlinkHref={"#ic"+i}>{topText[i]}</textPath></text>
+
             </a>
           </React.Fragment>
         ))

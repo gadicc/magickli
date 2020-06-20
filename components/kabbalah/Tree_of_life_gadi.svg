@@ -30,11 +30,11 @@
   <sodipodi:namedview
      inkscape:current-layer="svg224"
      inkscape:window-maximized="0"
-     inkscape:window-y="62"
+     inkscape:window-y="61"
      inkscape:window-x="249"
-     inkscape:cy="381.80796"
-     inkscape:cx="151.38617"
-     inkscape:zoom="0.94563747"
+     inkscape:cy="53.547742"
+     inkscape:cx="195.6744"
+     inkscape:zoom="5.3493334"
      showgrid="false"
      id="namedview226"
      inkscape:window-height="942"
@@ -46,7 +46,8 @@
      objecttolerance="10"
      borderopacity="1"
      bordercolor="#666666"
-     pagecolor="#ffffff" />
+     pagecolor="#ffffff"
+     inkscape:document-rotation="0" />
   <title
      id="title2">Kabbalistic Tree of Life with the names of the Sephiroth and paths in Hebrew</title>
   <g
@@ -423,7 +424,7 @@
        y="364.04889"
        x="268.936"
        id="tspan1269"
-       sodipodi:role="line"></tspan></text>
+       sodipodi:role="line" /></text>
   <text
      id="text1287"
      y="311.64844"
@@ -479,4 +480,11 @@
        x="157.30469"
        id="tspan1301"
        sodipodi:role="line">10</tspan></text>
+  <path
+     inkscape:transform-center-y="-11.465774"
+     inkscape:transform-center-x="0.15689284"
+     id="circle924-8"
+     style="fill:none;stroke:#800000;stroke-width:0.90212"
+     d="m 135.44707,43.804291 c 1.48695,-29.582599 43.28801,-30.468222 45.10586,0"
+     sodipodi:nodetypes="cc" />
 </svg>
