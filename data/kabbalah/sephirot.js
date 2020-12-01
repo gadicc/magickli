@@ -59,10 +59,11 @@ export default [
       romanization: 'Binah',
     },
     color: {
-      king: 'deep red-violet',
+      king: 'deep-red-violet',
       kingWeb: '#c0448f',
       queen: 'black',
       queenWeb: '#222',
+      queenWebText: '#ccc',
     },
     chakra: 'throat',
     godNameId: 'yhvh-elohim',
@@ -84,6 +85,9 @@ export default [
       romanization: 'Chesed',
     },
     color: {
+      king: 'deep-violet',
+      kingWeb: '#330066',
+      kingWebText: '#ccc',
       queen: 'blue',
       queenWeb: '#0066ff',
     },
@@ -107,6 +111,8 @@ export default [
       romanization: 'Gevurah',
     },
     color: {
+      king: 'orange',
+      kingWeb: 'orange',
       queen: 'scarlet',
       queenWeb: '#ff2400',
     },
@@ -130,6 +136,8 @@ export default [
       romanization: 'Tiferet',
     },
     color: {
+      king: 'rose-pink',
+      kingWeb: '#f7cac1',
       queen: 'gold',
       queenWeb: 'gold',
     },
@@ -153,6 +161,8 @@ export default [
       romanization: 'Netzach',
     },
     color: {
+      king: 'yellow-orange',
+      kingWeb: '#ffae42',
       queen: 'emerald',
       queenWeb: '#50C878',
     },
@@ -176,6 +186,8 @@ export default [
       romanization: 'Hod',
     },
     color: {
+      king: 'violet',
+      kingWeb: '#ee82ee',
       queen: 'orange',
       queenWeb: 'orange',
     },
@@ -199,6 +211,8 @@ export default [
       romanization: 'Yesod',
     },
     color: {
+      king: 'blue-violet',
+      kingWeb: '#2014d4',
       queen: 'violet',
       queenWeb: 'violet',
     },
@@ -222,6 +236,8 @@ export default [
       romanization: 'Malchut',
     },
     color: {
+      king: 'yellow',
+      kingWeb: 'yellow',
       queen: 'citrine,brown,olive,black',
       queenWeb: 'brown',
     },
