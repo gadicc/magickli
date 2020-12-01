@@ -3,10 +3,10 @@ import dotProp from 'dot-prop';
 
 import _sephirot from '../../data/kabbalah/sephirot';
 
-function TreeOfLife({ width, height, labels, color, field, topText = 'index' }) {
+function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index' }) {
+  const color = colorScale+'Web' || 'queenWeb';
   width = width || '100%';
   field = field || 'index';
-  color = color || 'queenWeb';
 
   if (!labels)
     labels = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], field));

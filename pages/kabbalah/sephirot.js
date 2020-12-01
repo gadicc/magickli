@@ -15,6 +15,8 @@ export default function Sephirot() {
 
   const [ field, setField ] = useState('name.romanization');
   const [ topText, setTopText ] = useState('index');
+  const [ colorScale, setColorScale ] = useState('queen');
+
   const fields = [
     'index',
     'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
@@ -59,15 +61,17 @@ export default function Sephirot() {
             <span>&nbsp;&nbsp;&nbsp;</span>
 
             <span>
-              Color: <select name="colorScale">
-                <option value="queen">Queen Scale</option>
+              Color: <select name="colorScale" value={colorScale}
+                  onChange={e => setColorScale(e.target.value)}>
+                <option value="king">King Scale (Projective)</option>
+                <option value="queen">Queen Scale (Receptive)</option>
               </select>
             </span>
           </div>
 
           <br />
 
-          <TreeOfLife field={field} topText={topText} />
+          <TreeOfLife field={field} topText={topText} colorScale={colorScale} />
 
           <ol>
             {

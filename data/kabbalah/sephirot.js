@@ -9,6 +9,8 @@ export default [
       en: 'Crown',
     },
     color: {
+      king: 'brillliance',
+      kingWeb: 'white',
       queen: 'white',
       queenWeb: 'white',
     },
@@ -32,6 +34,8 @@ export default [
       romanization: 'Chochmah',
     },
     color: {
+      king: 'soft-blue',
+      kingWeb: 'SkyBlue',
       queen: 'gray',
       queenWeb: 'gray',
     },
@@ -55,6 +59,8 @@ export default [
       romanization: 'Binah',
     },
     color: {
+      king: 'deep red-violet',
+      kingWeb: '#c0448f',
       queen: 'black',
       queenWeb: '#222',
     },
@@ -79,7 +85,7 @@ export default [
     },
     color: {
       queen: 'blue',
-      queenWeb: '#4444ff',
+      queenWeb: '#0066ff',
     },
     chakra: null,
     godNameId: 'el',
