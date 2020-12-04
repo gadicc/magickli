@@ -115,10 +115,35 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                 cx={s.x}
                 cy={s.y-11}
                 r="39.2"
-                fill={s.color}
+                fill={s.color.match(',') ? null : s.color}
                 stroke="#000"
                 strokeWidth="1.568"
               ></circle>
+
+              {
+                // Currently has fixed positions for Malkuth though.
+                s.color.match(',') ? (
+                  <>
+                    <path
+                       id="circle88-7"
+                       style={{fill:s.color.split(',')[0],stroke:'#000000',strokeWidth:1.568 }}
+                       d="m 158,556.5 -27.71859,-27.71859 c -15.30855,15.30855 -15.30855,40.12863 0,55.43718 z" />
+                    <path
+                       id="circle88-1"
+                       style={{fill:s.color.split(',')[1],stroke:'#000000',strokeWidth:1.568 }}
+                       d="m 185.5,529 c -15.30855,-15.30855 -40.12863,-15.30855 -55.43718,0 L 158,556.5 Z" />
+                    <path
+                       id="circle88-10"
+                       style={{fill:s.color.split(',')[2],stroke:'#000000',strokeWidth:1.568 }}
+                       d="m 158,556.5 27.71859,27.71859 c 15.30855,-15.30855 15.30855,-40.12863 0,-55.43718 z" />
+                    <path
+                       id="circle88-2"
+                       style={{fill:s.color.split(',')[3],stroke:'#000000',strokeWidth:1.568 }}
+                       d="m 158,556.5 -27.71859,27.71859 c 15.30855,15.30855 40.12863,15.30855 55.43718,0 z" />
+                  </>
+
+                ) : null
+              }
 
               <text key={i}
                 x={s.x}
@@ -180,6 +205,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
           </React.Fragment>
         ))
       }
+
       <path
         strokeWidth="0.392"
         d="M161.042 166.328h-5.57c-2.007 0-1.204-1.063-1.204-1.063-1.756.903-1.907 3.964 1.204 3.964h4.416c1.806 0 .542.602.542 1.756v7.476c0 1.606 1.45.402 1.45 0v-7.225c0-1.505 2.975-4.908-.838-4.908z"

@@ -238,8 +238,9 @@ export default [
     color: {
       king: 'yellow',
       kingWeb: 'yellow',
-      queen: 'citrine,brown,olive,black',
-      queenWeb: 'brown',
+      queen: 'citrine,olive,russet,black',
+      queenWeb: '#ba0,#880,#70360B,#000000',
+      queenWebText: '#eee',
     },
     chakra: null,
     godNameId: 'adonai-melech',
