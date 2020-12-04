@@ -238,8 +238,8 @@ export default [
     color: {
       king: 'yellow',
       kingWeb: 'yellow',
-      queen: 'citrine,olive,russet,black',
-      queenWeb: '#ba0,#880,#70360B,#000000',
+      queen: 'russet,citrine,olive,black',
+      queenWeb: '#80461B,#ba0,#880,#000000',
       queenWebText: '#eee',
     },
     chakra: null,
