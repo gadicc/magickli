@@ -3,42 +3,48 @@ export default {
   'ehiyeh': {
     name: {
       he: 'אהיה',
-      romanization: 'Ehiyeh'
+      romanization: 'Ehiyeh',
+      meaning: "I am",
     }
   },
 
   'yah': {
     name: {
       he: 'יה',
-      romanization: 'Yah'
+      romanization: 'Yah',
+      meaning: "Lord",
     }
   },
 
   'yhvh-elohim': {
     name: {
       he: 'יהוה אלוהים',
-      romanization: 'YHVH Eh-lo-heem'
+      romanization: 'YHVH Eh-lo-heem',
+      meaning: "The Lord God",
     }
   },
 
   'el': {
     name: {
       he: 'אל',
-      romanization: 'El'
+      romanization: 'El',
+      meaning: "God",
     }
   },
 
   'elohim-gibor': {
     name: {
       he: 'אלוהים גיבור',
-      romanization: 'Eh-loh-heem Gi-bohr',
+      romanization: 'Elohim Gibor',
+      meaning: "God of Power",
     }
   },
 
   'yhvh-eloha-vedaat': {
     name: {
       he: 'יהוה אלוה ודעת',
-      romanization: 'YHVH Eh-loh-hah Ve-da\'at',
+      romanization: 'YHVH Eloah Ve-da\'at',
+      meaning: "Lord God of Knowledge",
     }
   },
 
@@ -46,6 +52,7 @@ export default {
     name: {
       he: 'אלוהים צבעות',
       romanization: 'Eh-loh-heem Tzva-oht',
+      meaning: "Lord of Armies",
     }
   },
 
@@ -53,7 +60,8 @@ export default {
   'shadai-el-chai': {
     name: {
       he: 'שדאי אל חי',
-      romanization: 'Sha-dai El Chai',
+      romanization: 'Shaddai El Chai',
+      meaning: "Almighty Living God",
     }
   },
 
@@ -61,6 +69,7 @@ export default {
     name: {
       he: 'אדוני מלך',
       romanization: 'Ah-doh-nai Me-lech',
+      meaning: "Lord of Earth",
     }
   },
 

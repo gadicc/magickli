@@ -113,7 +113,7 @@ export default [
     color: {
       king: 'orange',
       kingWeb: 'orange',
-      queen: 'scarlet',
+      queen: 'scarlet', // Modern magick: Scarlet.  Golden Dawn Magick: Red
       queenWeb: '#ff2400',
     },
     chakra: 'heart',
@@ -138,7 +138,7 @@ export default [
     color: {
       king: 'rose-pink',
       kingWeb: '#f7cac1',
-      queen: 'gold',
+      queen: 'gold',  // Modern Magick: gold.  Golden Dawn Magick: Yellow
       queenWeb: 'gold',
     },
     chakra: null,
@@ -163,7 +163,7 @@ export default [
     color: {
       king: 'yellow-orange',
       kingWeb: '#ffae42',
-      queen: 'emerald',
+      queen: 'emerald', // Modern Magick: emerald.  Golden Dawn Magick: green
       queenWeb: '#50C878',
     },
     chakra: 'solar-plexus',
@@ -250,7 +250,7 @@ export default [
     stone: 'rock crystal',
     archangel: 'sandalphon',
     soul: 'guph',
-    angelicOrderId: 'ashim',
+    angelicOrderId: 'ishim',
   },
 
   {

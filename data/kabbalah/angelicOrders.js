@@ -3,7 +3,7 @@ export default {
   'chayot-hakodesh': {
     name: {
       he: 'חיות הקודש',
-      en: 'Holy Living Ones',
+      en: 'Holy Living Creatures',
       romanization: 'Chayot Hakodesh',
     }
   },
@@ -20,14 +20,14 @@ export default {
     name: {
       he: 'אראלים',
       en: 'Thrones',
-      romanization: 'Araleem',
+      romanization: 'Ar\'aleem',
     }
   },
 
   'chashmalim': {
     name: {
       he: 'חשמלים',
-      en: 'Brilliant Ones',
+      en: 'Shining Ones',
       romanization: 'Chashmaleem',
     }
   },
@@ -35,7 +35,7 @@ export default {
   'seraphim': {
     name: {
       he: 'שרפים',
-      en: 'Fiery Serpents',
+      en: 'Flaming Ones',
       romanization: 'Serapheem',
     }
   },
@@ -72,11 +72,11 @@ export default {
     }
   },
 
-  'ashim': {
+  'ishim': {
     name: {
       he: 'אישים',
       en: 'Souls of Fire',
-      romanization: 'Asheem',
+      romanization: 'Isheem',
     }
   },
 
