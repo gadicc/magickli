@@ -1,0 +1,100 @@
+{
+  "sources": [
+    "https://en.wikipedia.org/wiki/Hebrew_alphabet",
+    "https://en.wikipedia.org/wiki/Romanization_of_Hebrew",
+    "https://en.wikipedia.org/wiki/Mathers_table",
+    "https://en.wikipedia.org/wiki/Gematria"
+  ],
+
+  "alef": {
+    letter: {
+      he: "א",
+      mathers: "A"
+    },
+    value: 1,
+  },
+
+  "bet": {
+
+  },
+
+  "gimmel": {
+
+  },
+
+  "delet": {
+
+  },
+
+  "he": {
+
+  },
+
+  "vav": {
+
+  },
+
+  "zayin": {
+
+  },
+
+  "chet": {
+
+  },
+
+  "tet": {
+
+  },
+
+  "yod": {
+
+  },
+
+  "kaf": {
+
+  },
+
+  "lamed": {
+
+  },
+
+  "mem": {
+
+  },
+
+  "nun": {
+
+  },
+
+  "samech": {
+
+  },
+
+  "ayin": {
+
+  },
+
+  "pe": {
+
+  },
+
+  "tzadik": {
+
+  },
+
+  "qof": {
+
+  },
+
+  "resh": {
+
+  },
+
+  "shin": {
+
+  },
+
+  "tav": {
+
+  }
+}

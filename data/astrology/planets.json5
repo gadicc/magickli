@@ -1,0 +1,151 @@
+{
+  /*
+
+   */
+
+  "sol": {
+    id: "sol",
+    symbol: "☉",
+    hebrewLetterId: "resh",
+    name: {
+      en: {
+        en: "Sun",
+      },
+      he: {
+        he: 'שמש',
+        roman: 'Shemesh',
+        en: "Sun",
+      },
+    },
+    godNameId: "yhvh-eloha-vedaat",
+  },
+
+  "mercury": {
+    id: "mercury",
+    symbol: "☿",
+    hebrewLetterId: "bet",
+    godNameId: "elohim-tzvaot",
+    name: {
+      en: {
+        en: "Mercury",
+      },
+      he: {
+        he: "כוכב",
+        roman: 'Kochav',
+      }
+    }
+  },
+
+  "venus": {
+    id: "venus",
+    symbol: "♀",
+    hebrewLetterId: "dalet",
+    name: {
+      en: {
+        en: "Venus",
+      },
+      he: {
+        he: "נגה",
+        roman: "Noga",
+      },
+    },
+    godNameId: 'yhvh-tzvaot',
+  },
+
+  "earth": {
+    id: "earth",
+    symbol: "♁",
+    name: {
+      en: {
+        en: "Earth",
+      }
+    }
+  },
+
+  "luna": {
+    id: "luna",
+    symbol: "☾",
+    hebrewLetterId: "gimel",
+    godNameId: 'shaddai-el-chai',
+    name: {
+      en: {
+        en: "Moon",
+      },
+      he: {
+        he: "לבנה",
+        roman: "Levanah",
+        en: "White",
+      }
+    }
+  },
+
+  "mars": {
+    id: "mars",
+    symbol: "♂",
+    hebrewLetterId: "pe",
+    name: {
+      en: {
+        en: "Mars",
+      },
+      he: {
+        he: "מאדים",
+        roman: "Ma'adim",
+      }
+    },
+    godNameId: 'elohim-gibor',
+  },
+
+  "jupiter": {
+    id: "jupiter",
+    symbol: "♃",
+    hebrewLetterId: "kaf",
+    name: {
+      en: {
+        en: "Jupiter",
+      },
+      he: {
+        he: "צדק",
+        roman: "Tzedek",
+        en: "Justice"
+      }
+    },
+    godNameId: "el",
+  },
+
+  "saturn": {
+    id: "saturn",
+    symbol: "♄",
+    name: {
+      en: {
+        en: "Saturn",
+      },
+      he: {
+        he: "שַׁבְּתַאי",
+        roman: "Shabbathai",
+      }
+    },
+    hebrewLetterId: "tav",
+    godNameId: "yhvh-elohim",
+  },
+
+  "uranus": {
+    id: "uranus",
+    symbol: "⛢",
+    name: {
+      en: {
+        en: 'Uranus',
+      }
+    }
+  },
+
+  "neptune": {
+    id: "neptune",
+    symbol: "♆",
+    name: {
+      en: {
+        en: "Neptune",
+      }
+    }
+  },
+
+}
