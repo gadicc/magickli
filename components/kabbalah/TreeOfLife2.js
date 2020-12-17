@@ -1,7 +1,8 @@
 import React from "react";
 import dotProp from 'dot-prop';
 
-import _sephirot from '../../data/kabbalah/sephirot';
+import Data from '../../data/data';
+const _sephirot = Object.values(Data.sephirah);
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index' }) {
   const color = colorScale+'Web' || 'queenWeb';

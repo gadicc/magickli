@@ -25,13 +25,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Planets() {
+export default function signs() {
   const classes = useStyles();
   const navParts = [ { title: 'Astrology', url: '/astrology' } ];
 
   return (
     <>
-      <AppBar title="Planets" navParts={navParts} />
+      <AppBar title="Zodiac" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
 
@@ -40,32 +40,39 @@ export default function Planets() {
 
               <TableHead>
                 <TableRow>
-                  <TableCell>Symbol</TableCell>
-                  <TableCell>English</TableCell>
-                  <TableCell>Hebrew</TableCell>
+                  <TableCell>Sign & Symbol</TableCell>
+                  <TableCell>Meaning</TableCell>
+                  <TableCell>Rules from</TableCell>
+                  <TableCell>Ruled by</TableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
                 {
-                  Object.values(Data.planet).map(planet => (
-                    <TableRow key={planet.id}>
+                  Object.values(Data.zodiac).map(sign => (
+                    <TableRow key={sign.id}>
 
                       <TableCell scope="row">
-                        <Link href={"/astrology/planet/"+planet.id} color="secondary">
-                          {planet.symbol}
+                        <Link href={"/astrology/sign/"+sign.id} color="secondary">
+                          {sign.name.en} {sign.symbol}
                         </Link>
                       </TableCell>
 
                       <TableCell scope="row">
-                        <Link href={"/astrology/planet/"+planet.id} color="secondary">
-                          {planet.name.en.en}
+                        <Link href={"/astrology/sign/"+sign.id} color="secondary">
+                          {sign.meaning.en}
                         </Link>
                       </TableCell>
 
                       <TableCell scope="row">
-                        <Link href={"/astrology/planet/"+planet.id} color="secondary">
-                          {planet.name.he ? planet.name.he.roman : ""}
+                        <Link href={"/astrology/sign/"+sign.id} color="secondary">
+                          {JSON.stringify(sign.rulesFrom)}
+                        </Link>
+                      </TableCell>
+
+                      <TableCell scope="row">
+                        <Link href={"/astrology/sign/"+sign.id} color="secondary">
+                          {sign.planet.name.en.en}
                         </Link>
                       </TableCell>
 
@@ -75,17 +82,6 @@ export default function Planets() {
               </TableBody>
             </Table>
           </TableContainer>
-
-          <br />
-
-          <div>
-            <b>Image credit:</b>
-            <a href="https://en.wikipedia.org/wiki/File:Planets2013.svg">
-              Planet2013.svg
-            </a>
-            {" "}
-            from Wikimedia Commons, released under CC-BY-SA 2.5.
-          </div>
 
         </Box>
       </Container>

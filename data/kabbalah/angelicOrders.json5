@@ -1,4 +1,4 @@
-export default {
+{
 
   'chayot-hakodesh': {
     name: {
@@ -88,4 +88,4 @@ export default {
     }
   },
 
-};
+}

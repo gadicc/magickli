@@ -7,7 +7,7 @@ import Link from '../../src/Link';
 import Copyright from '../../src/Copyright';
 
 import AppBar from '../../components/AppBar';
-import sephirot from '../../data/kabbalah/sephirotGraph';
+import Data from '../../data/data';
 import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
 
 export default function Sephirot() {
@@ -75,7 +75,7 @@ export default function Sephirot() {
 
           <ol>
             {
-              sephirot.map(sephirah => (
+              Object.values(Data.sephirah).map(sephirah => (
                 <li key={sephirah.id}>
                   <Link href={"/kabbalah/sephirah/"+sephirah.id} color="secondary">
                     {sephirah.name.romanization}

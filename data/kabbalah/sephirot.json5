@@ -1,6 +1,6 @@
-export default [
+{
 
-  {
+  keter: {
     index: 1,
     id: 'keter',
     name: {
@@ -25,7 +25,7 @@ export default [
     angelicOrderId: 'chayot-hakodesh',
   },
 
-  {
+  chochmah: {
     index: 2,
     id: 'chochmah',
     name: {
@@ -50,7 +50,7 @@ export default [
     angelicOrderId: 'auphanim',
   },
 
-  {
+  binah: {
     index: 3,
     id: 'binah',
     name: {
@@ -76,7 +76,7 @@ export default [
     angelicOrderId: 'aralim',
   },
 
-  {
+  hesed: {
     index: 4,
     id: 'hesed',
     name: {
@@ -102,7 +102,7 @@ export default [
     angelicOrderId: 'chashmalim',
   },
 
-  {
+  gevurah: {
     index: 5,
     id: 'gevurah',
     name: {
@@ -127,7 +127,7 @@ export default [
     angelicOrderId: 'seraphim',
   },
 
-  {
+  tiferet: {
     index: 6,
     id: 'tiferet',
     name: {
@@ -152,7 +152,7 @@ export default [
     angelicOrderId: 'malachim',
   },
 
-  {
+  netzach: {
     index: 7,
     id: 'netzach',
     name: {
@@ -177,7 +177,7 @@ export default [
     angelicOrderId: 'elohim',
   },
 
-  {
+  hod: {
     index: 8,
     id: 'hod',
     name: {
@@ -202,7 +202,7 @@ export default [
     angelicOrderId: 'bnei-elohim',
   },
 
-  {
+  yesod: {
     index: 9,
     id: 'yesod',
     name: {
@@ -227,7 +227,7 @@ export default [
     angelicOrderId: 'kerubim',
   },
 
-  {
+  malchut: {
     index: 10,
     id: 'malchut',
     name: {
@@ -253,7 +253,7 @@ export default [
     angelicOrderId: 'ishim',
   },
 
-  {
+  daat: {
     index: 11,
     id: 'daat',
     name: {
@@ -275,4 +275,4 @@ export default [
     angelicOrderId: '',
   },
 
-];
+}

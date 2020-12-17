@@ -15,6 +15,11 @@ const tileData = [
     title: 'Planets',
     to: '/astrology/planets'
   },
+  {
+    img: '/pics/astrology.jpg',
+    title: 'Zodiac',
+    to: '/astrology/zodiac'
+  },
 ];
 
 const styles = theme => ({
