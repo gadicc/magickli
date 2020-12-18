@@ -11,7 +11,8 @@ import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
 
-import planets from '../../../data/astrology/planets.json5';
+import Data from '../../../data/data';
+const planets = Data.planet;
 
 export async function getStaticPaths() {
   const paths = Object.values(planets).map(planet => '/astrology/planet/' + planet.id);
@@ -47,14 +48,16 @@ export default function Planet() {
           </p>
 
           <table>
-            {
-              Object.keys(planet).map(key => (
-                <tr key={key}>
-                  <td>{key}</td>
-                  <td>{JSON.stringify(planet[key])}</td>
-                </tr>
-              ))
-            }
+            <tbody>
+              {
+                Object.keys(planet).map(key => (
+                  <tr key={key}>
+                    <td>{key}</td>
+                    <td>{JSON.stringify(planet[key])}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
           </table>
 
         </Box>
