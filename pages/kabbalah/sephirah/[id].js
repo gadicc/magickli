@@ -10,6 +10,7 @@ import Link from '../../../src/Link';
 import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
+import TreeOfLife from '../../../components/kabbalah/TreeOfLife2';
 
 import Data from '../../../data/data';
 const sephirot = Object.values(Data.sephirah);
@@ -41,19 +42,25 @@ export default function Sephirot() {
       <AppBar title={sephirah.name.romanization} navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
-          <p>
-            <i>
-              {sephirah.name.romanization}
-            </i>
-          </p>
+          <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
+            <TreeOfLife width="80px" topText="" active={sephirah.id} />
+          </span>
+
+          <h1>
+            {sephirah.name.romanization}
+          </h1>
 
           <table>
             <tbody>
               {
                 Object.keys(sephirah).map(key => (
                   <tr key={key}>
-                    <td>{key}</td>
-                    <td>{JSON.stringify(sephirah[key])}</td>
+                    <td>{key.substr(0,1).toUpperCase() + key.substr(1)}:</td>
+                    <td>{
+                      typeof sephirah[key] === 'string'
+                        ? sephirah[key].substr(0,1).toUpperCase() + sephirah[key].substr(1)
+                        : JSON.stringify(sephirah[key])
+                    }</td>
                   </tr>
                 ))
               }
