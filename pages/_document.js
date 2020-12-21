@@ -14,10 +14,6 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
           <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
           <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png" />
           <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png" />
