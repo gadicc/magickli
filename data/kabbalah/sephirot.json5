@@ -106,7 +106,7 @@
     soul: '-',
     angelicOrderId: 'chashmalim',
     prev: 'binah',
-    next: 'gvurah',
+    next: 'gevurah',
   },
 
   gevurah: {
@@ -178,7 +178,7 @@
       queenWeb: '#50C878',
     },
     chakra: 'solar-plexus',
-    godNameId: 'yhvh-tzvaot',
+    godNameId: 'elohim-tzvaot',
     scent: 'rose, red sandal',
     body: 'loins; hips',
     planets: 'venus',
@@ -186,7 +186,7 @@
     archangel: 'haniel',
     soul: '-',
     angelicOrderId: 'elohim',
-    prev: 'tifert',
+    prev: 'tiferet',
     next: 'hod',
   },
 
@@ -232,7 +232,7 @@
       queenWeb: 'violet',
     },
     chakra: 'root',
-    godNameId: 'shadi-el-chai',
+    godNameId: 'shadai-el-chai',
     scent: 'jasmine',
     body: 'genitals',
     planets: 'luna',
@@ -260,7 +260,7 @@
       queenWebText: '#eee',
     },
     chakra: null,
-    godNameId: 'adonai-melech',
+    godNameId: 'adonai-haaretz',
     scent: '',
     body: 'feet',
     planets: '4 elements',
@@ -283,7 +283,7 @@
       queen: ''
     },
     chakra: '',
-    godNameId: '',
+    godNameId: 'yhvh-elohim',
     scent: '',
     body: '',
     planets: '',

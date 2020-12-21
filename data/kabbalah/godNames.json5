@@ -50,12 +50,19 @@
 
   'yhvh-tzvaot': {
     name: {
-      he: 'אלוהים צבעות',
-      romanization: 'Eh-loh-heem Tzva-oht',
+      he: 'יהוה צבעות',
+      romanization: 'YHVH Tzva-oht',
       meaning: "Lord of Armies",
     }
   },
 
+  'elohim-tzvaot': {
+    name: {
+      he: 'אלוהים צבעות',
+      romanization: 'Eh-loh-heem Tzva-oht',
+      meaning: "God of Armies",
+    }
+  },
 
   'shadai-el-chai': {
     name: {
@@ -65,10 +72,10 @@
     }
   },
 
-  'adonai-melech': {
+  'adonai-haaretz': {
     name: {
-      he: 'אדוני מלך',
-      romanization: 'Ah-doh-nai Me-lech',
+      he: 'אדוני הארץ',
+      romanization: "Adonai Ha'aretz",
       meaning: "Lord of Earth",
     }
   },
