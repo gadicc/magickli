@@ -37,23 +37,138 @@ export default function Sephirot() {
   if (!sephirah)
     return null;
 
+  const otherLabels = Object.keys(sephirah).filter(
+    x => ![
+      'id', 'name', 'color',
+      'angelicOrder', 'angelicOrderId', 'godName', 'godNameId',
+    ].includes(x)
+  );
+
   return (
     <>
+      <style jsx>{`
+        div.nameDiv > div {
+          width: 33%;
+          display: inline-block;
+          text-align: center;
+        }
+
+        div.colorsDiv > div {
+          width: 50%;
+          display: inline-block;
+          text-align: center;
+        }
+
+        div.color {
+          width: 100%;
+          _margin: 0 5px 0 5px;
+          display: inline-block;
+          padding: 10px 20px 10px 20px;
+          text-align: center;
+        }
+
+        div.head {
+          font-weight: bold;
+        }
+      `}</style>
+
       <AppBar title={sephirah.name.romanization} navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
+
+          {/*
+          <table width="100%">
+            <style jsx>{`
+              a.prevNextLink { text-decoration: none }
+            `}</style>
+            <tbody>
+              <tr>
+                <td>
+                  <a className="prevNextLink" href="">
+                    ⬅
+                  </a>
+                </td>
+                <td>
+                  <TreeOfLife height="80px" topText="" active={sephirah.id} />
+                </td>
+                <td>
+                  <NameBlob name={sephirah.name} />
+                </td>
+                <td>
+                  <a className="prevNextLink" href="">
+                    ➡
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          */}
+
+         <div>
+           <TreeOfLife height="150px" topText="" active={sephirah.id} />
+         </div>
+         <br />
+
+          {/*
           <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
             <TreeOfLife width="80px" topText="" active={sephirah.id} />
           </span>
+          */}
 
-          <h1>
-            {sephirah.name.romanization}
-          </h1>
-
-          <table>
+          <table width="100%">
             <tbody>
+
+              <tr>
+                <td>Name:</td>
+                <td>
+                  <div className="nameDiv">
+                    <div>{sephirah.name.romanization}</div>
+                    <div>{sephirah.name.en}</div>
+                    <div>{sephirah.name.he}</div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>God Name:</td>
+                <td>
+                  <div className="nameDiv">
+                    <div>{sephirah.godName.name.romanization}</div>
+                    <div>{sephirah.godName.name.meaning}</div>
+                    <div>{sephirah.godName.name.he}</div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Angelic Host:</td>
+                <td>
+                  <div className="nameDiv">
+                    <div>{sephirah.angelicOrder.name.romanization}</div>
+                    <div>{sephirah.angelicOrder.name.en}</div>
+                    <div>{sephirah.angelicOrder.name.he}</div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Colors</td>
+                <td>
+                  <div className="colorsDiv">
+                    <div className="color" style={{background: sephirah.color.kingWeb, color: sephirah.color.kingWebText || 'white'}}>
+                      <div className="head">King Scale</div>
+                      <div className="text">{sephirah.color.king}</div>
+                    </div>
+                    <div className="color" style={{background: sephirah.color.queenWeb, color: sephirah.color.queenWebText || 'white'}}>
+                      <div className="head">Queen Scale</div>
+                      <div className="text">{sephirah.color.queen}</div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
               {
-                Object.keys(sephirah).map(key => (
+                otherLabels.map(key => (
                   <tr key={key}>
                     <td>{key.substr(0,1).toUpperCase() + key.substr(1)}:</td>
                     <td>{
