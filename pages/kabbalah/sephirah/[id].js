@@ -47,16 +47,22 @@ export default function Sephirot() {
   return (
     <>
       <style jsx>{`
+        div.nameDiv {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         div.nameDiv > div {
-          width: 33%;
-          display: inline-block;
+          width: 50%;
           text-align: center;
         }
 
         div.colorsDiv > div {
-          width: 50%;
+          width: calc(50% - 10px);
+          margin-right: 10px;
           display: inline-block;
           text-align: center;
+          border: 1px solid #ccc;
         }
 
         div.color {
@@ -74,6 +80,13 @@ export default function Sephirot() {
         div.nav { display: table; width: 100% }
         div.nav > div { display: table-cell; vertical-align: middle; }
         div.prevNext { font-size: 150%; }
+
+        table.main {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 20px;
+        }
+        table.main td { display: table-cell; vertical-align: middle }
       `}</style>
 
       <AppBar title={sephirah.name.romanization} navParts={navParts} />
@@ -121,16 +134,18 @@ export default function Sephirot() {
           </span>
           */}
 
-          <table width="100%">
+          <table className="main">
             <tbody>
 
               <tr>
                 <td>Name:</td>
                 <td>
                   <div className="nameDiv">
-                    <div>{sephirah.name.romanization}</div>
+                    <div>
+                      <div>{sephirah.name.he}</div>
+                      <div>{sephirah.name.romanization}</div>
+                    </div>
                     <div>{sephirah.name.en}</div>
-                    <div>{sephirah.name.he}</div>
                   </div>
                 </td>
               </tr>
@@ -139,9 +154,11 @@ export default function Sephirot() {
                 <td>God Name:</td>
                 <td>
                   <div className="nameDiv">
-                    <div>{sephirah.godName.name.romanization}</div>
+                    <div>
+                      <div>{sephirah.godName.name.he}</div>
+                      <div>{sephirah.godName.name.romanization}</div>
+                    </div>
                     <div>{sephirah.godName.name.meaning}</div>
-                    <div>{sephirah.godName.name.he}</div>
                   </div>
                 </td>
               </tr>
@@ -150,9 +167,11 @@ export default function Sephirot() {
                 <td>Angelic Host:</td>
                 <td>
                   <div className="nameDiv">
-                    <div>{sephirah.angelicOrder.name.romanization}</div>
+                    <div>
+                      <div>{sephirah.angelicOrder.name.he}</div>
+                      <div>{sephirah.angelicOrder.name.romanization}</div>
+                    </div>
                     <div>{sephirah.angelicOrder.name.en}</div>
-                    <div>{sephirah.angelicOrder.name.he}</div>
                   </div>
                 </td>
               </tr>
@@ -161,11 +180,11 @@ export default function Sephirot() {
                 <td>Colors</td>
                 <td>
                   <div className="colorsDiv">
-                    <div className="color" style={{background: sephirah.color.kingWeb, color: sephirah.color.kingWebText || 'white'}}>
+                    <div className="color" style={{background: sephirah.color.kingWeb, color: sephirah.color.kingWebText || 'black'}}>
                       <div className="head">King Scale</div>
                       <div className="text">{sephirah.color.king}</div>
                     </div>
-                    <div className="color" style={{background: sephirah.color.queenWeb, color: sephirah.color.queenWebText || 'white'}}>
+                    <div className="color" style={{background: sephirah.color.queenWeb, color: sephirah.color.queenWebText || 'black'}}>
                       <div className="head">Queen Scale</div>
                       <div className="text">{sephirah.color.queen}</div>
                     </div>

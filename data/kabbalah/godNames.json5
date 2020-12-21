@@ -19,7 +19,7 @@
   'yhvh-elohim': {
     name: {
       he: 'יהוה אלוהים',
-      romanization: 'YHVH Eh-lo-heem',
+      romanization: 'YHVH Elohim',
       meaning: "The Lord God",
     }
   },
@@ -59,7 +59,7 @@
   'elohim-tzvaot': {
     name: {
       he: 'אלוהים צבעות',
-      romanization: 'Eh-loh-heem Tzva-oht',
+      romanization: 'Elohim Tzvaot',
       meaning: "God of Armies",
     }
   },

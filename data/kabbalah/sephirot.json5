@@ -228,6 +228,7 @@
     color: {
       king: 'blue-violet',
       kingWeb: '#2014d4',
+      kingWebText: '#aaa',
       queen: 'violet',
       queenWeb: 'violet',
     },
