@@ -23,6 +23,7 @@
     archangelId: 'metatron',
     soul: 'yechidah',
     angelicOrderId: 'chayot-hakodesh',
+    next: 'chochmah',
   },
 
   chochmah: {
@@ -48,6 +49,8 @@
     archangel: 'raziel',
     soul: 'chaya',
     angelicOrderId: 'auphanim',
+    prev: 'keter',
+    next: 'binah',
   },
 
   binah: {
@@ -74,6 +77,8 @@
     archangel: 'tzaphkiel',
     soul: 'neshama',
     angelicOrderId: 'aralim',
+    prev: 'chochmah',
+    next: 'hesed',
   },
 
   hesed: {
@@ -100,6 +105,8 @@
     archangel: 'tzadkiel',
     soul: '-',
     angelicOrderId: 'chashmalim',
+    prev: 'binah',
+    next: 'gvurah',
   },
 
   gevurah: {
@@ -125,6 +132,8 @@
     archangel: 'khamael',
     soul: '-',
     angelicOrderId: 'seraphim',
+    prev: 'hesed',
+    next: 'tiferet',
   },
 
   tiferet: {
@@ -150,6 +159,8 @@
     archangel: 'raphael',
     soul: 'ruach',
     angelicOrderId: 'malachim',
+    prev: 'gevurah',
+    next: 'netzach',
   },
 
   netzach: {
@@ -175,6 +186,8 @@
     archangel: 'haniel',
     soul: '-',
     angelicOrderId: 'elohim',
+    prev: 'tifert',
+    next: 'hod',
   },
 
   hod: {
@@ -200,6 +213,8 @@
     archangel: 'michael',
     soul: '-',
     angelicOrderId: 'bnei-elohim',
+    prev: 'netzach',
+    next: 'yesod',
   },
 
   yesod: {
@@ -225,6 +240,8 @@
     archangel: 'gabriel',
     soul: 'nephesh',
     angelicOrderId: 'kerubim',
+    prev: 'hod',
+    next: 'malchut',
   },
 
   malchut: {
@@ -251,6 +268,7 @@
     archangel: 'sandalphon',
     soul: 'guph',
     angelicOrderId: 'ishim',
+    prev: 'yesod',
   },
 
   daat: {

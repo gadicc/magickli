@@ -70,6 +70,10 @@ export default function Sephirot() {
         div.head {
           font-weight: bold;
         }
+
+        div.nav { display: table; width: 100% }
+        div.nav > div { display: table-cell; vertical-align: middle; }
+        div.prevNext { font-size: 150%; }
       `}</style>
 
       <AppBar title={sephirah.name.romanization} navParts={navParts} />
@@ -104,8 +108,10 @@ export default function Sephirot() {
           </table>
           */}
 
-         <div>
-           <TreeOfLife height="150px" topText="" active={sephirah.id} />
+        <div className="nav">
+          <div className="prevNext">{sephirah.prev && <Link href={sephirah.prev} underline="none">❮</Link>}</div>
+          <div><TreeOfLife height="150px" topText="" active={sephirah.id} /></div>
+          <div className="prevNext">{sephirah.next && <Link href={sephirah.next} underline="none">❯</Link>}</div>
          </div>
          <br />
 
