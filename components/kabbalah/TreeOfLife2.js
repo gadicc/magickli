@@ -1,6 +1,7 @@
 import React from "react";
 import dotProp from 'dot-prop';
 
+import { useRouter } from 'next/router';
 import Data from '../../data/data';
 const _sephirot = Object.values(Data.sephirah);
 
@@ -47,6 +48,19 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
 
   const pathOpacity = active ? 0.1 : 1;
 
+  const ref = React.useRef();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    ref.current.querySelectorAll('a').forEach(a => {
+      a.onclick = function(e) {
+        const href = a.getAttribute('xlink:href');
+        e.preventDefault();
+        router.push(href);
+      }
+    });
+  });
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +68,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
       height={height}
       version="1.1"
       viewBox="0 0 316 600"
+      ref={ref}
     >
       <g
         fill="none"
