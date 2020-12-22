@@ -11,6 +11,7 @@ import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
 import TreeOfLife from '../../../components/kabbalah/TreeOfLife2';
+import Chakras from '../../../components/chakras/Chakras';
 
 import Data from '../../../data/data';
 const sephirot = Object.values(Data.sephirah);
@@ -40,7 +41,7 @@ export default function Sephirot() {
   const otherLabels = Object.keys(sephirah).filter(
     x => ![
       'id', 'name', 'color',
-      'angelicOrder', 'angelicOrderId', 'godName', 'godNameId',
+      'angelicOrder', 'angelicOrderId', 'godName', 'godNameId',  'chakra', 'chakraId',
     ].includes(x)
   );
 
@@ -177,7 +178,7 @@ export default function Sephirot() {
               </tr>
 
               <tr>
-                <td>Colors</td>
+                <td>Colors:</td>
                 <td>
                   <div className="colorsDiv">
                     <div className="color" style={{background: sephirah.color.kingWeb, color: sephirah.color.kingWebText || 'black'}}>
@@ -188,6 +189,16 @@ export default function Sephirot() {
                       <div className="head">Queen Scale</div>
                       <div className="text">{sephirah.color.queen}</div>
                     </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Chakra</td>
+                <td>
+                  <div className="nameDiv">
+                    <div>{sephirah.chakraId ? sephirah.chakraId.substr(0,1).toUpperCase() + sephirah.chakraId.substr(1) : 'None'}</div>
+                    <div><Chakras height="80px" active={sephirah.chakraId || 'none'} /></div>
                   </div>
                 </td>
               </tr>
