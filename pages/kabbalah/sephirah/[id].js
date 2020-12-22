@@ -185,7 +185,12 @@ export default function Sephirot() {
                       <div className="head">King Scale</div>
                       <div className="text">{sephirah.color.king}</div>
                     </div>
-                    <div className="color" style={{background: sephirah.color.queenWeb, color: sephirah.color.queenWebText || 'black'}}>
+                    <div className="color" style={{
+                      background: sephirah.color.queenWeb.match(',')
+                        ? 'conic-gradient(' + sephirah.color.queenWeb + ')'
+                        : sephirah.color.queenWeb,
+                      color: sephirah.color.queenWebText || 'black'
+                    }}>
                       <div className="head">Queen Scale</div>
                       <div className="text">{sephirah.color.queen}</div>
                     </div>

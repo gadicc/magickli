@@ -281,7 +281,8 @@
       romanization: 'Da\'at',
     },
     color: {
-      queen: ''
+      queen: '',
+      queenWeb: '',
     },
     chakraId: '',
     godNameId: 'yhvh-elohim',
