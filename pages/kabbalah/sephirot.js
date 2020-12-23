@@ -16,6 +16,7 @@ export default function Sephirot() {
   const [ field, setField ] = useState('name.romanization');
   const [ topText, setTopText ] = useState('index');
   const [ colorScale, setColorScale ] = useState('queen');
+  const [ letterAttr, setLetterAttr ] = useState('hermetic');
 
   const fields = [
     'index',
@@ -56,9 +57,8 @@ export default function Sephirot() {
                 ))
               }
             </select>
-            <br />
 
-            <span>&nbsp;&nbsp;&nbsp;</span>
+            <br />
 
             <span>
               Color: <select name="colorScale" value={colorScale}
@@ -67,11 +67,25 @@ export default function Sephirot() {
                 <option value="queen">Queen Scale (Receptive)</option>
               </select>
             </span>
+
+            <br />
+
+            <span>
+              Letter Attribution: <select name="letterAttr" value={letterAttr}
+                  onChange={e => setLetterAttr(e.target.value)}>
+                <option value="hebrew">Hebrew Tree</option>
+                <option value="hermetic">Western Hermetic Tree</option>
+              </select>
+              &nbsp;
+              <a target="_blank" href="https://hermetic.com/jwmt/v1n3/32paths">*</a>
+            </span>
+
           </div>
 
           <br />
 
-          <TreeOfLife field={field} topText={topText} colorScale={colorScale} />
+          <TreeOfLife field={field} topText={topText} colorScale={colorScale}
+            letterAttr={letterAttr}/>
 
           <ol>
             {
