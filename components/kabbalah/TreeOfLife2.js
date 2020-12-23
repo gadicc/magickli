@@ -151,7 +151,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
             <a key={path.id} xlinkHref={"/kabbalah/path/"+path.id}>
               <path id={'path'+firstUpper(path.id)} d={path.d}>
                 <title>
-                  Letter: {path[letterAttr].hebrewLetter.letter.he}
+                  Letter: { path[letterAttr]?.hebrewLetter?.letter?.he }
                   {
                     letterAttr === 'hermetic' &&
                     ", pathNo: " + path.hermetic.pathNo +
