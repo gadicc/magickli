@@ -92,7 +92,7 @@ function MoonDrawing({ phase, width, height }) {
   )
 }
 
-function MoonWidget() {
+function MoonWidget({ moonPadding='10px 0 5px 0' }) {
   const phaseData = lune.phase(new Date());
   const phaseValue = phaseData.phase;
   const phaseName = moonPhaseName(phaseValue);
@@ -106,7 +106,7 @@ function MoonWidget() {
         backgroundSize: 'cover',
         height: '100%'
       }}>
-      <div style={{paddingTop: '10px', paddingBottom: '5px'}}>
+      <div style={{padding: moonPadding}}>
         <MoonDrawing phase={phaseValue} height="85" />
       </div>
       <div style={{ color: '#cc5' }}>

@@ -8,7 +8,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import AppBar from '../../components/AppBar';
-import MoonWidget from './Moon';
+import MoonWidget from '../../components/astrology/Moon';
 
 const tileData = [
   {
