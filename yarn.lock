@@ -3762,6 +3762,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+lune@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/lune/-/lune-0.4.0.tgz#4ac3faaa6cd351236815212e8db7ecd8fb5e2306"
+  integrity sha1-SsP6qmzTUSNoFSEujbfs2PteIwY=
+
 magic-string@^0.25.0, magic-string@^0.25.7:
   version "0.25.7"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"

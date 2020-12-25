@@ -8,6 +8,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import AppBar from '../../components/AppBar';
+import MoonWidget from './Moon';
 
 const tileData = [
   {
@@ -19,6 +20,11 @@ const tileData = [
     img: '/pics/astrology.jpg',
     title: 'Zodiac',
     to: '/astrology/zodiac'
+  },
+  {
+    Component: MoonWidget,
+    title: 'Moon',
+    to: '/astrology/moon'
   },
 ];
 
@@ -48,8 +54,12 @@ function Index({ classes }) {
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList} spacing={0}>
           {tileData.map(tile => (
-            <GridListTile key={tile.img} component={Link} href={tile.to}>
-              <img src={tile.img} alt={tile.title} />
+            <GridListTile key={tile.to} component={Link} href={tile.to}>
+              {
+                tile.img
+                ? <img src={tile.img} alt={tile.title} />
+                : <tile.Component />
+              }
               <GridListTileBar className={classes.tileBar} title={tile.title} />
             </GridListTile>
           ))}
