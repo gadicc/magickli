@@ -8,7 +8,6 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import AppBar from '../../components/AppBar';
-import MoonWidget from '../../components/astrology/Moon';
 
 const tileData = [
   {
@@ -20,11 +19,6 @@ const tileData = [
     img: '/pics/astrology.jpg',
     title: 'Zodiac',
     to: '/astrology/zodiac'
-  },
-  {
-    Component: MoonWidget,
-    title: 'Moon',
-    to: '/astrology/moon'
   },
 ];
 

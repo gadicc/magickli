@@ -18,7 +18,10 @@ function uniMoon(moon, north = true, invert = true) {
 }
 
 export default function Moon() {
-  const navParts = [ { title: 'Astrology', url: '/astrology' } ];
+  const navParts = [
+    { title: 'Astrology', url: '/astrology' },
+    { title: 'Planets', url: '/astrology/planets' }
+  ];
 
   const now = new Date();
   const hunt = lune.phase_hunt(now);

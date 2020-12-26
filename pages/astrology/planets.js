@@ -4,6 +4,12 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+
+import { withStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,6 +22,9 @@ import ProTip from '../../src/ProTip';
 import Link from '../../src/Link';
 import Copyright from '../../src/Copyright';
 
+import MercuryWidget from '../../components/astrology/Mercury';
+import MoonWidget from '../../components/astrology/Moon';
+
 import AppBar from '../../components/AppBar';
 import Data from '../../data/data';
 
@@ -24,6 +33,21 @@ const useStyles = makeStyles({
     // minWidth: 650,
   },
 });
+
+const tileData = [
+  {
+    Component: MoonWidget,
+    title: 'Moon ☾',
+    to: 'moon'
+  },
+  {
+    Component: MercuryWidget,
+    title: 'Mercury ☿',
+    to: 'planet/mercury'
+  },
+];
+
+
 
 export default function Planets() {
   const classes = useStyles();
@@ -34,6 +58,19 @@ export default function Planets() {
       <AppBar title="Planets" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
+
+          <GridList cellHeight={180} className={classes.gridList} spacing={0}>
+            {tileData.map(tile => (
+              <GridListTile key={tile.to} component={Link} href={tile.to}>
+                {
+                  tile.img
+                  ? <img src={tile.img} alt={tile.title} />
+                  : <tile.Component />
+                }
+                <GridListTileBar className={classes.tileBar} title={tile.title} />
+              </GridListTile>
+            ))}
+          </GridList>
 
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
