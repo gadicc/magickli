@@ -1,6 +1,10 @@
 import React from 'react';
 import lune from 'lune';
 
+import useGeo from '../../src/useGeo';
+
+const moonMeanInclination = 5.15; // in degrees
+
 function moonPhaseName(phase) {
   if (phase === 0.5)
     return 'full-moon';
@@ -39,9 +43,9 @@ const namesLocal = {
   }
 };
 
-// Reactified version of
-// https://github.com/tingletech/moon-phase/blob/gh-pages/moon-phase.js
-function MoonDrawing({ phase, width, height }) {
+// Based on https://github.com/tingletech/moon-phase/blob/gh-pages/moon-phase.js
+// Reactified, added hemisphere and inclination, filters, etc.
+function MoonDrawing({ phase, width, height, northernHemisphere=true }) {
   let mag, sweep;
 
   // the "sweep-flag" and the direction of movement change every quarter moon
@@ -62,13 +66,18 @@ function MoonDrawing({ phase, width, height }) {
       exit;
   }
 
+  const inclination = northernHemisphere
+    ? moonMeanInclination
+    : moonMeanInclination + 180;
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      viewBox="0 0 200 162"
+      viewBox="0 0 170 162"
       width={width}
       height={height}
+      transform={`rotate(${inclination})`}
     >
 
       <defs>
@@ -81,12 +90,12 @@ function MoonDrawing({ phase, width, height }) {
   			</filter>
   		</defs>
 
-      <path className="back" d="m100,5 a20,20 0 1,1 0,150 a20,20 0 1,1 0,-150"
+      <path className="back" d="m85,5 a20,20 0 1,1 0,150 a20,20 0 1,1 0,-150"
         style={{ fill: 'white', filter: 'url(#glow)' }}/>
-      <path className="back" d="m100,5 a20,20 0 1,1 0,150 a20,20 0 1,1 0,-150"
+      <path className="back" d="m85,5 a20,20 0 1,1 0,150 a20,20 0 1,1 0,-150"
         style={{ fill: 'black' }}/>
       <path className="moon" d={
-        `m100,5 a${mag},20 0 1,${sweep[0]} 0,150 a20,20 0 1,${sweep[1]} 0,-150`}
+        `m85,5 a${mag},20 0 1,${sweep[0]} 0,150 a20,20 0 1,${sweep[1]} 0,-150`}
         style={{ fill: '#ebc815' }}/>
     </svg>
   )
@@ -99,6 +108,9 @@ function MoonWidget({ moonPadding='10px 0 5px 0' }) {
   const phaseNameLocal = namesLocal.en[phaseName];
   // console.log(phaseData);
 
+  const geo = useGeo();
+  const northernHemisphere = !geo || geo.latitude < 0;
+
   return (
     <div style={{
         textAlign:'center',
@@ -107,7 +119,8 @@ function MoonWidget({ moonPadding='10px 0 5px 0' }) {
         height: '100%'
       }}>
       <div style={{padding: moonPadding}}>
-        <MoonDrawing phase={phaseValue} height="85" />
+        <MoonDrawing phase={phaseValue} height="85"
+          northernHemisphere={northernHemisphere} />
       </div>
       <div style={{ color: '#cc5' }}>
         {phaseNameLocal}
@@ -116,4 +129,5 @@ function MoonWidget({ moonPadding='10px 0 5px 0' }) {
   )
 }
 
+export { moonMeanInclination };
 export default MoonWidget;
