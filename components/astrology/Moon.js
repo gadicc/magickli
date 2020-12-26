@@ -109,7 +109,7 @@ function MoonWidget({ moonPadding='10px 0 5px 0' }) {
   // console.log(phaseData);
 
   const geo = useGeo();
-  const northernHemisphere = !geo || geo.latitude < 0;
+  const northernHemisphere = !geo || geo.latitude > 0;
 
   return (
     <div style={{
