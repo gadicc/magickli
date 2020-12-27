@@ -101,7 +101,7 @@
       tarotId: "7",
     },
     hebrew: {
-      hebrewLetterId: 'gimmel',
+      hebrewLetterId: 'gimel',
     }
   },
 
@@ -161,7 +161,7 @@
       tarotId: "11",
     },
     hebrew: {
-      hebrewLetterId: 'tzadi',
+      hebrewLetterId: 'tsadi',
     }
   },
 
