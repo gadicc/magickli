@@ -90,10 +90,11 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={width}
-      height={height}
       version="1.1"
       viewBox="0 0 316 600"
+      id="TreeOfLife"
+      width={width}
+      height={height}
       ref={ref}
     >
 
@@ -199,7 +200,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
 
             <text key={i}
               x={s.x}
-              y={s.y+11}
+              y={s.y}
               fill={s.textColor || 'black'}
               fillOpacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
               stroke="none"
@@ -213,47 +214,32 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
               fontWeight="normal"
               letterSpacing="0"
               wordSpacing="0"
-              xmlSpace="preserve"
+              textAnchor="middle"
+              dominantBaseline="middle"
             >
-              <tspan
-                style={{ WebkitTextAlign: "center", textAlign: "center" }}
-                x={s.x}
-                // for 12 it's 8
-                // for 32 it's 3
-                y={s.y-1}
-                strokeWidth="0.8"
-                textAnchor="middle"
-                dominantBaseline="central"
-              >
-                { s.text }
-              </tspan>
+              { s.text }
             </text>
 
             <path
-               d={"M "
-                + (s.x - 27) + ","
-                + (s.y - 3) + " c 1.5,-34 56.5,-34 58,0"}
-               transform="rotate(29)"
-               style={{
-                 transformBox: 'fill-box', transformOrigin:"50% 100%",
-                 fill:'none',stroke:'none'}}
-               id={"ic"+i} />
+               id={"topTextPath"+i}
+               d={`M ${s.x-28},${s.y-3} c 1.5,-34 56.5,-34 58,0`}
+               style={{ fill:'none', stroke:'none' }}
+            />
 
             <text
-               y="0"
-               x="26.8589"
-               id="text923"
+               id={"topText_"+s.id}
                style={{
                   fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
                   letterSpacing:'-1.5px', wordSpacing:'0px',
                   fill:s.textColor||'black',
                   fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
-                  stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}
-               xmlSpace="preserve"><textPath
-                 style={{textAlign:'center',textAnchor:'middle'}}
-                 id="textPath945"
-                 xlinkHref={"#ic"+i}>{topText[i]}</textPath></text>
-
+                  stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
+              <textPath id="textPath945" xlinkHref={"#topTextPath"+i}
+                  textAnchor="middle" dominantBaseline="middle"
+                  startOffset="50%">
+                {topText[i]}
+              </textPath>
+            </text>
           </a>
         ))
       }

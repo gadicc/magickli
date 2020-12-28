@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import beautify from 'xml-beautifier';
+
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+
 import Box from '@material-ui/core/Box';
 import ProTip from '../../src/ProTip';
 import Link from '../../src/Link';
@@ -9,6 +12,24 @@ import Copyright from '../../src/Copyright';
 import AppBar from '../../components/AppBar';
 import Data from '../../data/data';
 import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
+
+function encodeSVG() {
+  let svgText = document.getElementById('TreeOfLife').outerHTML;
+  const download = document.getElementById('downloadSVG');
+
+  // since React doesn't support namespace tags
+  svgText = svgText.replace(
+    'xmlns="http://www.w3.org/2000/svg"',
+    'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
+  );
+
+  const pretty = beautify(svgText);
+  const data = encodeURIComponent(pretty);
+
+  download.setAttribute('download', 'TreeOfLife-magickli-export.svg');
+  download.setAttribute('href-lang', 'image/svg+xml');
+  download.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + data);
+}
 
 export default function Sephirot() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
@@ -86,6 +107,21 @@ export default function Sephirot() {
 
           <TreeOfLife field={field} topText={topText} colorScale={colorScale}
             letterAttr={letterAttr}/>
+
+          <div>
+            <a href="#" id="downloadSVG" onClick={encodeSVG}>Download as SVG</a>
+          </div>
+
+          <br />
+
+          <div>
+            Note: TextOnPath for RTL text (e.g. Hebrew) is&nbsp;
+            <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=374526">
+              broken in Chrome
+            </a>.
+            You'll see the TopText reversed.  It works in Firefox, or download
+            and view outside of youor browser.
+          </div>
 
           <ol>
             {
