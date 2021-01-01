@@ -8,22 +8,28 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import AppBar from '../components/AppBar';
+import GDLogoSquished from '../src/goldendawn-logo-squished.svg';
 
 const tileData = [
+  {
+    img: '/pics/about.png',
+    title: 'About',
+    to: '/about'
+  },
   {
     img: '/pics/astrology.jpg',
     title: 'Astrology',
     to: '/astrology'
   },
   {
+    Component: GDLogoSquished,
+    title: 'Golden Dawn',
+    to: '/hogd/'
+  },
+  {
     img: '/pics/Tree_of_Life,_Medieval.jpg',
     title: 'Kabbalah',
     to: '/kabbalah'
-  },
-  {
-    img: '/pics/about.png',
-    title: 'About',
-    to: '/about'
   },
 ];
 
@@ -53,8 +59,12 @@ function Index({ classes }) {
       <div className={classes.root}>
         <GridList cellHeight={180} className={classes.gridList} spacing={0}>
           {tileData.map(tile => (
-            <GridListTile key={tile.img} component={Link} href={tile.to}>
-              <img src={tile.img} alt={tile.title} />
+            <GridListTile key={tile.to} component={Link} href={tile.to}>
+                {
+                  tile.Component
+                    ? <tile.Component />
+                    : <img src={tile.img} alt={tile.title} />
+                }
               <GridListTileBar className={classes.tileBar} title={tile.title} />
             </GridListTile>
           ))}
