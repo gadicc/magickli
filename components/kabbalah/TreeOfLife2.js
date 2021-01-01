@@ -198,27 +198,75 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
               ) : null
             }
 
-            <text key={i}
-              x={s.x}
-              y={s.y}
-              fill={s.textColor || 'black'}
-              fillOpacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
-              stroke="none"
-              strokeLinecap="butt"
-              strokeLinejoin="miter"
-              strokeOpacity="1"
-              strokeWidth="0.8"
-              fontFamily="Sans"
-              fontSize={fontSize}
-              fontStyle="normal"
-              fontWeight="normal"
-              letterSpacing="0"
-              wordSpacing="0"
-              textAnchor="middle"
-              dominantBaseline="middle"
-            >
-              { s.text }
-            </text>
+            {
+              field === 'gdGrade.id'
+
+                ? <g>
+                    <circle
+                      cx={s.x - 20}
+                      cy={s.y}
+                      r="12"
+                      fill="none"
+                      stroke={s.textColor || 'black'}
+                    />
+                    <text
+                      x={s.x - 20}
+                      y={s.y + 1}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill={s.textColor || 'black'}
+                    >{s.text.split('=')[0]}
+                    </text>
+
+                    <text
+                      x={s.x}
+                      y={s.y + 1}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill={s.textColor || 'black'}
+                      fontSize="150%"
+                    >=</text>
+
+                    <rect
+                      x={s.x + 10}
+                      y={s.y - 10}
+                      width="20"
+                      height="20"
+                      fill="none"
+                      stroke={s.textColor || 'black'}
+                    />
+                    <text
+                      x={s.x + 20}
+                      y={s.y + 1}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      fill={s.textColor || 'black'}
+                    >{s.text.split('=')[1]}
+                    </text>
+                  </g>
+
+                : <text key={i}
+                    x={s.x}
+                    y={s.y}
+                    fill={s.textColor || 'black'}
+                    fillOpacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                    stroke="none"
+                    strokeLinecap="butt"
+                    strokeLinejoin="miter"
+                    strokeOpacity="1"
+                    strokeWidth="0.8"
+                    fontFamily="Sans"
+                    fontSize={fontSize}
+                    fontStyle="normal"
+                    fontWeight="normal"
+                    letterSpacing="0"
+                    wordSpacing="0"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                  >
+                    { s.text }
+                  </text>
+            }
 
             <path
                id={"topTextPath"+i}

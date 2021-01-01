@@ -46,6 +46,7 @@ export default function Sephirot() {
     'body',
     'chakra',
     'godName.name.en', 'godName.name.he', 'godName.name.romanization',
+    'gdGrade.id', 'gdGrade.name',
     'name.en', 'name.he', 'name.romanization',
     'planets',
     'scent',
