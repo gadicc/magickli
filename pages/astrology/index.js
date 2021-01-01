@@ -8,8 +8,9 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 
 import AppBar from '../../components/AppBar';
+import Tiles from '../../components/Tiles';
 
-const tileData = [
+const tiles = [
   {
     img: '/pics/planets2013.jpg',
     title: 'Planets',
@@ -22,45 +23,13 @@ const tileData = [
   },
 ];
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-    width: 500,
-    height: 450,
-  },
-  tileBar: {
-    background: 'rgba(0, 0, 0, 0.6)',
-  }
-});
-
-
-function Index({ classes }) {
+function Astrology() {
   return (
     <>
       <AppBar title="Astrology" />
-
-      <div className={classes.root}>
-        <GridList cellHeight={180} className={classes.gridList} spacing={0}>
-          {tileData.map(tile => (
-            <GridListTile key={tile.to} component={Link} href={tile.to}>
-              {
-                tile.img
-                ? <img src={tile.img} alt={tile.title} />
-                : <tile.Component />
-              }
-              <GridListTileBar className={classes.tileBar} title={tile.title} />
-            </GridListTile>
-          ))}
-        </GridList>
-      </div>
+      <Tiles tiles={tiles} />
     </>
   );
 }
 
-export default withStyles(styles)(Index);
+export default Astrology;
