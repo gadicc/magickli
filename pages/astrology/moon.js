@@ -25,7 +25,22 @@ export default function Moon() {
 
   const now = new Date();
   const hunt = lune.phase_hunt(now);
-  const d = d => DateTime.fromJSDate(d).toLocaleString(DateTime.DATETIME_FULL);
+  const huntNext = lune.phase_hunt(new Date(hunt.nextnew_date.getTime() + 24*3600000));
+  const dateFmt = d => DateTime.fromJSDate(d).toLocaleString(DateTime.DATETIME_FULL);
+
+  const data = [
+    { title: '🌑 Last New Moon 🌑', date: hunt.new_date },
+    { title: '🌓 First Quarter 🌓', date: hunt.q1_date },
+    { title: '🌕 Full Moon 🌕', date: hunt.full_date },
+    { title: '🌗 Third Quarter 🌗', date: hunt.q3_date },
+    { title: '🌑 Next New Moon 🌑', date: hunt.nextnew_date },
+    { title: '🌕 Next Full Moon 🌕', date: huntNext.full_date },
+  ];
+
+  data.forEach(row => {
+    if (row.date < now)
+      row.inPast = true;
+  });
 
   return (
     <>
@@ -39,6 +54,9 @@ export default function Moon() {
           margin-bottom: 1em;
           padding: 5px;
           background: rgba(0,0,0,0.7)
+        }
+        .past  {
+          opacity: 0.5;
         }
         .group > .title {
           color: #cc5;
@@ -57,32 +75,15 @@ export default function Moon() {
         <br />
 
         <div id="dates" style={{textAlign: 'center'}}>
-          <div className="group">
-            <div className="title">🌑 Last New Moon 🌑</div>
-            <div className="date">{d(hunt.new_date)}</div>
-          </div>
-
-          <div className="group">
-            <div className="title">🌓 First Quarter 🌓</div>
-            <div className="date">{d(hunt.q1_date)}</div>
-          </div>
-
-          <div className="group">
-            <div className="title">🌕 Full Moon 🌕</div>
-            <div className="date">{d(hunt.full_date)}</div>
-          </div>
-
-          <div className="group">
-            <div className="title">🌗 Third Quarter 🌗</div>
-            <div className="date">{d(hunt.q3_date)}</div>
-          </div>
-
-          <div className="group">
-            <div className="title">🌑 Next New Moon 🌑</div>
-            <div className="date">{d(hunt.nextnew_date)}</div>
-          </div>
+          {
+            data.map(row => (
+              <div key={row.title} className={"group" + (row.inPast?" past":"")}>
+                <div className="title">{row.title}</div>
+                <div className="date">{dateFmt(row.date)}</div>
+              </div>
+            ))
+          }
         </div>
-
       </div>
     </>
   );
