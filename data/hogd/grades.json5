@@ -2,41 +2,53 @@
   "1=10": {
     id: "1=10",
     name: "Zelator",
+    elementId: "earth",
+    planetId: "earth",
   },
 
   "2=9": {
     id: "2=9",
     name: "Theoricus",
+    elementId: "air",
+    planetId: "luna",
   },
 
   "3=8": {
     id: "3=8",
     name: "Practicus",
+    elementId: "water",
+    planetId: "mercury",
   },
 
   "4=7": {
     id: "4=7",
     name: "Philosophus",
+    elementId: "fire",
+    planetId: "venus",
   },
 
   "5=6": {
     id: "5=6",
     name: "Adeptus Minor",
+    planetId: "sol",
   },
 
   "6=5": {
     id: "6=5",
     name: "Adeptus Major",
+    planetId: "mars",
   },
 
   "7=4": {
     id: "7=4",
     name: "Adeptus Exemptus",
+    planetId: "jupiter",
   },
 
   "8=3": {
     id: "8=3",
     name: "Magister Templi",
+    planetId: "saturn",
   },
 
   "9=2": {

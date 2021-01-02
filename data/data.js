@@ -4,6 +4,8 @@ const allData = {
 
   hebrewLetter: require('./hebrewLetters.json5').default,
 
+  element: require('./elements.json5').default,
+
   gdGrade: require('./hogd/grades.json5').default,
 
   angelicOrder: require('./kabbalah/angelicOrders.json5').default,
