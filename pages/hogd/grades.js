@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
 import AppBar from '../../components/AppBar';
+import GradeTree from '../../components/hogd/GradeTree';
 import Data from '../../data/data';
 import Link from '../../src/Link';
 
@@ -24,6 +25,8 @@ export default function Grades() {
       <AppBar title="Grades" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
+
+          <GradeTree />
 
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
