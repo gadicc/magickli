@@ -40,6 +40,7 @@ function TreeOfLife() {
   const defaults = {
     field: 'name.romanization',
     topText: 'index',
+    bottomText: '',
     colorScale: 'queen',
     letterAttr: 'hermetic',
   };
@@ -93,7 +94,16 @@ function TreeOfLife() {
                 ))
               }
             </select>
+            <br />
 
+            Bottom text: <select name="topText" value={opts.bottomText}
+                onChange={ e => e.preventDefault() || set('bottomText', e.target.value) }>
+              {
+                fields.map(f => (
+                  <option key={f} value={f}>{f}</option>
+                ))
+              }
+            </select>
             <br />
 
             <span>
@@ -120,8 +130,10 @@ function TreeOfLife() {
 
           <br />
 
-          <Tree field={opts.field} topText={opts.topText} colorScale={opts.colorScale}
-            letterAttr={opts.letterAttr}/>
+          <Tree
+            field={opts.field} topText={opts.topText} bottomText={opts.bottomText}
+            colorScale={opts.colorScale} letterAttr={opts.letterAttr}
+          />
 
           <div>
             <a href="#" id="downloadSVG" onClick={encodeSVG}>Download as SVG</a>
