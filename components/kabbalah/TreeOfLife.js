@@ -295,7 +295,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                        id={"topText_"+s.id}
                        style={{
                           fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
-                          letterSpacing:'-1.5px', wordSpacing:'0px',
+                          letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
                           fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
                           stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
@@ -317,7 +317,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                        id={"bottomText_"+s.id}
                        style={{
                           fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
-                          letterSpacing:'-1.5px', wordSpacing:'0px',
+                          letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
                           fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
                           stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>

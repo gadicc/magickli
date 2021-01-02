@@ -40,7 +40,7 @@ function TreeOfLife() {
   const defaults = {
     field: 'name.romanization',
     topText: 'index',
-    bottomText: '',
+    bottomText: 'name.en',
     colorScale: 'queen',
     letterAttr: 'hermetic',
   };
