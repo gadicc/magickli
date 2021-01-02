@@ -1,0 +1,16 @@
+{
+  "1st": {
+    id: "1st",
+    pillarId: "severity",
+  },
+
+  "2nd": {
+    id: "2nd",
+    pillarId: "mercy",
+  },
+
+  "3rd": {
+    id: "3rd",
+    pillarId: "middle",
+  },
+}
