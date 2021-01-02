@@ -31,10 +31,13 @@ orderedPaths.hermetic = orderedPaths.hermetic.map(id => _paths[id]).reverse();
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
-    letterAttr = 'hermetic', active }) {
+    letterAttr = 'hermetic', active, pathHref, sephirahHref }) {
   const color = colorScale ? (colorScale+'Web') : 'queenWeb';
   width = width || '100%';
   field = field || 'index';
+
+  sephirahHref = sephirahHref || (s => "/kabbalah/sephirah/" + s.data.id);
+  pathHref = pathHref || (path => "/kabbalah/path/" + path.id);
 
   if (!labels)
     labels = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], field));
@@ -131,7 +134,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
             };
 
             return (
-              <a key={path.id} id={"path"+path.id} xlinkHref={"/kabbalah/path/"+path.id}>
+              <a key={path.id} id={"path"+path.id} xlinkHref={pathHref(path)}>
                 <path id={'outerPath'+firstUpper(path.id)} className="outerPath"
                     d={`M ${start.x},${start.y} L ${end.x},${end.y}`} />
                 <path id={'innerPath'+firstUpper(path.id)} className="innerPath"
@@ -158,7 +161,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
       <g id="sephirot">
       {
         sephirot.map((s,i) => (
-          <a key={i} id={s.data.id} xlinkHref={"/kabbalah/sephirah/"+s.data.id}>
+          <a key={i} id={s.data.id} xlinkHref={sephirahHref(s)}>
             <circle
               cx={s.x}
               cy={s.y}

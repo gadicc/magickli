@@ -3,14 +3,11 @@ import React from 'react';
 
 import AppBar from '../../components/AppBar';
 import Tiles from '../../components/Tiles';
-
-import TreeOfLife from '../../components/kabbalah/TreeOfLife';
+import GradeTree from '../../components/hogd/GradeTree';
 
 const tiles = [
   {
-    Component: function GradeTree() {
-      return <TreeOfLife height="120%" field="gdGrade.id" topText="gdGrade.name" />
-    },
+    Component: () => <GradeTree height="120%" />,
     title: 'Grades',
     to: '/hogd/grades'
   },
