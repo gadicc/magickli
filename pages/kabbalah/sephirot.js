@@ -11,7 +11,7 @@ import Copyright from '../../src/Copyright';
 
 import AppBar from '../../components/AppBar';
 import Data from '../../data/data';
-import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
+import TreeOfLife from '../../components/kabbalah/TreeOfLife';
 
 function encodeSVG() {
   let svgText = document.getElementById('TreeOfLife').outerHTML;

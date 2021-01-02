@@ -4,7 +4,7 @@ import React from 'react';
 import AppBar from '../../components/AppBar';
 import Tiles from '../../components/Tiles';
 
-import TreeOfLife from '../../components/kabbalah/TreeOfLife2';
+import TreeOfLife from '../../components/kabbalah/TreeOfLife';
 
 const tiles = [
   {

@@ -10,7 +10,7 @@ import Link from '../../../src/Link';
 import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
-import TreeOfLife from '../../../components/kabbalah/TreeOfLife2';
+import TreeOfLife from '../../../components/kabbalah/TreeOfLife';
 import Chakras from '../../../components/chakras/Chakras';
 
 import Data from '../../../data/data';
