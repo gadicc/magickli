@@ -7,8 +7,8 @@ import Tiles from '../../components/Tiles';
 const tiles = [
   {
     img: '/pics/treeOfLife.jpg',
-    title: 'Sephirot',
-    to: '/kabbalah/sephirot'
+    title: 'Tree of Life',
+    to: '/kabbalah/tree'
   },
 ];
 

@@ -11,7 +11,7 @@ import Copyright from '../../src/Copyright';
 
 import AppBar from '../../components/AppBar';
 import Data from '../../data/data';
-import TreeOfLife from '../../components/kabbalah/TreeOfLife';
+import Tree from '../../components/kabbalah/TreeOfLife';
 
 function encodeSVG() {
   let svgText = document.getElementById('TreeOfLife').outerHTML;
@@ -31,7 +31,7 @@ function encodeSVG() {
   download.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + data);
 }
 
-export default function Sephirot() {
+function TreeOfLife() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
 
   const [ field, setField ] = useState('name.romanization');
@@ -56,7 +56,7 @@ export default function Sephirot() {
 
   return (
     <>
-      <AppBar title="Sephirot" navParts={navParts} />
+      <AppBar title="Tree of Life" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
 
@@ -106,7 +106,7 @@ export default function Sephirot() {
 
           <br />
 
-          <TreeOfLife field={field} topText={topText} colorScale={colorScale}
+          <Tree field={field} topText={topText} colorScale={colorScale}
             letterAttr={letterAttr}/>
 
           <div>
@@ -151,3 +151,5 @@ export default function Sephirot() {
     </>
   );
 }
+
+export default TreeOfLife;
