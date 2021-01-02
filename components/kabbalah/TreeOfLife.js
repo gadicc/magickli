@@ -31,7 +31,7 @@ orderedPaths.hermetic = orderedPaths.hermetic.map(id => _paths[id]).reverse();
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
-    letterAttr = 'hermetic', active, pathHref, sephirahHref }) {
+    bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref }) {
   const color = colorScale ? (colorScale+'Web') : 'queenWeb';
   width = width || '100%';
   field = field || 'index';
@@ -43,6 +43,8 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     labels = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], field));
 
   topText = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], topText));
+  bottomText = [0,1,2,3,4,5,6,7,8,9].map(i =>
+    bottomText.split(',').map(path => dotProp.get(_sephirot[i], path)).join(' '));
 
   const fontSizeFromFieldName = {
     'index': 32,
@@ -271,26 +273,66 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                   </text>
             }
 
-            <path
-               id={"topTextPath"+i}
-               d={`M ${s.x-28},${s.y-3} c 1.5,-34 56.5,-34 58,0`}
-               style={{ fill:'none', stroke:'none' }}
-            />
+            {
+              function() {
+                const diameter = 64;
+                const radius = diameter / 2;
 
-            <text
-               id={"topText_"+s.id}
-               style={{
-                  fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
-                  letterSpacing:'-1.5px', wordSpacing:'0px',
-                  fill:s.textColor||'black',
-                  fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
-                  stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
-              <textPath id="textPath945" xlinkHref={"#topTextPath"+i}
-                  textAnchor="middle" dominantBaseline="middle"
-                  startOffset="50%">
-                {topText[i]}
-              </textPath>
-            </text>
+                // http://digerati-illuminatus.blogspot.com/2008/05/approximating-semicircle-with-cubic.html
+                const xValueInset = diameter * 0.05;
+                const yValueOffset = radius * 4.0 / 3.0;
+
+                return (
+                  <g>
+                    <path
+                       id={"topTextPath"+i}
+                       d={`M ${s.x-radius},${s.y} c ${xValueInset},-${yValueOffset} `
+                         + `${diameter-xValueInset},-${yValueOffset} ${diameter},0`}
+                       style={{ fill:'none', stroke:'none' }}
+                    />
+
+                    <text
+                       id={"topText_"+s.id}
+                       style={{
+                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
+                          letterSpacing:'-1.5px', wordSpacing:'0px',
+                          fill:s.textColor||'black',
+                          fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
+                          stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
+                      <textPath xlinkHref={"#topTextPath"+i}
+                          textAnchor="middle" dominantBaseline="middle"
+                          startOffset="50%">
+                        {topText[i]}
+                      </textPath>
+                    </text>
+
+                    <path
+                       id={"bottomTextPath"+i}
+                       d={`M ${s.x-radius},${s.y} c ${xValueInset},${yValueOffset} `
+                         + `${diameter-xValueInset},${yValueOffset} ${diameter},0`}
+                       style={{ fill:'none', stroke:'none' }}
+                    />
+
+                    <text
+                       id={"bottomText_"+s.id}
+                       style={{
+                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
+                          letterSpacing:'-1.5px', wordSpacing:'0px',
+                          fill:s.textColor||'black',
+                          fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
+                          stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
+                      <textPath xlinkHref={"#bottomTextPath"+i}
+                          textAnchor="middle" dominantBaseline="middle"
+                          startOffset="50%">
+                        {bottomText[i]}
+                      </textPath>
+                    </text>
+                  </g>
+                );
+
+              }()
+            }
+
           </a>
         ))
       }
