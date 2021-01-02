@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import beautify from 'xml-beautifier';
+import { useRouter } from 'next/router';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -33,11 +34,24 @@ function encodeSVG() {
 
 function TreeOfLife() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
+  const router = useRouter();
 
-  const [ field, setField ] = useState('name.romanization');
-  const [ topText, setTopText ] = useState('index');
-  const [ colorScale, setColorScale ] = useState('queen');
-  const [ letterAttr, setLetterAttr ] = useState('hermetic');
+  const opts = {};
+  const defaults = {
+    field: 'name.romanization',
+    topText: 'index',
+    colorScale: 'queen',
+    letterAttr: 'hermetic',
+  };
+
+  for (let key of Object.keys(defaults))
+    opts[key] = router.query[key] || defaults[key];
+
+  function set(key, value) {
+    router.replace({
+      query: { ...router.query, [key]: value }
+    });
+  }
 
   const fields = [
     'index',
@@ -61,8 +75,8 @@ function TreeOfLife() {
         <Box my={4}>
 
           <div style={{textAlign:'center'}}>
-            Label: <select name="field" value={field}
-                onChange={ e => e.preventDefault() || setField(e.target.value) }>
+            Label: <select name="field" value={opts.field}
+                onChange={ e => e.preventDefault() || set('field', e.target.value) }>
               {
                 fields.map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -71,8 +85,8 @@ function TreeOfLife() {
             </select>
             <br />
 
-            Top text: <select name="topText" value={topText}
-                onChange={ e => e.preventDefault() || setTopText(e.target.value) }>
+            Top text: <select name="topText" value={opts.topText}
+                onChange={ e => e.preventDefault() || set('topText', e.target.value) }>
               {
                 fields.map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -83,8 +97,8 @@ function TreeOfLife() {
             <br />
 
             <span>
-              Color: <select name="colorScale" value={colorScale}
-                  onChange={e => setColorScale(e.target.value)}>
+              Color: <select name="colorScale" value={opts.colorScale}
+                  onChange={e => set('colorScale', e.target.value)}>
                 <option value="king">King Scale (Projective)</option>
                 <option value="queen">Queen Scale (Receptive)</option>
               </select>
@@ -93,8 +107,8 @@ function TreeOfLife() {
             <br />
 
             <span>
-              Letter Attribution: <select name="letterAttr" value={letterAttr}
-                  onChange={e => setLetterAttr(e.target.value)}>
+              Letter Attribution: <select name="letterAttr" value={opts.letterAttr}
+                  onChange={e => set('letterAttr', e.target.value)}>
                 <option value="hebrew">Hebrew Tree</option>
                 <option value="hermetic">Western Hermetic Tree</option>
               </select>
@@ -106,8 +120,8 @@ function TreeOfLife() {
 
           <br />
 
-          <Tree field={field} topText={topText} colorScale={colorScale}
-            letterAttr={letterAttr}/>
+          <Tree field={opts.field} topText={opts.topText} colorScale={opts.colorScale}
+            letterAttr={opts.letterAttr}/>
 
           <div>
             <a href="#" id="downloadSVG" onClick={encodeSVG}>Download as SVG</a>
@@ -137,13 +151,13 @@ function TreeOfLife() {
           </ol>
 
           <div>
-            <b>Image credit:</b> Modified version of
+            <b>Credit:</b> Image inspired by
             {" "}
             <a href="https://commons.wikimedia.org/wiki/File:Tree_of_life_bahir_Hebrew.svg">
               Tree of life bahir Hebrew.svg
             </a>
             {" "}
-            from Wikimedia Commons, released under CC-BY-SA 2.5.
+            from Wikimedia Commons.
           </div>
 
         </Box>
