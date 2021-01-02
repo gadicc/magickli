@@ -13,7 +13,7 @@ function GradeTree({ ...props }) {
     <TreeOfLife
       field="gdGrade.id"
       topText="gdGrade.name"
-      bottomText="gdGrade.element.symbol,gdGrade.planet.symbol"
+      bottomText="gdGrade.element.symbol,gdGrade.orderId,gdGrade.planet.symbol"
       sephirahHref={sephirahHref}
       pathHref={pathHref}
       {...props}
