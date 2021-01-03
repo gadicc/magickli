@@ -68,7 +68,7 @@ function MoonDrawing({ phase, width, height, northernHemisphere=true }) {
 
   const inclination = northernHemisphere
     ? moonMeanInclination
-    : moonMeanInclination + 180;
+    : 180 - moonMeanInclination;
 
   return (
     <svg
