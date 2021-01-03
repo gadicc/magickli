@@ -39,4 +39,7 @@ for (let [set, data] of Object.entries(allData)) {
   }
 }
 
+if (typeof window !== 'undefined')
+  window.magickData = allData;
+  
 module.exports = allData;

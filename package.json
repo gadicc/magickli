@@ -19,6 +19,7 @@
     "next-pwa": "^5.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "tarot-deck": "^2.0.1",
     "xml-beautifier": "^0.4.3"
   },
   "devDependencies": {

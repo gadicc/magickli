@@ -1,5 +1,6 @@
 import React from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,7 @@ import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
 import TreeOfLife from '../../../components/kabbalah/TreeOfLife';
+import { tarotDeck, RWSPath } from '../../../src/tarot';
 
 import Data from '../../../data/data';
 const paths = Object.values(Data.tolPath);
@@ -46,7 +48,9 @@ export default function Sephirot() {
   const [ from, to ] = path.id.split('_').map(Number).map(
     i => Object.values(Data.sephirah).find(s => s.index === i)
   );
-  console.log({ from, to });
+
+  const tarotCard = tarotDeck.getByRank(Number(path.hermetic.tarotId));
+  const tarotImg = RWSPath(path.hermetic.tarotId);
 
   return (
     <>
@@ -128,6 +132,11 @@ export default function Sephirot() {
             <tbody>
 
               <tr>
+                <td>Path No:</td>
+                <td>{path.hermetic.pathNo}</td>
+              </tr>
+
+              <tr>
                 <td>Hebrew Letter:</td>
                 <td>
                   <div className="hebrewLetter">
@@ -135,6 +144,20 @@ export default function Sephirot() {
                     <div>
                       {path.hermetic.hebrewLetter.letter.name}{" "}
                       ("{path.hermetic.hebrewLetter.letter.mathers}")
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Tarot:</td>
+                <td>
+                  <div>
+                    <div>
+                      <Image src={tarotImg} alt={tarotCard.name} width={100} height={176} />
+                    </div>
+                    <div>
+                      {tarotCard.name} ({tarotCard.rank})
                     </div>
                   </div>
                 </td>
