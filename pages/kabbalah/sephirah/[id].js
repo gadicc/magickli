@@ -26,7 +26,7 @@ export async function getStaticProps({ params: { id } }) {
 }
 
 export default function Sephirot() {
-  const navParts = [ { title: 'Sephirot', url: '/kabbalah/sephirot' } ];
+  const navParts = [ { title: 'Sephirot', url: '/kabbalah/tree' } ];
 
   const router = useRouter();
 
