@@ -49,8 +49,8 @@ export default function Sephirot() {
     i => Object.values(Data.sephirah).find(s => s.index === i)
   );
 
-  const tarotCard = tarotDeck.getByRank(Number(path.hermetic.tarotId));
-  const tarotImg = RWSPath(path.hermetic.tarotId);
+  const tarotCard = path.hermetic && tarotDeck.getByRank(Number(path.hermetic.tarotId));
+  const tarotImg = path.hermetic && RWSPath(path.hermetic.tarotId);
 
   return (
     <>
@@ -128,41 +128,52 @@ export default function Sephirot() {
 
           <h2>Hermetic Tradition</h2>
 
+          {
+            path.hermetic
+            ? <table className="main">
+                <tbody>
+
+                  <tr>
+                    <td>Path No:</td>
+                    <td>{path.hermetic.pathNo}</td>
+                  </tr>
+
+                  <tr>
+                    <td>Hebrew Letter:</td>
+                    <td>
+                      <div className="hebrewLetter">
+                        <div>{path.hermetic.hebrewLetter.letter.he}</div>
+                        <div>
+                          {path.hermetic.hebrewLetter.letter.name}{" "}
+                          ("{path.hermetic.hebrewLetter.letter.mathers}")
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Tarot:</td>
+                    <td>
+                      <div>
+                        <div>
+                          <Image src={tarotImg} alt={tarotCard.name} width={100} height={176} />
+                        </div>
+                        <div>
+                          {tarotCard.name} ({tarotCard.rank})
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            : <div>
+                Not mentioned in Hermetic Tradition
+              </div>
+          }
+
           <table className="main">
             <tbody>
-
-              <tr>
-                <td>Path No:</td>
-                <td>{path.hermetic.pathNo}</td>
-              </tr>
-
-              <tr>
-                <td>Hebrew Letter:</td>
-                <td>
-                  <div className="hebrewLetter">
-                    <div>{path.hermetic.hebrewLetter.letter.he}</div>
-                    <div>
-                      {path.hermetic.hebrewLetter.letter.name}{" "}
-                      ("{path.hermetic.hebrewLetter.letter.mathers}")
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Tarot:</td>
-                <td>
-                  <div>
-                    <div>
-                      <Image src={tarotImg} alt={tarotCard.name} width={100} height={176} />
-                    </div>
-                    <div>
-                      {tarotCard.name} ({tarotCard.rank})
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
               {
                 otherLabels.map(key => (
                   <tr key={key}>
