@@ -100,11 +100,12 @@ function TreeOfLife() {
           "https://magick.li/kabbalah/tree" + "?" + urlQuery
         } />
         <meta property="og:image" content={
-          "https://magick.li/api/treeOfLife?fmt=png&width=300&height=400&" + urlQuery
+          "https://magick.li/api/treeOfLife?fmt=webp&width=1200&height=630&" + urlQuery
         } />
+        <meta property="og:image:type" content="image/webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="Tree of Life svg" />
-        <meta property="og:image:width" content="150" />
-        <meta property="og:image:height" content="200" />
       </Head>
       <AppBar title="Tree of Life" navParts={navParts} />
       <Container maxWidth="sm">
