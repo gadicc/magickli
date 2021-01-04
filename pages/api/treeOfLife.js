@@ -5,6 +5,11 @@ import sharp from 'sharp';
 
 import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 
+//import path from 'path';
+console.log(path.resolve('.'));
+console.log(path.resolve('../../ppublic'));
+process.env.FONTCONFIG_PATH = '/var/task/public/fonts/';
+
 export default function treeOfLifeSVG(req, res) {
   let svgText = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
     ReactDOMServer.renderToStaticMarkup(
