@@ -102,6 +102,20 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
       height={height}
       ref={ref}
     >
+      <style type="text/css">{`
+        @font-face {
+          font-family: 'Noto Sans Regular';
+          src: url('/fonts/NotoSans-Regular.ttf') format('truetype')
+        }
+        @font-face {
+          font-family: 'Noto Sans Hebrew Regular';
+          src: url('/fonts/NotoSans-Regular.ttf') format('truetype')
+        }
+        svg {
+          font-family: 'Noto Sans Regular', 'Noto Sans Hebrew Regular', Arial, sans-serif;
+        }
+      `}</style>
+
 
       {/* Paths */}
       <g id="paths">
@@ -260,7 +274,6 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                     strokeLinejoin="miter"
                     strokeOpacity="1"
                     strokeWidth="0.8"
-                    fontFamily="Sans"
                     fontSize={fontSize}
                     fontStyle="normal"
                     fontWeight="normal"
@@ -294,7 +307,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                     <text
                        id={"topText_"+s.id}
                        style={{
-                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
+                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px',
                           letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
                           fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
@@ -316,7 +329,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                     <text
                        id={"bottomText_"+s.id}
                        style={{
-                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px', fontFamily:'Sans',
+                          fontStyle:'normal', fontWeight:'normal', fontSize:'10px',
                           letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
                           fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
