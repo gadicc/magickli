@@ -5,9 +5,9 @@ import sharp from 'sharp';
 
 import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 
-//import path from 'path';
+import path from 'path';
 console.log(path.resolve('.'));
-console.log(path.resolve('../../ppublic'));
+console.log(path.resolve('./../../public'));
 process.env.FONTCONFIG_PATH = '/var/task/public/fonts/';
 
 export default function treeOfLifeSVG(req, res) {
