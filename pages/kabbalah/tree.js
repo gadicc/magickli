@@ -100,7 +100,7 @@ function TreeOfLife() {
           "https://magick.li/kabbalah/tree" + "?" + urlQuery
         } />
         <meta property="og:image" content={
-          "https://magick.li/api/treeOfLife?fmt=webp&width=1200&height=630&" + urlQuery
+          "https://magick.li/api/treeOfLife?v=1&fmt=webp&width=1200&height=630&" + urlQuery
         } />
         <meta property="og:image:type" content="image/webp" />
         <meta property="og:image:width" content="1200" />
