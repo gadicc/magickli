@@ -25,6 +25,11 @@ export default function treeOfLifeSVG(req, res) {
 
   } else {
 
+    svgText = svgText.replaceAll(
+      /font-family="Sans"/g,
+      'font-family="Arial"',
+    );
+
     const s = sharp(new Buffer(svgText));
 
     if (req.query.width && req.query.height)
