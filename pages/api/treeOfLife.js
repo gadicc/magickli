@@ -5,12 +5,16 @@ import sharp from 'sharp';
 
 import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 
+import fs from 'fs';
 import path from 'path';
 console.log(__dirname);
 console.log(path.resolve('.'));
 console.log(path.resolve('./public'));
 console.log(path.resolve('./public/fonts.conf'));
+
+const fontsDir = path.resolve('public', 'fonts.conf');
 process.env.FONTCONFIG_PATH = '/var/task/public/fonts.conf';
+console.log(fs.readFileSync(fontsDir).toString());
 
 export default function treeOfLifeSVG(req, res) {
   let svgText = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
