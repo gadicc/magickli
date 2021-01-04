@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import beautify from 'xml-beautifier';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -48,6 +49,14 @@ function TreeOfLife() {
   for (let key of Object.keys(defaults))
     opts[key] = router.query[key] || defaults[key];
 
+    console.log(router);
+
+  const urlQuery = Object.entries(router.query).map(
+    ([key, val]) => key + '=' + encodeURIComponent(val)
+  ).join("&");
+
+  console.log(urlQuery);
+
   function set(key, value) {
     router.replace({
       query: { ...router.query, [key]: value }
@@ -71,6 +80,22 @@ function TreeOfLife() {
 
   return (
     <>
+      <Head>
+        <title key="title">Kabbalistic Tree of Life </title>
+
+        <meta property="og:site_name" content="magick.li" />
+        <meta property="og:title" content="Kabbalistic Tree of Life" />
+        <meta property="og:description" content="Customizable, interactive
+          Tree of Life image and info." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={
+          "https://magick.li/kabbalah/tree" + "?" + urlQuery
+        } />
+        <meta property="og:image" content={
+          "https://magick.li/api/treeOfLife" + "?" + urlQuery
+        } />
+        <meta property="og:image:alt" content="Tree of Life svg" />
+      </Head>
       <AppBar title="Tree of Life" navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
