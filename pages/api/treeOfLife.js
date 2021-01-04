@@ -7,6 +7,11 @@ import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 
 import fs from 'fs';
 import path from 'path';
+console.log(__dirname);
+console.log(path.resolve('.'));
+console.log(path.resolve('./public'));
+console.log(path.resolve('./public/fonts.conf'));
+
 const fontsDir = path.resolve('public', 'fonts.conf');
 process.env.FONTCONFIG_FILE = '/var/task/public/fonts.conf';
 console.log(fs.readFileSync(fontsDir).toString());
