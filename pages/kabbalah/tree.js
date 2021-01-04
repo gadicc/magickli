@@ -15,6 +15,18 @@ import AppBar from '../../components/AppBar';
 import Data from '../../data/data';
 import Tree from '../../components/kabbalah/TreeOfLife';
 
+/*
+  The mere existance of this function changes the behaviour of how the page
+  is served.  Next.js will render the page on-demand, per-request.  The
+  important consequence of this is that router.query won't be empty on the
+  server.
+
+  See https://nextjs.org/docs/advanced-features/automatic-static-optimization
+*/
+function getServerSideProps(context) {
+  return { props: {} };
+}
+
 function encodeSVG() {
   let svgText = document.getElementById('TreeOfLife').outerHTML;
   const download = document.getElementById('downloadSVG');
@@ -92,9 +104,11 @@ function TreeOfLife() {
           "https://magick.li/kabbalah/tree" + "?" + urlQuery
         } />
         <meta property="og:image" content={
-          "https://magick.li/api/treeOfLife" + "?" + urlQuery
+          "https://magick.li/api/treeOfLife.svg" + "?" + urlQuery
         } />
         <meta property="og:image:alt" content="Tree of Life svg" />
+        <meta property="og:image:width" content="150" />
+        <meta property="og:image:height" content="200" />
       </Head>
       <AppBar title="Tree of Life" navParts={navParts} />
       <Container maxWidth="sm">
@@ -203,4 +217,5 @@ function TreeOfLife() {
   );
 }
 
+export { getServerSideProps };
 export default TreeOfLife;
