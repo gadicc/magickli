@@ -25,6 +25,13 @@ export default function treeOfLifeSVG(req, res) {
 
   } else {
 
+    /*
+    svgText = svgText.replace(
+      /url('\/fonts\//g,
+      "url('https://magick.li/fonts/",
+    );
+    */
+
     const s = sharp(new Buffer(svgText));
 
     if (req.query.width && req.query.height)

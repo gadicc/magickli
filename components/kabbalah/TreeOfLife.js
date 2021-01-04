@@ -104,15 +104,15 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     >
       <style type="text/css">{`
         @font-face {
-          font-family: 'Noto Sans Regular';
-          src: url('/fonts/NotoSans-Regular.ttf') format('truetype')
+          font-family: 'Noto Sans';
+          src: local('Noto Sans'), url('https://magick.li/fonts/NotoSans-Regular.ttf') format('truetype')
         }
         @font-face {
-          font-family: 'Noto Sans Hebrew Regular';
-          src: url('/fonts/NotoSans-Regular.ttf') format('truetype')
+          font-family: 'Noto Sans Hebrew';
+          src: local("Noto Sans Hebrew"), url('https://magick.li/fonts/NotoSansHebrew-Regular.ttf') format('truetype')
         }
         svg {
-          font-family: 'Noto Sans Regular', 'Noto Sans Hebrew Regular', Arial, sans-serif;
+          font-family: 'Noto Sans', 'Noto Sans Hebrew', Arial, sans-serif;
         }
       `}</style>
 
