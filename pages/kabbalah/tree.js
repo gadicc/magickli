@@ -61,13 +61,9 @@ function TreeOfLife() {
   for (let key of Object.keys(defaults))
     opts[key] = router.query[key] || defaults[key];
 
-    console.log(router);
-
   const urlQuery = Object.entries(router.query).map(
     ([key, val]) => key + '=' + encodeURIComponent(val)
   ).join("&");
-
-  console.log(urlQuery);
 
   function set(key, value) {
     router.replace({
@@ -104,7 +100,7 @@ function TreeOfLife() {
           "https://magick.li/kabbalah/tree" + "?" + urlQuery
         } />
         <meta property="og:image" content={
-          "https://magick.li/api/treeOfLife.svg" + "?" + urlQuery
+          "https://magick.li/api/treeOfLife?fmt=png&width=300&height=400&" + urlQuery
         } />
         <meta property="og:image:alt" content="Tree of Life svg" />
         <meta property="og:image:width" content="150" />
