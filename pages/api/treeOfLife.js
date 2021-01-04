@@ -6,6 +6,7 @@ import sharp from 'sharp';
 import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 
 import path from 'path';
+console.log(__dirname);
 console.log(path.resolve('.'));
 console.log(path.resolve('./public'));
 console.log(path.resolve('./public/fonts.conf'));
@@ -38,7 +39,7 @@ export default function treeOfLifeSVG(req, res) {
     );
     */
 
-    const s = sharp(new Buffer(svgText));
+    const s = sharp(Buffer.from(svgText));
 
     if (req.query.width && req.query.height)
       s.resize(Number(req.query.width), Number(req.query.height));
