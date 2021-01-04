@@ -8,7 +8,7 @@ import TreeOfLife from '../../components/kabbalah/TreeOfLife.js';
 //import fs from 'fs';
 //import path from 'path';
 //const fontsDir = path.resolve('public', 'fonts.conf');
-process.env.FONTCONFIG_FILE = '/var/task/fonts.conf';
+process.env.FONTCONFIG_FILE = '/var/task/public/fonts.conf';
 //console.log(fs.readFileSync(fontsDir).toString());
 
 export default function treeOfLifeSVG(req, res) {
