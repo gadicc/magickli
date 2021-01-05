@@ -18,6 +18,11 @@ const tiles = [
     to: '/astrology'
   },
   {
+    img: '/pics/30aethyrs.jpg',
+    title: 'Enochian',
+    to: 'https://enochian.app/'
+  },
+  {
     Component: GDLogoSquished,
     title: 'Golden Dawn',
     to: '/hogd/'
