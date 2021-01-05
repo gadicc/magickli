@@ -19,13 +19,15 @@ import Tree from '../../components/kabbalah/TreeOfLife';
   The mere existance of this function changes the behaviour of how the page
   is served.  Next.js will render the page on-demand, per-request.  The
   important consequence of this is that router.query won't be empty on the
-  server.
+  server.  Edit: However, it prevents page cache on client / slower loading.
 
   See https://nextjs.org/docs/advanced-features/automatic-static-optimization
 */
+/*
 function getServerSideProps(context) {
   return { props: {} };
 }
+*/
 
 function encodeSVG() {
   let svgText = document.getElementById('TreeOfLife').outerHTML;
@@ -96,12 +98,10 @@ function TreeOfLife() {
         <meta property="og:description" content="Customizable, interactive
           Tree of Life image and info." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={
-          "https://magick.li/kabbalah/tree" + "?" + urlQuery
-        } />
-        <meta property="og:image" content={
-          "https://magick.li/api/treeOfLife?v=1&fmt=webp&width=1200&height=630&" + urlQuery
-        } />
+        {/* "https://magick.li/kabbalah/tree" + "?" + urlQuery */}
+        <meta property="og:url" content="https://magick.li/kabbalah/tree" />
+        {/* "https://magick.li/api/treeOfLife?v=1&fmt=webp&width=1200&height=630&" + urlQuery */}
+        <meta property="og:image" content="https://magick.li/feature/kabbalah/tree.webp" />
         <meta property="og:image:type" content="image/webp" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -214,5 +214,5 @@ function TreeOfLife() {
   );
 }
 
-export { getServerSideProps };
+// export { getServerSideProps };
 export default TreeOfLife;
