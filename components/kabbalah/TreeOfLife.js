@@ -24,14 +24,61 @@ const orderedPaths = {
   ]
 };
 
-// Map to path data with that id
-orderedPaths.hebrew = orderedPaths.hebrew.map(id => _paths[id]).reverse();
-orderedPaths.hermetic = orderedPaths.hermetic.map(id => _paths[id]).reverse();
-
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
+function LineOutline({ x1, x2, y1, y2, offset=5, ...args }) {
+  const points = [ [x1,y1], [x2,y2] ];
+
+  const cancel = x => x === 0 ? 0 : 1;
+  const neg = x => x < 0 ? -1 : 1; // Unlike Math.sign(), no 0.
+  const xDir = Math.sign(x1-x2);
+  const yDir = Math.sign(y1-y2);
+
+  function pythagOffset(xDir, yDir, axis) {
+    //if (xDir === 0 && axis === 0 || yDir === 0 && axis === 1)
+    //  return offset;
+    if (xDir === 0 || yDir === 0)
+      return offset;
+    return Math.sqrt(offset*offset/2);
+  }
+
+  function calc(point, offsetDirection) {
+    const off = pythagOffset(xDir, yDir, point);
+    //const x = from[0]*pos[0] + to[0]*Number(!pos[0]);
+    //const y = from[1]*pos[1] + to[1]*Number(!pos[1]);
+    //
+    //
+//    const x = points[point][0] + (yDir!==0 && offset*offsetDirection*neg(xDir));
+//    const y = points[point][1] + (xDir!==0 && offset*offsetDirection);
+    const x = points[point][0] + pythagOffset(xDir,yDir,point) * offsetDirection * (cancel(yDir) * neg(xDir));
+    const y = points[point][1] + pythagOffset(xDir,yDir,point) * offsetDirection * cancel(xDir);
+    const result = `${x},${y}`;
+   /*
+    const result = pos.map((p, p2) => {
+      points[p]
+    });
+    */
+    console.log({ points, point, offsetDirection, result });
+    return result;
+  }
+
+  return (
+    <path
+      {...args}
+      d={
+        `M ${calc(0,-1)} ` +
+        `L ${calc(1,-1)} ` +
+        `L ${calc(1,1)} ` +
+        `L ${calc(0,1)} ` +
+        `z`
+      }
+    />
+  )
+}
+
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
-    bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref }) {
+    bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref,
+    activePath }) {
   const color = colorScale ? (colorScale+'Web') : 'queenWeb';
   width = width || '100%';
   field = field || 'index';
@@ -77,7 +124,32 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     { x: pillar[1].x, y: rowStart+rowGap*8, data: _sephirot[9], color: _sephirot[9].color[color], text: labels[9], textColor: _sephirot[9].color[color+'Text'] },
   ];
 
-  const pathOpacity = active ? 0.1 : 1;
+  let pathsToDraw = orderedPaths[letterAttr];
+  if (activePath) {
+    // Bring activePath to top
+    pathsToDraw = pathsToDraw.filter(x => x !== activePath);
+    pathsToDraw.unshift(activePath);
+  }
+
+  // Map to path data with that id
+  pathsToDraw = pathsToDraw.map(id => _paths[id]).reverse()
+
+  const outerSephirot = activePath && activePath.split('_').map(Number);
+
+  function sephirahOpacity(sephirah) {
+    if (!active && !activePath)
+      return 1;
+
+    if (active && active === sephirah.data.id)
+      return 1;
+
+    if (activePath) {
+      if (outerSephirot.includes(sephirah.data.index))
+        return 1;
+    }
+
+    return 0.1;
+  }
 
   const ref = React.useRef();
   const router = useRouter();
@@ -120,15 +192,28 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
       {/* Paths */}
       <g id="paths">
         <style type="text/css">{`
-          .outerPath { stroke: #000; stroke-width: 20; }
-          .innerPath { stroke: #fff; stroke-width: 17; }
+          .path {
+            stroke: #000;
+            stroke-width: 3;
+            fill: #fff;
+            paint-order: stroke fill markers;
+          }
+          .path.active {
+            fill: #ffa;
+          }
+          .path.inactive {
+            opacity: 0.2;
+          }
+
           .letter { font-size: 110%; }
+          .letter.inactive { opacity: 0.2 };
         `}</style>
         {
-          orderedPaths[letterAttr].map(path => {
+          pathsToDraw.map(path => {
             const parts = path.id.split('_');
             const start = sephirot[ Number(parts[0]) - 1 ];
             const end = sephirot[ Number(parts[1]) - 1 ];
+            const activePathClass = (activePath ? activePath===path.id?' active':' inactive' : '');
 
             // Adjust position on path to avoid being covered over by other paths
             const specialPositions = {
@@ -151,12 +236,9 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
 
             return (
               <a key={path.id} id={"path"+path.id} xlinkHref={pathHref(path)}>
-                <path id={'outerPath'+firstUpper(path.id)} className="outerPath"
-                    d={`M ${start.x},${start.y} L ${end.x},${end.y}`} />
-                <path id={'innerPath'+firstUpper(path.id)} className="innerPath"
-                    d={`M ${start.x},${start.y} L ${end.x},${end.y}`}>
-                </path>
-                <text className="letter" x={letterPos.x} y={letterPos.y}
+                <LineOutline x1={start.x} y1={start.y} x2={end.x} y2={end.y} offset={8.5}
+                  className={"path"+activePathClass} />
+                <text className={"letter"+activePathClass} x={letterPos.x} y={letterPos.y}
                     textAnchor="middle" dominantBaseline="middle">
                   { path[letterAttr]?.hebrewLetter?.letter?.he }
                 </text>
@@ -185,7 +267,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
               fill={s.color.match(',') ? null : s.color}
               stroke="#000"
               strokeWidth="1.568"
-              opacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+              opacity={sephirahOpacity(s)}
             ></circle>
 
             {
@@ -195,22 +277,22 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                   <path
                      id="circle88-7"
                      style={{fill:s.color.split(',')[0],stroke:'#000000',strokeWidth:1.568 }}
-                     opacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                     opacity={sephirahOpacity(s)}
                      d="m 158,556.5 -27.71859,-27.71859 c -15.30855,15.30855 -15.30855,40.12863 0,55.43718 z" />
                   <path
                      id="circle88-1"
                      style={{fill:s.color.split(',')[1],stroke:'#000000',strokeWidth:1.568 }}
-                     opacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                     opacity={sephirahOpacity(s)}
                      d="m 185.5,529 c -15.30855,-15.30855 -40.12863,-15.30855 -55.43718,0 L 158,556.5 Z" />
                   <path
                      id="circle88-10"
                      style={{fill:s.color.split(',')[2],stroke:'#000000',strokeWidth:1.568 }}
-                     opacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                     opacity={sephirahOpacity(s)}
                      d="m 158,556.5 27.71859,27.71859 c 15.30855,-15.30855 15.30855,-40.12863 0,-55.43718 z" />
                   <path
                      id="circle88-2"
                      style={{fill:s.color.split(',')[3],stroke:'#000000',strokeWidth:1.568 }}
-                     opacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                     opacity={sephirahOpacity(s)}
                      d="m 158,556.5 -27.71859,27.71859 c 15.30855,15.30855 40.12863,15.30855 55.43718,0 z" />
                 </>
 
@@ -268,7 +350,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                     x={s.x}
                     y={s.y}
                     fill={s.textColor || 'black'}
-                    fillOpacity={ (!active || (active && active===s.data.id)) ? 1 : 0.1 }
+                    fillOpacity={sephirahOpacity(s)}
                     stroke="none"
                     strokeLinecap="butt"
                     strokeLinejoin="miter"
@@ -310,7 +392,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                           fontStyle:'normal', fontWeight:'normal', fontSize:'10px',
                           letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
-                          fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
+                          fillOpacity: sephirahOpacity(s),
                           stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
                       <textPath xlinkHref={"#topTextPath"+i}
                           textAnchor="middle" dominantBaseline="middle"
@@ -332,7 +414,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                           fontStyle:'normal', fontWeight:'normal', fontSize:'10px',
                           letterSpacing:'-0.5px', wordSpacing:'0px',
                           fill:s.textColor||'black',
-                          fillOpacity: (!active || (active && active===s.data.id)) ? 1 : 0.1,
+                          fillOpacity: sephirahOpacity(s),
                           stroke:'none',strokeWidth:'0.8px',strokeLinecap:'butt',strokeLinejoin:'miter',strokeOpacity:1}}>
                       <textPath xlinkHref={"#bottomTextPath"+i}
                           textAnchor="middle" dominantBaseline="middle"
