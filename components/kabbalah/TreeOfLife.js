@@ -26,6 +26,43 @@ const orderedPaths = {
 
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
+function LineOutline2({ x1, x2, y1, y2, offset=5, ...args }) {
+  const xDir = Math.sign(x2-x1);
+  const yDir = Math.sign(x2-y2);
+  const xDiff = Math.abs(x2-x1);
+  const yDiff = Math.abs(y2-y1);
+  const theta = Math.atan(xDiff / yDiff);
+
+  const theta2 = 90 - theta;
+
+  let xDiff2, yDiff2;
+  if (theta === 90) {
+      xDiff2 = 0; yDiff2 = offset;
+  } else if (theta === 0) {
+      xDiff2 = offset; yDiff2 = 0;
+  } else {
+    const xDiff2 = Math.sin(theta2) * offset;
+    //const yDiff2 = Math.sqrt(offset*offset + xDiff2*xDiff2);
+    const yDiff2 = Math.cos(theta2) * offset;
+  }
+
+  console.log({ theta2, xDiff2, yDiff2 });
+
+  return (
+    <path
+      {...args}
+      d={
+        `M ${x1-xDiff2},${y1+yDiff2} ` +
+        `L ${x1+xDiff2},${y1-yDiff2} ` +
+        `L ${x2+xDiff2},${y2-yDiff2} ` +
+        `L ${x2-xDiff2},${y2+yDiff2} ` +
+        `z`
+      }
+    />
+  )
+}
+
+
 function LineOutline({ x1, x2, y1, y2, offset=5, ...args }) {
   const points = [ [x1,y1], [x2,y2] ];
 
@@ -245,7 +282,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                 <title>
                   Letter: { path[letterAttr]?.hebrewLetter?.letter?.he }
                   {
-                    letterAttr === 'hermetic' &&
+                    letterAttr === 'hermetic' && path.hermetic &&
                     ", pathNo: " + path.hermetic.pathNo +
                     ", tarotId: " + path.hermetic.tarotId
                   }
