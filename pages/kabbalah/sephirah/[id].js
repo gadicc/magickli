@@ -42,6 +42,7 @@ export default function Sephirot() {
     x => ![
       'id', 'name', 'color',
       'angelicOrder', 'angelicOrderId', 'godName', 'godNameId',  'chakra', 'chakraId',
+      'gdGrade', 'gdGradeId',
     ].includes(x)
   );
 
