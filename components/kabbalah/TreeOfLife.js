@@ -26,87 +26,25 @@ const orderedPaths = {
 
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
-function LineOutline2({ x1, x2, y1, y2, offset=5, ...args }) {
-  const xDir = Math.sign(x2-x1);
-  const yDir = Math.sign(x2-y2);
+function LineOutline({ x1, y1, x2, y2, offset=5, ...args }) {
   const xDiff = Math.abs(x2-x1);
   const yDiff = Math.abs(y2-y1);
+  const xDir = xDiff === 0 ? 1 : Math.sign(x2-x1);
+  const yDir = yDiff === 0 ? 1 : Math.sign(y2-y1);
+
   const theta = Math.atan(xDiff / yDiff);
-
-  const theta2 = 90 - theta;
-
-  let xDiff2, yDiff2;
-  if (theta === 90) {
-      xDiff2 = 0; yDiff2 = offset;
-  } else if (theta === 0) {
-      xDiff2 = offset; yDiff2 = 0;
-  } else {
-    const xDiff2 = Math.sin(theta2) * offset;
-    //const yDiff2 = Math.sqrt(offset*offset + xDiff2*xDiff2);
-    const yDiff2 = Math.cos(theta2) * offset;
-  }
-
-  console.log({ theta2, xDiff2, yDiff2 });
+  const theta2 = Math.PI/2 - theta;
+  const xDiff2 = Math.sin(theta2) * offset;
+  const yDiff2 = Math.cos(theta2) * offset;
 
   return (
     <path
       {...args}
       d={
-        `M ${x1-xDiff2},${y1+yDiff2} ` +
-        `L ${x1+xDiff2},${y1-yDiff2} ` +
-        `L ${x2+xDiff2},${y2-yDiff2} ` +
-        `L ${x2-xDiff2},${y2+yDiff2} ` +
-        `z`
-      }
-    />
-  )
-}
-
-
-function LineOutline({ x1, x2, y1, y2, offset=5, ...args }) {
-  const points = [ [x1,y1], [x2,y2] ];
-
-  const cancel = x => x === 0 ? 0 : 1;
-  const neg = x => x < 0 ? -1 : 1; // Unlike Math.sign(), no 0.
-  const xDir = Math.sign(x1-x2);
-  const yDir = Math.sign(y1-y2);
-
-  function pythagOffset(xDir, yDir, axis) {
-    //if (xDir === 0 && axis === 0 || yDir === 0 && axis === 1)
-    //  return offset;
-    if (xDir === 0 || yDir === 0)
-      return offset;
-    return Math.sqrt(offset*offset/2);
-  }
-
-  function calc(point, offsetDirection) {
-    const off = pythagOffset(xDir, yDir, point);
-    //const x = from[0]*pos[0] + to[0]*Number(!pos[0]);
-    //const y = from[1]*pos[1] + to[1]*Number(!pos[1]);
-    //
-    //
-//    const x = points[point][0] + (yDir!==0 && offset*offsetDirection*neg(xDir));
-//    const y = points[point][1] + (xDir!==0 && offset*offsetDirection);
-    const x = points[point][0] + pythagOffset(xDir,yDir,point) * offsetDirection * (cancel(yDir) * neg(xDir));
-    const y = points[point][1] + pythagOffset(xDir,yDir,point) * offsetDirection * cancel(xDir);
-    const result = `${x},${y}`;
-   /*
-    const result = pos.map((p, p2) => {
-      points[p]
-    });
-    */
-    console.log({ points, point, offsetDirection, result });
-    return result;
-  }
-
-  return (
-    <path
-      {...args}
-      d={
-        `M ${calc(0,-1)} ` +
-        `L ${calc(1,-1)} ` +
-        `L ${calc(1,1)} ` +
-        `L ${calc(0,1)} ` +
+        `M ${x1-xDiff2*xDir},${y1+yDiff2*yDir} ` +
+        `L ${x1+xDiff2*xDir},${y1-yDiff2*yDir} ` +
+        `L ${x2+xDiff2*xDir},${y2-yDiff2*yDir} ` +
+        `L ${x2-xDiff2*xDir},${y2+yDiff2*yDir} ` +
         `z`
       }
     />
