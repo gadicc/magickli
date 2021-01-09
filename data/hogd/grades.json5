@@ -4,6 +4,7 @@
     name: "Neophyte",
     orderId: "1st",
     degreeId: "1st",
+    next: "1=10",
   },
 
   "1=10": {
@@ -13,6 +14,9 @@
     planetId: "earth",
     orderId: "1st",
     degreeId: "1st",
+    sephirahId: "malchut",
+    prev: "0=0",
+    next: "2=9",
   },
 
   "2=9": {
@@ -22,6 +26,9 @@
     planetId: "luna",
     orderId: "1st",
     degreeId: "1st",
+    sephirahId: "yesod",
+    prev: "1=10",
+    next: "3=8",
   },
 
   "3=8": {
@@ -31,6 +38,9 @@
     planetId: "mercury",
     orderId: "1st",
     degreeId: "1st",
+    sephirahId: "hod",
+    prev: "2=9",
+    next: "4=7",
   },
 
   "4=7": {
@@ -40,6 +50,9 @@
     planetId: "venus",
     orderId: "1st",
     degreeId: "1st",
+    sephirahId: "netzach",
+    prev: "3=8",
+    next: "portal",
   },
 
   "portal": {
@@ -47,6 +60,8 @@
     name: "Portal",
     elementId: "spirit",
     degreeId: "2nd",
+    prev: "4=7",
+    next: "5=6",
   },
 
   "5=6": {
@@ -55,6 +70,9 @@
     planetId: "sol",
     orderId: "2nd",
     degreeId: "3rd",
+    sephirahId: "tiferet",
+    prev: "portal",
+    next: "6=5",
   },
 
   "6=5": {
@@ -63,6 +81,9 @@
     planetId: "mars",
     orderId: "2nd",
     degreeId: "3rd",
+    sephirahId: "gevurah",
+    prev: "5=6",
+    next: "7=4",
   },
 
   "7=4": {
@@ -71,6 +92,9 @@
     planetId: "jupiter",
     orderId: "2nd",
     degreeId: "3rd",
+    sephirahId: "hesed",
+    prev: "6=5",
+    next: "8=3",
   },
 
   "8=3": {
@@ -78,17 +102,25 @@
     name: "Magister Templi",
     planetId: "saturn",
     orderId: "3rd",
+    sephirahId: "binah",
+    prev: "7=4",
+    next: "9=2",
   },
 
   "9=2": {
     id: "9=2",
     name: "Magus",
     orderId: "3rd",
+    sephirahId: "chochmah",
+    prev: "8=3",
+    next: "10=1",
   },
 
   "10=1": {
     id: "10=1",
     name: "Ipsissimus",
     orderId: "3rd",
+    sephirahId: "keter",
+    prev: "9=2",
   },
 }

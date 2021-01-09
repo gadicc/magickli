@@ -10,6 +10,7 @@ import Link from '../../../src/Link';
 import Copyright from '../../../src/Copyright';
 
 import AppBar from '../../../components/AppBar';
+import GradeTree from '../../../components/hogd/GradeTree';
 
 import Data from '../../../data/data';
 const grades = Data.gdGrade;
@@ -38,9 +39,27 @@ export default function Planet() {
 
   return (
     <>
+      <style jsx>{`
+        div.nav { display: table; width: 100% }
+        div.nav > div { display: table-cell; vertical-align: middle; }
+        div.prevNext { font-size: 150%; }
+      `}</style>
       <AppBar title={grade.name} navParts={navParts} />
+
       <Container maxWidth="sm">
         <Box my={4}>
+          <div className="nav">
+            <div className="prevNext">{grade.prev && <Link href={grade.prev} underline="none">❮</Link>}</div>
+            <div>{
+              grade.sephirah
+              ? <GradeTree height="150px" topText="" active={grade.sephirah.id} />
+              : <span>(no sephirah)</span>
+            }</div>
+            <div className="prevNext">{grade.next && <Link href={grade.next} underline="none">❯</Link>}</div>
+           </div>
+           <br />
+
+
           <p>
             <i>
               {grade.name} ({grade.id})
@@ -50,12 +69,19 @@ export default function Planet() {
           <table>
             <tbody>
               {
-                Object.keys(grade).map(key => (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{JSON.stringify(grade[key])}</td>
-                  </tr>
-                ))
+                Object.keys(grade).map(key => {
+                  let json;
+                  try {
+                    json = JSON.stringify(grade[key]);
+                  } catch (e) {
+                  }
+                  return json && (
+                    <tr key={key}>
+                      <td>{key}</td>
+                      <td>{json}</td>
+                    </tr>
+                  );
+                })
               }
             </tbody>
           </table>
