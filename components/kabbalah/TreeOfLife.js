@@ -27,28 +27,17 @@ const orderedPaths = {
 const firstUpper = string => string[0].toUpperCase() + string.substr(1);
 
 function LineOutline({ x1, y1, x2, y2, offset=5, ...args }) {
-  const xDiff = Math.abs(x2-x1);
-  const yDiff = Math.abs(y2-y1);
-  const xDir = xDiff === 0 ? 1 : Math.sign(x2-x1);
-  const yDir = yDiff === 0 ? 1 : Math.sign(y2-y1);
-
-  const theta = Math.atan(xDiff / yDiff);
-  const theta2 = Math.PI/2 - theta;
-  const xDiff2 = Math.sin(theta2) * offset;
-  const yDiff2 = Math.cos(theta2) * offset;
+  const theta = Math.PI/2 - Math.atan( (x2-x1) / (y2-y1) );
+  const xd = Math.sin(theta) * offset;
+  const yd = Math.cos(theta) * offset;
 
   return (
     <path
       {...args}
-      d={
-        `M ${x1-xDiff2*xDir},${y1+yDiff2*yDir} ` +
-        `L ${x1+xDiff2*xDir},${y1-yDiff2*yDir} ` +
-        `L ${x2+xDiff2*xDir},${y2-yDiff2*yDir} ` +
-        `L ${x2-xDiff2*xDir},${y2+yDiff2*yDir} ` +
-        `z`
-      }
+      d={ `M ${x1-xd},${y1+yd} L ${x1+xd},${y1-yd} ` +
+          `L ${x2+xd},${y2-yd} L ${x2-xd},${y2+yd} z` }
     />
-  )
+  );
 }
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
