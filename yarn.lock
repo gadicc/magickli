@@ -1969,7 +1969,7 @@ core-util-is@~1.0.0:
 
 "corpora@https://github.com/dariusk/corpora/archive/master.tar.gz":
   version "0.0.1"
-  resolved "https://github.com/dariusk/corpora/archive/master.tar.gz#c7ea64dddc375631eef270de71ebe8c92bb983bc"
+  resolved "https://github.com/dariusk/corpora/archive/master.tar.gz#c8fbd1245c0180cee01b8206d46f0e659c821c0b"
 
 cosmiconfig@^7.0.0:
   version "7.0.1"
