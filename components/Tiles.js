@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ImageList from '@material-ui/core/ImageList';
+import ImageListItem from '@material-ui/core/ImageListItem';
+import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 
 import Link from '../src/Link';
 
@@ -25,18 +25,18 @@ const styles = theme => ({
 function Tiles({ tiles, classes }) {
   return (
     <div className={classes.root}>
-      <GridList cellHeight={180} className={classes.gridList} spacing={0}>
+      <ImageList cellHeight={180} className={classes.gridList} spacing={0}>
         {tiles.map(tile => (
-          <GridListTile key={tile.to} component={Link} href={tile.to}>
+          <ImageListItem key={tile.to} component={Link} href={tile.to}>
               {
                 tile.Component
                   ? <tile.Component height="100%" className="MuiGridListTile-imgFullHeight" />
                   : <img src={tile.img} alt={tile.title} />
               }
-            <GridListTileBar className={classes.tileBar} title={tile.title} />
-          </GridListTile>
+            <ImageListItemBar className={classes.tileBar} title={tile.title} />
+          </ImageListItem>
         ))}
-      </GridList>
+      </ImageList>
     </div>
   )
 }
