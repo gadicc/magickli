@@ -150,10 +150,10 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
           font-family: 'Noto Sans Hebrew';
           src: local("Noto Sans Hebrew"), url('https://magick.li/fonts/NotoSansHebrew-Regular.ttf') format('truetype')
         }
-        svg {
+        svg#TreeOfLife {
           font-family: 'Noto Sans', 'Noto Sans Hebrew', Arial, sans-serif;
         }
-      ` + (flip && 'svg { transform: rotateY(180deg) }')}</style>
+      ` + (flip && 'svg#TreeOfLife { transform: rotateY(180deg) }')}</style>
 
 
       {/* Paths */}
