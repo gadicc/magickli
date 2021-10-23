@@ -252,7 +252,7 @@
     godNameId: 'shadai-el-chai',
     scent: 'jasmine',
     body: 'genitals',
-    bodAlt: 'genitals',
+    bodyPos: 'genitals',
     planets: 'luna',
     stone: 'quartz',
     archangel: 'gabriel',
