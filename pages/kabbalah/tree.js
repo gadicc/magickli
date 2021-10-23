@@ -58,6 +58,7 @@ function TreeOfLife() {
     bottomText: 'name.en',
     colorScale: 'queen',
     letterAttr: 'hermetic',
+    flip: false,
   };
 
   for (let key of Object.keys(defaults))
@@ -164,6 +165,14 @@ function TreeOfLife() {
               <a target="_blank" href="https://hermetic.com/jwmt/v1n3/32paths">*</a>
             </span>
 
+            <br />
+
+            <span>
+              Flip tree: <input type="checkbox" value={opts.flip}
+                  onChange={e => set('flip', e.target.checked)} />
+              &nbsp; (View from Behind / Body View)
+            </span>
+
           </div>
 
           <br />
@@ -171,6 +180,7 @@ function TreeOfLife() {
           <Tree
             field={opts.field} topText={opts.topText} bottomText={opts.bottomText}
             colorScale={opts.colorScale} letterAttr={opts.letterAttr}
+            flip={opts.flip}
           />
 
           <div>

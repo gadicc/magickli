@@ -42,7 +42,7 @@ function LineOutline({ x1, y1, x2, y2, offset=5, ...args }) {
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
     bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref,
-    activePath }) {
+    activePath, flip }) {
   const color = colorScale ? (colorScale+'Web') : 'queenWeb';
   width = width || '100%';
   field = field || 'index';
@@ -127,6 +127,9 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
       }
     });
   });
+  
+  // From "true" / "false" to true / false
+  flip = flip === "true";
 
   return (
     <svg
@@ -150,7 +153,7 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
         svg {
           font-family: 'Noto Sans', 'Noto Sans Hebrew', Arial, sans-serif;
         }
-      `}</style>
+      ` + (flip && 'svg { transform: rotateY(180deg) }')}</style>
 
 
       {/* Paths */}
