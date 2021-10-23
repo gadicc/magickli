@@ -77,7 +77,7 @@ function TreeOfLife() {
     'index',
     'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
     'archangel',
-    'body',
+    'body', 'bodyPos',
     'chakra',
     'godName.name.en', 'godName.name.he', 'godName.name.romanization',
     'gdGrade.id', 'gdGrade.name',
@@ -112,8 +112,8 @@ function TreeOfLife() {
         <Box my={4}>
 
           <div style={{textAlign:'center'}}>
-            Label: <select name="field" value={opts.field}
-                onChange={ e => e.preventDefault() || set('field', e.target.value) }>
+            Top text: <select name="topText" value={opts.topText}
+                onChange={ e => e.preventDefault() || set('topText', e.target.value) }>
               {
                 fields.map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -122,8 +122,8 @@ function TreeOfLife() {
             </select>
             <br />
 
-            Top text: <select name="topText" value={opts.topText}
-                onChange={ e => e.preventDefault() || set('topText', e.target.value) }>
+            Center text: <select name="field" value={opts.field}
+                onChange={ e => e.preventDefault() || set('field', e.target.value) }>
               {
                 fields.map(f => (
                   <option key={f} value={f}>{f}</option>
@@ -140,6 +140,8 @@ function TreeOfLife() {
                 ))
               }
             </select>
+            <br />
+
             <br />
 
             <span>
@@ -182,8 +184,8 @@ function TreeOfLife() {
             <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=374526">
               broken in Chrome
             </a>.
-            You'll see the TopText reversed.  It works in Firefox, or download
-            and view outside of youor browser.
+            You'll see the TopText / BottomText reversed.  It works in Firefox,
+            or download and view outside of your browser.
           </div>
 
           <ol>
