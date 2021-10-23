@@ -167,11 +167,11 @@ function TreeOfLife() {
 
             <br />
 
-            <span>
+            <label>
               Flip tree: <input type="checkbox" value={opts.flip}
                   onChange={e => set('flip', e.target.checked)} />
               &nbsp; (View from Behind / Body View)
-            </span>
+            </label>
 
           </div>
 
