@@ -42,7 +42,7 @@ function LineOutline({ x1, y1, x2, y2, offset=5, ...args }) {
 
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
     bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref,
-    activePath, flip }) {
+    activePath, flip, showDaat }) {
   const color = colorScale ? (colorScale+'Web') : 'queenWeb';
   width = width || '100%';
   field = field || 'index';
@@ -51,10 +51,10 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
   pathHref = pathHref || (path => "/kabbalah/path/" + path.id);
 
   if (!labels)
-    labels = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], field));
+    labels = [0,1,2,3,4,5,6,7,8,9,10].map(i => dotProp.get(_sephirot[i], field));
 
-  topText = [0,1,2,3,4,5,6,7,8,9].map(i => dotProp.get(_sephirot[i], topText));
-  bottomText = [0,1,2,3,4,5,6,7,8,9].map(i =>
+  topText = [0,1,2,3,4,5,6,7,8,9,10].map(i => dotProp.get(_sephirot[i], topText));
+  bottomText = [0,1,2,3,4,5,6,7,8,9,10].map(i =>
     bottomText.split(',').map(path => dotProp.get(_sephirot[i], path)).join(' '));
 
   const fontSizeFromFieldName = {
@@ -87,7 +87,12 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     { x: pillar[1].x, y: rowStart+rowGap*6, data: _sephirot[8], color: _sephirot[8].color[color], text: labels[8], textColor: _sephirot[8].color[color+'Text'] },
     { x: pillar[1].x, y: rowStart+rowGap*8, data: _sephirot[9], color: _sephirot[9].color[color], text: labels[9], textColor: _sephirot[9].color[color+'Text'] },
   ];
-
+  
+  if (showDaat)
+    sephirot.push({ x: pillar[1].x, y: rowStart+rowGap*2, data: _sephirot[10], color: _sephirot[10].color[color], text: labels[10], textColor: _sephirot[10].color[color+'Text'] })
+  
+  console.log(sephirot);
+    
   let pathsToDraw = orderedPaths[letterAttr];
   if (activePath) {
     // Bring activePath to top
@@ -128,9 +133,6 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     });
   });
   
-  // From "true" / "false" to true / false
-  flip = flip === "true";
-
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -232,8 +234,9 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
               cy={s.y}
               r="39.2"
               fill={s.color.match(',') ? null : s.color}
-              stroke="#000"
+              stroke={s.data.color.strokeColor || "#000"}
               strokeWidth="1.568"
+              strokeDasharray={s.data.color.strokeDasharray}
               opacity={sephirahOpacity(s)}
             ></circle>
 

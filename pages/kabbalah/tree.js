@@ -59,10 +59,15 @@ function TreeOfLife() {
     colorScale: 'queen',
     letterAttr: 'hermetic',
     flip: false,
+    showDaat: false,
   };
 
   for (let key of Object.keys(defaults))
     opts[key] = router.query[key] || defaults[key];
+    
+  // From "true" / "false" to true / false
+  opts.flip = opts.flip === "true";
+  opts.showDaat = opts.showDaat === "true";
 
   const urlQuery = Object.entries(router.query).map(
     ([key, val]) => key + '=' + encodeURIComponent(val)
@@ -172,6 +177,13 @@ function TreeOfLife() {
                   onChange={e => set('flip', e.target.checked)} />
               &nbsp; (View from Behind / Body View)
             </label>
+            
+            <br />
+            
+            <label>
+              Show Da'at: <input type="checkbox" value={opts.showDaat}
+                  onChange={e => set('showDaat', e.target.checked)} />
+            </label>
 
           </div>
 
@@ -180,7 +192,7 @@ function TreeOfLife() {
           <Tree
             field={opts.field} topText={opts.topText} bottomText={opts.bottomText}
             colorScale={opts.colorScale} letterAttr={opts.letterAttr}
-            flip={opts.flip}
+            flip={opts.flip} showDaat={opts.showDaat}
           />
 
           <div>

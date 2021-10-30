@@ -301,13 +301,17 @@
       romanization: 'Da\'at',
     },
     color: {
-      queen: '',
-      queenWeb: '',
+      queen: 'lavendar',
+      queenWeb: '#E6E6FAEE',
+      queenWebText: '#000',
+      strokeDasharray: 2,
+      strokeColor: '#000000AA'
     },
     chakraId: '',
     godNameId: 'yhvh-elohim',
     scent: '',
-    body: '',
+    body: 'throat', // double check in Golden Dawn Magick
+    bodyPos: 'throat',
     planets: '',
     stone: '',
     archangel: '',
