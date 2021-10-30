@@ -12,6 +12,8 @@ const allData = {
   godName: require('./kabbalah/godNames.json5').default,
   sephirah: require('./kabbalah/sephirot.json5').default,
   tolPath: require('./kabbalah/paths.json5').default,
+  
+  // chakra: require('./chakras.json5').default,
 };
 
 function insertRefs(row) {

@@ -84,7 +84,7 @@ function TreeOfLife() {
     'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
     'archangel',
     'body', 'bodyPos',
-    'chakra',
+    'chakraId',
     'godName.name.en', 'godName.name.he', 'godName.name.romanization',
     'gdGrade.id', 'gdGrade.name',
     'name.en', 'name.he', 'name.romanization',
