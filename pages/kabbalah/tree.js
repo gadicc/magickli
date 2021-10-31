@@ -84,14 +84,14 @@ function TreeOfLife() {
     'angelicOrder.name.en', 'angelicOrder.name.he', 'angelicOrder.name.romanization',
     'archangel',
     'body', 'bodyPos',
-    'chakraId',
+    'chakra',
     'godName.name.en', 'godName.name.he', 'godName.name.romanization',
     'gdGrade.id', 'gdGrade.name',
     'name.en', 'name.he', 'name.romanization',
     'planets',
     'scent',
     'stone',
-    'soul',
+    'soul.name.en', 'soul.name.he', 'soul.name.romanization',
   ];
 
   return (
