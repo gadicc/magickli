@@ -25,7 +25,7 @@ const styles = theme => ({
 function Tiles({ tiles, classes }) {
   return (
     <div className={classes.root}>
-      <ImageList cellHeight={180} className={classes.gridList} spacing={0}>
+      <ImageList rowHeight={180} className={classes.gridList} gap={0}>
         {tiles.map(tile => (
           <ImageListItem key={tile.to} component={Link} href={tile.to}>
               {
