@@ -47,6 +47,40 @@ function encodeSVG() {
   download.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + data);
 }
 
+async function copySVG(event) {
+  event.preventDefault();
+
+  let svgText = document.getElementById('TreeOfLife').outerHTML;
+
+  // since React doesn't support namespace tags
+  svgText = svgText.replace(
+    'xmlns="http://www.w3.org/2000/svg"',
+    'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
+  );
+
+  const blob = new Blob([svgText], {type: "image/svg+xml"})
+  const item = new ClipboardItem({ "image/svg+xml": blob });
+
+  try {
+    await navigator.clipboard.write([item]);
+  } catch (err) {
+    if (err.message === "Type image/svg+xml not supported on write." || err.message.match(/is not defined/)) {
+
+      // Fallback (and actually only way possible at time of writing)
+      const textarea = document.createElement('textarea');
+      textarea.value = svgText;
+      document.body.appendChild(textarea);
+      textarea.select();
+      const result = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (result === "unsuccessful") {}
+
+    } else {
+      throw err;
+    }
+  }
+}
+
 function TreeOfLife() {
   const navParts = [ { title: 'Kabbalah', url: '/kabbalah' } ];
   const router = useRouter();
@@ -197,6 +231,8 @@ function TreeOfLife() {
 
           <div>
             <a href="#" id="downloadSVG" onClick={encodeSVG}>Download as SVG</a>
+            {" | "}
+            <a href="#" id="copySVG" onClick={copySVG}>Copy to Clipboard</a>
           </div>
 
           <br />
