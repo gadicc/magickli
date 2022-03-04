@@ -45,7 +45,13 @@ function Link(props) {
   }
 
   return (
-    <MuiLink component={NextComposed} className={className} ref={innerRef} href={href} {...other} />
+    <MuiLink
+      component={NextComposed}
+      className={className}
+      ref={innerRef}
+      href={href}
+      {...other}
+      underline="hover" />
   );
 }
 
