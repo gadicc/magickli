@@ -1,7 +1,7 @@
-import { withStyles } from '@material-ui/core/styles';
-import ImageList from '@material-ui/core/ImageList';
-import ImageListItem from '@material-ui/core/ImageListItem';
-import ImageListItemBar from '@material-ui/core/ImageListItemBar';
+import withStyles from '@mui/styles/withStyles';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 import Link from '../src/Link';
 

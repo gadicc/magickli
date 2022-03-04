@@ -1,11 +1,9 @@
 import React from 'react';
 import Link from '../../src/Link';
-//import Link from '@material-ui/core/Link';
-
-import { withStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
+import withStyles from '@mui/styles/withStyles';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 import AppBar from '../../components/AppBar';
 import Tiles from '../../components/Tiles';

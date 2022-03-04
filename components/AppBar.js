@@ -1,14 +1,12 @@
 import React from 'react';
-// import { useRouter } from 'next/router';
-
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import HomeIcon from '@material-ui/icons/Home';
-import ShareIcon from '@material-ui/icons/Share';
+import makeStyles from '@mui/styles/makeStyles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import HomeIcon from '@mui/icons-material/Home';
+import ShareIcon from '@mui/icons-material/Share';
 
 import Link from '../src/Link';
 
@@ -52,7 +50,12 @@ export default function ButtonAppBar({ title, navParts }) {
       <AppBar position="static">
         <Toolbar>
           <Link href="/" className={classes.navPos}>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              size="large">
               <HomeIcon />
             </IconButton>
           </Link>
@@ -70,7 +73,7 @@ export default function ButtonAppBar({ title, navParts }) {
             {title}
           </Typography>
           {/* <Button color="inherit">Login</Button> */}
-          <IconButton color="inherit" aria-label="share" onClick={share}>
+          <IconButton color="inherit" aria-label="share" onClick={share} size="large">
             <ShareIcon />
           </IconButton>
         </Toolbar>
