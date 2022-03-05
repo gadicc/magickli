@@ -54,7 +54,7 @@ function MercuryDrawing({ phase, width, height }) {
   );
 }
 
-function MercuryWidget({ padding = "8px 0 7px 0" }) {
+function MercuryWidget({ padding = "10px 0 18px 0" }) {
   const retrograde = find();
   const d = (d) =>
     DateTime.fromJSDate(d).toLocaleString({
