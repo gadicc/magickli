@@ -289,6 +289,7 @@ function TreeOfLife({
 
           return (
             <text
+              key={path.id}
               style={style}
               x={letterPos.x}
               y={letterPos.y}
