@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import beautify from "xml-beautifier";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -75,6 +77,8 @@ async function copySVG(event) {
       throw err;
     }
   }
+
+  toast("✅ Copied to clipboard as SVG");
 }
 
 async function copyPNG(event) {
@@ -104,6 +108,7 @@ async function copyPNG(event) {
 
   const item = new ClipboardItem({ "image/png": pngBlob });
   await navigator.clipboard.write([item]);
+  toast("✅ PNG copied to clipboard");
 }
 
 function TreeOfLife() {
@@ -345,6 +350,17 @@ function TreeOfLife() {
           </div>
         </Box>
       </Container>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
     </>
   );
 }
