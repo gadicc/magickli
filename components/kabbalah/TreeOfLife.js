@@ -207,6 +207,9 @@ function TreeOfLife({
         svg#TreeOfLife {
           font-family: 'Noto Sans', 'Noto Sans Hebrew', Arial, sans-serif;
         }
+        a:visited * {
+          fill: inherit;
+        }
       ` + (flip && "svg#TreeOfLife { transform: rotateY(180deg) }")}
       </style>
 
@@ -225,7 +228,7 @@ function TreeOfLife({
           const start = sephirot[Number(parts[0]) - 1];
           const end = sephirot[Number(parts[1]) - 1];
 
-          const styleActive = { fill: "#ffa " };
+          const styleActive = { fill: "#ffa" };
           const styleInactive = { opacity: 0.2 };
           const style = activePath
             ? activePath === path.id
@@ -288,16 +291,18 @@ function TreeOfLife({
             : null;
 
           return (
-            <text
-              key={path.id}
-              style={style}
-              x={letterPos.x}
-              y={letterPos.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-            >
-              {path[letterAttr]?.hebrewLetter?.letter?.he}
-            </text>
+            <a key={path.id} id={"path" + path.id} xlinkHref={pathHref(path)}>
+              <text
+                key={path.id}
+                style={style}
+                x={letterPos.x}
+                y={letterPos.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+              >
+                {path[letterAttr]?.hebrewLetter?.letter?.he}
+              </text>
+            </a>
           );
         })}
       </g>
@@ -310,6 +315,10 @@ function TreeOfLife({
               cy={s.y}
               r="39.2"
               fill={s.color.match(",") ? null : s.color}
+              style={{
+                // Override a:visited * { inherit } from style.
+                fill: s.color.match(",") ? null : s.color,
+              }}
               stroke={s.data.color.strokeColor || "#000"}
               strokeWidth="1.568"
               strokeDasharray={s.data.color.strokeDasharray}
