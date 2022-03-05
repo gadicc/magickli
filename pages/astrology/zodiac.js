@@ -27,7 +27,7 @@ export default function signs() {
       <Container maxWidth="sm">
         <Box my={4}>
           <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Sign & Symbol</TableCell>
