@@ -29,19 +29,20 @@ function getServerSideProps(context) {
 }
 */
 
-function encodeSVG() {
-  let svgText = document.getElementById("TreeOfLife").outerHTML;
-  const download = document.getElementById("downloadSVG");
-
-  // since React doesn't support namespace tags
-  svgText = svgText.replace(
+function getSvgText() {
+  return document.getElementById("TreeOfLife").outerHTML.replace(
+    // since React doesn't support namespace tags
     'xmlns="http://www.w3.org/2000/svg"',
     'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
   );
+}
 
+function encodeSVG() {
+  const svgText = getSvgText();
   const pretty = beautify(svgText);
   const data = encodeURIComponent(pretty);
 
+  const download = document.getElementById("downloadSVG");
   download.setAttribute("download", "TreeOfLife-magickli-export.svg");
   download.setAttribute("href-lang", "image/svg+xml");
   download.setAttribute("href", "data:image/svg+xml;charset=utf-8," + data);
@@ -50,14 +51,7 @@ function encodeSVG() {
 async function copySVG(event) {
   event.preventDefault();
 
-  let svgText = document.getElementById("TreeOfLife").outerHTML;
-
-  // since React doesn't support namespace tags
-  svgText = svgText.replace(
-    'xmlns="http://www.w3.org/2000/svg"',
-    'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
-  );
-
+  const svgText = getSvgText();
   const blob = new Blob([svgText], { type: "image/svg+xml" });
   const item = new ClipboardItem({ "image/svg+xml": blob });
 
@@ -81,6 +75,35 @@ async function copySVG(event) {
       throw err;
     }
   }
+}
+
+async function copyPNG(event) {
+  event.preventDefault();
+
+  const svgText = getSvgText();
+  const svgBlob = new Blob([svgText], { type: "image/svg+xml;charset=utf-8" });
+
+  const svgImage = new Image();
+  const svgUrl = URL.createObjectURL(svgBlob);
+  await new Promise((resolve) => {
+    svgImage.onload = resolve;
+    svgImage.src = svgUrl;
+  });
+  URL.revokeObjectURL(svgUrl);
+
+  const canvas = document.createElement("canvas");
+  canvas.height = 1080;
+  canvas.width = svgImage.width * (1080 / svgImage.height);
+
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(svgImage, 0, 0);
+
+  const pngBlob = await new Promise((resolve) =>
+    canvas.toBlob(resolve, "image/png", 0.9)
+  );
+
+  const item = new ClipboardItem({ "image/png": pngBlob });
+  await navigator.clipboard.write([item]);
 }
 
 function TreeOfLife() {
@@ -281,7 +304,11 @@ function TreeOfLife() {
             </a>
             {" | "}
             <a href="#" id="copySVG" onClick={copySVG}>
-              Copy to Clipboard
+              Copy SVG to Clipboard
+            </a>
+            {" | "}
+            <a href="#" id="copyPNG" onClick={copyPNG}>
+              Copy PNG to Clipboard
             </a>
           </div>
 
