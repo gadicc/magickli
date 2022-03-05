@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
+
+# Host
 Host: https://magick.li
+
+# Sitemaps
 Sitemap: https://magick.li/sitemap.xml
