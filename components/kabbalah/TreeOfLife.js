@@ -40,6 +40,11 @@ function LineOutline({ x1, y1, x2, y2, offset=5, ...args }) {
   );
 }
 
+/*
+ * Note: originally I used a lot of CSS classes, which worked superbly in the
+ * browser, but was very inconsistent when exporting into external programs.
+ */
+
 function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index',
     bottomText='', letterAttr = 'hermetic', active, pathHref, sephirahHref,
     activePath, flip, showDaat }) {
@@ -120,6 +125,22 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
     return 0.1;
   }
 
+  function pathLetterPos(path) {
+    // Adjust position on path to avoid being covered over by other paths
+    const specialPositions = {
+      hebrew: {
+        '2_5': 0.3,   '3_4': 0.3,   // Half way to 2_5,3_4 intersection
+        '2_6': 0.333, '3_6': 0.333, // Level with y-cent of 1_6, 2_4, 3_5
+        '6_9': 0.635                // Visible between 7_8 and Yesod
+      },
+      hermetic: {
+        '2_6': 0.333, '3_6': 0.333, // In line with Center 1_6, 2_4, 3_5
+        '6_9': 0.635                // Visible between 7_8 and Yesod
+      }
+    };
+    return specialPositions[letterAttr][path.id] || 0.5;
+  }
+
   const ref = React.useRef();
   const router = useRouter();
 
@@ -157,60 +178,32 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
         }
       ` + (flip && 'svg#TreeOfLife { transform: rotateY(180deg) }')}</style>
 
-
       {/* Paths */}
-      <g id="paths">
-        <style type="text/css">{`
-          .path {
-            stroke: #000;
-            stroke-width: 3;
-            fill: #fff;
-            paint-order: stroke fill markers;
-          }
-          .path.active {
-            fill: #ffa;
-          }
-          .path.inactive {
-            opacity: 0.2;
-          }
-
-          .letter { font-size: 110%; }
-          .letter.inactive { opacity: 0.2 };
-        `}</style>
+      <g id="paths" style={{ stroke: "#000", strokeWidth: 3, fill: "#fff", paintOrder: "stroke fill markers" }}>
         {
           pathsToDraw.map(path => {
             const parts = path.id.split('_');
             const start = sephirot[ Number(parts[0]) - 1 ];
             const end = sephirot[ Number(parts[1]) - 1 ];
-            const activePathClass = (activePath ? activePath===path.id?' active':' inactive' : '');
 
-            // Adjust position on path to avoid being covered over by other paths
-            const specialPositions = {
-              hebrew: {
-                '2_5': 0.3,   '3_4': 0.3,   // Half way to 2_5,3_4 intersection
-                '2_6': 0.333, '3_6': 0.333, // Level with y-cent of 1_6, 2_4, 3_5
-                '6_9': 0.635                // Visible between 7_8 and Yesod
-              },
-              hermetic: {
-                '2_6': 0.333, '3_6': 0.333, // In line with Center 1_6, 2_4, 3_5
-                '6_9': 0.635                // Visible between 7_8 and Yesod
-              }
-            };
-            const pos = specialPositions[letterAttr][path.id] || 0.5;
-
-            const letterPos = {
-              x: start.x + (end.x - start.x) * pos,
-              y: start.y + (end.y - start.y) * pos
-            };
+            const styleActive = { fill: "#ffa "};
+            const styleInactive = { opacity: 0.2 };
+            const style = activePath ? activePath===path.id ? styleActive : styleInactive : null;
 
             return (
               <a key={path.id} id={"path"+path.id} xlinkHref={pathHref(path)}>
                 <LineOutline x1={start.x} y1={start.y} x2={end.x} y2={end.y} offset={8.5}
-                  className={"path"+activePathClass} />
+                  style={style} />
+                {/*
+                  Note: Originally it was quite nice to have each letter inside the path.
+                  But for export purposes, much more helpful to have all letters in their
+                  own group (to edit style as a group).  MOVED BELOW.
+
                 <text className={"letter"+activePathClass} x={letterPos.x} y={letterPos.y}
                     textAnchor="middle" dominantBaseline="middle">
                   { path[letterAttr]?.hebrewLetter?.letter?.he }
                 </text>
+                */}
                 <title>
                   Letter: { path[letterAttr]?.hebrewLetter?.letter?.he }
                   {
@@ -220,6 +213,33 @@ function TreeOfLife({ width, height, labels, colorScale, field, topText = 'index
                   }
                 </title>
               </a>
+            );
+          })
+        }
+      </g>
+
+      <g id="pathLetters" style={{ fontSize: "100%" }}>
+        {
+          pathsToDraw.map(path => {
+            const parts = path.id.split('_');
+            const start = sephirot[ Number(parts[0]) - 1 ];
+            const end = sephirot[ Number(parts[1]) - 1 ];
+
+            const shift = pathLetterPos(path);
+            const letterPos = {
+              x: start.x + (end.x - start.x) * shift,
+              y: start.y + (end.y - start.y) * shift
+            };
+
+            const styleActive = {};
+            const styleInactive = { opacity: 0.2 };
+            const style = activePath ? activePath===path.id ? styleActive : styleInactive : null;
+
+            return (
+              <text style={style} x={letterPos.x} y={letterPos.y}
+                  textAnchor="middle" dominantBaseline="middle">
+                { path[letterAttr]?.hebrewLetter?.letter?.he }
+              </text>
             );
           })
         }
