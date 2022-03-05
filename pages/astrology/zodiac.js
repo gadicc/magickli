@@ -18,14 +18,7 @@ import Copyright from "../../src/Copyright";
 import AppBar from "../../components/AppBar";
 import Data from "../../data/data";
 
-const useStyles = makeStyles({
-  table: {
-    // minWidth: 650,
-  },
-});
-
 export default function signs() {
-  const classes = useStyles();
   const navParts = [{ title: "Astrology", url: "/astrology" }];
 
   return (

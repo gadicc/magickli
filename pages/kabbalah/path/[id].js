@@ -154,8 +154,8 @@ export default function Sephirot() {
                     <div className="hebrewLetter">
                       <div>{path.hermetic.hebrewLetter.letter.he}</div>
                       <div>
-                        {path.hermetic.hebrewLetter.letter.name} ("
-                        {path.hermetic.hebrewLetter.letter.mathers}")
+                        {path.hermetic.hebrewLetter.letter.name} (&quot;
+                        {path.hermetic.hebrewLetter.letter.mathers}&quot;)
                       </div>
                     </div>
                   </td>

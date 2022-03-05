@@ -1,3 +1,5 @@
+// import Image from "next/image";
+
 import withStyles from "@mui/styles/withStyles";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -34,7 +36,10 @@ function Tiles({ tiles, classes }) {
                 className="MuiGridListTile-imgFullHeight"
               />
             ) : (
-              <img src={tile.img} alt={tile.title} />
+              <img // eslint-disable-line
+                src={tile.img}
+                alt={tile.title}
+              />
             )}
             <ImageListItemBar className={classes.tileBar} title={tile.title} />
           </ImageListItem>

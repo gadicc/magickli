@@ -1,5 +1,6 @@
 import React from "react";
 import { DateTime } from "luxon";
+import Image from "next/image";
 
 import retrogrades from "../../data/astrology/retrograde.json5";
 
@@ -72,7 +73,7 @@ function MercuryWidget({ padding = "8px 0 7px 0" }) {
     >
       <style jsx>{``}</style>
       <div style={{ padding }}>
-        <img src="/pics/mercury.webp" height="85" />
+        <Image src="/pics/mercury.webp" height="85" width="85" alt="Mercury" />
       </div>
       <div style={{ color: "#cc5" }}>
         Retro {d(retrograde.start)} - {d(retrograde.end)}

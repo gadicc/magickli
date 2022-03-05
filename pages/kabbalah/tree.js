@@ -265,7 +265,11 @@ function TreeOfLife() {
                 <option value="hermetic">Western Hermetic Tree</option>
               </select>
               &nbsp;
-              <a target="_blank" href="https://hermetic.com/jwmt/v1n3/32paths">
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://hermetic.com/jwmt/v1n3/32paths"
+              >
                 *
               </a>
             </span>
@@ -281,7 +285,7 @@ function TreeOfLife() {
             </label>
             <br />
             <label>
-              Show Da'at:{" "}
+              Show Da&apos;at:{" "}
               <input
                 type="checkbox"
                 value={opts.showDaat}
@@ -323,8 +327,8 @@ function TreeOfLife() {
             <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=374526">
               broken in Chrome
             </a>
-            . You'll see the TopText / BottomText reversed. It works in Firefox,
-            or download and view outside of your browser.
+            . You&apos;ll see the TopText / BottomText reversed. It works in
+            Firefox, or download and view outside of your browser.
           </div>
 
           <ol>
