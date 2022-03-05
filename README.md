@@ -1,8 +1,8 @@
 # magick.li
 
-*Open-source magick reference PWA*
+_Open-source magick reference PWA_
 
-Copyright (c) 2020 Gadi Cohen.  MIT licensed.
+Copyright (c) 2020 Gadi Cohen. MIT licensed.
 
 ## Development
 

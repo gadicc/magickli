@@ -1,22 +1,21 @@
-const withPWA = require('next-pwa')
+const withPWA = require("next-pwa");
 
 module.exports = withPWA({
   pwa: {
-    dest: 'public'
+    dest: "public",
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-
     config.module.rules.push({
       test: /\.json5$/i,
-      loader: 'json5-loader',
-      type: 'javascript/auto'
+      loader: "json5-loader",
+      type: "javascript/auto",
     });
 
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
-    return config
+    return config;
   },
 });
