@@ -13,7 +13,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import ProTip from "../../src/ProTip";
 import Link from "../../src/Link";
 import Copyright from "../../src/Copyright";
 
