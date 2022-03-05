@@ -23,7 +23,7 @@ const tiles = [
     to: 'https://enochian.app/'
   },
   {
-    Component: GDLogoSquished,
+    Component: () => <GDLogoSquished width="100%"/>,
     title: 'Golden Dawn',
     to: '/hogd/'
   },

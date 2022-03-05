@@ -24,8 +24,8 @@ const styles = theme => ({
 
 function Tiles({ tiles, classes }) {
   return (
-    <div className={classes.root}>
-      <ImageList rowHeight={180} className={classes.gridList} gap={0}>
+    <div>
+      <ImageList rowHeight={180} gap={0} sx={{ width: "100%" }}>
         {tiles.map(tile => (
           <ImageListItem key={tile.to} component={Link} href={tile.to}>
               {
