@@ -4,31 +4,31 @@
     name: {
       en: "Root",
       sa: "मूलाधार",
-      romanization: "Muladhara"
-    }
+      romanization: "Muladhara",
+    },
   },
 
   sacral: {
     id: "sacral",
   },
-  
+
   "solar-plexus": {
-    id: "solar-plexus"
+    id: "solar-plexus",
   },
-  
+
   heart: {
-    id: "heart"
+    id: "heart",
   },
-  
+
   throat: {
-    id: "throat"
+    id: "throat",
   },
-  
+
   "third-eye": {
-    id: "third-eye"
+    id: "third-eye",
   },
-  
+
   crown: {
-    id: "crown"
-  },  
+    id: "crown",
+  },
 }

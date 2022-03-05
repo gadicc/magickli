@@ -1,170 +1,205 @@
 {
   aries: {
-    id: 'aries',
+    id: "aries",
     no: 1,
-    symbol: '♈',
+    symbol: "♈",
     name: {
-      en: 'Aries'
+      en: "Aries",
     },
     meaning: {
-      en: 'Ram'
+      en: "Ram",
     },
-    rulesFrom: [ [3, 21], [4, 19] ],
-    planetId: 'mars',
+    rulesFrom: [
+      [3, 21],
+      [4, 19],
+    ],
+    planetId: "mars",
   },
 
   taurus: {
-    id: 'taurus',
+    id: "taurus",
     no: 2,
-    symbol: '♉',
+    symbol: "♉",
     name: {
-      en: 'Taurus'
+      en: "Taurus",
     },
     meaning: {
-      en: 'Bullm'
+      en: "Bullm",
     },
-    rulesFrom: [ [4, 20], [5, 20] ],
-    planetId: 'venus',
+    rulesFrom: [
+      [4, 20],
+      [5, 20],
+    ],
+    planetId: "venus",
   },
 
   gemini: {
-    id: 'gemini',
+    id: "gemini",
     no: 3,
-    symbol: '♊',
+    symbol: "♊",
     name: {
-      en: 'Gemini'
+      en: "Gemini",
     },
     meaning: {
-      en: 'Twins'
+      en: "Twins",
     },
-    rulesFrom: [ [5, 21], [6, 20] ],
-    planetId: 'mercury',
+    rulesFrom: [
+      [5, 21],
+      [6, 20],
+    ],
+    planetId: "mercury",
   },
 
   cancer: {
-    id: 'cancer',
+    id: "cancer",
     no: 4,
-    symbol: '♋',
+    symbol: "♋",
     name: {
-      en: 'Cancer'
+      en: "Cancer",
     },
     meaning: {
-      en: 'Crab'
+      en: "Crab",
     },
-    rulesFrom: [ [6, 21], [7, 22] ],
-    planetId: 'sol',
+    rulesFrom: [
+      [6, 21],
+      [7, 22],
+    ],
+    planetId: "sol",
   },
 
   leo: {
-    id: 'leo',
+    id: "leo",
     no: 5,
-    symbol: '♌',
+    symbol: "♌",
     name: {
-      en: 'Leo'
+      en: "Leo",
     },
     meaning: {
-      en: 'Lion'
+      en: "Lion",
     },
-    rulesFrom: [ [7, 23], [8, 22] ],
-    planetId: 'sol',
+    rulesFrom: [
+      [7, 23],
+      [8, 22],
+    ],
+    planetId: "sol",
   },
 
   virgo: {
-    id: 'virgo',
+    id: "virgo",
     no: 6,
-    symbol: '♍',
+    symbol: "♍",
     name: {
-      en: 'Virgo'
+      en: "Virgo",
     },
     meaning: {
-      en: 'Virgin'
+      en: "Virgin",
     },
-    rulesFrom: [ [8, 23], [9, 22] ],
-    planetId: 'mercury',
+    rulesFrom: [
+      [8, 23],
+      [9, 22],
+    ],
+    planetId: "mercury",
   },
 
   libra: {
-    id: 'libra',
+    id: "libra",
     no: 7,
-    symbol: '♎',
+    symbol: "♎",
     name: {
-      en: 'Libra'
+      en: "Libra",
     },
     meaning: {
-      en: 'Scales'
+      en: "Scales",
     },
-    rulesFrom: [ [9, 23], [10, 22] ],
-    planetId: 'venus',
+    rulesFrom: [
+      [9, 23],
+      [10, 22],
+    ],
+    planetId: "venus",
   },
 
   scorpio: {
-    id: 'scorpio',
+    id: "scorpio",
     no: 8,
-    symbol: '♏',
+    symbol: "♏",
     name: {
-      en: 'Scorpio'
+      en: "Scorpio",
     },
     meaning: {
-      en: 'Scorpion'
+      en: "Scorpion",
     },
-    rulesFrom: [ [10, 23], [11, 21] ],
-    planetId: 'jupiter',
+    rulesFrom: [
+      [10, 23],
+      [11, 21],
+    ],
+    planetId: "jupiter",
   },
 
   sagittarius: {
-    id: 'sagittarius',
+    id: "sagittarius",
     no: 9,
-    symbol: '♐',
+    symbol: "♐",
     name: {
-      en: 'Sagittarius'
+      en: "Sagittarius",
     },
     meaning: {
-      en: 'Archer'
+      en: "Archer",
     },
-    rulesFrom: [ [11, 22], [12, 21] ],
-    planetId: 'jupiter',
+    rulesFrom: [
+      [11, 22],
+      [12, 21],
+    ],
+    planetId: "jupiter",
   },
 
   capricorn: {
-    id: 'capricorn',
+    id: "capricorn",
     no: 10,
-    symbol: '♑',
+    symbol: "♑",
     name: {
-      en: 'Capricorn'
+      en: "Capricorn",
     },
     meaning: {
-      en: 'Sea-goat'
+      en: "Sea-goat",
     },
-    rulesFrom: [ [12, 22], [1, 19] ],
-    planetId: 'saturn',
+    rulesFrom: [
+      [12, 22],
+      [1, 19],
+    ],
+    planetId: "saturn",
   },
 
   aquarius: {
-    id: 'aquarius',
+    id: "aquarius",
     no: 11,
-    symbol: '♒',
+    symbol: "♒",
     name: {
-      en: 'Aquarius'
+      en: "Aquarius",
     },
     meaning: {
-      en: 'Water-bearer'
+      en: "Water-bearer",
     },
-    rulesFrom: [ [1, 20], [2, 18] ],
-    planetId: 'saturn',
+    rulesFrom: [
+      [1, 20],
+      [2, 18],
+    ],
+    planetId: "saturn",
   },
 
   pisces: {
-    id: 'pisces',
+    id: "pisces",
     no: 12,
-    symbol: '♓',
+    symbol: "♓",
     name: {
-      en: 'Pisces'
+      en: "Pisces",
     },
     meaning: {
-      en: 'Fish'
+      en: "Fish",
     },
-    rulesFrom: [ [2, 19], [3, 20] ],
-    planetId: 'jupiter',
+    rulesFrom: [
+      [2, 19],
+      [3, 20],
+    ],
+    planetId: "jupiter",
   },
-
 }

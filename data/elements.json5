@@ -1,27 +1,26 @@
 {
-  "earth": {
+  earth: {
     id: "earth",
     symbol: "🜃",
   },
 
-  "air": {
+  air: {
     id: "air",
     symbol: "🜁",
   },
 
-  "water": {
+  water: {
     id: "water",
     symbol: "🜄",
   },
 
-  "fire": {
+  fire: {
     id: "fire",
     symbol: "🜂",
   },
 
-  "spirit": {
+  spirit: {
     id: "spirit",
     symbol: "☸",
   },
-
 }

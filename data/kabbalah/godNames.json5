@@ -1,83 +1,81 @@
 {
-
-  'ehiyeh': {
+  ehiyeh: {
     name: {
-      he: 'אהיה',
-      romanization: 'Ehiyeh',
+      he: "אהיה",
+      romanization: "Ehiyeh",
       meaning: "I am",
-    }
+    },
   },
 
-  'yah': {
+  yah: {
     name: {
-      he: 'יה',
-      romanization: 'Yah',
+      he: "יה",
+      romanization: "Yah",
       meaning: "Lord",
-    }
+    },
   },
 
-  'yhvh-elohim': {
+  "yhvh-elohim": {
     name: {
-      he: 'יהוה אלוהים',
-      romanization: 'YHVH Elohim',
+      he: "יהוה אלוהים",
+      romanization: "YHVH Elohim",
       meaning: "The Lord God",
-    }
+    },
   },
 
-  'el': {
+  el: {
     name: {
-      he: 'אל',
-      romanization: 'El',
+      he: "אל",
+      romanization: "El",
       meaning: "God",
-    }
+    },
   },
 
-  'elohim-gibor': {
+  "elohim-gibor": {
     name: {
-      he: 'אלוהים גיבור',
-      romanization: 'Elohim Gibor',
+      he: "אלוהים גיבור",
+      romanization: "Elohim Gibor",
       meaning: "God of Power",
-    }
+    },
   },
 
-  'yhvh-eloha-vedaat': {
+  "yhvh-eloha-vedaat": {
     name: {
-      he: 'יהוה אלוה ודעת',
-      romanization: 'YHVH Eloah Ve-da\'at',
+      he: "יהוה אלוה ודעת",
+      romanization: "YHVH Eloah Ve-da'at",
       meaning: "Lord God of Knowledge",
-    }
+    },
   },
 
-  'yhvh-tzvaot': {
+  "yhvh-tzvaot": {
     name: {
-      he: 'יהוה צבעות',
-      romanization: 'YHVH Tzva-oht',
+      he: "יהוה צבעות",
+      romanization: "YHVH Tzva-oht",
       meaning: "Lord of Armies",
-    }
+    },
   },
 
-  'elohim-tzvaot': {
+  "elohim-tzvaot": {
     name: {
-      he: 'אלוהים צבעות',
-      romanization: 'Elohim Tzvaot',
+      he: "אלוהים צבעות",
+      romanization: "Elohim Tzvaot",
       meaning: "God of Armies",
-    }
+    },
   },
 
-  'shadai-el-chai': {
+  "shadai-el-chai": {
     name: {
-      he: 'שדאי אל חי',
-      romanization: 'Shaddai El Chai',
+      he: "שדאי אל חי",
+      romanization: "Shaddai El Chai",
       meaning: "Almighty Living God",
-    }
+    },
   },
 
-  'adonai-haaretz': {
+  "adonai-haaretz": {
     name: {
-      he: 'אדוני הארץ',
+      he: "אדוני הארץ",
       romanization: "Adonai Ha'aretz",
       meaning: "Lord of Earth",
-    }
+    },
   },
-
 }

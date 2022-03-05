@@ -55,7 +55,7 @@
     next: "portal",
   },
 
-  "portal": {
+  portal: {
     id: "portal",
     name: "Portal",
     elementId: "spirit",

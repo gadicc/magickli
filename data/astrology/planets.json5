@@ -3,7 +3,7 @@
 
    */
 
-  "sol": {
+  sol: {
     id: "sol",
     symbol: "☉",
     hebrewLetterId: "resh",
@@ -12,15 +12,15 @@
         en: "Sun",
       },
       he: {
-        he: 'שמש',
-        roman: 'Shemesh',
+        he: "שמש",
+        roman: "Shemesh",
         en: "Sun",
       },
     },
     godNameId: "yhvh-eloha-vedaat",
   },
 
-  "mercury": {
+  mercury: {
     id: "mercury",
     symbol: "☿",
     hebrewLetterId: "bet",
@@ -31,12 +31,12 @@
       },
       he: {
         he: "כוכב",
-        roman: 'Kochav',
-      }
-    }
+        roman: "Kochav",
+      },
+    },
   },
 
-  "venus": {
+  venus: {
     id: "venus",
     symbol: "♀",
     hebrewLetterId: "dalet",
@@ -49,24 +49,24 @@
         roman: "Noga",
       },
     },
-    godNameId: 'yhvh-tzvaot',
+    godNameId: "yhvh-tzvaot",
   },
 
-  "earth": {
+  earth: {
     id: "earth",
     symbol: "♁",
     name: {
       en: {
         en: "Earth",
-      }
-    }
+      },
+    },
   },
 
-  "luna": {
+  luna: {
     id: "luna",
     symbol: "☾",
     hebrewLetterId: "gimel",
-    godNameId: 'shaddai-el-chai',
+    godNameId: "shaddai-el-chai",
     name: {
       en: {
         en: "Moon",
@@ -75,11 +75,11 @@
         he: "לבנה",
         roman: "Levanah",
         en: "White",
-      }
-    }
+      },
+    },
   },
 
-  "mars": {
+  mars: {
     id: "mars",
     symbol: "♂",
     hebrewLetterId: "pe",
@@ -90,12 +90,12 @@
       he: {
         he: "מאדים",
         roman: "Ma'adim",
-      }
+      },
     },
-    godNameId: 'elohim-gibor',
+    godNameId: "elohim-gibor",
   },
 
-  "jupiter": {
+  jupiter: {
     id: "jupiter",
     symbol: "♃",
     hebrewLetterId: "kaf",
@@ -106,13 +106,13 @@
       he: {
         he: "צדק",
         roman: "Tzedek",
-        en: "Justice"
-      }
+        en: "Justice",
+      },
     },
     godNameId: "el",
   },
 
-  "saturn": {
+  saturn: {
     id: "saturn",
     symbol: "♄",
     name: {
@@ -122,30 +122,29 @@
       he: {
         he: "שַׁבְּתַאי",
         roman: "Shabbathai",
-      }
+      },
     },
     hebrewLetterId: "tav",
     godNameId: "yhvh-elohim",
   },
 
-  "uranus": {
+  uranus: {
     id: "uranus",
     symbol: "⛢",
     name: {
       en: {
-        en: 'Uranus',
-      }
-    }
+        en: "Uranus",
+      },
+    },
   },
 
-  "neptune": {
+  neptune: {
     id: "neptune",
     symbol: "♆",
     name: {
       en: {
         en: "Neptune",
-      }
-    }
+      },
+    },
   },
-
 }

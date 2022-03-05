@@ -1,91 +1,89 @@
 {
-
-  'chayot-hakodesh': {
+  "chayot-hakodesh": {
     name: {
-      he: 'חיות הקודש',
-      en: 'Holy Living Creatures',
-      romanization: 'Chayot Hakodesh',
-    }
+      he: "חיות הקודש",
+      en: "Holy Living Creatures",
+      romanization: "Chayot Hakodesh",
+    },
   },
 
-  'auphanim': {
+  auphanim: {
     name: {
-      he: 'אופנים',
-      en: 'Wheels',
-      romanization: 'Auphaneem',
-    }
+      he: "אופנים",
+      en: "Wheels",
+      romanization: "Auphaneem",
+    },
   },
 
-  'aralim': {
+  aralim: {
     name: {
-      he: 'אראלים',
-      en: 'Thrones',
-      romanization: 'Ar\'aleem',
-    }
+      he: "אראלים",
+      en: "Thrones",
+      romanization: "Ar'aleem",
+    },
   },
 
-  'chashmalim': {
+  chashmalim: {
     name: {
-      he: 'חשמלים',
-      en: 'Shining Ones',
-      romanization: 'Chashmaleem',
-    }
+      he: "חשמלים",
+      en: "Shining Ones",
+      romanization: "Chashmaleem",
+    },
   },
 
-  'seraphim': {
+  seraphim: {
     name: {
-      he: 'שרפים',
-      en: 'Flaming Ones',
-      romanization: 'Serapheem',
-    }
+      he: "שרפים",
+      en: "Flaming Ones",
+      romanization: "Serapheem",
+    },
   },
 
-  'malachim': {
+  malachim: {
     name: {
-      he: 'מלאכים',
-      en: 'Messengers',
-      romanization: 'Malecheem',
-    }
+      he: "מלאכים",
+      en: "Messengers",
+      romanization: "Malecheem",
+    },
   },
 
-  'elohim': {
+  elohim: {
     name: {
-      he: 'אלוהים',
-      en: 'Gods & Goddesses',
-      romanization: 'Eloheem',
-    }
+      he: "אלוהים",
+      en: "Gods & Goddesses",
+      romanization: "Eloheem",
+    },
   },
 
-  'bnei-elohim': {
+  "bnei-elohim": {
     name: {
-      he: 'בני אלוהים',
-      en: 'Children of the Gods',
-      romanization: 'Bnei Eloheem',
-    }
+      he: "בני אלוהים",
+      en: "Children of the Gods",
+      romanization: "Bnei Eloheem",
+    },
   },
 
-  'kerubim': {
+  kerubim: {
     name: {
-      he: 'כרובים',
-      en: 'Strong Ones',
-      romanization: 'Kerubeem',
-    }
+      he: "כרובים",
+      en: "Strong Ones",
+      romanization: "Kerubeem",
+    },
   },
 
-  'ishim': {
+  ishim: {
     name: {
-      he: 'אישים',
-      en: 'Souls of Fire',
-      romanization: 'Isheem',
-    }
+      he: "אישים",
+      en: "Souls of Fire",
+      romanization: "Isheem",
+    },
   },
 
-  '': {
+  "": {
     name: {
-      he: '',
-      en: '',
-      romanization: '',
-    }
+      he: "",
+      en: "",
+      romanization: "",
+    },
   },
-
 }

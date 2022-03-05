@@ -7,253 +7,253 @@
   ],
  */
 
- // IDs are taken from the Unicode codepoints for Hebrew letters
- // https://unicode.org/charts/PDF/U0590.pdf
+// IDs are taken from the Unicode codepoints for Hebrew letters
+// https://unicode.org/charts/PDF/U0590.pdf
 {
-  "alef": {
-    id: 'alef',
+  alef: {
+    id: "alef",
     letter: {
       he: "א",
-      name: 'Aleph',
-      mathers: "A"
+      name: "Aleph",
+      mathers: "A",
     },
     index: 1,
     value: 1,
   },
 
-  "bet": {
-    id: 'bet',
+  bet: {
+    id: "bet",
     letter: {
       he: "ב",
-      name: 'Bet',
-      mathers: "B"
+      name: "Bet",
+      mathers: "B",
     },
     index: 2,
     value: 2,
   },
 
-  "gimel": {
-    id: 'gimel',
+  gimel: {
+    id: "gimel",
     letter: {
       he: "ג",
-      name: 'Gimel',
-      mathers: "G"
+      name: "Gimel",
+      mathers: "G",
     },
     index: 3,
     value: 3,
   },
 
-  "dalet": {
-    id: 'dalet',
+  dalet: {
+    id: "dalet",
     letter: {
       he: "ד",
-      name: 'Dalet',
-      mathers: "D"
+      name: "Dalet",
+      mathers: "D",
     },
     index: 4,
     value: 4,
   },
 
-  "he": {
-    id: 'he',
+  he: {
+    id: "he",
     letter: {
       he: "ה",
-      name: 'He',
-      mathers: "H"
+      name: "He",
+      mathers: "H",
     },
     index: 5,
     value: 5,
   },
 
-  "vav": {
-    id: 'vav',
+  vav: {
+    id: "vav",
     letter: {
       he: "ו",
-      name: 'Vav',
-      mathers: "V"
+      name: "Vav",
+      mathers: "V",
     },
     index: 6,
     value: 6,
   },
 
-  "zayin": {
-    id: 'zayin',
+  zayin: {
+    id: "zayin",
     letter: {
       he: "ז",
-      name: 'Zayin',
-      mathers: "Z"
+      name: "Zayin",
+      mathers: "Z",
     },
     index: 7,
     value: 7,
   },
 
-  "het": {
-    id: 'het',
+  het: {
+    id: "het",
     letter: {
       he: "ח",
-      name: 'Het',
-      mathers: "Ch"
+      name: "Het",
+      mathers: "Ch",
     },
     index: 8,
     value: 8,
   },
 
-  "tet": {
-    id: 'tet',
+  tet: {
+    id: "tet",
     letter: {
       he: "ט",
       name: "Tet",
-      mathers: "T"
+      mathers: "T",
     },
     index: 9,
     value: 9,
   },
 
-  "yod": {
-    id: 'yod',
+  yod: {
+    id: "yod",
     letter: {
       he: "י",
-      name: 'Yod',
-      mathers: "I"
+      name: "Yod",
+      mathers: "I",
     },
     index: 10,
     value: 10,
   },
 
-  "kaf": {
-    id: 'kaf',
+  kaf: {
+    id: "kaf",
     letter: {
       he: "כ",
-      name: 'Kaf',
-      mathers: "K"
+      name: "Kaf",
+      mathers: "K",
     },
     index: 11,
     value: 20,
     valueFinal: 500,
   },
 
-  "lamed": {
-    id: 'lamed',
+  lamed: {
+    id: "lamed",
     letter: {
       he: "ל",
-      name: 'Lamed',
-      mathers: "L"
+      name: "Lamed",
+      mathers: "L",
     },
     index: 12,
     value: 30,
   },
 
-  "mem": {
-    id: 'mem',
+  mem: {
+    id: "mem",
     letter: {
       he: "מ",
-      name: 'Mem',
-      mathers: "M"
+      name: "Mem",
+      mathers: "M",
     },
     index: 13,
     value: 40,
     valueFinal: 600,
   },
 
-  "nun": {
-    id: 'nun',
+  nun: {
+    id: "nun",
     letter: {
       he: "נ",
-      name: 'Nun',
-      mathers: "N"
+      name: "Nun",
+      mathers: "N",
     },
     index: 14,
     value: 50,
     valueFinal: 700,
   },
 
-  "samekh": {
-    id: 'samekh',
+  samekh: {
+    id: "samekh",
     letter: {
       he: "ס",
-      name: 'Samekh',
-      mathers: "S"
+      name: "Samekh",
+      mathers: "S",
     },
     index: 15,
     value: 60,
   },
 
-  "ayin": {
-    id: 'ayin',
+  ayin: {
+    id: "ayin",
     letter: {
       he: "ע",
-      name: 'Ayin',
-      mathers: "O"
+      name: "Ayin",
+      mathers: "O",
     },
     index: 16,
     value: 70,
   },
 
-  "pe": {
-    id: 'pe',
+  pe: {
+    id: "pe",
     letter: {
       he: "פ",
-      name: 'Pe',
-      mathers: "P"
+      name: "Pe",
+      mathers: "P",
     },
     index: 17,
     value: 80,
     valueFinal: 800,
   },
 
-  "tsadi": {
-    id: 'tsadi',
+  tsadi: {
+    id: "tsadi",
     letter: {
       he: "צ",
-      name: 'Tsadi',
-      mathers: "Tz"
+      name: "Tsadi",
+      mathers: "Tz",
     },
     index: 18,
     value: 90,
     valueFinal: 900,
   },
 
-  "qof": {
-    id: 'qof',
+  qof: {
+    id: "qof",
     letter: {
       he: "ק",
-      name: 'Qof',
-      mathers: "Q"
+      name: "Qof",
+      mathers: "Q",
     },
     index: 19,
     value: 100,
   },
 
-  "resh": {
-    id: 'resh',
+  resh: {
+    id: "resh",
     letter: {
       he: "ר",
-      name: 'Resh',
-      mathers: "R"
+      name: "Resh",
+      mathers: "R",
     },
     index: 20,
     value: 200,
   },
 
-  "shin": {
-    id: 'shin',
+  shin: {
+    id: "shin",
     letter: {
       he: "ש",
-      name: 'Shin',
-      mathers: "Sh"
+      name: "Shin",
+      mathers: "Sh",
     },
     index: 21,
     value: 300,
   },
 
-  "tav": {
-    id: 'tav',
+  tav: {
+    id: "tav",
     letter: {
       he: "ת",
-      name: 'Tav',
-      mathers: "Th"
+      name: "Tav",
+      mathers: "Th",
     },
     index: 22,
     value: 400,
-  }
+  },
 }

@@ -10,237 +10,237 @@
   "1_2": {
     id: "1_2",
     hermetic: {
-      hebrewLetterId: 'alef',
+      hebrewLetterId: "alef",
       pathNo: 11,
       tarotId: "0",
     },
     hebrew: {
-      hebrewLetterId: 'he',
-    }
+      hebrewLetterId: "he",
+    },
   },
 
   "1_3": {
     id: "1_3",
     hermetic: {
-      hebrewLetterId: 'bet',
+      hebrewLetterId: "bet",
       pathNo: 12,
       tarotId: "1",
     },
     hebrew: {
-      hebrewLetterId: 'vav',
-    }
+      hebrewLetterId: "vav",
+    },
   },
 
   "1_6": {
     id: "1_6",
     hermetic: {
-      hebrewLetterId: 'gimel',
+      hebrewLetterId: "gimel",
       pathNo: 13,
       tarotId: "2",
     },
     hebrew: {
-      hebrewLetterId: 'dalet',
-    }
+      hebrewLetterId: "dalet",
+    },
   },
 
   "2_3": {
     id: "2_3",
     hermetic: {
-      hebrewLetterId: 'dalet',
+      hebrewLetterId: "dalet",
       pathNo: 14,
       tarotId: "3",
     },
     hebrew: {
-      hebrewLetterId: 'shin',
-    }
+      hebrewLetterId: "shin",
+    },
   },
 
   "2_4": {
     id: "2_4",
     hermetic: {
-      hebrewLetterId: 'vav',
+      hebrewLetterId: "vav",
       pathNo: 16,
       tarotId: "5",
     },
     hebrew: {
-      hebrewLetterId: 'bet',
-    }
+      hebrewLetterId: "bet",
+    },
   },
 
   "2_5": {
     id: "2_5",
     hebrew: {
-      hebrewLetterId: 'zayin',
-    }
+      hebrewLetterId: "zayin",
+    },
   },
 
   "2_6": {
     id: "2_6",
     hermetic: {
-      hebrewLetterId: 'he',
+      hebrewLetterId: "he",
       pathNo: 15,
       tarotId: "4",
     },
     hebrew: {
-      hebrewLetterId: 'tet',
-    }
+      hebrewLetterId: "tet",
+    },
   },
 
   "3_4": {
     id: "3_4",
     hebrew: {
-      hebrewLetterId: 'qof',
-    }
+      hebrewLetterId: "qof",
+    },
   },
 
   "3_5": {
     id: "3_5",
     hermetic: {
-      hebrewLetterId: 'het',
+      hebrewLetterId: "het",
       pathNo: 18,
       tarotId: "7",
     },
     hebrew: {
-      hebrewLetterId: 'gimel',
-    }
+      hebrewLetterId: "gimel",
+    },
   },
 
   "3_6": {
     id: "3_6",
     hermetic: {
-      hebrewLetterId: 'zayin',
+      hebrewLetterId: "zayin",
       pathNo: 17,
       tarotId: "6",
     },
     hebrew: {
-      hebrewLetterId: 'ayin',
-    }
+      hebrewLetterId: "ayin",
+    },
   },
 
   "4_5": {
     id: "4_5",
     hermetic: {
-      hebrewLetterId: 'tet',
+      hebrewLetterId: "tet",
       pathNo: 19,
       tarotId: "8",
     },
     hebrew: {
-      hebrewLetterId: 'alef',
-    }
+      hebrewLetterId: "alef",
+    },
   },
 
   "4_6": {
     id: "4_6",
     hermetic: {
-      hebrewLetterId: 'yod',
+      hebrewLetterId: "yod",
       pathNo: 20,
       tarotId: "9",
     },
     hebrew: {
-      hebrewLetterId: 'het',
-    }
+      hebrewLetterId: "het",
+    },
   },
 
   "4_7": {
     id: "4_7",
     hermetic: {
-      hebrewLetterId: 'kaf',
+      hebrewLetterId: "kaf",
       pathNo: 21,
       tarotId: "10",
     },
     hebrew: {
-      hebrewLetterId: 'kaf',
-    }
+      hebrewLetterId: "kaf",
+    },
   },
 
   "5_6": {
     id: "5_6",
     hermetic: {
-      hebrewLetterId: 'lamed',
+      hebrewLetterId: "lamed",
       pathNo: 22,
       tarotId: "11",
     },
     hebrew: {
-      hebrewLetterId: 'tsadi',
-    }
+      hebrewLetterId: "tsadi",
+    },
   },
 
   "5_8": {
     id: "5_8",
     hermetic: {
-      hebrewLetterId: 'mem',
+      hebrewLetterId: "mem",
       pathNo: 23,
       tarotId: "12",
     },
     hebrew: {
-      hebrewLetterId: 'pe',
-    }
+      hebrewLetterId: "pe",
+    },
   },
 
   "6_7": {
     id: "6_7",
     hermetic: {
-      hebrewLetterId: 'nun',
+      hebrewLetterId: "nun",
       pathNo: 24,
       tarotId: "13",
     },
     hebrew: {
-      hebrewLetterId: 'yod',
-    }
+      hebrewLetterId: "yod",
+    },
   },
 
   "6_8": {
     id: "6_8",
     hermetic: {
-      hebrewLetterId: 'ayin',
+      hebrewLetterId: "ayin",
       pathNo: 26,
       tarotId: "15",
     },
     hebrew: {
-      hebrewLetterId: 'samekh',
-    }
+      hebrewLetterId: "samekh",
+    },
   },
 
   "6_9": {
     id: "6_9",
     hermetic: {
-      hebrewLetterId: 'samekh',
+      hebrewLetterId: "samekh",
       pathNo: 25,
       tarotId: "14",
     },
     hebrew: {
-      hebrewLetterId: 'resh',
-    }
+      hebrewLetterId: "resh",
+    },
   },
 
   "7_8": {
     id: "7_8",
     hermetic: {
-      hebrewLetterId: 'pe',
+      hebrewLetterId: "pe",
       pathNo: 27,
       tarotId: "16",
     },
     hebrew: {
-      hebrewLetterId: 'mem',
-    }
+      hebrewLetterId: "mem",
+    },
   },
 
   "7_9": {
     id: "7_9",
     hermetic: {
-      hebrewLetterId: 'tsadi',
+      hebrewLetterId: "tsadi",
       pathNo: 28,
       tarotId: "17",
     },
     hebrew: {
-      hebrewLetterId: 'nun',
-    }
+      hebrewLetterId: "nun",
+    },
   },
 
   "7_10": {
     id: "7_10",
     hermetic: {
-      hebrewLetterId: 'qof',
+      hebrewLetterId: "qof",
       pathNo: 29,
       tarotId: "18",
     },
@@ -249,19 +249,19 @@
   "8_9": {
     id: "8_9",
     hermetic: {
-      hebrewLetterId: 'resh',
+      hebrewLetterId: "resh",
       pathNo: 30,
       tarotId: "19",
     },
     hebrew: {
-      hebrewLetterId: 'lamed',
-    }
+      hebrewLetterId: "lamed",
+    },
   },
 
   "8_10": {
     id: "8_10",
     hermetic: {
-      hebrewLetterId: 'shin',
+      hebrewLetterId: "shin",
       pathNo: 31,
       tarotId: "20",
     },
@@ -270,12 +270,12 @@
   "9_10": {
     id: "9_10",
     hermetic: {
-      hebrewLetterId: 'tav',
+      hebrewLetterId: "tav",
       pathNo: 32,
       tarotId: "21",
     },
     hebrew: {
-      hebrewLetterId: 'tav',
-    }
+      hebrewLetterId: "tav",
+    },
   },
 }
