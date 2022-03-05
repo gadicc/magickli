@@ -1,4 +1,4 @@
-import TreeOfLife from '../../components/kabbalah/TreeOfLife';
+import TreeOfLife from "../../components/kabbalah/TreeOfLife";
 
 function sephirahHref(s) {
   return "/hogd/grade/" + s.data.gdGradeId;
@@ -18,7 +18,7 @@ function GradeTree({ ...props }) {
       pathHref={pathHref}
       {...props}
     />
-  )
+  );
 }
 
 export default GradeTree;

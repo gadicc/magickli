@@ -1,14 +1,14 @@
-import React from 'react';
-import makeStyles from '@mui/styles/makeStyles';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import HomeIcon from '@mui/icons-material/Home';
-import ShareIcon from '@mui/icons-material/Share';
+import React from "react";
+import makeStyles from "@mui/styles/makeStyles";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import HomeIcon from "@mui/icons-material/Home";
+import ShareIcon from "@mui/icons-material/Share";
 
-import Link from '../src/Link';
+import Link from "../src/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   navPos: {
-    color: 'white'
-  }
+    color: "white",
+  },
 }));
 
 export default function ButtonAppBar({ title, navParts }) {
@@ -31,18 +31,19 @@ export default function ButtonAppBar({ title, navParts }) {
 
   function share() {
     const data = {
-      title: title + ' - magick.li',
-      text: 'Check out "' + title + '" on magick.li, the open source magick app!',
+      title: title + " - magick.li",
+      text:
+        'Check out "' + title + '" on magick.li, the open source magick app!',
       url: window.location,
     };
 
     //console.log({ data });
 
     if (navigator.share)
-      navigator.share(data)
-        .catch(e => alert("Error sharing. " + JSON.stringify(error)));
-    else
-      alert("Sharing not supported on this platform.");
+      navigator
+        .share(data)
+        .catch((e) => alert("Error sharing. " + JSON.stringify(error)));
+    else alert("Sharing not supported on this platform.");
   }
 
   return (
@@ -55,25 +56,30 @@ export default function ButtonAppBar({ title, navParts }) {
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
-              size="large">
+              size="large"
+            >
               <HomeIcon />
             </IconButton>
           </Link>
           <Typography variant="h6" className={classes.title}>
-            {
-              navParts && navParts.map(part => (
+            {navParts &&
+              navParts.map((part) => (
                 <span key={part.url}>
                   <Link href={part.url} className={classes.navPos}>
                     {part.title}
-                  </Link>
-                  {" "}&gt;{" "}
+                  </Link>{" "}
+                  &gt;{" "}
                 </span>
-              ))
-            }
+              ))}
             {title}
           </Typography>
           {/* <Button color="inherit">Login</Button> */}
-          <IconButton color="inherit" aria-label="share" onClick={share} size="large">
+          <IconButton
+            color="inherit"
+            aria-label="share"
+            onClick={share}
+            size="large"
+          >
             <ShareIcon />
           </IconButton>
         </Toolbar>
