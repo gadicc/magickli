@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 //import Link from '@mui/material/Link';
 
-import AppBar from '../../components/AppBar';
-import Tiles from '../../components/Tiles';
-import GradeTree from '../../components/hogd/GradeTree';
+import AppBar from "../../components/AppBar";
+import Tiles from "../../components/Tiles";
+import GradeTree from "../../components/hogd/GradeTree";
 
 const tiles = [
   {
     Component: () => <GradeTree height="120%" />,
-    title: 'Grades',
-    to: '/hogd/grades'
+    title: "Grades",
+    to: "/hogd/grades",
   },
 ];
 

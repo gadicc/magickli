@@ -1,23 +1,23 @@
-import React from 'react';
-import Link from '../../src/Link';
-import withStyles from '@mui/styles/withStyles';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import React from "react";
+import Link from "../../src/Link";
+import withStyles from "@mui/styles/withStyles";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
 
-import AppBar from '../../components/AppBar';
-import Tiles from '../../components/Tiles';
+import AppBar from "../../components/AppBar";
+import Tiles from "../../components/Tiles";
 
 const tiles = [
   {
-    img: '/pics/planets2013.jpg',
-    title: 'Planets',
-    to: '/astrology/planets'
+    img: "/pics/planets2013.jpg",
+    title: "Planets",
+    to: "/astrology/planets",
   },
   {
-    img: '/pics/astrology.jpg',
-    title: 'Zodiac',
-    to: '/astrology/zodiac'
+    img: "/pics/astrology.jpg",
+    title: "Zodiac",
+    to: "/astrology/zodiac",
   },
 ];
 

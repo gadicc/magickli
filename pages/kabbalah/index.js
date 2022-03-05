@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 //import Link from '@mui/material/Link';
 
-import AppBar from '../../components/AppBar';
-import Tiles from '../../components/Tiles';
+import AppBar from "../../components/AppBar";
+import Tiles from "../../components/Tiles";
 
 const tiles = [
   {
-    img: '/pics/treeOfLife.jpg',
-    title: 'Tree of Life',
-    to: '/kabbalah/tree'
+    img: "/pics/treeOfLife.jpg",
+    title: "Tree of Life",
+    to: "/kabbalah/tree",
   },
 ];
 
