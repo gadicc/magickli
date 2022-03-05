@@ -128,7 +128,7 @@ function TreeOfLife({
       textColor: _sephirot[10].color[color + "Text"],
     });
 
-  console.log(sephirot);
+  //console.log(sephirot);
 
   let pathsToDraw = orderedPaths[letterAttr];
   if (activePath) {
