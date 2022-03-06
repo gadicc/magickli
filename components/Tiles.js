@@ -22,12 +22,15 @@ const styles = (theme) => ({
   tileBar: {
     background: "rgba(0, 0, 0, 0.6)",
   },
+  img: {
+    overflow: "hidden",
+  },
 });
 
 function Tiles({ tiles, classes }) {
   return (
     <div>
-      <ImageList rowHeight={180} gap={0} sx={{ width: "100%" }}>
+      <ImageList rowHeight={180} gap={0} sx={{ width: "100%", margin: 0 }}>
         {tiles.map((tile) => (
           <ImageListItem key={tile.to} component={Link} href={tile.to}>
             {tile.Component ? (
@@ -36,7 +39,8 @@ function Tiles({ tiles, classes }) {
                 className="MuiGridListTile-imgFullHeight"
               />
             ) : (
-              <img // eslint-disable-line
+              <img
+                className={classes.img} // eslint-disable-line
                 src={tile.img}
                 alt={tile.title}
               />
