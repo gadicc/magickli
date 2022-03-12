@@ -38,7 +38,7 @@ function getSvgText() {
   );
 }
 
-function encodeSVG() {
+function downloadSVG() {
   const svgText = getSvgText();
   const pretty = beautify(svgText);
   const data = encodeURIComponent(pretty);
@@ -47,6 +47,19 @@ function encodeSVG() {
   download.setAttribute("download", "TreeOfLife-magickli-export.svg");
   download.setAttribute("href-lang", "image/svg+xml");
   download.setAttribute("href", "data:image/svg+xml;charset=utf-8," + data);
+}
+
+async function downloadPNG() {
+  const canvas = await drawnCanvas();
+  const pngBlob = await new Promise((resolve) =>
+    canvas.toBlob(resolve, "image/png", 0.9)
+  );
+
+  const url = URL.createObjectURL(pngBlob);
+  const download = document.getElementById("downloadPNG");
+  download.setAttribute("download", "TreeOfLife-magickli-export.png");
+  download.setAttribute("href-lang", "image/png");
+  download.setAttribute("href", url);
 }
 
 async function copySVG(event) {
@@ -80,9 +93,7 @@ async function copySVG(event) {
   toast("✅ Copied to clipboard as SVG");
 }
 
-async function copyPNG(event) {
-  event.preventDefault();
-
+async function drawnCanvas() {
   const svgText = getSvgText();
   const svgBlob = new Blob([svgText], { type: "image/svg+xml;charset=utf-8" });
 
@@ -101,6 +112,13 @@ async function copyPNG(event) {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(svgImage, 0, 0);
 
+  return canvas;
+}
+
+async function copyPNG(event) {
+  event.preventDefault();
+
+  const canvas = await drawnCanvas();
   const pngBlob = await new Promise((resolve) =>
     canvas.toBlob(resolve, "image/png", 0.9)
   );
@@ -313,8 +331,12 @@ function TreeOfLife() {
 
           <div style={{ textAlign: "center", fontSize: "90%" }}>
             Download:{" "}
-            <a href="#" id="downloadSVG" onClick={encodeSVG}>
+            <a href="#" id="downloadSVG" onClick={downloadSVG}>
               SVG
+            </a>
+            {" | "}
+            <a href="#" id="downloadPNG" onClick={downloadPNG}>
+              PNG
             </a>
             <br />
             Copy to Clipboard:{" "}
