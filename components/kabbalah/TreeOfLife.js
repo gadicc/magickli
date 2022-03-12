@@ -426,6 +426,8 @@ function TreeOfLife({
                 key={i}
                 x={s.x}
                 y={s.y}
+                // We repeat in "style" to override a:visited * { color }
+                style={{ fill: s.textColor || "black" }}
                 fill={s.textColor || "black"}
                 fillOpacity={sephirahOpacity(s)}
                 stroke="none"
