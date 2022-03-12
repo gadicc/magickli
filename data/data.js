@@ -14,7 +14,7 @@ const allData = {
   tolPath: require("./kabbalah/paths.json5").default,
   soul: require("./kabbalah/souls.json5").default,
 
-  // chakra: require('./chakras.json5').default,
+  chakra: require("./chakras.json5").default,
 };
 
 function insertRefs(row) {
