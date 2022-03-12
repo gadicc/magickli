@@ -308,30 +308,31 @@ function TreeOfLife() {
             showDaat={opts.showDaat}
           />
 
-          <div>
+          <br />
+          <br />
+
+          <div style={{ textAlign: "center", fontSize: "90%" }}>
+            Download:{" "}
             <a href="#" id="downloadSVG" onClick={encodeSVG}>
-              Download as SVG
+              SVG
             </a>
-            {" | "}
+            <br />
+            Copy to Clipboard:{" "}
             <a href="#" id="copySVG" onClick={copySVG}>
-              Copy SVG to Clipboard
+              SVG
             </a>
             {" | "}
             <a href="#" id="copyPNG" onClick={copyPNG}>
-              Copy PNG to Clipboard
+              PNG
+            </a>
+            <br />
+            Hebrew Font:{" "}
+            <a href="https://magick.li/fonts/NotoSansHebrew-Regular.ttf">
+              NotoSansHebrew-Regular.ttf
             </a>
           </div>
 
           <br />
-
-          <div>
-            Note: TextOnPath for RTL text (e.g. Hebrew) is&nbsp;
-            <a href="https://bugs.chromium.org/p/chromium/issues/detail?id=374526">
-              broken in Chrome
-            </a>
-            . You&apos;ll see the TopText / BottomText reversed. It works in
-            Firefox, or download and view outside of your browser.
-          </div>
 
           <ol>
             {Object.values(Data.sephirah).map((sephirah) => (
@@ -346,8 +347,8 @@ function TreeOfLife() {
             ))}
           </ol>
 
-          <div>
-            <b>Credit:</b> Image inspired by{" "}
+          <div style={{ fontSize: "60%" }}>
+            <b>Credit:</b> Glyph inspired by{" "}
             <a href="https://commons.wikimedia.org/wiki/File:Tree_of_life_bahir_Hebrew.svg">
               Tree of life bahir Hebrew.svg
             </a>{" "}
