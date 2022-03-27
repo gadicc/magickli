@@ -10,8 +10,7 @@ function moonPhaseName(phase) {
 
   if (phase > 0.5) {
     if (phase === 0.75) return "last-quarter";
-    if (phase > 0.75);
-    return "waning-crescent";
+    if (phase > 0.75) return "waning-crescent";
     return "waning-gibbous";
   } else {
     if (phase === 0) return "new-moon";
