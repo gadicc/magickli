@@ -71,7 +71,10 @@ export async function getServerSideProps(context) {
   return { props: { _id } };
 }
 
-const randomItem = (set) => set[Math.floor(Math.random() * set.length)];
+function randomItem(set, prevItem) {
+  const newItem = set[Math.floor(Math.random() * set.length)];
+  return newItem === prevItem ? randomItem(set, prevItem) : newItem;
+}
 
 function StudySet() {
   const router = useRouter();
@@ -89,7 +92,7 @@ function StudySet() {
       setWrong("noMatch"); // to show answer in green
       setTimeout(() => {
         setWrong(null);
-        setItem(randomItem(set));
+        setItem(randomItem(set, item));
         if (!wrong) setCorrect(correct + 1);
         setTotal(total + 1);
       }, 200);
