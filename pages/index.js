@@ -32,6 +32,11 @@ const tiles = [
     title: "Kabbalah",
     to: "/kabbalah",
   },
+  {
+    img: "/pics/study.jpg",
+    title: "Study",
+    to: "/study",
+  },
 ];
 
 function Index() {
