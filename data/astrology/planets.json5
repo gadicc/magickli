@@ -147,4 +147,24 @@
       },
     },
   },
+
+  rahu: {
+    id: "rahu",
+    symbol: "☊",
+    name: {
+      en: {
+        en: "Caput Draconis",
+      },
+    },
+  },
+
+  ketu: {
+    id: "ketu",
+    symbol: "☋",
+    name: {
+      en: {
+        en: "Cauda Draconic",
+      },
+    },
+  },
 }
