@@ -34,6 +34,7 @@ function StudySet() {
   const [total, setTotal] = React.useState(0);
   const [wrong, setWrong] = React.useState(null);
   const Question = set.Question;
+  // console.log({ set, cards, card });
 
   function clicked(answer) {
     if (answer === card.answer) {
@@ -49,9 +50,11 @@ function StudySet() {
     }
   }
 
+  const navParts = [{ title: "Study", url: "/study" }];
+
   return (
     <Container maxWidth="lg" sx={{ p: 0 }}>
-      <AppBar title={"Study " + _id} />
+      <AppBar title={_id} navParts={navParts} />
       <Box sx={{ p: 2 }}>
         <div style={{ textAlign: "right" }}>
           {total === 0 ? "Go!" : `${correct} / ${total}`}

@@ -47,16 +47,24 @@ function generateCards() {
   });
 }
 
+const itemSymbol = (item) => item.symbol;
+const itemName = (item) => item.name.en;
+
+const setDefaults = {
+  Question: SingleCharQuestion,
+  generateCards,
+};
+
 const sets = {
-  _default: {
-    Question: SingleCharQuestion,
-    generateCards,
+  "planet-signs": {
+    data: data.planet,
+    question: itemSymbol,
+    answer: (item) => item.name.en.en,
   },
   "zodiac-signs": {
     data: data.zodiac,
-    question: (item) => item.symbol,
-    answer: (item) => item.name.en,
-    Question: SingleCharQuestion,
+    question: itemSymbol,
+    answer: itemName,
   },
 };
 
@@ -64,7 +72,7 @@ function getSet(id) {
   if (!sets[id]) throw new Error("No such set");
 
   const set = {
-    ...sets._default,
+    ...setDefaults,
     ...sets[id],
   };
 
@@ -76,4 +84,5 @@ function getSet(id) {
   return set;
 }
 
+export { sets };
 export default getSet;
