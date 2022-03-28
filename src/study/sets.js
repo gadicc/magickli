@@ -28,15 +28,16 @@ function shuffle(array) {
 }
 
 function generateCards() {
-  const { data, question, answer } = this;
+  const { data, question, answer, answers: _answers } = this;
   const array = Object.values(data);
 
   shuffle(array);
   return array.map((item) => {
     const otherItems = array.filter((oItem) => oItem !== item);
     shuffle(otherItems);
-    const answers = otherItems.slice(0, 3).concat([item]).map(answer);
-    shuffle(answers);
+    const answers =
+      _answers || otherItems.slice(0, 3).concat([item]).map(answer);
+    if (!_answers) shuffle(answers);
     return {
       set: name,
       id: item.id,
@@ -68,6 +69,18 @@ const sets = {
     data: data.zodiac,
     question: "symbol",
     answer: "name.en",
+  },
+  "zodiac-triples": {
+    data: data.zodiac,
+    question: "symbol",
+    answer: "element.symbol",
+    answers: ["🜁", "🜂", "🜄", "🜃"],
+  },
+  "zodiac-quads": {
+    data: data.zodiac,
+    question: "symbol",
+    answer: "quadruplicity",
+    answers: ["cardinal", "kerubic", "mutable"],
   },
 };
 
