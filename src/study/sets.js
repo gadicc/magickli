@@ -47,24 +47,27 @@ function generateCards() {
   });
 }
 
-const itemSymbol = (item) => item.symbol;
-const itemName = (item) => item.name.en;
-
 const setDefaults = {
   Question: SingleCharQuestion,
   generateCards,
 };
 
+function dotProps(item, object) {
+  const keys = item.split(".");
+  for (let key of keys) object = object[key];
+  return object;
+}
+
 const sets = {
   "planet-signs": {
     data: data.planet,
-    question: itemSymbol,
-    answer: (item) => item.name.en.en,
+    question: "symbol",
+    answer: "name.en.en",
   },
   "zodiac-signs": {
     data: data.zodiac,
-    question: itemSymbol,
-    answer: itemName,
+    question: "symbol",
+    answer: "name.en",
   },
 };
 
@@ -78,8 +81,11 @@ function getSet(id) {
 
   set.generateCards.bind(set);
 
-  // TODO, itereate through values, do string substuttion
-  // e.g. "item => item.name.en" becomes (item) => item.name.en;
+  // Allow e.g. "name.en" to create (item) => item.name.en;
+  for (let key of ["question", "answer"]) {
+    if (typeof set[key] === "string")
+      set[key] = dotProps.bind(undefined, set[key]);
+  }
 
   return set;
 }
