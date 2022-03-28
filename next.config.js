@@ -5,6 +5,9 @@ module.exports = withPWA({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push({
       test: /\.json5$/i,
