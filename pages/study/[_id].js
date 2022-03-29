@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { supermemo } from "supermemo";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -24,6 +25,75 @@ function randomCard(set, prevCard) {
   return newCard === prevCard ? randomCard(set, prevCard) : newCard;
 }
 
+const StudySetCol = db.collection("studySet");
+
+function updateCardSet(set, cardId, { wrongCount, startTime }) {
+  const cardSet = StudySetCol.findOne({ setId: set.id }) || {
+    // userId:
+    setId: set.id,
+    cards: null,
+    correct: 0,
+    incorrect: 0,
+    time: 0,
+    dueDate: new Date(),
+  };
+
+  if (!cardSet.cards) {
+    cardSet.cards = {};
+    for (let cardId of Object.keys(set.data))
+      cardSet.cards[cardId] = {
+        correct: 0,
+        incorrect: 0,
+        time: 0,
+        dueDate: new Date(),
+        supermemo: {
+          interval: 0,
+          repetition: 0,
+          efactor: 2.5,
+        },
+      };
+  }
+
+  const card = cardSet.cards[cardId];
+  // console.log({ cardSet, card });
+
+  const elapsed = Date.now() - startTime;
+  card.time += elapsed;
+  cardSet.time += elapsed;
+
+  let grade;
+  if (wrongCount === 0) {
+    card.correct++;
+    cardSet.correct++;
+    if (elapsed < 3000) grade = 5;
+    else if (elapsed < 5000) grade = 4;
+    else grade = 3;
+  } else {
+    card.incorrect++;
+    cardSet.incorrect++;
+    if (elapsed < 3000) grade = 2;
+    else if (elapsed < 8000) grade = 1;
+    else grade = 0;
+  }
+
+  // console.log({ wrongCount, startTime, elapsed, grade });
+
+  card.supermemo = supermemo(card.supermemo, grade);
+
+  const dayInMs = 86400000;
+  const oldDueDate = card.dueDate.getTime();
+  card.dueDate = new Date(oldDueDate + card.supermemo.interval * dayInMs);
+
+  let earliestDueDate = card.dueDate;
+  for (let card2 of Object.values(cardSet.cards))
+    if (card2.dueDate < earliestDueDate) earliestDueDate = card2.dueDate;
+
+  //if (cardSet.dueDate.getTime() === oldDueDate) cardSet.dueDate = card.dueDate;
+
+  if (cardSet._id) StudySetCol.update(cardSet._id, { $set: cardSet });
+  else StudySetCol.insert(cardSet);
+}
+
 function StudySet() {
   const router = useRouter();
   const _id = router.query._id;
@@ -34,20 +104,26 @@ function StudySet() {
   const [correct, setCorrect] = React.useState(0);
   const [total, setTotal] = React.useState(0);
   const [wrong, setWrong] = React.useState(null);
+  const [wrongCount, setWrongCount] = React.useState(0);
+  const [startTime, setStartTime] = React.useState(Date.now());
   const Question = set.Question;
   // console.log({ set, cards, card });
 
   function clicked(answer) {
     if (answer === card.answer) {
       setWrong("noMatch"); // to show answer in green
+      setWrongCount(0);
       setTimeout(() => {
         setWrong(null);
         setCard(randomCard(cards, card));
         if (!wrong) setCorrect(correct + 1);
         setTotal(total + 1);
+        setStartTime(Date.now());
       }, 200);
+      updateCardSet(set, card.id, { wrongCount, startTime });
     } else {
       setWrong(answer);
+      setWrongCount(wrongCount + 1);
     }
   }
 

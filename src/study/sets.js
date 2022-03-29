@@ -39,7 +39,7 @@ function generateCards() {
       _answers || otherItems.slice(0, 3).concat([item]).map(answer);
     if (!_answers) shuffle(answers);
     return {
-      set: name,
+      // setId: name,
       id: item.id,
       question: question(item),
       answer: answer(item),
@@ -61,22 +61,26 @@ function dotProps(item, object) {
 
 const sets = {
   "planet-signs": {
+    id: "planet-signs",
     data: data.planet,
     question: "symbol",
     answer: "name.en.en",
   },
   "zodiac-signs": {
+    id: "zodiac-signs",
     data: data.zodiac,
     question: "symbol",
     answer: "name.en",
   },
   "zodiac-triples": {
+    id: "zodiac-triples",
     data: data.zodiac,
     question: "symbol",
     answer: "element.symbol",
     answers: ["🜁", "🜂", "🜄", "🜃"],
   },
   "zodiac-quads": {
+    id: "zodiac-quads",
     data: data.zodiac,
     question: "symbol",
     answer: "quadruplicity",
