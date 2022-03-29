@@ -12,6 +12,7 @@ import Link from "../../src/Link.js";
 import AppBar from "../../components/AppBar.js";
 
 import getSet from "../../src/study/sets.js";
+import db from "../../src/db.js";
 
 export async function getServerSideProps(context) {
   const { _id } = context.query;

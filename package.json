@@ -16,6 +16,8 @@
     "@mui/material": "^5.4.4",
     "@mui/styles": "^5.4.4",
     "dot-prop": "^6.0.1",
+    "gongo-client": "^0.3.3",
+    "gongo-client-react": "^0.0.3",
     "lune": "^0.4.0",
     "luxon": "^2.0.2",
     "next": "^12.1.0",
