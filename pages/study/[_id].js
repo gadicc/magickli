@@ -176,13 +176,15 @@ function StudySet({ set, cards, studyData }) {
     if (answer === card.answer) {
       setWrong("noMatch"); // to show answer in green
       setWrongCount(0);
-      setTimeout(() => {
-        setWrong(null);
-        setCard(randomCard(cards, card));
-        if (!wrong) setCorrect(correct + 1);
-        setTotal(total + 1);
-        setStartTime(Date.now());
-      }, 200);
+      // If we're on the final card, don't try set a new card at the end.
+      if (cards.length > 1)
+        setTimeout(() => {
+          setWrong(null);
+          setCard(randomCard(cards, card));
+          if (!wrong) setCorrect(correct + 1);
+          setTotal(total + 1);
+          setStartTime(Date.now());
+        }, 200);
       updateCardSet(set, card.id, studyData, { wrongCount, startTime });
     } else {
       setWrong(answer);
