@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { supermemo } from "supermemo";
+import { useGongoOne } from "gongo-client-react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -27,50 +28,24 @@ function randomCard(set, prevCard) {
 
 const StudySetCol = db.collection("studySet");
 
-function updateCardSet(set, cardId, { wrongCount, startTime }) {
-  const cardSet = StudySetCol.findOne({ setId: set.id }) || {
-    // userId:
-    setId: set.id,
-    cards: null,
-    correct: 0,
-    incorrect: 0,
-    time: 0,
-    dueDate: new Date(),
-  };
-
-  if (!cardSet.cards) {
-    cardSet.cards = {};
-    for (let cardId of Object.keys(set.data))
-      cardSet.cards[cardId] = {
-        correct: 0,
-        incorrect: 0,
-        time: 0,
-        dueDate: new Date(),
-        supermemo: {
-          interval: 0,
-          repetition: 0,
-          efactor: 2.5,
-        },
-      };
-  }
-
-  const card = cardSet.cards[cardId];
+function updateCardSet(set, cardId, studyData, { wrongCount, startTime }) {
+  const card = studyData.cards[cardId];
   // console.log({ cardSet, card });
 
   const elapsed = Date.now() - startTime;
   card.time += elapsed;
-  cardSet.time += elapsed;
+  studyData.time += elapsed;
 
   let grade;
   if (wrongCount === 0) {
     card.correct++;
-    cardSet.correct++;
+    studyData.correct++;
     if (elapsed < 3000) grade = 5;
     else if (elapsed < 5000) grade = 4;
     else grade = 3;
   } else {
     card.incorrect++;
-    cardSet.incorrect++;
+    studyData.incorrect++;
     if (elapsed < 3000) grade = 2;
     else if (elapsed < 8000) grade = 1;
     else grade = 0;
@@ -85,21 +60,62 @@ function updateCardSet(set, cardId, { wrongCount, startTime }) {
   card.dueDate = new Date(oldDueDate + card.supermemo.interval * dayInMs);
 
   let earliestDueDate = card.dueDate;
-  for (let card2 of Object.values(cardSet.cards))
+  for (let card2 of Object.values(studyData.cards))
     if (card2.dueDate < earliestDueDate) earliestDueDate = card2.dueDate;
 
-  //if (cardSet.dueDate.getTime() === oldDueDate) cardSet.dueDate = card.dueDate;
+  //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
 
-  if (cardSet._id) StudySetCol.update(cardSet._id, { $set: cardSet });
-  else StudySetCol.insert(cardSet);
+  StudySetCol.update(studyData._id, { $set: studyData });
 }
 
-function StudySet() {
+function StudySetLoad() {
   const router = useRouter();
   const _id = router.query._id;
 
   const set = React.useMemo(() => getSet(_id), [_id]);
   const cards = React.useMemo(() => set.generateCards(), [set]);
+
+  const studyData = useGongoOne((db) =>
+    db.collection("studySet").find({ setId: _id })
+  );
+
+  React.useEffect(() => {
+    if (!studyData) {
+      const newStudyData = {
+        // userId:
+        setId: set.id,
+        cards: {},
+        correct: 0,
+        incorrect: 0,
+        time: 0,
+        dueDate: new Date(),
+      };
+
+      for (let cardId of Object.keys(set.data)) {
+        newStudyData.cards[cardId] = {
+          correct: 0,
+          incorrect: 0,
+          time: 0,
+          dueDate: new Date(),
+          supermemo: {
+            interval: 0,
+            repetition: 0,
+            efactor: 2.5,
+          },
+        };
+      }
+
+      console.log({ newStudyData });
+      StudySetCol.insert(newStudyData);
+    }
+  }, [!!studyData]);
+
+  if (!studyData) return <div>Initializing</div>;
+
+  return <StudySet set={set} cards={cards} studyData={studyData} />;
+}
+
+function StudySet({ set, cards, studyData }) {
   const [card, setCard] = React.useState(randomCard(cards));
   const [correct, setCorrect] = React.useState(0);
   const [total, setTotal] = React.useState(0);
@@ -120,7 +136,7 @@ function StudySet() {
         setTotal(total + 1);
         setStartTime(Date.now());
       }, 200);
-      updateCardSet(set, card.id, { wrongCount, startTime });
+      updateCardSet(set, card.id, studyData, { wrongCount, startTime });
     } else {
       setWrong(answer);
       setWrongCount(wrongCount + 1);
@@ -131,7 +147,7 @@ function StudySet() {
 
   return (
     <Container maxWidth="lg" sx={{ p: 0 }}>
-      <AppBar title={_id} navParts={navParts} />
+      <AppBar title={set.id} navParts={navParts} />
       <Box sx={{ p: 2 }}>
         <div style={{ textAlign: "right" }}>
           {total === 0 ? "Go!" : `${correct} / ${total}`}
@@ -168,4 +184,4 @@ function StudySet() {
   );
 }
 
-export default dynamic(Promise.resolve(StudySet), { ssr: false });
+export default dynamic(Promise.resolve(StudySetLoad), { ssr: false });
