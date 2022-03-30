@@ -2,13 +2,14 @@ import React from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { supermemo } from "supermemo";
-import { useGongoOne } from "gongo-client-react";
+import { useGongoOne, useGongoIsPopulated } from "gongo-client-react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
 import Link from "../../src/Link.js";
 import AppBar from "../../components/AppBar.js";
@@ -116,6 +117,7 @@ function StudySetLoad() {
   const router = useRouter();
   const _id = router.query._id;
 
+  const isPopulated = useGongoIsPopulated();
   const set = React.useMemo(() => getSet(_id), [_id]);
   const allCards = React.useMemo(() => set.generateCards(), [set]);
   const studyData = useGongoOne((db) =>
@@ -125,17 +127,36 @@ function StudySetLoad() {
   // console.log({ studyData });
 
   React.useEffect(() => {
-    if (!studyData) {
+    if (isPopulated && !studyData) {
       // Race conditiion, let's double check with sync
       if (!StudySetCol.findOne({ setId: _id }));
       StudySetCol.insert(NewStudyData(set));
     }
-  }, [!!studyData]);
+  }, [!!studyData, isPopulated]);
 
-  if (!studyData) return <div>Initializing</div>;
+  if (!studyData || !isPopulated) return <div>Initializing</div>;
 
   const dueCards = fetchDueCards(allCards, studyData);
   console.log({ set, allCards, dueCards, studyData });
+
+  if (dueCards.length === 0) {
+    const navParts = [{ title: "Study", url: "/study" }];
+    return (
+      <Container maxWidth="lg" sx={{ p: 0 }}>
+        <AppBar title={set.id} navParts={navParts} />
+        <Box sx={{ p: 2, textAlign: "center" }}>
+          <div style={{ fontSize: "500%" }}>🏆</div>
+          <Typography variant="body1">
+            You&apos;re all done for the day!
+          </Typography>
+          <br />
+          <Button variant="contained" component={Link} href="/study">
+            Back to Study Home
+          </Button>
+        </Box>
+      </Container>
+    );
+  }
 
   return <StudySet set={set} cards={dueCards} studyData={studyData} />;
 }
