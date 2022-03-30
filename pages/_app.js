@@ -4,6 +4,7 @@ import Head from "next/head";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../src/theme";
+import db from "../src/db.js";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

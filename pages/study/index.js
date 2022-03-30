@@ -59,9 +59,11 @@ export default function Study() {
                     <Link href={"/study/" + set.setId}>{set.setId}</Link>
                   </TableCell>
                   <TableCell align="right">
-                    {Math.round(
-                      (set.correct / (set.correct + set.incorrect)) * 100
-                    ) + "%"}
+                    {set.correct + set.incorrect > 0
+                      ? Math.round(
+                          (set.correct / (set.correct + set.incorrect)) * 100
+                        ) + "%"
+                      : "-"}
                   </TableCell>
                   <TableCell align="right">{dueCount(set)}</TableCell>
                 </TableRow>
