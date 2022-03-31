@@ -36,3 +36,4 @@ yarn-error.log*
 /public/workbox-*.js
 /public/workbox-*.js.map
 public/sitemap-0.xml
+.vercel
