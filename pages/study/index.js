@@ -42,6 +42,10 @@ export default function Study() {
   const userId = useGongoUserId();
   useGongoSub("studySet");
 
+  React.useEffect(() => {
+    db.transport.poll();
+  }, []);
+
   if (!isPopulated) return <div>Initializating...</div>;
 
   return (

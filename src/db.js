@@ -23,6 +23,7 @@ function defineTransport() {
     }
     return await _origPoll();
   };
+  db.transport.poll();
 }
 
 function enableNetwork() {
