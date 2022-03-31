@@ -12,9 +12,15 @@ gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
 gs.publish("studySet", async (db, opts, updatedAt, auth, req) => {
   const userId = await auth.userId();
+  console.log({ userId });
   if (!userId) return [];
 
-  return db.collection("studySet").find({ userId });
+  const cursor = db.collection("studySet").find({ userId: ObjectID(userId) });
+
+  const results = await cursor.toArray();
+  console.log({ results });
+
+  return cursor;
 });
 
 // TODO, don't publish secrets :)

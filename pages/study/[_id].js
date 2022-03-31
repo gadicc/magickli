@@ -45,7 +45,10 @@ function NewStudyData(set) {
     dueDate: new Date(),
   };
 
-  if (userId) newStudyData.userId = userId;
+  if (userId) {
+    newStudyData.userId = userId;
+    newStudyData.__ObjectIDs = ["userId"];
+  }
 
   for (let cardId of Object.keys(set.data)) {
     newStudyData.cards[cardId] = {
@@ -102,8 +105,14 @@ function updateCardSet(set, cardId, studyData, { wrongCount, startTime }) {
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
 
+  // If we weren't logged in before, but are now, take this opportunity to
+  // populate userId.  TODO: probably a better place to do this.
   const userId = db.auth.getUserId();
-  if (userId && !studyData.userId) studyData.userId = userId;
+  if (userId && !studyData.userId) {
+    studyData.userId = userId;
+    if (!studyData.__ObjectIDs) studyData.__ObjectIDs = [];
+    studyData.__ObjectIDs.push("userId");
+  }
 
   // Gongo quirk: since we're updating with the same data*, it will skip.
   // *i.e., we mutate the original record, then ask to update it, but there's

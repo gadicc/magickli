@@ -18,7 +18,10 @@ function defineTransport() {
     if (userId) {
       const result = db
         .collection("studySet")
-        .update({ userId: { $exists: false } }, { $set: { userId } });
+        .update(
+          { userId: { $exists: false } },
+          { $set: { userId }, $push: { __ObjectIDs: "userId" } }
+        );
       console.log(result);
     }
     return await _origPoll();
