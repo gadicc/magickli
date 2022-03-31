@@ -43,7 +43,7 @@ export default function Study() {
   useGongoSub("studySet");
 
   React.useEffect(() => {
-    db.transport.poll();
+    if (db.transport) db.transport.poll();
   }, []);
 
   if (!isPopulated) return <div>Initializating...</div>;
