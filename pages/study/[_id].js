@@ -35,7 +35,6 @@ const StudySetCol = db.collection("studySet");
 
 function NewStudyData(set) {
   const userId = db.auth.getUserId();
-  useGongoSub("studySet");
 
   const newStudyData = {
     setId: set.id,
@@ -134,6 +133,7 @@ function StudySetLoad() {
   const studyData = useGongoOne((db) =>
     db.collection("studySet").find({ setId: _id })
   );
+  useGongoSub("studySet");
 
   // console.log({ studyData });
 
