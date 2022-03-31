@@ -68,8 +68,15 @@ function NewStudyData(set) {
   return newStudyData;
 }
 
-function updateCardSet(set, cardId, studyData, { wrongCount, startTime }) {
-  const card = studyData.cards[cardId];
+function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
+  const card = { ..._studyData.cards[cardId] };
+  const studyData = {
+    correct: _studyData.correct,
+    incorrect: _studyData.incorrect,
+    time: _studyData.time,
+    ["cards." + cardId]: card,
+  };
+
   // console.log({ cardSet, card });
 
   const elapsed = Date.now() - startTime;
@@ -100,25 +107,27 @@ function updateCardSet(set, cardId, studyData, { wrongCount, startTime }) {
   card.dueDate = new Date(Date.now() + card.supermemo.interval * dayInMs);
 
   let earliestDueDate = card.dueDate;
-  for (let card2 of Object.values(studyData.cards))
+  for (let card2 of Object.values(_studyData.cards))
     if (card2.dueDate < earliestDueDate) earliestDueDate = card2.dueDate;
+  studyData.dueDate = earliestDueDate;
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
 
   // If we weren't logged in before, but are now, take this opportunity to
   // populate userId.  TODO: probably a better place to do this.
   const userId = db.auth.getUserId();
-  if (userId && !studyData.userId) {
+  if (userId && !_studyData.userId) {
     studyData.userId = userId;
-    if (!studyData.__ObjectIDs) studyData.__ObjectIDs = [];
-    studyData.__ObjectIDs.push("userId");
+    if (!_studyData.__ObjectIDs) _studyData.__ObjectIDs = [];
+    _studyData.__ObjectIDs.push("userId");
   }
 
   // Gongo quirk: since we're updating with the same data*, it will skip.
   // *i.e., we mutate the original record, then ask to update it, but there's
   // "no change".
-  StudySetCol.update(studyData._id, {
-    $set: { ...studyData, quirk: Date.now() },
+  console.log({ $set: studyData });
+  StudySetCol.update(_studyData._id, {
+    $set: studyData,
   });
 }
 
