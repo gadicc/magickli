@@ -2,7 +2,11 @@ import React from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { supermemo } from "supermemo";
-import { useGongoOne, useGongoIsPopulated } from "gongo-client-react";
+import {
+  useGongoOne,
+  useGongoIsPopulated,
+  useGongoSub,
+} from "gongo-client-react";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -30,8 +34,10 @@ function randomCard(set, prevCard) {
 const StudySetCol = db.collection("studySet");
 
 function NewStudyData(set) {
+  const userId = db.auth.getUserId();
+  useGongoSub("studySet");
+
   const newStudyData = {
-    // userId:
     setId: set.id,
     cards: {},
     correct: 0,
@@ -39,6 +45,8 @@ function NewStudyData(set) {
     time: 0,
     dueDate: new Date(),
   };
+
+  if (userId) newStudyData.userId = userId;
 
   for (let cardId of Object.keys(set.data)) {
     newStudyData.cards[cardId] = {
@@ -94,6 +102,9 @@ function updateCardSet(set, cardId, studyData, { wrongCount, startTime }) {
     if (card2.dueDate < earliestDueDate) earliestDueDate = card2.dueDate;
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
+
+  const userId = db.auth.getUserId();
+  if (userId && !studyData.userId) studyData.userId = userId;
 
   // Gongo quirk: since we're updating with the same data*, it will skip.
   // *i.e., we mutate the original record, then ask to update it, but there's

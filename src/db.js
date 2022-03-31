@@ -11,17 +11,43 @@ function defineTransport() {
     pollWhenIdle: false,
     idleTimeout: 60 * 1000,
   });
+
+  const _origPoll = db.transport._poll.bind(db.transport);
+  db.transport._poll = async function () {
+    const userId = db.auth.getUserId();
+    if (userId) {
+      const result = db
+        .collection("studySet")
+        .update({ userId: { $exists: false } }, { $set: { userId } });
+      console.log(result);
+    }
+    return await _origPoll();
+  };
 }
 
-setTimeout(() => {
-  db.idb.on("collectionsPopulated", () => {
-    const network = db.gongoStore.findOne("network");
-    if (network?.enabled) {
-      console.log("gongoStore.network.enabled is set");
-      defineTransport();
-    }
-  });
-}, 10);
+function enableNetwork() {
+  if (db.transport) {
+    console.warn("enableNetwork() called but transport already exists");
+    return;
+  }
+
+  const network = db.gongoStore.findOne("network");
+  if (network) db.gongoStore.update("network", { $set: { enabled: true } });
+  else db.gongoStore.insert({ _id: "network", enabled: true });
+
+  defineTransport();
+}
+
+if (typeof window !== "undefined")
+  setTimeout(() => {
+    db.idb.on("collectionsPopulated", () => {
+      const network = db.gongoStore.findOne("network");
+      if (network?.enabled) {
+        console.log("gongoStore.network.enabled is set");
+        defineTransport();
+      }
+    });
+  }, 10);
 
 /*
  */
@@ -38,5 +64,5 @@ db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 
 if (typeof window !== "undefined") window.db = db;
 
-export { defineTransport };
+export { enableNetwork };
 export default db;

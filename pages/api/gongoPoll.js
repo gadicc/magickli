@@ -10,6 +10,13 @@ const gs = new GongoServer({
 
 gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
+gs.publish("studySet", async (db, opts, updatedAt, auth, req) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  return db.collection("studySet").find({ userId });
+});
+
 // TODO, don't publish secrets :)
 gs.publish("accounts", (db) => db.collection("accounts").find());
 

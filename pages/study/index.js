@@ -1,5 +1,11 @@
 import React from "react";
-import { useGongoLive } from "gongo-client-react";
+import {
+  useGongoLive,
+  useGongoOne,
+  useGongoUserId,
+  useGongoIsPopulated,
+  useGongoSub,
+} from "gongo-client-react";
 import { useRouter } from "next/router";
 
 import Container from "@mui/material/Container";
@@ -17,6 +23,7 @@ import Paper from "@mui/material/Paper";
 import Link from "../../src/Link.js";
 import AppBar from "../../components/AppBar.js";
 import { sets as allSets } from "../../src/study/sets.js";
+import db, { enableNetwork } from "../../src/db.js";
 
 function dueCount(set) {
   let count = 0;
@@ -29,7 +36,13 @@ function dueCount(set) {
 
 export default function Study() {
   const router = useRouter();
+  const isPopulated = useGongoIsPopulated();
   const currentSets = useGongoLive((db) => db.collection("studySet").find());
+  const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
+  const userId = useGongoUserId();
+  useGongoSub("studySet");
+
+  if (!isPopulated) return <div>Initializating...</div>;
 
   return (
     <>
@@ -72,7 +85,26 @@ export default function Study() {
           </Table>
         </TableContainer>
         <br />
-
+        {(!network?.enabled || !userId) && (
+          <span>
+            {!network?.enabled && (
+              <>
+                <Button onClick={enableNetwork}>Enable Network</Button>
+                and{" "}
+              </>
+            )}
+            <Button
+              disabled={!network?.enabled}
+              onClick={() => db.auth.loginWithService("google")}
+            >
+              Login
+            </Button>
+            to sync and save your progress, and participate in leaderboards
+            (coming soon).
+            <br />
+            <br />
+          </span>
+        )}
         <Typography variant="h5" sx={{ paddingBottom: 1 }}>
           All Sets
         </Typography>
