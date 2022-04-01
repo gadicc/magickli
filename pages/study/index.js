@@ -7,6 +7,7 @@ import {
   useGongoSub,
 } from "gongo-client-react";
 import { useRouter } from "next/router";
+import { formatDistanceToNowStrict } from "date-fns";
 
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -41,6 +42,19 @@ export default function Study() {
   const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
   const userId = useGongoUserId();
   useGongoSub("studySet");
+
+  const currentSetIds = React.useMemo(
+    () => currentSets.map((s) => s.setId),
+    [currentSets]
+  );
+
+  const otherSets = React.useMemo(
+    () =>
+      Object.keys(allSets)
+        .filter((setId) => !currentSetIds.includes(setId))
+        .map((setId) => allSets[setId]),
+    [currentSetIds]
+  );
 
   React.useEffect(() => {
     if (db.transport) db.transport.poll();
@@ -82,7 +96,14 @@ export default function Study() {
                         ) + "%"
                       : "-"}
                   </TableCell>
-                  <TableCell align="right">{dueCount(set)}</TableCell>
+                  <TableCell align="right">
+                    {(function () {
+                      const dueCards = dueCount(set);
+                      return dueCards
+                        ? dueCards + " cards"
+                        : "in " + formatDistanceToNowStrict(set.dueDate);
+                    })()}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -110,7 +131,7 @@ export default function Study() {
           </span>
         )}
         <Typography variant="h5" sx={{ paddingBottom: 1 }}>
-          All Sets
+          Available Sets
         </Typography>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
@@ -121,17 +142,17 @@ export default function Study() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.keys(allSets).map((name) => (
+              {otherSets.map((set) => (
                 <TableRow
-                  key={name}
+                  key={set.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => router.push("/study/" + name)}
+                  onClick={() => router.push("/study/" + set.id)}
                 >
                   <TableCell component="th" scope="row">
-                    <Link href={"/study/" + name}>{name}</Link>
+                    <Link href={"/study/" + set.id}>{set.id}</Link>
                   </TableCell>
                   <TableCell align="right">
-                    {Object.keys(allSets[name].data).length}
+                    {Object.keys(set.data).length}
                   </TableCell>
                 </TableRow>
               ))}
