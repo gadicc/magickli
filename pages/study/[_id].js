@@ -21,10 +21,12 @@ import AppBar from "../../components/AppBar.js";
 import getSet from "../../src/study/sets.js";
 import db from "../../src/db.js";
 
+/*
 export async function getServerSideProps(context) {
   const { _id } = context.query;
   return { props: { _id } };
 }
+*/
 
 function randomCard(set, prevCard) {
   const newCard = set[Math.floor(Math.random() * set.length)];
@@ -144,10 +146,11 @@ function fetchDueCards(allCards, studyData) {
 function StudySetLoad() {
   const router = useRouter();
   const _id = router.query._id;
+  console.log({ _id, query: router.query });
 
   const isPopulated = useGongoIsPopulated();
-  const set = React.useMemo(() => getSet(_id), [_id]);
-  const allCards = React.useMemo(() => set.generateCards(), [set]);
+  const set = React.useMemo(() => _id && getSet(_id), [_id]);
+  const allCards = React.useMemo(() => set && set.generateCards(), [set]);
   const studyData = useGongoOne((db) =>
     db.collection("studySet").find({ setId: _id })
   );
