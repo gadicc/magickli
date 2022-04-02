@@ -237,8 +237,8 @@ function StudySet({ set, cards, studyData }) {
         <Question question={card.question} />
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
-            {card.answers.map((answer) => (
-              <Grid key={answer} item xs={12} sm={6}>
+            {card.answers.map((answer, i) => (
+              <Grid key={i} item xs={12} sm={6}>
                 <Button
                   fullWidth
                   variant="outlined"
