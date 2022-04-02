@@ -109,8 +109,13 @@ function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
   card.dueDate = new Date(Date.now() + card.supermemo.interval * dayInMs);
 
   let earliestDueDate = card.dueDate;
-  for (let card2 of Object.values(_studyData.cards))
-    if (card2.dueDate < earliestDueDate) earliestDueDate = card2.dueDate;
+  for (const [id, card2] of Object.entries(_studyData.cards)) {
+    // Skip currentId because we already used it but more importantly, we
+    // didn't mutate _studyData.cards[currentId] so it would be the previous
+    // dueDate, i.e. before now & thus guaranteed (but incorrect) "earliest"
+    if (id !== cardId && card2.dueDate < earliestDueDate)
+      earliestDueDate = card2.dueDate;
+  }
   studyData.dueDate = earliestDueDate;
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
