@@ -21,6 +21,7 @@
     "gongo-client-react": "^0.0.3",
     "gongo-server": "^0.1.1",
     "gongo-server-db-mongo": "^0.0.5",
+    "json-rich-text": "^1.0.0",
     "lune": "^0.4.0",
     "luxon": "^2.0.2",
     "next": "^12.1.0",
@@ -33,7 +34,8 @@
     "sharp": "^0.29.2",
     "supermemo": "^2.0.17",
     "tarot-deck": "^2.0.1",
-    "xml-beautifier": "^0.5.0"
+    "xml-beautifier": "^0.5.0",
+    "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^6.2.1",

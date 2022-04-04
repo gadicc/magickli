@@ -1,0 +1,43 @@
+- type: todo
+  title: diagram
+
+- type: todo
+  title: prayer to the east
+
+- type: todo
+  title: officers, required
+
+- type: h1
+  children:
+    - type: text
+      value: Opening of the Hall of the Neophytes
+
+- type: task
+  role: hierophant
+  do: Wait until all members assembled and robed, then knock once.
+
+- type: task
+  role:
+    all-except: hierophant
+  do: Sit in proper place.
+
+- type: task
+  role: hierophant
+  say: Honoured Hiereus, perform the Lesser Banishing Ritual of the Pentagram.
+
+- type: task
+  role: hiereus
+  do: Rise and perform the L.B.R.P. ad return to place.
+
+- type: task
+  role: hiereus
+  do: Knocks
+
+- type: task
+  role:
+    all-except: herius
+  do: Rise
+
+- type: task
+  role: keryx
+  do: Go to North East with Wand and Lamp, and raise them.
