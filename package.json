@@ -21,7 +21,7 @@
     "gongo-client-react": "^0.0.3",
     "gongo-server": "^0.1.1",
     "gongo-server-db-mongo": "^0.0.5",
-    "json-rich-text": "^1.0.0",
+    "json-rich-text": "1.1.1",
     "lune": "^0.4.0",
     "luxon": "^2.0.2",
     "next": "^12.1.0",

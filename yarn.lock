@@ -3468,10 +3468,10 @@ json-parse-even-better-errors@^2.3.0:
   resolved "https://registry.yarnpkg.com/json-parse-even-better-errors/-/json-parse-even-better-errors-2.3.1.tgz#7c47805a94319928e05777405dc12e1f7a4ee02d"
   integrity sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
 
-json-rich-text@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-rich-text/-/json-rich-text-1.0.0.tgz#73917a47d53fdd39f2b5ecdd4ccb05c887f390ee"
-  integrity sha512-59X8LqySWDg3Iug7BQCByP+VJ6e7HrFsZzhRqNmHavMrTJXi3Vy4XXvQKxn3HW/K5t8dv+jm0OwjGOUspKRd5g==
+json-rich-text@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/json-rich-text/-/json-rich-text-1.1.1.tgz#5c009a882f5e18ec9e92f8767cad315159971f07"
+  integrity sha512-5rlYt0X6URLueoKDxJ3sVufvsZX1Nzh5x6NE+trcfn7ALSuEOW+39P7NjM5AB8/4y0+Rx9ibujABoMLZmLeNfg==
   dependencies:
     react-select "^5.2.2"
 

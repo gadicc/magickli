@@ -10,7 +10,7 @@
 - type: h1
   children:
     - type: text
-      value: Opening of the Hall of the Neophytes
+      value: Opening of the Hall of the Neophytes!
 
 - type: task
   role: hierophant
