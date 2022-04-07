@@ -17,6 +17,15 @@ import neophyte from "./neophyte.yaml";
 
 const origDoc = { children: neophyte };
 
+function applyBrs(str) {
+  const out = [];
+  for (const part of str.split("<br />")) {
+    out.push(part);
+    out.push(<br />);
+  }
+  return out.slice(0, out.length - 1);
+}
+
 const win = typeof window === "object";
 if (win) {
   (async function () {
@@ -146,7 +155,7 @@ if (win) {
                   </span>
                 )}
                 <span className="pg">{key}</span>
-                {block.say && <div className="say">{block.say}</div>}
+                {block.say && <div className="say">{applyBrs(block.say)}</div>}
                 {block.do && (
                   <div className="do">
                     {block.do.endsWith(".")

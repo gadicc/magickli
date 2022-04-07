@@ -246,3 +246,213 @@
 - type: task
   role: hierophant
   do: Sits down.
+
+- type: task
+  role: hierophant
+  say: Frater Stolistes and Frater Dadouchos, I command you to purify and
+    consecrate the hall with water and fire.
+
+- type: task
+  role: stolistes,dadouches
+  do: Perform your respective below tasks simultaneously.
+
+- type: task
+  role: stolistes
+  do: Goes to the east, faces Hierophant, and making a cross in the air with his
+    cup, sprinkles a few drops of water three times towards the east.  Passes
+    to the south, west and north, repeating the purification in each quarter,
+    then returns to the east to complete the circle.
+
+- type: task
+  role: stolistes
+  do: Holds the cup high.
+
+- type: task
+  role: stolistes
+  say: I purify with water.
+
+- type: task
+  role: dadouchos
+  do: Follows Stolistes when he goes to the east, and when he has gone to the
+    south, faces east, raises his censer, and swings thrice towards the east.
+    Then goes south, west and north, repeating the cesnsing at each quarter,
+    and returns to the east to complete the circle.
+
+- type: task
+  role: dadouchos
+  do: Raises the censer.
+
+- type: task
+  role: dadouchos
+  say: I consecrate with fire.
+
+- type: task
+  role: stolistes,dadouches
+  do: Return to their places.
+
+- type: task
+  role: hierophant
+  say: Let the mystic circumambulation take place in the pathway of light.
+
+- type: task
+  role: hierophant
+  do: Stands holding the sceptre in his right hand, the Banner of the East
+    in his left.
+
+- type: task
+  role: keryx
+  do: Goes to the northeast with lamp and wand.
+
+- type: task
+  role: hegemon
+  do: Follows.
+
+- type: task
+  role: hiereus
+  do: Follows with banner and sword.
+
+- type: task
+  role: stolistes
+  do: Follows with cup.
+
+- type: task
+  role: dadouchos
+  do: Follows with censer.
+
+- type: task
+  role: sentinel
+  do: Follows with sword.
+
+- type: task
+  role: keryx
+  do: Leads procession past Hierophant, making the signs of Horus and
+    Harpocrates as he passes.
+
+- type: task
+  role: hegemon,hiereus,stolistes,dadouchos
+  do: Follows, doing the same.
+
+- type: task
+  role: hiereus
+  do: Falls out as soon as he reaches his throne.
+
+- type: task
+  role: hegemon
+  do: Returns to his place after passing Hierophant twice.
+
+- type: task
+  role: stolistes,dadouchos,sentinel,keryx
+  do: Passes the Hierophant 3 times and then take their place as they come to
+    them.
+
+- type: task
+  role: hierophant
+  say: The mystical circumambulation symbolical of the rise of light is
+    accomplished.  Let us adore the Lord of the Universe and space.
+
+- type: task
+  role: all
+  do: Faces east and make the saluting or the enterer (Horus) sign following
+    the lead of Hierophant. The Sign of Silence is made at the end of the
+    prayer.
+
+- type: task
+  role: all
+  say: Holy art Thou, Lord of the Universe! (salute)<br />
+    Holy art Thou, Whom nature hath not formed! (salute)<br />
+    Holy art Thou, the vast and the mighty one! (salute)<br />
+    Lord of the light and the darkness! (Sign of Silence)
+
+- type: task
+  role: hierophant,hiereus,hegemon
+  do: Raise wands / sword in salute, and sink them.
+
+- type: task
+  role: all
+  do: Face as usual but remain standing.
+
+- type: task
+  role: hierophant
+  say: Frater Keryx, in the name of the Lord of the Universe, I command you
+    to declade that I have opened hte hall of the Neophytes.
+
+- type: task
+  role: keryx
+  do: Goes northeast, faces west, and raises wand.
+
+- type: task
+  role: keryx
+  say: In the name of the Lord of the Universe, who works in silence and whom
+    naught but silence can express, I declare that the sun has arisen and the
+    shadows flee away.
+
+- type: task
+  role: keryx
+  do: Returns to his place.
+
+- type: task
+  role: hierophant
+  do: Knocks.
+
+- type: task
+  role: hiereus
+  do: Knocks.
+
+- type: task
+  role: hegemon
+  do: Knocks.
+
+- type: info
+  value: The knocks are given before the words are said.
+
+- type: task
+  role: hierophant
+  say: (Knocks) Khabs.
+
+- type: task
+  role: hiereus
+  say: (Knocks) Am.
+
+- type: task
+  role: hegemon
+  say: (Knocks) Pekht.
+
+- type: task
+  role: hierophant
+  say: (Knocks) Konx.
+
+- type: task
+  role: hiereus
+  say: (Knocks) Om.
+
+- type: task
+  role: hegemon
+  say: (Knocks) Pax.
+
+- type: task
+  role: hierophant
+  say: (Knocks) Light.
+
+- type: task
+  role: hiereus
+  say: (Knocks) In.
+
+- type: task
+  role: hegemon
+  say: (Knocks) Extension.
+
+- type: task
+  role: all
+  do: Make signs towards the altar and sit down.
+
+- type: task
+  role: keryx
+  do: Removes the rose, cup, paten of bread and salt, and the lamp from the
+    altar, leaving the cross and triangle only.  He sees that a hassock is in
+    readiness at the west for the candidate to kneel on.
+
+- type: title
+  value: Initiation of the 0=0 Grade
+
+- type: todo
+  title: Circle and square for 0=0.

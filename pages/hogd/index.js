@@ -11,6 +11,11 @@ const tiles = [
     title: "Grades",
     to: "/hogd/grades",
   },
+  {
+    img: "/pics/Anxfisa_Golden_Dawn_Robes.jpg",
+    title: "Rituals",
+    to: "/hogd/rituals",
+  },
 ];
 
 function HOGD() {
