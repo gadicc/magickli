@@ -22,7 +22,7 @@ if (win) {
   (async function () {
     const Node = (await import("json-rich-text/lib/esm/blocks/node.js"))
       .default;
-    console.log({ Node });
+    // console.log({ Node });
 
     const types = {
       title: class Title extends Node {
@@ -35,11 +35,24 @@ if (win) {
         }
       },
 
-      todo: class Todo2 extends Node {
+      todo: class Todo extends Node {
         //type: "todo";
 
         render(key) {
           return <div key={key}>(TODO: {this.block?.title})</div>;
+        }
+      },
+
+      note: class Note extends Node {
+        render(key) {
+          return (
+            <Paper
+              style={{ fontStyle: "italic" }}
+              sx={{ p: 1, mb: 1, mx: 2.5, background: "#f4f4f4" }}
+            >
+              {this.block.value}
+            </Paper>
+          );
         }
       },
 
@@ -48,6 +61,8 @@ if (win) {
 
         render(key) {
           const block = this.block;
+          const vars = React.useContext(VarContext);
+          // console.log({ myRole: vars.myRole.value });
 
           /*
           let roles;
@@ -59,22 +74,33 @@ if (win) {
           } else
             throw new Error("Unknown role type: " + JSON.stringify(block.role));
           */
-          const myRole = "hierophant";
-          const role = block.role;
-          const forMe =
-            role === myRole ||
-            (role.startsWith("all") && !role.endsWith("except-" + myRole));
+          const myRole = vars.myRole.value; // "hierophant"
+
+          let forMe,
+            role = block.role;
+
+          if (role === myRole || role === "all") forMe = true;
+          else if (role.match(",")) forMe = role.split(",").includes(myRole);
+          else if (role.startsWith("all-except-"))
+            forMe = !role.substr(11).split(",").includes(myRole);
+          else if (role === "all-officers")
+            forMe = !["candidate", "member"].includes(myRole);
+
+          const samePreviousRole = this.prev().block.role === role;
 
           return (
             <div key={key}>
               <Paper
                 sx={{
                   px: 2,
-                  py: 1,
+                  pt: 1,
+                  pb: 1,
                   mb: 1.6,
+                  mt: samePreviousRole ? -1.0 : 0,
                   ml: forMe ? 5 : 0,
                   mr: forMe ? 0 : 5,
                   background: forMe && "#d9fdd3",
+                  position: "relative",
                 }}
               >
                 <style jsx>{`
@@ -104,16 +130,30 @@ if (win) {
                     content: "*";
                   }
                   .role {
-                    color: blue;
+                  }
+                  .pg {
+                    position: absolute;
+                    right: 8px;
+                    top: 6px;
+                    color: #ddd;
                   }
                 `}</style>
-                {role !== myRole && (
-                  <span className="role">
-                    {role.substr(0, 1).toUpperCase() + role.substr(1)}
+                {role !== myRole && !samePreviousRole && (
+                  <span className="role" style={{ color: roles[role]?.color }}>
+                    {roles[role]
+                      ? roles[role].symbol + " " + roles[role].name
+                      : role.substr(0, 1).toUpperCase() + role.substr(1)}
                   </span>
                 )}
+                <span className="pg">{key}</span>
                 {block.say && <div className="say">{block.say}</div>}
-                {block.do && <div className="do">{block.do}</div>}
+                {block.do && (
+                  <div className="do">
+                    {block.do.endsWith(".")
+                      ? block.do.substr(0, block.do.length - 1)
+                      : block.do}
+                  </div>
+                )}
               </Paper>
             </div>
           );
@@ -125,17 +165,96 @@ if (win) {
   })();
 }
 
+const roles = {
+  hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
+  hiereus: { name: "Hiereus", symbol: "▲", color: "black" },
+  hegemon: { name: "Hegemon", symbol: "✝", color: "#aaa" },
+  keryx: { name: "Keryx", symbol: "☤", color: "#c55" },
+  stolistes: { name: "Stolistes", symbol: "☕", color: "#55c" },
+  dadouchos: { name: "Dadouchos", symbol: "卍", color: "#cc5" },
+  sentinel: { name: "Sentinel", symbol: "𓂀", color: "#777" },
+  candidate: { name: "Candidate", symbol: "🤠", color: "#fcf" },
+  member: { name: "Member", color: "#ccc" },
+};
+
+const vars = [
+  {
+    name: "myRole",
+    label: "My role",
+    type: "select",
+    options: Object.keys(roles).map((role) => ({
+      value: role,
+      label: roles[role].name,
+    })),
+    default: "member",
+  },
+  {
+    name: "candidateName",
+    label: "Candidate's Name",
+    type: "text",
+    default: "(Candidate's Name)",
+  },
+  {
+    name: "candidateMotto",
+    label: "Candidate's Motto",
+    type: "text",
+    default: "(Candidate's Motto)",
+  },
+];
+
+const VarContext = React.createContext();
+
 function Doc() {
   //const doc = { children: [{ type: "text", value: "hi" }] };
   const [doc, setDoc] = React.useState(origDoc);
-  window.setDoc = setDoc;
-  window.origDoc = origDoc;
+
+  const varState = {};
+  for (const varDesc of vars) {
+    const [value, set] = React.useState(varDesc.default);
+    varState[varDesc.name] = { value, set };
+  }
 
   return (
     <>
       <AppBar title="Magick.li" />
       <Box sx={{ background: "#efeae2", p: 2 }}>
-        <Render doc={doc} />
+        <div>
+          {vars.map((v) => (
+            <span>
+              {v.label}:{" "}
+              {(function () {
+                if (v.type === "select")
+                  return (
+                    <select
+                      onChange={(e) => varState[v.name].set(e.target.value)}
+                    >
+                      {v.options.map((option) => (
+                        <option
+                          value={option.value}
+                          selected={option.value === varState[v.name].value}
+                        >
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  );
+                if (v.type === "text")
+                  return (
+                    <input
+                      type="text"
+                      value={varState[v.name].value}
+                      onChange={(e) => varState[v.name].set(e.target.value)}
+                    />
+                  );
+              })()}
+              <br />
+            </span>
+          ))}
+        </div>
+        <br />
+        <VarContext.Provider value={varState}>
+          <Render doc={doc} />
+        </VarContext.Provider>
       </Box>
     </>
   );

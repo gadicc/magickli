@@ -5,9 +5,6 @@
   title: diagram
 
 - type: todo
-  title: prayer to the east
-
-- type: todo
   title: officers, required
 
 - type: task
@@ -19,21 +16,233 @@
   do: Sit in proper place
 
 - type: task
-  role: hierophant
-  say: Honoured Hiereus, perform the Lesser Banishing Ritual of the Pentagram.
-
-- type: task
-  role: hiereus
-  do: Rise and perform the L.B.R.P. ad return to place
-
-- type: task
-  role: hiereus
-  do: Knocks
-
-- type: task
-  role: all-except-hireius
+  role: all-officers
   do: Rise
+
+- type: note
+  value: Non-officers do not rise except for adorations to the east or when
+    asked for the signs.  Stand when Hierophant says "Let us adore the Lord
+    of the universe and sapce" and face east until end of adoration.  Do
+    not circumambulate with officers, but when they do move, should do so
+    in the direction of the sun and make Neophyte signs on passing the throne
+    of the east whether the Hierophant is there or not.  Sign made in
+    direction of movement except when entering or leaving the hall.  When
+    made towards the east or when asked to give the signs, towards the altar.
+
+- type: task
+  role: hierophant
+  do: Knock x1
 
 - type: task
   role: keryx
-  do: Go to North East with Wand and Lamp, and raise them
+  do: On hearing the knock, go to the northeast, to the Hierophant's right,
+    face west, raising lamp and wand ).
+
+- type: task
+  role: keryx
+  say: Hekas! Hekas! Este bebeloi.
+
+- type: task
+  role: keryx
+  do: Returns to his/her place.
+
+- type: task
+  role: hierophant
+  do: Rise and knocks.
+
+- type: task
+  role: hierophant
+  say: Fratres and sorores of the (name) Temple of the Order of the Stella
+    Matutina, assist me to open the hall of the Neophytes.  Frater Keryx,
+    see that the hall is properly guarded.
+
+- type: task
+  role: keryx
+  do: Go to the door and give one knock.
+
+- type: task
+  role: sentinel
+  do: Reply with one knock.
+
+- type: task
+  role: keryx
+  say: Very honoured Hierophant, the hall is properly guarded.
+
+- type: task
+  role: keryx
+  say: Salute the Hierophant's throne and remain by the door.
+
+- type: task
+  role: hierophant
+  say: Honuured Hiereus, guard the hither side of the portal and assure
+    yourself that all present have witessed the Stella Matutina.
+
+- type: task
+  role: hierius
+  do: Go to the door, stand before it with sword erect
+
+- type: task
+  role: keryx
+  do: Stand to the right of Hiereus with with lamp and wand.
+
+- type: task
+  role: hiereus
+  say: Fratres and Sorores of the Order of teh Stella Matutina, give the signs
+    of a Neophyte.
+
+- type: task
+  role: all
+  do: Give Neophyte signs.
+
+- type: task
+  role: hiereus
+  do: Give the signs towards Hierophant.
+
+- type: task
+  role: hierus
+  say: Very honoured Hierophant, all present have been so honoured.
+
+- type: task
+  role: hiereus,kerux
+  do: Return to your place.
+
+- type: task
+  role: hierophant
+  do: Give Sign of the Enterer towards the west, but not the Sign of Silence.
+
+- type: task
+  role: hierophant
+  say: Let the number of officers in this degree and the nature of their
+    offices be proclaimed once again, that the powers whose images they are
+    may be awakaned in the spheres of those present and in the sphere of this
+    order, for by names and images are all powers awakened and reawakened.
+
+- type: task
+  role: hierophant
+  do: Make the Sign of Silence.
+
+- type: task
+  role: hierophant
+  say: Honoured Hiereus, how many chief officers are there in this grade?
+
+- type: task
+  role: hiereus
+  do: "There are three chief officers: the Hierophant, the Hiereus, and the
+    Hegemon"
+
+- type: task
+  role: hierophant
+  say: Is there any precularity in these names?
+
+- type: task
+  role: hiereus
+  say: They all commence with the letter "H".
+
+- type: task
+  role: hierophant
+  say: Of what is this letter a symbol?
+
+- type: task
+  role: hiereus
+  say: Of life, because the letter "H" is our mode of representing the ancient
+    Greek aspirate or breathing, and breath is the evidence of life.
+
+- type: task
+  role: hierophant
+  say: How many lesser officers are there?
+
+- type: task
+  role: hiereus
+  say: "There are three beside the Sentinal: the Kerux, the Stolistes, and
+    the Dadouchos.  The Sentinel is withouot the portal of the hall and has
+    a sword in his hand to keep out intruders.  It is his duty to prepare
+    the candidate."
+
+- type: task
+  role: hierophant
+  say: Frater Dadouchos, your station and duties?
+
+- type: task
+  role: dadouchos
+  say: My station is in the south to symbolise heat and dryness, and my duty
+    is to see that the lamps and fires of the temple are ready at the opening,
+    to watch over the censer and the incense and to consecrate the hall and
+    the fratres and sorores and the candidate with fire.
+
+- type: task
+  role: hierophant
+  say: Frater Stolistes, your station and duties?
+
+- type: task
+  role: hierophant
+  say: My station is in the north to symbolise cold and moisture, and my duties
+    are to see that robes and collars and insignia of the officers are ready at
+    the opening, to watch over the cup of lustral water, and to purify the hall
+    and the fratres and sorores and the candidate with water.
+
+- type: task
+  role: hierophant
+  say: Frater Kerux, your station and duties?
+
+- type: task
+  role: keryx
+  say: My place is within the portal.  My duties are to see that the furniture
+    of the hall is properly arranged at the opening, to guard the inner side
+    of the portal, to admit the fratres and sorores, and to watch over the
+    reception of the candidate; to lead all mystic circumambulations carrying
+    the lamp of my office, and to make all reports and announcements.  My lamp
+    is the symbol of the hidden knowledge, and my wand is the symbol of its
+    directing power.
+
+- type: task
+  role: hierophant
+  say: Honoured Hegemon, your station and duties?
+
+- type: task
+  role: hegemon
+  say: My station is between the two pillars of Hermes and Solomon and my face
+    is towards the cubical Altar of the Universe.  My duty is to watch over the
+    gateway of the hidden knowledge, for I am the reconciler between light and
+    darkness.  I watch over the preparation of the candidate and assist in his
+    reception, and I lead him in the path that conducts from darkness to light.
+    The white colour of my robe is the colour of purity, my ensign of office is
+    a mitre-headed sceptre to symbolise religion which guides and regulates
+    life, and my office symbolises those higher aspirations of the soul which
+    guide its action.
+
+- type: task
+  role: hierophant
+  say: Honoured Hiereus, your station and duties?
+
+- type: task
+  role: hiereus
+  do: Holds sword and banner.
+
+- type: task
+  role: hiereus
+  say: My station is on the throne of the west and is a symbol of increase
+    of darkness and decrease of light and I am the master of darkness.  I
+    keep the gateway of the west and watch over the reception of the
+    candidate and over the lesser officers in the doing of their work.  My
+    black robe is an image of the darkness that was upon the face of the
+    waters.  I carry the Sword of Judgement and the Banner of the Evening
+    Twilight, which is the Banner of the West, and I am called fortitude
+    by the unhappy.
+
+- type: task
+  role: hierophant
+  do: Stand holding the sceptre and Banner of the East.
+
+- type: task
+  role: hierophant
+  say: My station is on the throne of the east, in the place where the sun
+    rises, and I am the master of the hall, governing it according to the
+    laws of the order, as He whose image I am, is the master of all who
+    work for the hidden knowledge.  My robe is red because of uncreated
+    fire and created fire, and I hold the Banner of the Morning Light which
+    is the Banner of the East.  I am called power and mercy and light and
+    abundance, and I am the expounder of the Mysteries.
+
+- type: task
+  role: hierophant
+  do: Sits down.
