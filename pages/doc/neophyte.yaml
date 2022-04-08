@@ -9,7 +9,7 @@
 
 - type: task
   role: hierophant
-  do: Waits until all members assembled and robed, then knocks once
+  do: Waits until all members assembled and robed, then ✊ once
 
 - type: task
   role: members
@@ -31,11 +31,11 @@
 
 - type: task
   role: hierophant
-  do: Knock x1
+  do: ✊
 
 - type: task
   role: keryx
-  do: On hearing the knock, goes to the northeast, to the Hierophant's right,
+  do: On hearing the ✊, goes to the northeast, to the Hierophant's right,
     facing west, and raises lamp and wand ).
 
 - type: task
@@ -48,7 +48,7 @@
 
 - type: task
   role: hierophant
-  do: Rises and knocks.
+  do: Rises and ✊.
 
 - type: task
   role: hierophant
@@ -58,11 +58,11 @@
 
 - type: task
   role: keryx
-  do: Goes to the door and gives one knock.
+  do: Goes to the door and gives one ✊.
 
 - type: task
   role: sentinel
-  do: Replies with one knock.
+  do: Replies with one ✊.
 
 - type: task
   role: keryx
@@ -392,54 +392,54 @@
 
 - type: task
   role: hierophant
-  do: Knocks.
+  do: ✊.
 
 - type: task
   role: hiereus
-  do: Knocks.
+  do: ✊.
 
 - type: task
   role: hegemon
-  do: Knocks.
+  do: ✊.
 
-- type: info
-  value: The knocks are given before the words are said.
+- type: note
+  value: The ✊'s are given before the words are said.
 
 - type: task
   role: hierophant
-  say: (Knocks) Khabs.
+  say: (✊) Khabs.
 
 - type: task
   role: hiereus
-  say: (Knocks) Am.
+  say: (✊) Am.
 
 - type: task
   role: hegemon
-  say: (Knocks) Pekht.
+  say: (✊) Pekht.
 
 - type: task
   role: hierophant
-  say: (Knocks) Konx.
+  say: (✊) Konx.
 
 - type: task
   role: hiereus
-  say: (Knocks) Om.
+  say: (✊) Om.
 
 - type: task
   role: hegemon
-  say: (Knocks) Pax.
+  say: (✊) Pax.
 
 - type: task
   role: hierophant
-  say: (Knocks) Light.
+  say: (✊) Light.
 
 - type: task
   role: hiereus
-  say: (Knocks) In.
+  say: (✊) In.
 
 - type: task
   role: hegemon
-  say: (Knocks) Extension.
+  say: (✊) Extension.
 
 - type: task
   role: all
@@ -459,11 +459,20 @@
 
 - type: task
   role: hierophant
-  say: Fratres and sorores of the (name) Temple of the Order of the Stella
-    Matutina, I have received a dispensation from the greatly honoured
-    chiefs of the Second Order, to admit <b>${candidateName}</b> to the
-    0=0 () degree of Neophyte.  Honoured Hegemon, bid the candidate prepare
-    for the cermeony of his admission, and superintend his preparation.
+  say: true
+  children:
+    - type: text
+      value: "Fratres and sorores of the (name) Temple of the Order of the
+        Stella Matutina, I have received a dispensation from the greatly
+        honoured chiefs of the Second Order, to admit "
+    - type: bold
+      children:
+        - type: var
+          name: candidateName
+    - type: text
+      value: " to the 0=0 () degree of Neophyte.  Honoured Hegemon, bid the
+        candidate prepare for the cermeony of his admission, and superintend
+        his preparation."
 
 - type: task
   role: hegemon
@@ -477,11 +486,11 @@
   role: hegemon
   do: Sees that the candidate is properly robed and hoodwinked and that
     the rope goes three times around his waist.  He then leads the candidate
-    to the door and gives one knock.
+    to the door and gives one ✊.
 
 - type: task
   role: keryx
-  do: One knock from within.
+  do: One ✊ from within.
 
 - type: task
   role: keryx
