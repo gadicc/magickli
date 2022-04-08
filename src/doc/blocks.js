@@ -7,9 +7,11 @@ import Typography from "@mui/material/Typography";
 
 import DocContext from "../../src/doc/context.js";
 
-function applyBrs(str) {
+function decodeBasicTags(str) {
   let i = 0;
   const out = [];
+  // "hello <b>there</b> my <br> friend".split(/(<.*?>)/g);
+  // (7) ['hello ', '<b>', 'there', '</b>', ' my ', '<br>', ' friend']
   for (const part of str.split("<br />")) {
     out.push(part);
     out.push(<br key={i++} />);
@@ -33,6 +35,19 @@ class Todo extends Node {
 
   render(key) {
     return <div key={key}>(TODO: {this.block?.title})</div>;
+  }
+}
+
+class Bold extends Node {
+  render(key) {
+    return <b key={key}>{this.renderChildren()}</b>;
+  }
+}
+
+class Var extends Node {
+  render(key) {
+    const context = React.useContext(DocContext);
+    return <span>{context.vars[this.block.name].value}</span>;
   }
 }
 
@@ -146,7 +161,13 @@ class Task extends Node {
             </span>
           )}
           <span className="pg">{key}</span>
-          {block.say && <div className="say">{applyBrs(block.say)}</div>}
+          {block.say && (
+            <div className="say">
+              {typeof block.say === "string"
+                ? decodeBasicTags(block.say)
+                : this.renderChildren()}
+            </div>
+          )}
           {block.do && (
             <div className="do">
               {block.do.endsWith(".")
@@ -160,7 +181,14 @@ class Task extends Node {
   }
 }
 
-const blocks = { title: Title, todo: Todo, note: Note, task: Task };
+const blocks = {
+  title: Title,
+  todo: Todo,
+  note: Note,
+  task: Task,
+  bold: Bold,
+  var: Var,
+};
 Node.registerBlocks(blocks);
 
 export { Render };

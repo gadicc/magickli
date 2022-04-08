@@ -456,3 +456,56 @@
 
 - type: todo
   title: Circle and square for 0=0.
+
+- type: task
+  role: hierophant
+  say: Fratres and sorores of the (name) Temple of the Order of the Stella
+    Matutina, I have received a dispensation from the greatly honoured
+    chiefs of the Second Order, to admit <b>${candidateName}</b> to the
+    0=0 () degree of Neophyte.  Honoured Hegemon, bid the candidate prepare
+    for the cermeony of his admission, and superintend his preparation.
+
+- type: task
+  role: hegemon
+  do: Rises and removes his chair from between the pillars and goes out.
+
+- type: task
+  role: sentinal
+  do: Follows carrying the hoodwink and rope.
+
+- type: task
+  role: hegemon
+  do: Sees that the candidate is properly robed and hoodwinked and that
+    the rope goes three times around his waist.  He then leads the candidate
+    to the door and gives one knock.
+
+- type: task
+  role: keryx
+  do: One knock from within.
+
+- type: task
+  role: keryx
+  say: The candidate seeks for entrance.
+
+- type: task
+  role: hierophant
+  say: true
+  children:
+    - type: text
+      value: "I give permission to admit "
+
+    - type: bold
+      children:
+        - type: var
+          name: candidateName
+
+    - type: text
+      value: " who now loses his name and will henceforth be known among us as "
+
+    - type: bold
+      children:
+        - type: var
+          name: candidateMotto
+
+    - type: text
+      value: .  Let the Stolistes and the Dadouchos assist in the reception.
