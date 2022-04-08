@@ -10,6 +10,11 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import ListIcon from "@mui/icons-material/List";
 import Avatar from "@mui/material/Avatar";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import Stack from "@mui/material/Stack";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Slide from "@mui/material/Slide";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
@@ -55,6 +60,22 @@ const vars = [
   },
 ];
 
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger} style={{}}>
+      {children}
+    </Slide>
+  );
+}
+
 function Doc() {
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
@@ -82,11 +103,37 @@ function Doc() {
 
   const router = useRouter();
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
+  const [fontSize, setFontSize] = React.useState(100);
 
   return (
     <>
-      <AppBar title={router.query._id} navParts={navParts} />
-      <Box sx={{ background: "#efeae2", p: 2 }}>
+      <HideOnScroll>
+        <div style={{ position: "fixed", width: "100%" }}>
+          <AppBar title={router.query._id} navParts={navParts} />
+          <div style={{ background: "#fafafa" }}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <IconButton
+                aria-label="decrease font size"
+                component="span"
+                onClick={() => setFontSize(fontSize - 5)}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <span>{fontSize}%</span>
+              <IconButton
+                aria-label="increase font size"
+                component="span"
+                onClick={() => setFontSize(fontSize + 5)}
+              >
+                <AddIcon />
+              </IconButton>
+            </Stack>
+          </div>
+        </div>
+      </HideOnScroll>
+      <Box
+        sx={{ background: "#efeae2", p: 2, pt: 14, fontSize: fontSize + "%" }}
+      >
         <div>
           {vars.map((v) => (
             <span key={v.name}>
@@ -118,6 +165,7 @@ function Doc() {
             </span>
           ))}
         </div>
+
         <br />
         <DocContext.Provider value={context}>
           <Render doc={doc} />
