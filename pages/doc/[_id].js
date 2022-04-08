@@ -1,7 +1,7 @@
 import React from "react";
+import { useRouter } from "next/router";
 
 import Box from "@mui/material/Box";
-
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -80,9 +80,12 @@ function Doc() {
     setAnchorEl(null);
   };
 
+  const router = useRouter();
+  const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
+
   return (
     <>
-      <AppBar title="Magick.li" />
+      <AppBar title={router.query._id} navParts={navParts} />
       <Box sx={{ background: "#efeae2", p: 2 }}>
         <div>
           {vars.map((v) => (
