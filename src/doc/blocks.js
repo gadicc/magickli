@@ -81,6 +81,10 @@ class Task extends Node {
       forMe = !role.substr(11).split(",").includes(myRole);
     else if (role === "all-officers")
       forMe = !["candidate", "member"].includes(myRole);
+    else if (role.startsWith("all-officers-except-"))
+      forMe =
+        !["candidate", "member"].includes(myRole) &&
+        !role.substr(20).split(",").includes(myRole);
 
     const samePreviousRole = this.prev().block.role === role;
 

@@ -9,11 +9,11 @@
 
 - type: task
   role: hierophant
-  do: Wait until all members assembled and robed, then knock once
+  do: Waits until all members assembled and robed, then knocks once
 
 - type: task
-  role: all-except-hierophant
-  do: Sit in proper place
+  role: members
+  do: Sit in proper places
 
 - type: task
   role: all-officers
@@ -35,8 +35,8 @@
 
 - type: task
   role: keryx
-  do: On hearing the knock, go to the northeast, to the Hierophant's right,
-    face west, raising lamp and wand ).
+  do: On hearing the knock, goes to the northeast, to the Hierophant's right,
+    facing west, and raises lamp and wand ).
 
 - type: task
   role: keryx
@@ -48,7 +48,7 @@
 
 - type: task
   role: hierophant
-  do: Rise and knocks.
+  do: Rises and knocks.
 
 - type: task
   role: hierophant
@@ -58,11 +58,11 @@
 
 - type: task
   role: keryx
-  do: Go to the door and give one knock.
+  do: Goes to the door and gives one knock.
 
 - type: task
   role: sentinel
-  do: Reply with one knock.
+  do: Replies with one knock.
 
 - type: task
   role: keryx
@@ -70,7 +70,7 @@
 
 - type: task
   role: keryx
-  do: Salute the Hierophant's throne and remain by the door.
+  do: Salutes the Hierophant's throne and remains by the door.
 
 - type: task
   role: hierophant
@@ -79,11 +79,11 @@
 
 - type: task
   role: hierius
-  do: Go to the door, stand before it with sword erect
+  do: Goes to the door and stands before it with sword erect
 
 - type: task
   role: keryx
-  do: Stand to the right of Hiereus with with lamp and wand.
+  do: Stands to the right of Hiereus with with lamp and wand.
 
 - type: task
   role: hiereus
