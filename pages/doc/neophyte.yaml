@@ -70,11 +70,11 @@
 
 - type: task
   role: keryx
-  say: Salute the Hierophant's throne and remain by the door.
+  do: Salute the Hierophant's throne and remain by the door.
 
 - type: task
   role: hierophant
-  say: Honuured Hiereus, guard the hither side of the portal and assure
+  say: Honoured Hiereus, guard the hither side of the portal and assure
     yourself that all present have witessed the Stella Matutina.
 
 - type: task
