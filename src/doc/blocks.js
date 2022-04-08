@@ -47,7 +47,7 @@ class Bold extends Node {
 class Var extends Node {
   render(key) {
     const context = React.useContext(DocContext);
-    return <span>{context.vars[this.block.name].value}</span>;
+    return <span key={key}>{context.vars[this.block.name].value}</span>;
   }
 }
 
