@@ -2,6 +2,15 @@ import React from "react";
 
 import Box from "@mui/material/Box";
 
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
+import IconButton from "@mui/material/IconButton";
+import ListIcon from "@mui/icons-material/List";
+import Avatar from "@mui/material/Avatar";
+
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
 import neophyte from "./neophyte.yaml";
@@ -58,6 +67,19 @@ function Doc() {
     context.vars[varDesc.name] = { value, set };
   }
 
+  const titles = doc.children
+    .filter((c) => c.type === "title")
+    .map((b) => b.value);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <AppBar title="Magick.li" />
@@ -98,6 +120,65 @@ function Doc() {
           <Render doc={doc} />
         </DocContext.Provider>
       </Box>
+      <Tooltip title="Table of Contents">
+        <IconButton
+          onClick={handleClick}
+          size="small"
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+          aria-controls={open ? "toc" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+        >
+          <Avatar>
+            <ListIcon />
+          </Avatar>
+        </IconButton>
+      </Tooltip>
+
+      <Menu
+        anchorEl={anchorEl}
+        id="toc"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mb: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              bottom: -10,
+              right: 18,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "bottom" }}
+        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+      >
+        {titles.map((title, i) => (
+          <MenuItem
+            key={i}
+            onClick={() => (location.hash = title.replace(/ /g, "_"))}
+          >
+            {title}
+          </MenuItem>
+        ))}
+      </Menu>
     </>
   );
 }

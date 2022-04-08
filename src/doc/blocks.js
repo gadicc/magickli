@@ -21,6 +21,7 @@ class Title extends Node {
   render(key) {
     return (
       <Paper key={key} sx={{ p: 1, mb: 1, background: "#fff" }}>
+        <a name={this.block.value.replace(/ /g, "_")}></a>
         <Typography variant="h5">{this.block.value}</Typography>
       </Paper>
     );
