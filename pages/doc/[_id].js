@@ -148,36 +148,42 @@ const vars = [
       label: roles[role].name,
     })),
     default: "member",
+    collapsable: false,
   },
   {
     name: "candidateName",
     label: "Candidate's Name",
     type: "text",
     default: "(Candidate's Name)",
+    collapsable: true,
   },
   {
     name: "candidateMotto",
     label: "Candidate's Motto",
     type: "text",
     default: "(Candidate's Motto)",
+    collapsable: true,
   },
   {
     name: "templeName",
     label: "Temple",
     type: "text",
     default: "(name)",
+    collapsable: true,
   },
   {
     name: "orderName",
     label: "Order's Name",
     type: "text",
     default: "Order of the Stella Matutina",
+    collapsable: true,
   },
   {
     name: "witnessed",
     label: "Witnessed/Beheld the",
     type: "text",
     default: "Stella Matutina",
+    collapsable: true,
   },
 ];
 
@@ -195,6 +201,45 @@ function HideOnScroll(props) {
       {children}
     </Slide>
   );
+}
+
+function ShowVars({ vars, context }) {
+  return vars.map((v) => (
+    <span key={v.name}>
+      {(function () {
+        if (v.type === "select")
+          return (
+            <FormControl>
+              <InputLabel id={"input-" + v.name + "-label"}>
+                {v.label}
+              </InputLabel>
+              <Select
+                labelId={"input-" + v.name + "-label"}
+                label={v.label}
+                value={context.vars[v.name].value}
+                onChange={(e) => context.vars[v.name].set(e.target.value)}
+              >
+                {v.options.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          );
+        if (v.type === "text")
+          return (
+            <TextField
+              label={v.label}
+              value={context.vars[v.name].value}
+              onChange={(e) => context.vars[v.name].set(e.target.value)}
+            />
+          );
+      })()}
+      <br />
+      <br />
+    </span>
+  ));
 }
 
 function Doc() {
@@ -226,6 +271,15 @@ function Doc() {
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
   const [fontSize, setFontSize] = React.useState(100);
 
+  const [alwaysVars, collapsableVars] = React.useMemo(() => {
+    const alwaysVars = [],
+      collapsableVars = [];
+    for (const variable of vars)
+      if (variable.collapsable) collapsableVars.push(variable);
+      else alwaysVars.push(variable);
+    return [alwaysVars, collapsableVars];
+  }, []);
+
   return (
     <>
       <HideOnScroll>
@@ -256,44 +310,12 @@ function Doc() {
         sx={{ background: "#efeae2", p: 2, pt: 14, fontSize: fontSize + "%" }}
       >
         <div>
-          {vars.map((v) => (
-            <span key={v.name}>
-              {(function () {
-                if (v.type === "select")
-                  return (
-                    <FormControl>
-                      <InputLabel id={"input-" + v.name + "-label"}>
-                        {v.label}
-                      </InputLabel>
-                      <Select
-                        labelId={"input-" + v.name + "-label"}
-                        label={v.label}
-                        value={context.vars[v.name].value}
-                        onChange={(e) =>
-                          context.vars[v.name].set(e.target.value)
-                        }
-                      >
-                        {v.options.map((option) => (
-                          <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  );
-                if (v.type === "text")
-                  return (
-                    <TextField
-                      label={v.label}
-                      value={context.vars[v.name].value}
-                      onChange={(e) => context.vars[v.name].set(e.target.value)}
-                    />
-                  );
-              })()}
-              <br />
-              <br />
-            </span>
-          ))}
+          <ShowVars vars={alwaysVars} context={context} />
+          <details>
+            <summary>More Variables</summary>
+            <br />
+            <ShowVars vars={collapsableVars} context={context} />
+          </details>
         </div>
 
         <br />
