@@ -157,6 +157,18 @@ const vars = [
     type: "text",
     default: "(Candidate's Motto)",
   },
+  {
+    name: "templeName",
+    label: "Temple",
+    type: "text",
+    default: "(name)",
+  },
+  {
+    name: "orderName",
+    label: "Order's Name",
+    type: "text",
+    default: "Order of the Stella Matutina",
+  },
 ];
 
 function HideOnScroll(props) {

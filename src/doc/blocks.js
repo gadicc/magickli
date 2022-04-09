@@ -63,9 +63,15 @@ class Todo extends Node {
   }
 }
 
-class Bold extends Node {
+class B extends Node {
   render(key) {
     return <b key={key}>{this.renderChildren()}</b>;
+  }
+}
+
+class I extends Node {
+  render(key) {
+    return <i key={key}>{this.renderChildren()}</i>;
   }
 }
 
@@ -207,9 +213,10 @@ class Task extends Node {
 }
 
 const blocks = {
-  bold: Bold,
+  b: B,
   br: Br,
   grade: Grade,
+  i: I,
   img: Img,
   note: Note,
   task: Task,
