@@ -37,13 +37,13 @@ class Grade extends Node {
           .circled {
             border: 1px solid;
             border-radius: 50%;
-            width: 2ch;
+            width: 2.5ch;
             display: inline-block;
             text-align: center;
           }
           .squared {
             border: 1px solid;
-            width: 2ch;
+            width: 2.5ch;
             display: inline-block;
             text-align: center;
           }
