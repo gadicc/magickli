@@ -17,6 +17,10 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import Stack from "@mui/material/Stack";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
@@ -254,30 +258,39 @@ function Doc() {
         <div>
           {vars.map((v) => (
             <span key={v.name}>
-              {v.label}:{" "}
               {(function () {
                 if (v.type === "select")
                   return (
-                    <select
-                      value={context.vars[v.name].value}
-                      onChange={(e) => context.vars[v.name].set(e.target.value)}
-                    >
-                      {v.options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
+                    <FormControl>
+                      <InputLabel id={"input-" + v.name + "-label"}>
+                        {v.label}
+                      </InputLabel>
+                      <Select
+                        labelId={"input-" + v.name + "-label"}
+                        label={v.label}
+                        value={context.vars[v.name].value}
+                        onChange={(e) =>
+                          context.vars[v.name].set(e.target.value)
+                        }
+                      >
+                        {v.options.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   );
                 if (v.type === "text")
                   return (
-                    <input
-                      type="text"
+                    <TextField
+                      label={v.label}
                       value={context.vars[v.name].value}
                       onChange={(e) => context.vars[v.name].set(e.target.value)}
                     />
                   );
               })()}
+              <br />
               <br />
             </span>
           ))}
