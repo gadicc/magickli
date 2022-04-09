@@ -1,5 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
+import lex from "pug-lexer";
+import parse from "pug-parser";
 
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
@@ -19,9 +21,44 @@ import Slide from "@mui/material/Slide";
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
 import neophyte from "./neophyte.yaml";
+import _neophyte from "!!raw-loader!./0=0.pug";
 import { Render } from "../../src/doc/blocks.js";
 
-const origDoc = { children: neophyte };
+console.log(_neophyte);
+
+const tokens = lex(_neophyte);
+const ast = parse(tokens, { src: _neophyte });
+
+function toJrt(ast) {
+  const out = {};
+  console.log(1, ast);
+
+  // if (ast.type === "Block") return ast.nodes.map(toJrt);
+  //
+  if (ast.type === "Tag") {
+    const attrs = {};
+    for (let attr of ast.attrs) attrs[attr.name] = attr.val;
+
+    if (ast.name === "say") {
+      out.type = "task";
+      out.role = attrs.role;
+      out.say = true;
+    }
+  } else if (ast.type === "Text") {
+    out.type = "text";
+    out.value = ast.val;
+  }
+
+  if (ast.nodes) out.children = ast.nodes.map(toJrt);
+  if (ast.block) out.children = ast.block.nodes.map(toJrt);
+  return out;
+}
+
+console.log(JSON.stringify(ast, null, "  "));
+console.log(JSON.stringify(toJrt(ast), null, "  "));
+
+//const origDoc = { children: neophyte };
+const origDoc = toJrt(ast);
 
 const roles = {
   hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
