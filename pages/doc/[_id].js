@@ -169,6 +169,12 @@ const vars = [
     type: "text",
     default: "Order of the Stella Matutina",
   },
+  {
+    name: "witnessed",
+    label: "Witnessed/Beheld the",
+    type: "text",
+    default: "Stella Matutina",
+  },
 ];
 
 function HideOnScroll(props) {
