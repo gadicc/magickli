@@ -219,4 +219,6 @@ const blocks = {
 };
 Node.registerBlocks(blocks);
 
-export { Render };
+// NB: If we don't export "Node", React fast refresh won't pickup Component
+// changes.
+export { Node, Render };
