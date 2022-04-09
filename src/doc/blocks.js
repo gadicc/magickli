@@ -7,23 +7,11 @@ import Typography from "@mui/material/Typography";
 
 import DocContext from "../../src/doc/context.js";
 
-function decodeBasicTags(str) {
-  let i = 0;
-  const out = [];
-  // "hello <b>there</b> my <br> friend".split(/(<.*?>)/g);
-  // (7) ['hello ', '<b>', 'there', '</b>', ' my ', '<br>', ' friend']
-  for (const part of str.split("<br />")) {
-    out.push(part);
-    out.push(<br key={i++} />);
-  }
-  return out.slice(0, out.length - 1);
-}
-
 class Title extends Node {
   render(key) {
     return (
       <Paper key={key} sx={{ p: 1, mb: 1, background: "#fff" }}>
-        <a name={"title" + key}></a>
+        <a name={this.block.text.replace(/ /g, "_")}></a>
         <Typography variant="h5">
           {this.block.value || this.renderChildren()}
         </Typography>
@@ -32,19 +20,64 @@ class Title extends Node {
   }
 }
 
+class Grade extends Node {
+  render(key) {
+    const parts = this.block.grade.split("=");
+
+    return (
+      <span
+        key={key}
+        style={{
+          display: "inline-block",
+          position: "relative",
+          textIndent: "0px",
+        }}
+      >
+        <style jsx>{`
+          .circled {
+            border: 1px solid;
+            border-radius: 50%;
+            width: 2ch;
+            display: inline-block;
+            text-align: center;
+          }
+          .squared {
+            border: 1px solid;
+            width: 2ch;
+            display: inline-block;
+            text-align: center;
+          }
+        `}</style>
+        <span className="circled">{parts[0]}</span>=
+        <span className="squared">{parts[1]}</span>
+      </span>
+    );
+  }
+}
+
 class Todo extends Node {
   //type: "todo";
 
   render(key) {
-    return (
-      <div key={key}>(TODO: {this.block?.title || this.renderChildren()})</div>
-    );
+    return <div key={key}>(TODO: {this.renderChildren()})</div>;
   }
 }
 
 class Bold extends Node {
   render(key) {
     return <b key={key}>{this.renderChildren()}</b>;
+  }
+}
+
+class Img extends Node {
+  render(key) {
+    return <img key={key} width="100%" src={this.block.src} />;
+  }
+}
+
+class Br extends Node {
+  render(key) {
+    return <br key={key} />;
   }
 }
 
@@ -63,7 +96,7 @@ class Note extends Node {
         style={{ fontStyle: "italic" }}
         sx={{ p: 1, mb: 1, mx: 2.5, background: "#f4f4f4" }}
       >
-        {this.block.value || this.renderChildren()}
+        {this.renderChildren()}
       </Paper>
     );
   }
@@ -165,13 +198,7 @@ class Task extends Node {
             </span>
           )}
           <span className="pg">{key}</span>
-          {block.say && (
-            <div className="say">
-              {typeof block.say === "string"
-                ? decodeBasicTags(block.say)
-                : this.renderChildren()}
-            </div>
-          )}
+          {block.say && <div className="say">{this.renderChildren()}</div>}
           {block.do && <div className="do">{this.renderChildren()}</div>}
         </Paper>
       </div>
@@ -180,11 +207,14 @@ class Task extends Node {
 }
 
 const blocks = {
-  title: Title,
-  todo: Todo,
+  bold: Bold,
+  br: Br,
+  grade: Grade,
+  img: Img,
   note: Note,
   task: Task,
-  bold: Bold,
+  title: Title,
+  todo: Todo,
   var: Var,
 };
 Node.registerBlocks(blocks);

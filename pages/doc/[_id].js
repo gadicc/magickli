@@ -20,8 +20,8 @@ import Slide from "@mui/material/Slide";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
-import neophyte from "./neophyte.yaml";
-import _neophyte from "!!raw-loader!./0=0.pug";
+// import neophyte from "../../src/doc/neophyte.yaml";
+import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 import { Render } from "../../src/doc/blocks.js";
 
 const tokens = lex(_neophyte);
@@ -33,31 +33,18 @@ function toJrt(ast) {
   // if (ast.type === "Block") return ast.nodes.map(toJrt);
   //
   if (ast.type === "Tag") {
-    const attrs = {};
-    for (let attr of ast.attrs)
-      attrs[attr.name] = attr.val.replace(/^'+|'+$/g, "");
-
     if (ast.name === "say") {
       out.type = "task";
-      out.role = attrs.role;
       out.say = true;
     } else if (ast.name === "do") {
       out.type = "task";
-      out.role = attrs.role;
       out.do = true;
-    } else if (ast.name === "title") {
-      out.type = "title";
-      //out.children = [{ type: "text", value: ast.val.replace(/^"+|"+$/g, '') || "XXX" }];
-    } else if (ast.name === "todo") {
-      out.type = "todo";
-    } else if (ast.name === "note") {
-      out.type = "note";
-    } else if (ast.name === "var") {
-      out.type = "var";
-      out.name = attrs.name;
-    } else if (ast.name === "bold") {
-      out.type = "bold";
+    } else {
+      out.type = ast.name;
     }
+
+    for (let attr of ast.attrs)
+      out[attr.name] = attr.val.replace(/^['"]+|['"]+$/g, "");
   } else if (ast.type === "Text") {
     out.type = "text";
     out.value = ast.val;
@@ -133,7 +120,7 @@ function toPug(node, indent = 0) {
   return str;
 }
 
-console.log(toPug({ children: neophyte }));
+// console.log(toPug({ children: neophyte }));
 
 const roles = {
   hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
@@ -200,9 +187,9 @@ function Doc() {
     context.vars[varDesc.name] = { value, set };
   }
 
-  const titles = doc.children
+  const titles = doc.children[0].children
     .filter((c) => c.type === "title")
-    .map((b) => b.value);
+    .map((b) => b.text);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
