@@ -23,8 +23,10 @@ class Title extends Node {
   render(key) {
     return (
       <Paper key={key} sx={{ p: 1, mb: 1, background: "#fff" }}>
-        <a name={this.block.value.replace(/ /g, "_")}></a>
-        <Typography variant="h5">{this.block.value}</Typography>
+        <a name={"title" + key}></a>
+        <Typography variant="h5">
+          {this.block.value || this.renderChildren()}
+        </Typography>
       </Paper>
     );
   }
@@ -34,7 +36,9 @@ class Todo extends Node {
   //type: "todo";
 
   render(key) {
-    return <div key={key}>(TODO: {this.block?.title})</div>;
+    return (
+      <div key={key}>(TODO: {this.block?.title || this.renderChildren()})</div>
+    );
   }
 }
 
@@ -59,7 +63,7 @@ class Note extends Node {
         style={{ fontStyle: "italic" }}
         sx={{ p: 1, mb: 1, mx: 2.5, background: "#f4f4f4" }}
       >
-        {this.block.value}
+        {this.block.value || this.renderChildren()}
       </Paper>
     );
   }
@@ -101,7 +105,7 @@ class Task extends Node {
         !["candidate", "member"].includes(myRole) &&
         !role.substr(20).split(",").includes(myRole);
 
-    const samePreviousRole = this.prev().block.role === role;
+    const samePreviousRole = this.prev() && this.prev().block.role === role;
 
     return (
       <div key={key}>
@@ -168,13 +172,7 @@ class Task extends Node {
                 : this.renderChildren()}
             </div>
           )}
-          {block.do && (
-            <div className="do">
-              {block.do.endsWith(".")
-                ? block.do.substr(0, block.do.length - 1)
-                : block.do}
-            </div>
-          )}
+          {block.do && <div className="do">{this.renderChildren()}</div>}
         </Paper>
       </div>
     );

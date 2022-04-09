@@ -38,12 +38,16 @@
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "^1.20.1",
     "@svgr/webpack": "^6.2.1",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
     "eslint-config-prettier": "^8.5.0",
     "json5-loader": "^4.0.1",
     "next-sitemap": "^2.5.4",
-    "prettier": "^2.5.1"
+    "prettier": "^2.6.2",
+    "pug-lexer": "^5.0.1",
+    "pug-parser": "^6.0.0",
+    "raw-loader": "^4.0.2"
   }
 }
