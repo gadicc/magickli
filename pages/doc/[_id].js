@@ -21,6 +21,11 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import Popover from "@mui/material/Popover";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
@@ -59,72 +64,11 @@ function toJrt(ast) {
   return out;
 }
 
-console.log(JSON.stringify(ast, null, "  "));
-console.log(JSON.stringify(toJrt(ast), null, "  "));
+// console.log(JSON.stringify(ast, null, "  "));
+// console.log(JSON.stringify(toJrt(ast), null, "  "));
 
 //const origDoc = { children: neophyte };
 const origDoc = toJrt(ast);
-
-function toPug(node, indent = 0) {
-  //const obj = {}, attrs = [];
-  let str = node.type;
-  const attrs = [];
-
-  if (node.type === "task") {
-    attrs.push({ name: "role", val: node.role });
-    if (node.do) str = "do";
-    if (node.say) str = "say";
-    node.text = node.do || node.say;
-    if (typeof node.text !== "string") delete node.text;
-  } else if (node.type === "text") {
-    str = "|";
-    node.text = node.value;
-  } else if (node.type === "title") {
-    node.text = node.value;
-  } else if (node.type === "todo") {
-    node.text = node.title;
-  } else if (node.type === "note") {
-    node.text = node.value;
-  } else if (node.type === "var") {
-    attrs.push({ name: "name", val: node.name });
-  }
-
-  if (attrs.length)
-    str +=
-      "(" +
-      attrs.map(({ name, val }) => name + "='" + val + "'").join(",") +
-      ")";
-
-  if (node.text) {
-    if (str.length + node.text.length > 80) {
-      // https://stackoverflow.com/a/51506718/1839099
-      const wrap = (s, w) =>
-        s.replace(
-          new RegExp(`(?![^\\n]{1,${w}}$)([^\\n]{1,${w}})\\s`, "g"),
-          "$1\n"
-        );
-      str +=
-        "\n" +
-        " ".repeat(indent + 2) +
-        "| " +
-        wrap(node.text, 80)
-          .split("\n")
-          .join("\n" + " ".repeat(indent + 2) + "| ");
-    } else str += " " + node.text;
-  }
-
-  if (node.children)
-    str +=
-      "\n" +
-      " ".repeat(indent + 2) +
-      node.children
-        .map((n) => toPug(n, indent + 2))
-        .join("\n" + " ".repeat(indent + 2));
-
-  return str;
-}
-
-// console.log(toPug({ children: neophyte }));
 
 const roles = {
   hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
@@ -242,6 +186,121 @@ function ShowVars({ vars, context }) {
   ));
 }
 
+function ZoomMenu({
+  anchorEl,
+  setAnchorEl,
+  onCloseExtra,
+  fontSize,
+  setFontSize,
+}) {
+  return (
+    <Popover
+      open={Boolean(anchorEl)}
+      anchorEl={anchorEl}
+      onClose={(event, reason) => {
+        console.log(event, reason);
+        setAnchorEl(null);
+        onCloseExtra(event);
+      }}
+      anchorOrigin={{ vertical: "center", horizontal: "left" }}
+      transformOrigin={{ horizontal: "right", vertical: "center" }}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mr: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            bottom: 10,
+            right: -5,
+            width: 10,
+            height: 10,
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
+            zIndex: 0,
+          },
+        },
+      }}
+    >
+      <Stack direction="row" alignItems="center" spacing={0}>
+        <IconButton
+          aria-label="decrease font size"
+          onClick={() => setFontSize(fontSize - 5)}
+        >
+          <RemoveIcon />
+        </IconButton>
+        <span>{fontSize}%</span>
+        <IconButton
+          aria-label="increase font size"
+          onClick={() => setFontSize(fontSize + 5)}
+        >
+          <AddIcon />
+        </IconButton>
+      </Stack>
+    </Popover>
+  );
+}
+
+function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
+  return (
+    <Menu
+      anchorEl={anchorEl}
+      id="toc"
+      open={!!anchorEl}
+      onClose={(event) => {
+        setAnchorEl(null);
+        onCloseExtra(event);
+      }}
+      anchorOrigin={{ vertical: "center", horizontal: "left" }}
+      transformOrigin={{ horizontal: "right", vertical: "center" }}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: "visible",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mb: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          "&:before": {
+            content: '""',
+            display: "block",
+            position: "absolute",
+            top: "50%",
+            right: -5,
+            width: 10,
+            height: 10,
+            bgcolor: "background.paper",
+            transform: "translateY(-50%) rotate(45deg)",
+            zIndex: 0,
+          },
+        },
+      }}
+    >
+      {titles.map((title, i) => (
+        <MenuItem
+          key={i}
+          onClick={() => (location.hash = title.replace(/ /g, "_"))}
+        >
+          {title}
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+}
+
 function Doc() {
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
@@ -258,14 +317,9 @@ function Doc() {
     .filter((c) => c.type === "title")
     .map((b) => b.text);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const [sdOpen, setSdOpen] = React.useState(false);
+  const [tocAnchorEl, setTocAnchorEl] = React.useState(null);
+  const [zoomAnchorEl, setZoomAnchorEl] = React.useState(null);
 
   const router = useRouter();
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
@@ -285,29 +339,10 @@ function Doc() {
       <HideOnScroll>
         <div style={{ position: "fixed", width: "100%", zIndex: 1000 }}>
           <AppBar title={router.query._id} navParts={navParts} />
-          <div style={{ background: "#fafafa" }}>
-            <Stack direction="row" alignItems="center" spacing={2}>
-              <IconButton
-                aria-label="decrease font size"
-                component="span"
-                onClick={() => setFontSize(fontSize - 5)}
-              >
-                <RemoveIcon />
-              </IconButton>
-              <span>{fontSize}%</span>
-              <IconButton
-                aria-label="increase font size"
-                component="span"
-                onClick={() => setFontSize(fontSize + 5)}
-              >
-                <AddIcon />
-              </IconButton>
-            </Stack>
-          </div>
         </div>
       </HideOnScroll>
       <Box
-        sx={{ background: "#efeae2", p: 2, pt: 14, fontSize: fontSize + "%" }}
+        sx={{ background: "#efeae2", p: 2, pt: 10, fontSize: fontSize + "%" }}
       >
         <div>
           <ShowVars vars={alwaysVars} context={context} />
@@ -323,65 +358,51 @@ function Doc() {
           <Render doc={doc} />
         </DocContext.Provider>
       </Box>
-      <Tooltip title="Table of Contents">
-        <IconButton
-          onClick={handleClick}
-          size="small"
-          sx={{ position: "fixed", bottom: 16, right: 16 }}
-          aria-controls={open ? "toc" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-        >
-          <Avatar>
-            <ListIcon />
-          </Avatar>
-        </IconButton>
-      </Tooltip>
 
-      <Menu
-        anchorEl={anchorEl}
-        id="toc"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mb: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              bottom: -10,
-              right: 18,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
+      <SpeedDial
+        ariaLabel="SpeedDial basic example"
+        sx={{ position: "fixed", bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+        open={sdOpen}
+        onOpen={(event, reason) => {
+          // "mouseEnter", "focus"
+          if (["toggle"].includes(reason)) setSdOpen(true);
         }}
-        transformOrigin={{ horizontal: "right", vertical: "bottom" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
+        onClose={(event, reason) => {
+          // "blur", "mouseLeave"
+          if (["toggle", "escapeKeyDown"].includes(reason)) setSdOpen(false);
+        }}
       >
-        {titles.map((title, i) => (
-          <MenuItem
-            key={i}
-            onClick={() => (location.hash = title.replace(/ /g, "_"))}
-          >
-            {title}
-          </MenuItem>
-        ))}
-      </Menu>
+        <SpeedDialAction
+          icon=<ListIcon />
+          tooltipTitle="Table of Contents"
+          onClick={(event) => {
+            tocAnchorEl
+              ? setTocAnchorEl(null)
+              : setTocAnchorEl(event.currentTarget);
+          }}
+        />
+        <SpeedDialAction
+          icon=<ZoomInIcon />
+          tooltipTitle="Zoom In/Out"
+          onClick={(event) => setZoomAnchorEl(event.currentTarget)}
+        />
+        ))
+      </SpeedDial>
+
+      <ZoomMenu
+        anchorEl={zoomAnchorEl}
+        setAnchorEl={setZoomAnchorEl}
+        onCloseExtra={() => setSdOpen(false)}
+        fontSize={fontSize}
+        setFontSize={setFontSize}
+      />
+      <TocMenu
+        anchorEl={tocAnchorEl}
+        setAnchorEl={setTocAnchorEl}
+        onCloseExtra={() => setSdOpen(false)}
+        titles={titles}
+      />
     </>
   );
 }
