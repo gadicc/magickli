@@ -26,6 +26,8 @@ import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import Popover from "@mui/material/Popover";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
@@ -339,6 +341,7 @@ function Doc() {
 
   const [nextPos, setNextPos] = React.useState(0);
   const [currentPos, setCurrentPos] = React.useState(0);
+  const jumped = React.useRef();
 
   React.useEffect(() => {
     function scrollListener(event) {
@@ -410,6 +413,25 @@ function Doc() {
           if (["toggle", "escapeKeyDown"].includes(reason)) setSdOpen(false);
         }}
       >
+        {jumped.current ? (
+          <SpeedDialAction
+            icon=<ArrowUpwardIcon />
+            tooltipTitle="Jump Back"
+            onClick={() => {
+              window.scrollTo(0, jumped.current);
+              jumped.current = false;
+            }}
+          />
+        ) : (
+          <SpeedDialAction
+            icon=<ArrowDownwardIcon />
+            tooltipTitle="Jump to Next"
+            onClick={() => {
+              jumped.current = window.pageYOffset;
+              doc.children[nextPos].ref.current.scrollIntoView(false);
+            }}
+          />
+        )}
         <SpeedDialAction
           icon=<ListIcon />
           tooltipTitle="Table of Contents"
