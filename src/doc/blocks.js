@@ -146,8 +146,18 @@ class Task extends Node {
 
     const samePreviousRole = this.prev() && this.prev().block.role === role;
 
+    const ref = React.useRef();
+    React.useEffect(() => {
+      this.block.ref = ref;
+      this.block.forMe = forMe;
+      return () => {
+        delete this.block.ref;
+        delete this.block.forMe;
+      };
+    });
+
     return (
-      <div key={key}>
+      <div key={key} ref={ref}>
         <Paper
           sx={{
             px: 2,

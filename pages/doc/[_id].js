@@ -197,8 +197,7 @@ function ZoomMenu({
     <Popover
       open={Boolean(anchorEl)}
       anchorEl={anchorEl}
-      onClose={(event, reason) => {
-        console.log(event, reason);
+      onClose={(event) => {
         setAnchorEl(null);
         onCloseExtra(event);
       }}
@@ -292,7 +291,11 @@ function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
       {titles.map((title, i) => (
         <MenuItem
           key={i}
-          onClick={() => (location.hash = title.replace(/ /g, "_"))}
+          onClick={() => {
+            location.hash = title.replace(/ /g, "_");
+            setAnchorEl(null);
+            onCloseExtra();
+          }}
         >
           {title}
         </MenuItem>
@@ -313,7 +316,7 @@ function Doc() {
     context.vars[varDesc.name] = { value, set };
   }
 
-  const titles = doc.children[0].children
+  const titles = doc.children
     .filter((c) => c.type === "title")
     .map((b) => b.text);
 
@@ -333,6 +336,40 @@ function Doc() {
       else alwaysVars.push(variable);
     return [alwaysVars, collapsableVars];
   }, []);
+
+  const [nextPos, setNextPos] = React.useState(0);
+  const [currentPos, setCurrentPos] = React.useState(0);
+
+  React.useEffect(() => {
+    function scrollListener(event) {
+      let nextPosSet = false;
+      let currentPosSet = false;
+      const bottom = window.pageYOffset + window.innerHeight;
+
+      // TODO, re-implement with binary search.
+      // const start = Date.now();
+      for (let i = 0; i < doc.children.length; i++) {
+        const node = doc.children[i];
+        if (node.type !== "task") continue;
+        if (node.forMe && !nextPosSet && node.ref.current.offsetTop > bottom) {
+          nextPosSet = true;
+          setNextPos(i);
+        } else {
+          if (!currentPosSet && node.ref.current.offsetTop > bottom) {
+            currentPosSet = true;
+            setCurrentPos(i - 1);
+          }
+        }
+        if (nextPosSet && currentPosSet) break;
+      }
+      // console.log("diff " + (Date.now() - start) + "ms");
+      // console.log(window.pageYOffset);
+    }
+    window.addEventListener("scroll", scrollListener);
+    return () => window.removeEventListener("scroll", scrollListener);
+  }, [doc.children]);
+
+  // console.log({ currentPos, nextPos });
 
   return (
     <>
@@ -362,7 +399,7 @@ function Doc() {
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         sx={{ position: "fixed", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
+        icon={nextPos - currentPos}
         open={sdOpen}
         onOpen={(event, reason) => {
           // "mouseEnter", "focus"
