@@ -108,6 +108,17 @@ class Note extends Node {
   }
 }
 
+class Summary extends Node {
+  render(key) {
+    return (
+      <details key={key}>
+        <summary>{this.block.summary}</summary>
+        {this.renderChildren()}
+      </details>
+    );
+  }
+}
+
 class Task extends Node {
   //type: "todo";
 
@@ -233,6 +244,7 @@ const blocks = {
   title: Title,
   todo: Todo,
   var: Var,
+  summary: Summary,
 };
 Node.registerBlocks(blocks);
 

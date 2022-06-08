@@ -2,26 +2,37 @@ title(text="Opening of the Hall of the Neophytes")
   | Opening of the Hall of the Neophytes
 todo diagram
 todo officers, required
-note ✊ - This sign represents one knock made by rapping the base or shaft
+note 
+  | ✊ - This sign represents one knock made by rapping the base or shaft
   | of wand or the pommel of a sword on the table.
 do(role="hierophant")
   | Waits until all members assembled and robed, then ✊
 do(role="members") Sit in proper places
 do(role="all-officers") Rise
-note
-  | Non-officers do not rise except for adorations to the east or when asked for the
-  | signs. Stand when Hierophant says "Let us adore the Lord of the universe and
-  | sapce" and face east until end of adoration. Do not circumambulate with
-  | officers, but when they do move, should do so in the direction of the sun and
-  | make Neophyte signs on passing the throne of the east whether the Hierophant is
-  | there or not. Sign made in direction of movement except when entering or
-  | leaving the hall. When made towards the east or when asked to give the signs,
-  | towards the altar.
+do(role="members")
+  | Do not rise except for adorations to the east or when asked for the
+  | signs.
+  br
+  br
+  | Stand when Hierophant says "Let us adore the Lord of the universe and
+  | space" and face east until end of adoration.
+  br
+  br
+  | Do not circumambulate with
+  | officers, but when moving for other purposes, do so in the direction of the sun and
+  | make the Neophyte signs on passing the Throne of the East whether the Hierophant is
+  | there or not.
+  | The sign is always made in direction of movement except:
+  | 1) When entering or leaving the hall: made towards the east.
+  | 2) When asked to give the signs: towards the altar.
 do(role="hierophant") ✊
 do(role="keryx")
   | On hearing the ✊, goes to the northeast, to the Hierophant's right, facing west,
   | and raises lamp and wand
-say(role="keryx") Hekas! Hekas! Este bebeloi.
+say(role="keryx")
+  summary(summary="Hekas! Hekas! Este bebeloi!")
+    | "Begone! Begone! Ye profane ones!" in Greek. Traditionally announced
+    | that the ancient Greek Mysteries were about to be celebrated.
 do(role="keryx") Returns to his/her place
 do(role="hierophant") Rises and ✊
 say(role="hierophant")
@@ -53,7 +64,7 @@ say(role="hiereus")
   | , give the signs of a Neophyte.
 do(role="all") Give Neophyte signs
 do(role="hiereus") Give the signs towards Hierophant
-say(role="hierus") Very honoured Hierophant, all present have been so honoured.
+say(role="hiereus") Very honoured Hierophant, all present have been so honoured.
 do(role="hiereus,kerux") Return to your place
 do(role="hierophant")
   | Give Sign of the Enterer towards the west, but not the Sign of Silence.
@@ -67,7 +78,7 @@ say(role="hierophant")
   | Honoured Hiereus, how many chief officers are there in this grade?
 do(role="hiereus")
   | There are three chief officers: the Hierophant, the Hiereus, and the Hegemon
-say(role="hierophant") Is there any precularity in these names?
+say(role="hierophant") Is there any pecularity in these names?
 say(role="hiereus") They all commence with the letter "H".
 say(role="hierophant") Of what is this letter a symbol?
 say(role="hiereus")
@@ -85,7 +96,7 @@ say(role="dadouchos")
   | the censer and the incense and to consecrate the hall and the fratres and
   | sorores and the candidate with fire.
 say(role="hierophant") Frater Stolistes, your station and duties?
-say(role="hierophant")
+say(role="stolistes")
   | My station is in the north to symbolise cold and moisture, and my duties are to
   | see that robes and collars and insignia of the officers are ready at the
   | opening, to watch over the cup of lustral water, and to purify the hall and the
@@ -131,7 +142,7 @@ say(role="hierophant")
   | Frater Stolistes and Frater Dadouchos, I command you to purify and consecrate
   | the hall with water and fire.
 do(role="stolistes,dadouchos")
-  | Perform your respective below tasks simultaneously.
+  | Perform your respective tasks below simultaneously.
 do(role="stolistes")
   | Goes to the east, faces Hierophant, and making a cross in the air with his cup,
   | sprinkles a few drops of water three times towards the east. Passes to the
@@ -140,7 +151,8 @@ do(role="stolistes")
 do(role="stolistes") Holds the cup high
 say(role="stolistes") I purify with water.
 do(role="dadouchos")
-  | Follows Stolistes when he goes to the east, and when he has gone to the south,
+  | Follows Stolistes when he goes to the east, and when Stolistes has gone to
+  | the south, Dadouchos
   | faces east, raises his censer, and swings thrice towards the east. Then goes
   | south, west and north, repeating the cesnsing at each quarter, and returns to
   | the east to complete the circle.
@@ -170,8 +182,9 @@ say(role="hierophant")
   | The mystical circumambulation symbolical of the rise of light is accomplished.
   | Let us adore the Lord of the Universe and space.
 do(role="all")
-  | Faces east and make the saluting or the enterer (Horus) sign following the lead
-  | of Hierophant. The Sign of Silence is made at the end of the prayer.
+  | Stand, face east and make the saluting or the enterer (Horus) sign
+  | following the lead of Hierophant. The Sign of Silence is made at the
+  | end of the prayer.
 say(role="all")
   | Holy art Thou, Lord of the Universe! (salute)
   br
@@ -179,12 +192,12 @@ say(role="all")
   br
   | Holy art Thou, the vast and the mighty one! (salute)
   br
-  | Lord of the light and the darkness! (Sign of Silence)
+  | Lord of the light and of the darkness! (Sign of Silence)
 do(role="hierophant,hiereus,hegemon")
   | Raise wands / sword in salute, and sink them.
 do(role="all") Face as usual but remain standing
 say(role="hierophant")
-  | Frater Keryx, in the name of the Lord of the Universe, I command you to declade
+  | Frater Keryx, in the name of the Lord of the Universe, I command you to declare
   | that I have opened hte hall of the Neophytes.
 do(role="keryx") Goes northeast, faces west, and raises wand
 say(role="keryx")
@@ -199,12 +212,12 @@ note The ✊'s are given before the words are said.
 say(role="hierophant") (✊) Khabs.
 say(role="hiereus") (✊) Am.
 say(role="hegemon") (✊) Pekht.
-say(role="hierophant") (✊) Konx.
-say(role="hiereus") (✊) Om.
-say(role="hegemon") (✊) Pax.
-say(role="hierophant") (✊) Light.
-say(role="hiereus") (✊) In.
-say(role="hegemon") (✊) Extension.
+say(role="hiereus") (✊) Konx.
+say(role="hegemon") (✊) Om.
+say(role="hierophant") (✊) Pax.
+say(role="hegemon") (✊) Light.
+say(role="hierophant") (✊) In.
+say(role="hiereus") (✊) Extension.
 do(role="all") Make signs towards the altar and sit down
 do(role="keryx")
   | Removes the rose, cup, paten of bread and salt, and the lamp from the altar,

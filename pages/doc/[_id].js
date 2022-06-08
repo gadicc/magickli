@@ -77,7 +77,7 @@ const roles = {
   hiereus: { name: "Hiereus", symbol: "▲", color: "black" },
   hegemon: { name: "Hegemon", symbol: "✝", color: "#aaa" },
   keryx: { name: "Keryx", symbol: "☤", color: "#c55" },
-  stolistes: { name: "Stolistes", symbol: "☕", color: "#55c" },
+  stolistes: { name: "Stolistes", symbol: "🏆", color: "#55c" },
   dadouchos: { name: "Dadouchos", symbol: "卍", color: "#cc5" },
   sentinel: { name: "Sentinel", symbol: "𓂀", color: "#777" },
   candidate: { name: "Candidate", symbol: "🤠", color: "#fcf" },
