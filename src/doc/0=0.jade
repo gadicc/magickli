@@ -65,7 +65,7 @@ say(role="hiereus")
 do(role="all") Give Neophyte signs
 do(role="hiereus") Give the signs towards Hierophant
 say(role="hiereus") Very honoured Hierophant, all present have been so honoured.
-do(role="hiereus,kerux") Return to your place
+do(role="hiereus,keryx") Return to your place
 do(role="hierophant")
   | Give Sign of the Enterer towards the west, but not the Sign of Silence.
 say(role="hierophant")
@@ -926,54 +926,61 @@ say(role="hierophant")
   var(name="orderName")
   | , assist me to close the hall of the Neophytes.
 do(role="all") Rise.
-do(role="stolistes") Directs Neophyte to rise.
+do(role="stolistes") Directs Neophyte to rise
+do(role="neophyte") Rises
 
 do(role="hiereus") ✊
 do(role="hegemon") ✊
-do(role="kerux") ✊
+do(role="keryx") ✊
 do(role="sentinel") ✊
 
 say(role="hierophant") Frater Keryx, see that the hall is properly guarded.
-say(role="keryx") The hal is properly guarded, very honoured Hierophant.
-say(role="hierophant") Honoured Hiereus, assure youorself that all present
-  | have beheld the
+say(role="keryx") The hall is properly guarded, very honoured Hierophant.
+say(role="hierophant")
+  | Honoured Hiereus, assure yourself that all present have beheld the
   |
   var(name="witnessed")
   | .
 
 say(role="hiereus") Fratres and sorores, give the signs.
 do(role="all-except-hierophant") Perform signs.
-say(role="hiereus") Very honoured Hierophant, all present have been so
-  | honoured.
+say(role="hiereus")
+  | Very honoured Hierophant, all present have been so honoured.
 say(role="hierophant") Let the hall be purified by water and by fire.
 
-say(role="stolistes") I purify with water.
 do(role="stolistes") Purifies as in the opening.
-say(role="dadouchos") I consecrate with fire.
+say(role="stolistes") I purify with water.
 do(role="dadouchos") Consecrates as in the opening.
+say(role="dadouchos") I consecrate with fire.
 
-say(role="hierophant") Let the mystical reverse circumambulation take place
+say(role="hierophant")
+  | Let the mystical reverse circumambulation take place
   | in the pathway of light.
 do(role="keryx") Goes by the south to the southeast.
-do(role="hegemon") Goes to the north and leads the new Neophyte by the
+do(role="hegemon")
+  | Goes to the north and leads the new Neophyte by the
   | west and south, directing him to follow Hegemon in the procession.
 do(role="hiereus") Follows Neophyte.
 do(role="stolistes") Follows Hiereus.
 do(role="dadouches") Accompanies or follows Stolises.
 do(role="sentinel") Ends the procession.
-do(role="hierophant") Stands and holds the Banner of the East in his left
+do(role="hierophant")
+  | Stands and holds the Banner of the East in his left
   | hand, sceptre in his right.
 do(role="all-except-hierophant")
-  | Make the Neophyte signs up on passing the Hierophant.
+  | Make the Neophyte signs when passing the Hierophant.
 do(role="hiereus") Drops out when his throne is reached.
-do(role="hegemon") Passes Hierophant twice and then takes his place
+do(role="hegemon")
+  | Passes Hierophant twice and then takes his place
   | between the pillars, directing Neophyte to follow Keryx.
-do(role="keryx") After the third passing of the Hierophant, directs
+do(role="keryx")
+  | After the third passing of the Hierophant, directs
   | Neophyte to his seat.
 do(role="all-except-hierophant,hiereus,hegemon,keryx")
   | Drop out as their places reached.
 
-say(role="hierophant") The mystical circumambulation is accomplished. It is
+say(role="hierophant")
+  | The mystical circumambulation is accomplished. It is
   | the symbol of fading light. Let us adore the Lord of the Universe.
 do(role="all") Turn east.
 do(role="stolistes") Directs Neophyte to rise and face east.
@@ -993,49 +1000,57 @@ say(role="hierophant")
   | repast, composed of the symbols of the four elements, and to remember
   | our pledge of secrecy.
 do(role="all") Are seated.
-do(role="hierophant") Puts down his sceptre and returns the Banner of the
+do(role="hierophant")
+  | Puts down his sceptre and returns the Banner of the
   | East to its place. He goes to the west of the altar and facing east
   | gives the saluting sign but not the Sign of Silence, and takes up the
   | rose
-say(role="hierophant") I invite you to inhale with me the perfume of this
+say(role="hierophant")
+  | I invite you to inhale with me the perfume of this
   | rose, as a symbol of air.
 do(role="hierophant") Smells rose
 say(role="hierophant") To feel with me the warmth of this sacred fire.
 do(role="hierophant") Spreads his hands over it.
 say(role="hierophant") To eat with me this bread and salt as types of earth.
 do(role="hierophant") Dips bread in salt and eats.
-say(role="hierophant") And finally to drink with me this wine, the
+say(role="hierophant")
+  | And finally to drink with me this wine, the
   | consecrated emblem of elemental water.
 do(role="hierophant") Makes a cross with the cup and drinks.
 
-do(role="hierophant") Puts down the cup between cross and triangle.
+do(role="hierophant")
+  | Puts down the cup between cross and triangle.
   | Comes east of the altar and faces west.
 
 do(role="praemonstrator")
   | Comes to the west of the altar and makes the saluting sign.
 do(role="hierophant")
   | Replies with Sign of Silence.
-do(role="hierophant") Gives Praemonstrator the rose.
-do(role="praemonstrator") Smells and returns rose.
+do(role="hierophant") Gives Praemonstrator the rose
+do(role="praemonstrator") Smells and returns rose
 do(role="praemonstrator") Feels the warmth of the lamp
 do(role="praemonstrator") Eats the bread and salt
-do(role="hierophant") Gives Praemonstrator the cup.
-do(role="praemonstrator") Takes cup and makes a cross, drinks and returns.
-do(role="hierophant") Passes by west and south to his throne.
-do(role="praemonstrator") Comes to the east of the altar.
-do(role="imperator") Comes to the west, exchanges signs and partakes.
-  | Returns to his place after serving Cancellarius.
-do(role="cancellarius") Repeat and serve Past Hierophant.
-do(role="pastHierophant") Repeat and serve Hiereus.
-do(role="hiereus") Repeat and serve Hegemon.
-do(role="hegemon") Repeat and serve Stolistes.
-do(role="stolistes") Repeat and serve Dadouchos.
-do(role="dadouchos") Repeat and serve remaining Inner Order members in
-  | order of seniority.
+do(role="hierophant") Gives Praemonstrator the cup
+do(role="praemonstrator") Takes cup and makes a cross, drinks and returns it
+do(role="hierophant") Passes by west and south to his throne
+do(role="praemonstrator") Comes to the east of the altar
+do(role="imperator")
+  | Comes to the west, exchanges signs and partakes.
+  | Returns to his place after serving Cancellarius
+do(role="cancellarius") Repeat and serve Past Hierophant
+do(role="pastHierophant") Repeat and serve Hiereus
+do(role="hiereus") Repeat and serve Hegemon
+do(role="hegemon") Repeat and serve Stolistes
+do(role="stolistes") Repeat and serve Dadouchos
+do(role="dadouchos")
+  | Repeat and serve remaining Inner Order members in
+  | order of seniority
 note Remaining Inner Order members in order of seniority partake but
   |
   | without waiting for instruction. If there is a pause, one comes
   | forward.
+do(role="hegemon")
+  | (Or other appointed officer) Ready to pilot Neophytes in next step.
 note Repeated by members of the Outer Order in the same manner.
   |
   | Philosophi, Practici, Theorici, Zelatores, Neophytes.
@@ -1066,5 +1081,8 @@ say(role="hierophant")
   | May what we have partaken maintain us in our search for the
   | quintessence, the stone of the philosophers, true wisdom,
   | perfect happinesss, the summum bonum.
+  summary(summary="Ⓘ")
+    | Latin, "sum of good".
+
 do(role="keryx") Leads out the Neophyte
 do(role="all-officers-except-keryx") Remain in the temple
