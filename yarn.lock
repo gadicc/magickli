@@ -2223,7 +2223,7 @@ core-util-is@~1.0.0:
 
 "corpora@https://github.com/dariusk/corpora/archive/master.tar.gz":
   version "0.0.1"
-  resolved "https://github.com/dariusk/corpora/archive/master.tar.gz#a17df66bc6430f3d9b7ee1a9e3bc6292bef65955"
+  resolved "https://github.com/dariusk/corpora/archive/master.tar.gz#a9db69309da6409eea9e7c552607fc587033324c"
 
 cosmiconfig@^6.0.0:
   version "6.0.0"
