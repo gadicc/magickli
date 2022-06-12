@@ -326,7 +326,10 @@ function Doc() {
   const context = { vars: {}, roles };
   for (const varDesc of vars) {
     // const [value, set] = React.useState(varDesc.default);
-    const value = router.query[varDesc.name] || varDesc.default;
+    const value =
+      router.query[varDesc.name] === undefined
+        ? varDesc.default
+        : router.query[varDesc.name];
     const set = (value) =>
       router.push({ query: { ...router.query, [varDesc.name]: value } });
     context.vars[varDesc.name] = { value, set };
