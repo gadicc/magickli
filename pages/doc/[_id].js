@@ -331,7 +331,14 @@ function Doc() {
         ? varDesc.default
         : router.query[varDesc.name];
     const set = (value) =>
-      router.push({ query: { ...router.query, [varDesc.name]: value } });
+      router.replace(
+        { query: { ...router.query, [varDesc.name]: value } },
+        undefined,
+        {
+          scroll: false,
+          shallow: true,
+        }
+      );
     context.vars[varDesc.name] = { value, set };
   }
 
