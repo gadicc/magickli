@@ -311,13 +311,6 @@ function Doc() {
   //const [doc, setDoc] = React.useState(origDoc);
   const doc = origDoc;
 
-  const context = { vars: {}, roles };
-
-  for (const varDesc of vars) {
-    const [value, set] = React.useState(varDesc.default);
-    context.vars[varDesc.name] = { value, set };
-  }
-
   const titles = doc.children
     .filter((c) => c.type === "title")
     .map((b) => b.text);
@@ -329,6 +322,15 @@ function Doc() {
   const router = useRouter();
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
   const [fontSize, setFontSize] = React.useState(100);
+
+  const context = { vars: {}, roles };
+  for (const varDesc of vars) {
+    // const [value, set] = React.useState(varDesc.default);
+    const value = router.query[varDesc.name] || varDesc.default;
+    const set = (value) =>
+      router.push({ query: { ...router.query, [varDesc.name]: value } });
+    context.vars[varDesc.name] = { value, set };
+  }
 
   const [alwaysVars, collapsableVars] = React.useMemo(() => {
     const alwaysVars = [],
