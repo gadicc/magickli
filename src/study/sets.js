@@ -33,7 +33,9 @@ function generateCards() {
 
   shuffle(array);
   return array.map((item) => {
-    const otherItems = array.filter((oItem) => oItem !== item);
+    const otherItems = array.filter(
+      (oItem, i) => oItem !== item && array.indexOf(oItem) === i
+    );
     shuffle(otherItems);
     const answers =
       _answers || otherItems.slice(0, 3).concat([item]).map(answer);
@@ -60,6 +62,30 @@ function dotProps(item, object) {
 }
 
 const sets = {
+  "hebrew-latin": {
+    id: "hebrew-latin",
+    data: data.hebrewLetter,
+    question: "letter.he",
+    answer: "letter.latin",
+  },
+  "hebrew-name": {
+    id: "hebrew-name",
+    data: data.hebrewLetter,
+    question: "letter.he",
+    answer: "letter.name",
+  },
+  "hebrew-value": {
+    id: "hebrew-value",
+    data: data.hebrewLetter,
+    question: "letter.he",
+    answer: "value",
+  },
+  "hebrew-meaning": {
+    id: "hebrew-meaning",
+    data: data.hebrewLetter,
+    question: "letter.he",
+    answer: "meaning.en",
+  },
   "planet-signs": {
     id: "planet-signs",
     data: data.planet,

@@ -2,7 +2,7 @@
   "sources": [
     "https://en.wikipedia.org/wiki/Hebrew_alphabet",
     "https://en.wikipedia.org/wiki/Romanization_of_Hebrew",
-    "https://en.wikipedia.org/wiki/Mathers_table",
+    "https://en.wikipedia.org/wiki/latin_table",
     "https://en.wikipedia.org/wiki/Gematria"
   ],
  */
@@ -15,10 +15,13 @@
     letter: {
       he: "א",
       name: "Aleph",
-      mathers: "A",
+      latin: "A",
     },
     index: 1,
     value: 1,
+    meaning: {
+      en: "ox",
+    },
   },
 
   bet: {
@@ -26,10 +29,13 @@
     letter: {
       he: "ב",
       name: "Bet",
-      mathers: "B",
+      latin: "B",
     },
     index: 2,
     value: 2,
+    meaning: {
+      en: "house",
+    },
   },
 
   gimel: {
@@ -37,10 +43,13 @@
     letter: {
       he: "ג",
       name: "Gimel",
-      mathers: "G",
+      latin: "G",
     },
     index: 3,
     value: 3,
+    meaning: {
+      en: "camel",
+    },
   },
 
   dalet: {
@@ -48,10 +57,13 @@
     letter: {
       he: "ד",
       name: "Dalet",
-      mathers: "D",
+      latin: "D",
     },
     index: 4,
     value: 4,
+    meaning: {
+      en: "door",
+    },
   },
 
   he: {
@@ -59,10 +71,13 @@
     letter: {
       he: "ה",
       name: "He",
-      mathers: "H",
+      latin: "H",
     },
     index: 5,
     value: 5,
+    meaning: {
+      en: "window",
+    },
   },
 
   vav: {
@@ -70,10 +85,13 @@
     letter: {
       he: "ו",
       name: "Vav",
-      mathers: "V",
+      latin: "V",
     },
     index: 6,
     value: 6,
+    meaning: {
+      en: "peg, nail, pin, hook",
+    },
   },
 
   zayin: {
@@ -81,10 +99,13 @@
     letter: {
       he: "ז",
       name: "Zayin",
-      mathers: "Z",
+      latin: "Z",
     },
     index: 7,
     value: 7,
+    meaning: {
+      en: "sword, armor, weapon",
+    },
   },
 
   het: {
@@ -92,10 +113,13 @@
     letter: {
       he: "ח",
       name: "Het",
-      mathers: "Ch",
+      latin: "Ch",
     },
     index: 8,
     value: 8,
+    meaning: {
+      en: "enclosure, fence",
+    },
   },
 
   tet: {
@@ -103,10 +127,13 @@
     letter: {
       he: "ט",
       name: "Tet",
-      mathers: "T",
+      latin: "T",
     },
     index: 9,
     value: 9,
+    meaning: {
+      en: "serpent",
+    },
   },
 
   yod: {
@@ -114,10 +141,13 @@
     letter: {
       he: "י",
       name: "Yod",
-      mathers: "I",
+      latin: "I",
     },
     index: 10,
     value: 10,
+    meaning: {
+      en: "hand",
+    },
   },
 
   kaf: {
@@ -125,11 +155,27 @@
     letter: {
       he: "כ",
       name: "Kaf",
-      mathers: "K",
+      latin: "K",
     },
     index: 11,
     value: 20,
-    valueFinal: 500,
+    meaning: {
+      en: "palm of hand",
+    },
+  },
+
+  "kaf-sofit": {
+    id: "kaf-sofit",
+    letter: {
+      he: "ך",
+      name: "Kaf-Sofit",
+      latin: "K(f)",
+    },
+    index: 11,
+    value: 500,
+    meaning: {
+      en: "palm of hand",
+    },
   },
 
   lamed: {
@@ -137,10 +183,13 @@
     letter: {
       he: "ל",
       name: "Lamed",
-      mathers: "L",
+      latin: "L",
     },
     index: 12,
     value: 30,
+    meaning: {
+      en: "ox-goad",
+    },
   },
 
   mem: {
@@ -148,11 +197,27 @@
     letter: {
       he: "מ",
       name: "Mem",
-      mathers: "M",
+      latin: "M",
     },
     index: 13,
     value: 40,
-    valueFinal: 600,
+    meaning: {
+      en: "water",
+    },
+  },
+
+  "mem-sofit": {
+    id: "mem-sofit",
+    letter: {
+      he: "ם",
+      name: "Mem-Sofit",
+      latin: "M(f)",
+    },
+    index: 13,
+    value: 600,
+    meaning: {
+      en: "water",
+    },
   },
 
   nun: {
@@ -160,11 +225,27 @@
     letter: {
       he: "נ",
       name: "Nun",
-      mathers: "N",
+      latin: "N",
     },
     index: 14,
     value: 50,
-    valueFinal: 700,
+    meaning: {
+      en: "fish",
+    },
+  },
+
+  "nun-sofit": {
+    id: "nun-sofit",
+    letter: {
+      he: "ן",
+      name: "Nun-Sofit",
+      latin: "N(f)",
+    },
+    index: 14,
+    value: 700,
+    meaning: {
+      en: "fish",
+    },
   },
 
   samekh: {
@@ -172,10 +253,13 @@
     letter: {
       he: "ס",
       name: "Samekh",
-      mathers: "S",
+      latin: "S",
     },
     index: 15,
     value: 60,
+    meaning: {
+      en: "prop, support",
+    },
   },
 
   ayin: {
@@ -183,10 +267,13 @@
     letter: {
       he: "ע",
       name: "Ayin",
-      mathers: "O",
+      latin: "O",
     },
     index: 16,
     value: 70,
+    meaning: {
+      en: "eye",
+    },
   },
 
   pe: {
@@ -194,11 +281,27 @@
     letter: {
       he: "פ",
       name: "Pe",
-      mathers: "P",
+      latin: "P",
     },
     index: 17,
     value: 80,
-    valueFinal: 800,
+    meaning: {
+      en: "mouth",
+    },
+  },
+
+  "pe-sofit": {
+    id: "pe-sofit",
+    letter: {
+      he: "ף",
+      name: "Pe-Sofit",
+      latin: "P(f)",
+    },
+    index: 17,
+    value: 800,
+    meaning: {
+      en: "mouth",
+    },
   },
 
   tsadi: {
@@ -206,11 +309,27 @@
     letter: {
       he: "צ",
       name: "Tsadi",
-      mathers: "Tz",
+      latin: "Tz",
     },
     index: 18,
     value: 90,
-    valueFinal: 900,
+    meaning: {
+      en: "fishhook",
+    },
+  },
+
+  "tsadi-sofit": {
+    id: "tsadi-sofit",
+    letter: {
+      he: "ץ",
+      name: "Tsadi-Sofit",
+      latin: "Tz(f)",
+    },
+    index: 18,
+    value: 900,
+    meaning: {
+      en: "fishhook",
+    },
   },
 
   qof: {
@@ -218,10 +337,13 @@
     letter: {
       he: "ק",
       name: "Qof",
-      mathers: "Q",
+      latin: "Q",
     },
     index: 19,
     value: 100,
+    meaning: {
+      en: "back of the head, ear",
+    },
   },
 
   resh: {
@@ -229,10 +351,13 @@
     letter: {
       he: "ר",
       name: "Resh",
-      mathers: "R",
+      latin: "R",
     },
     index: 20,
     value: 200,
+    meaning: {
+      en: "head",
+    },
   },
 
   shin: {
@@ -240,10 +365,13 @@
     letter: {
       he: "ש",
       name: "Shin",
-      mathers: "Sh",
+      latin: "Sh",
     },
     index: 21,
     value: 300,
+    meaning: {
+      en: "tooth",
+    },
   },
 
   tav: {
@@ -251,9 +379,12 @@
     letter: {
       he: "ת",
       name: "Tav",
-      mathers: "Th",
+      latin: "Th",
     },
     index: 22,
     value: 400,
+    meaning: {
+      en: "cross",
+    },
   },
 }
