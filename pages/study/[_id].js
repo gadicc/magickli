@@ -35,6 +35,20 @@ function randomCard(set, prevCard) {
 
 const StudySetCol = db.collection("studySet");
 
+function newCard() {
+  return {
+    correct: 0,
+    incorrect: 0,
+    time: 0,
+    dueDate: new Date(),
+    supermemo: {
+      interval: 0,
+      repetition: 0,
+      efactor: 2.5,
+    },
+  };
+}
+
 function NewStudyData(set) {
   const userId = db.auth.getUserId();
 
@@ -53,17 +67,7 @@ function NewStudyData(set) {
   }
 
   for (let cardId of Object.keys(set.data)) {
-    newStudyData.cards[cardId] = {
-      correct: 0,
-      incorrect: 0,
-      time: 0,
-      dueDate: new Date(),
-      supermemo: {
-        interval: 0,
-        repetition: 0,
-        efactor: 2.5,
-      },
-    };
+    newStudyData.cards[cardId] = newCard();
   }
 
   // console.log({ newStudyData });
@@ -142,7 +146,7 @@ function fetchDueCards(allCards, studyData) {
   const now = new Date();
   const cards = [];
   for (let setCard of allCards) {
-    const studySetCard = studyData.cards[setCard.id];
+    const studySetCard = studyData.cards[setCard.id] || newCard();
     if (studySetCard.dueDate <= now) cards.push(setCard);
   }
   return cards;
