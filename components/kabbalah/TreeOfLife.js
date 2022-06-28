@@ -95,14 +95,26 @@ function TreeOfLife({
   };
   const fontSize = fontSizeFromFieldName[field] || 10;
 
+  const constructRadius = 128.5;
+  const intersectionOffset = (constructRadius / 2) * Math.sqrt(3);
+  const strokePadding = 2;
+
+  const sephirahRadius = 40;
+  const canvasWidth =
+    2 * intersectionOffset + 2 * sephirahRadius + 2 * strokePadding;
+  const canvasHeight =
+    4 * constructRadius + 2 * sephirahRadius + 2 * strokePadding;
+
+  // prettier-ignore
   const pillar = [
-    { name: "severity", x: 47 },
-    { name: "equilibrium", x: 158 },
-    { name: "mercy", x: 269.5 },
+    { name: "severity", x: sephirahRadius + strokePadding },
+    { name: "equilibrium", x: sephirahRadius + strokePadding + intersectionOffset },
+    { name: "mercy", x: sephirahRadius + strokePadding + 2 * intersectionOffset },
   ];
 
-  const rowStart = 45;
-  const rowGap = 64;
+  // commented parts are to make room for construction circles (usually not drawn)
+  const rowStart = sephirahRadius + strokePadding; // constructRadius;
+  const rowGap = constructRadius / 2;
 
   // prettier-ignore
   const sephirot = [
@@ -188,7 +200,8 @@ function TreeOfLife({
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      viewBox="0 0 316 600"
+      // viewBox="0 0 316 600"
+      viewBox={"0 0 " + canvasWidth + " " + canvasHeight}
       id="TreeOfLife"
       width={width}
       height={height}
@@ -212,6 +225,41 @@ function TreeOfLife({
         }
       ` + (flip && "svg#TreeOfLife { transform: rotateY(180deg) }")}
       </style>
+
+      {/*
+      <circle
+        cx={pillar[1].x}
+        cy={constructRadius}
+        r={constructRadius}
+        stroke="#f00"
+        fill="white"
+        fillOpacity="0.5"
+      />
+      <circle
+        cx={pillar[1].x}
+        cy={2 * constructRadius}
+        r={constructRadius}
+        stroke="#f00"
+        fill="white"
+        fillOpacity="0.5"
+      />
+      <circle
+        cx={pillar[1].x}
+        cy={3 * constructRadius}
+        r={constructRadius}
+        stroke="#f00"
+        fill="white"
+        fillOpacity="0.5"
+      />
+      <circle
+        cx={pillar[1].x}
+        cy={4 * constructRadius}
+        r={constructRadius}
+        stroke="#f00"
+        fill="white"
+        fillOpacity="0.5"
+      />
+      */}
 
       {/* Paths */}
       <g
@@ -313,7 +361,7 @@ function TreeOfLife({
             <circle
               cx={s.x}
               cy={s.y}
-              r="39.2"
+              r={sephirahRadius}
               fill={s.color.match(",") ? null : s.color}
               style={{
                 // Override a:visited * { inherit } from style.
