@@ -373,53 +373,40 @@ function TreeOfLife({
               opacity={sephirahOpacity(s)}
             ></circle>
 
-            {
-              // Currently has fixed positions for Malkuth though.
-              s.color.match(",") ? (
-                <>
-                  <path
-                    id="circle88-7"
-                    style={{
-                      fill: s.color.split(",")[0],
-                      stroke: "#000000",
-                      strokeWidth: 1.568,
-                    }}
-                    opacity={sephirahOpacity(s)}
-                    d="m 158,556.5 -27.71859,-27.71859 c -15.30855,15.30855 -15.30855,40.12863 0,55.43718 z"
-                  />
-                  <path
-                    id="circle88-1"
-                    style={{
-                      fill: s.color.split(",")[1],
-                      stroke: "#000000",
-                      strokeWidth: 1.568,
-                    }}
-                    opacity={sephirahOpacity(s)}
-                    d="m 185.5,529 c -15.30855,-15.30855 -40.12863,-15.30855 -55.43718,0 L 158,556.5 Z"
-                  />
-                  <path
-                    id="circle88-10"
-                    style={{
-                      fill: s.color.split(",")[2],
-                      stroke: "#000000",
-                      strokeWidth: 1.568,
-                    }}
-                    opacity={sephirahOpacity(s)}
-                    d="m 158,556.5 27.71859,27.71859 c 15.30855,-15.30855 15.30855,-40.12863 0,-55.43718 z"
-                  />
-                  <path
-                    id="circle88-2"
-                    style={{
-                      fill: s.color.split(",")[3],
-                      stroke: "#000000",
-                      strokeWidth: 1.568,
-                    }}
-                    opacity={sephirahOpacity(s)}
-                    d="m 158,556.5 -27.71859,27.71859 c 15.30855,15.30855 40.12863,15.30855 55.43718,0 z"
-                  />
-                </>
-              ) : null
-            }
+            {(function () {
+              const colors = s.color.split(",");
+              if (colors.length > 1) {
+                const out = new Array(colors.length);
+                const r = sephirahRadius;
+                const rads = Math.PI / 180;
+                // Adapted from https://codepen.io/hari_shanx/pen/NRyPBz
+                const from = { angle: 0, x: 0, y: 0 },
+                  to = { angle: 0, x: 0, y: 0 };
+                for (let i = 0; i < colors.length; i++) {
+                  // 180 - 45; hard coded malkuth angles till we need something else
+                  from.angle = (i * 360) / colors.length + 180 - 45;
+                  to.angle = ((i + 1) * 360) / colors.length + 180 - 45;
+                  from.x = s.x + r * Math.cos(from.angle * rads);
+                  from.y = s.y + r * Math.sin(from.angle * rads);
+                  to.x = s.x + r * Math.cos(to.angle * rads);
+                  to.y = s.y + r * Math.sin(to.angle * rads);
+                  out.push(
+                    <path
+                      style={{
+                        fill: colors[i],
+                        stroke: "#000000",
+                        strokeWidth: 1.568,
+                      }}
+                      opacity={sephirahOpacity(s)}
+                      d={`M ${s.x},${s.y} L ${from.x},${from.y} A ${r},${r} 0 0,1 ${to.x},${to.y} z`}
+                    />
+                  );
+                }
+                return out;
+              } else {
+                return null;
+              }
+            })()}
 
             {field === "gdGrade.id" ? (
               <g>
