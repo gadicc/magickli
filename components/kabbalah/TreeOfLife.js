@@ -98,22 +98,21 @@ function TreeOfLife({
   const constructRadius = 128.5;
   const intersectionOffset = (constructRadius / 2) * Math.sqrt(3);
   const strokePadding = 2;
+  const showConstructionCircles = false;
 
   const sephirahRadius = 40;
-  const canvasWidth =
-    2 * intersectionOffset + 2 * sephirahRadius + 2 * strokePadding;
+  const canvasWidth = 2 * (constructRadius + sephirahRadius + strokePadding);
   const canvasHeight =
-    4 * constructRadius + 2 * sephirahRadius + 2 * strokePadding;
+    4 * constructRadius + 2 * (sephirahRadius + strokePadding);
 
   // prettier-ignore
   const pillar = [
-    { name: "severity", x: sephirahRadius + strokePadding },
-    { name: "equilibrium", x: sephirahRadius + strokePadding + intersectionOffset },
-    { name: "mercy", x: sephirahRadius + strokePadding + 2 * intersectionOffset },
+    { name: "severity", x: -intersectionOffset },
+    { name: "equilibrium", x: 0 },
+    { name: "mercy", x: intersectionOffset },
   ];
 
-  // commented parts are to make room for construction circles (usually not drawn)
-  const rowStart = sephirahRadius + strokePadding; // constructRadius;
+  const rowStart = sephirahRadius + strokePadding;
   const rowGap = constructRadius / 2;
 
   // prettier-ignore
@@ -201,7 +200,10 @@ function TreeOfLife({
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
       // viewBox="0 0 316 600"
-      viewBox={"0 0 " + canvasWidth + " " + canvasHeight}
+      // viewBox={"0 0 " + canvasWidth + " " + canvasHeight}
+      viewBox={
+        -canvasWidth / 2 + " " + 0 + " " + canvasWidth + " " + canvasHeight
+      }
       id="TreeOfLife"
       width={width}
       height={height}
@@ -225,42 +227,6 @@ function TreeOfLife({
         }
       ` + (flip && "svg#TreeOfLife { transform: rotateY(180deg) }")}
       </style>
-
-      {/*
-      <circle
-        cx={pillar[1].x}
-        cy={constructRadius}
-        r={constructRadius}
-        stroke="#f00"
-        fill="white"
-        fillOpacity="0.5"
-      />
-      <circle
-        cx={pillar[1].x}
-        cy={2 * constructRadius}
-        r={constructRadius}
-        stroke="#f00"
-        fill="white"
-        fillOpacity="0.5"
-      />
-      <circle
-        cx={pillar[1].x}
-        cy={3 * constructRadius}
-        r={constructRadius}
-        stroke="#f00"
-        fill="white"
-        fillOpacity="0.5"
-      />
-      <circle
-        cx={pillar[1].x}
-        cy={4 * constructRadius}
-        r={constructRadius}
-        stroke="#f00"
-        fill="white"
-        fillOpacity="0.5"
-      />
-      */}
-
       {/* Paths */}
       <g
         id="paths"
@@ -317,7 +283,6 @@ function TreeOfLife({
           );
         })}
       </g>
-
       <g id="pathLetters" style={{ fontSize: "100%" }}>
         {pathsToDraw.map((path) => {
           const parts = path.id.split("_");
@@ -354,7 +319,6 @@ function TreeOfLife({
           );
         })}
       </g>
-
       <g id="sephirot">
         {sephirot.map((s, i) => (
           <a key={i} id={s.data.id} xlinkHref={sephirahHref(s)}>
@@ -573,6 +537,42 @@ function TreeOfLife({
           </a>
         ))}
       </g>
+      {showConstructionCircles && (
+        <>
+          <circle
+            cx={pillar[1].x}
+            cy={rowStart}
+            r={constructRadius}
+            stroke="#f00"
+            fill="white"
+            fillOpacity="0.5"
+          />
+          <circle
+            cx={pillar[1].x}
+            cy={rowStart + constructRadius}
+            r={constructRadius}
+            stroke="#f00"
+            fill="white"
+            fillOpacity="0.5"
+          />
+          <circle
+            cx={pillar[1].x}
+            cy={rowStart + 2 * constructRadius}
+            r={constructRadius}
+            stroke="#f00"
+            fill="white"
+            fillOpacity="0.5"
+          />
+          <circle
+            cx={pillar[1].x}
+            cy={rowStart + 3 * constructRadius}
+            r={constructRadius}
+            stroke="#f00"
+            fill="white"
+            fillOpacity="0.5"
+          />
+        </>
+      )}
     </svg>
   );
 }
