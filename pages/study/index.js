@@ -87,7 +87,8 @@ export default function Study() {
                   onClick={() => router.push("/study/" + set.setId)}
                 >
                   <TableCell component="th" scope="row">
-                    <Link href={"/study/" + set.setId}>{set.setId}</Link>
+                    <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
+                    <Link href={"/study/info/" + set.setId}>🛈</Link>
                   </TableCell>
                   <TableCell align="right">
                     {set.correct + set.incorrect > 0
