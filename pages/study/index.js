@@ -84,7 +84,7 @@ export default function Study() {
                 <TableRow
                   key={set._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => router.push("/study/" + set.setId)}
+                  // onClick={() => router.push("/study/" + set.setId)}
                 >
                   <TableCell component="th" scope="row">
                     <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
