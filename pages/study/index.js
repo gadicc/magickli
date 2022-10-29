@@ -21,10 +21,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import Link from "../../src/Link.js";
-import AppBar from "../../components/AppBar.js";
-import { sets as allSets } from "../../src/study/sets.js";
-import db, { enableNetwork } from "../../src/db.js";
+import Link from "../../src/Link";
+import AppBar from "../../components/AppBar";
+import { sets as allSets } from "../../src/study/sets";
+import db, { enableNetwork } from "../../src/db";
 
 function dueCount(set) {
   let count = 0;

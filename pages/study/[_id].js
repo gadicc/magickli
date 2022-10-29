@@ -15,11 +15,11 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import Link from "../../src/Link.js";
-import AppBar from "../../components/AppBar.js";
+import Link from "../../src/Link";
+import AppBar from "../../components/AppBar";
 
-import getSet from "../../src/study/sets.js";
-import db from "../../src/db.js";
+import getSet from "../../src/study/sets";
+import db from "../../src/db";
 
 /*
 export async function getServerSideProps(context) {

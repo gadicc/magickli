@@ -66,6 +66,7 @@ if (typeof window !== "undefined")
 
 db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 
+// @ts-expect-error: i know
 if (typeof window !== "undefined") window.db = db;
 
 export { enableNetwork };

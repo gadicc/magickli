@@ -21,7 +21,7 @@ import {
 } from "@mui/material";
 
 import AppBar from "../../../components/AppBar";
-import db from "../../../src/db.js";
+import db from "../../../src/db";
 
 const StudySetCol = db.collection("studySet");
 

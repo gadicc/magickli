@@ -37,3 +37,5 @@ yarn-error.log*
 /public/workbox-*.js.map
 public/sitemap-0.xml
 .vercel
+next-env.d.ts
+tsconfig.tsbuildinfo
