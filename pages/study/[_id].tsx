@@ -41,6 +41,7 @@ export interface StudyCard {
 }
 
 export interface StudySetData {
+  [key: string]: unknown;
   _id?: string;
   userId?: string;
   setId: string;
@@ -75,6 +76,7 @@ function randomCard(set: StudyCard[], prevCard: StudyCard = null) {
 const StudySetCol = db.collection("studySet");
 
 function NewStudyData(set) {
+  // @ts-expect-error
   const userId = db.auth.getUserId();
 
   const newStudyData: StudySetData = {
@@ -166,6 +168,7 @@ function updateCardSet(
 
   // If we weren't logged in before, but are now, take this opportunity to
   // populate userId.  TODO: probably a better place to do this.
+  // @ts-expect-error
   const userId = db.auth.getUserId();
   if (userId && !_studyData.userId) {
     studyDataUpdate.userId = userId;

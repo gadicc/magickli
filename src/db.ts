@@ -1,6 +1,7 @@
 import db from "gongo-client";
 import HTTPTransport from "gongo-client/lib/transports/http";
 import GongoAuth from "gongo-client/lib/auth";
+import { StudySetData } from "../pages/study/[_id]";
 
 db.extend("auth", GongoAuth);
 
@@ -12,8 +13,11 @@ function defineTransport() {
     idleTimeout: 60 * 1000,
   });
 
+  // @ts-expect-error
   const _origPoll = db.transport._poll.bind(db.transport);
+  // @ts-expect-error
   db.transport._poll = async function () {
+    // @ts-expect-error
     const userId = db.auth.getUserId();
     if (userId) {
       const result = db
@@ -26,10 +30,12 @@ function defineTransport() {
     }
     return await _origPoll();
   };
+  // @ts-expect-error
   db.transport.poll();
 }
 
 function enableNetwork() {
+  // @ts-expect-error
   if (db.transport) {
     console.warn("enableNetwork() called but transport already exists");
     return;
@@ -65,6 +71,12 @@ if (typeof window !== "undefined")
 // db.collection("cache", { isLocalCollection: true }).persist();
 
 db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
+
+declare module "gongo-client" {
+  class Database {
+    collection(name: "studySet"): Collection<StudySetData>;
+  }
+}
 
 // @ts-expect-error: i know
 if (typeof window !== "undefined") window.db = db;
