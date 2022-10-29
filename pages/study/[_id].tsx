@@ -28,14 +28,32 @@ export async function getServerSideProps(context) {
 }
 */
 
-function randomCard(set, prevCard) {
-  const newCard = set[Math.floor(Math.random() * set.length)];
-  return newCard === prevCard ? randomCard(set, prevCard) : newCard;
+export interface StudyCard {
+  correct: number;
+  incorrect: number;
+  time: number;
+  dueDate: Date;
+  supermemo: {
+    interval: number;
+    repetition: number;
+    efactor: number;
+  };
 }
 
-const StudySetCol = db.collection("studySet");
+export interface StudySetData {
+  _id?: string;
+  userId?: string;
+  setId: string;
+  cards: Record<string, StudyCard>;
+  correct: number;
+  incorrect: number;
+  time: number;
+  dueDate: Date;
+  __ObjectIDs?: string[];
+  __updatedAt?: number;
+}
 
-function newCard() {
+function newCard(): StudyCard {
   return {
     correct: 0,
     incorrect: 0,
@@ -49,10 +67,17 @@ function newCard() {
   };
 }
 
+function randomCard(set: StudyCard[], prevCard: StudyCard = null) {
+  const newCard = set[Math.floor(Math.random() * set.length)];
+  return newCard === prevCard ? randomCard(set, prevCard) : newCard;
+}
+
+const StudySetCol = db.collection("studySet");
+
 function NewStudyData(set) {
   const userId = db.auth.getUserId();
 
-  const newStudyData = {
+  const newStudyData: StudySetData = {
     setId: set.id,
     cards: {},
     correct: 0,
@@ -74,9 +99,24 @@ function NewStudyData(set) {
   return newStudyData;
 }
 
-function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
+function updateCardSet(
+  set,
+  cardId,
+  _studyData: StudySetData,
+  { wrongCount, startTime }
+) {
   const card = { ..._studyData.cards[cardId] };
-  const studyData = {
+
+  interface StudyDataUpdate {
+    correct?: number;
+    incorrect?: number;
+    time?: number;
+    dueDate?: Date;
+    userId?: string;
+    [key: string]: unknown; // e.g. SDU["cards.card_id"] = card;
+  }
+
+  const studyDataUpdate: StudyDataUpdate = {
     correct: _studyData.correct,
     incorrect: _studyData.incorrect,
     time: _studyData.time,
@@ -87,18 +127,18 @@ function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
 
   const elapsed = Date.now() - startTime;
   card.time += elapsed;
-  studyData.time += elapsed;
+  studyDataUpdate.time += elapsed;
 
   let grade;
   if (wrongCount === 0) {
     card.correct++;
-    studyData.correct++;
+    studyDataUpdate.correct++;
     if (elapsed < 3000) grade = 5;
     else if (elapsed < 5000) grade = 4;
     else grade = 3;
   } else {
     card.incorrect++;
-    studyData.incorrect++;
+    studyDataUpdate.incorrect++;
     if (elapsed < 3000) grade = 2;
     else if (elapsed < 8000) grade = 1;
     else grade = 0;
@@ -120,7 +160,7 @@ function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
     if (id !== cardId && card2.dueDate < earliestDueDate)
       earliestDueDate = card2.dueDate;
   }
-  studyData.dueDate = earliestDueDate;
+  studyDataUpdate.dueDate = earliestDueDate;
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
 
@@ -128,7 +168,7 @@ function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
   // populate userId.  TODO: probably a better place to do this.
   const userId = db.auth.getUserId();
   if (userId && !_studyData.userId) {
-    studyData.userId = userId;
+    studyDataUpdate.userId = userId;
     if (!_studyData.__ObjectIDs) _studyData.__ObjectIDs = [];
     _studyData.__ObjectIDs.push("userId");
   }
@@ -136,9 +176,9 @@ function updateCardSet(set, cardId, _studyData, { wrongCount, startTime }) {
   // Gongo quirk: since we're updating with the same data*, it will skip.
   // *i.e., we mutate the original record, then ask to update it, but there's
   // "no change".
-  console.log({ $set: studyData });
+  console.log({ $set: studyDataUpdate });
   StudySetCol.update(_studyData._id, {
-    $set: studyData,
+    $set: studyDataUpdate,
   });
 }
 
@@ -170,8 +210,11 @@ function StudySetLoad() {
   React.useEffect(() => {
     if (isPopulated && !studyData) {
       // Race conditiion, let's double check with sync
-      if (!StudySetCol.findOne({ setId: _id }));
-      StudySetCol.insert(NewStudyData(set));
+      // Note, previously the if had an errant semicolon (";") afterwards,
+      // so was never checked before calling the next line.  Fixed now,
+      // look out for any strange behaviour.  TODO.
+      if (!StudySetCol.findOne({ setId: _id }))
+        StudySetCol.insert(NewStudyData(set));
     }
   }, [!!studyData, isPopulated]);
 
