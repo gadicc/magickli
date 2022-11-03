@@ -28,7 +28,7 @@ export async function getServerSideProps(context) {
 }
 */
 
-export interface StudyCard {
+export interface StudyCardStats {
   correct: number;
   incorrect: number;
   time: number;
@@ -40,12 +40,12 @@ export interface StudyCard {
   };
 }
 
-export interface StudySetData {
+export interface StudySetStats {
   [key: string]: unknown;
   _id?: string;
   userId?: string;
   setId: string;
-  cards: Record<string, StudyCard>;
+  cards: Record<string, StudyCardStats>;
   correct: number;
   incorrect: number;
   time: number;
@@ -54,7 +54,7 @@ export interface StudySetData {
   __updatedAt?: number;
 }
 
-function newCard(): StudyCard {
+function newCard(): StudyCardStats {
   return {
     correct: 0,
     incorrect: 0,
@@ -68,7 +68,7 @@ function newCard(): StudyCard {
   };
 }
 
-function randomCard(set: StudyCard[], prevCard: StudyCard = null) {
+function randomCard(set: StudyCardStats[], prevCard: StudyCardStats = null) {
   const newCard = set[Math.floor(Math.random() * set.length)];
   return newCard === prevCard ? randomCard(set, prevCard) : newCard;
 }
@@ -79,7 +79,7 @@ function NewStudyData(set) {
   // @ts-expect-error
   const userId = db.auth.getUserId();
 
-  const newStudyData: StudySetData = {
+  const newStudyData: StudySetStats = {
     setId: set.id,
     cards: {},
     correct: 0,
@@ -104,7 +104,7 @@ function NewStudyData(set) {
 function updateCardSet(
   set,
   cardId,
-  _studyData: StudySetData,
+  _studyData: StudySetStats,
   { wrongCount, startTime }
 ) {
   const card = { ..._studyData.cards[cardId] };
@@ -197,7 +197,7 @@ function fetchDueCards(allCards, studyData) {
 
 function StudySetLoad() {
   const router = useRouter();
-  const _id = router.query._id;
+  const _id = router.query._id as undefined | string;
   console.log({ _id, query: router.query });
 
   const isPopulated = useGongoIsPopulated();

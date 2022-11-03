@@ -1,7 +1,7 @@
-import db from "gongo-client";
+import db, { Collection } from "gongo-client";
 import HTTPTransport from "gongo-client/lib/transports/http";
 import GongoAuth from "gongo-client/lib/auth";
-import { StudySetData } from "../pages/study/[_id]";
+import { StudySetStats } from "../pages/study/[_id]";
 
 db.extend("auth", GongoAuth);
 
@@ -74,7 +74,7 @@ db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 
 declare module "gongo-client" {
   class Database {
-    collection(name: "studySet"): Collection<StudySetData>;
+    collection(name: "studySet"): Collection<StudySetStats>;
   }
 }
 
