@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 
 import data from "../../data/data.js";
 
-function SingleCharQuestion({ question }) {
+function SingleCharQuestion({ question }: { question: string }) {
   return (
     <Paper sx={{ my: 2, p: 2, fontSize: "500%", textAlign: "center" }}>
       {question}
@@ -13,7 +13,7 @@ function SingleCharQuestion({ question }) {
 
 // TODO, rather just pull out X shuffled items.
 // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(array) {
+function shuffle<T>(array: T[]) {
   let currentIndex = array.length,
     randomIndex;
   while (currentIndex != 0) {
@@ -27,7 +27,31 @@ function shuffle(array) {
   return array;
 }
 
-function generateCards() {
+export interface StudyCardDataItem {
+  id: string;
+  [key: string]: unknown;
+}
+
+export interface StudySet {
+  // methods
+  Question: typeof SingleCharQuestion;
+  generateCards: typeof generateCards;
+  // data
+  id: string;
+  data: StudyCardDataItem[];
+  question: (item: unknown) => string;
+  answer: (item: unknown) => string;
+  answers: string[];
+}
+
+export interface StudyCard {
+  id: string;
+  question: string;
+  answer: string;
+  answers: string[];
+}
+
+function generateCards(this: StudySet) {
   const { data, question, answer, answers: _answers } = this;
   const array = Object.values(data);
 
@@ -46,7 +70,7 @@ function generateCards() {
       question: question(item),
       answer: answer(item),
       answers,
-    };
+    } as StudyCard;
   });
 }
 
@@ -114,10 +138,10 @@ const sets = {
   },
 };
 
-function getSet(id) {
+function getSet(id: string) {
   if (!sets[id]) throw new Error("No such set");
 
-  const set = {
+  const set: StudySet = {
     ...setDefaults,
     ...sets[id],
   };
