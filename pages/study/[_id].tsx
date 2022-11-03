@@ -203,8 +203,8 @@ function StudySetLoad() {
   const isPopulated = useGongoIsPopulated();
   const set = React.useMemo(() => _id && getSet(_id), [_id]);
   const allCards = React.useMemo(() => set && set.generateCards(), [set]);
-  const studyData = useGongoOne((db) =>
-    db.collection("studySet").find({ setId: _id })
+  const studyData = useGongoOne(
+    (db) => _id && db.collection("studySet").find({ setId: _id })
   );
   useGongoSub("studySet");
 
