@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import Link from "../../src/Link";
 import AppBar from "../../components/AppBar";
 
-import getSet from "../../src/study/sets";
+import getSet, { StudyCard, StudySet } from "../../src/study/sets";
 import db from "../../src/db";
 
 /*
@@ -68,14 +68,14 @@ function newCard(): StudyCardStats {
   };
 }
 
-function randomCard(set: StudyCardStats[], prevCard: StudyCardStats = null) {
+function randomCard(set: StudyCard[], prevCard: StudyCard = null): StudyCard {
   const newCard = set[Math.floor(Math.random() * set.length)];
   return newCard === prevCard ? randomCard(set, prevCard) : newCard;
 }
 
 const StudySetCol = db.collection("studySet");
 
-function NewStudyData(set) {
+function NewStudyData(set: StudySet) {
   // @ts-expect-error
   const userId = db.auth.getUserId();
 
@@ -115,7 +115,7 @@ function updateCardSet(
     time?: number;
     dueDate?: Date;
     userId?: string;
-    [key: string]: unknown; // e.g. SDU["cards.card_id"] = card;
+    [key: string]: unknown; // e.g. $set: { ["cards.card_id"]: card }
   }
 
   const studyDataUpdate: StudyDataUpdate = {
@@ -185,7 +185,10 @@ function updateCardSet(
   });
 }
 
-function fetchDueCards(allCards, studyData) {
+function fetchDueCards(
+  allCards: StudyCard[],
+  studyData: StudySetStats
+): StudyCard[] {
   const now = new Date();
   const cards = [];
   for (let setCard of allCards) {
