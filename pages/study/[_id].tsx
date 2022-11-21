@@ -20,6 +20,7 @@ import AppBar from "../../components/AppBar";
 
 import getSet, { StudyCard, StudySet } from "../../src/study/sets";
 import db from "../../src/db";
+import { Stack } from "@mui/material";
 
 /*
 export async function getServerSideProps(context) {
@@ -33,10 +34,13 @@ export interface StudyCardStats {
   incorrect: number;
   time: number;
   dueDate: Date;
-  supermemo: {
+  supermemo?: {
     interval: number;
     repetition: number;
     efactor: number;
+  };
+  repetition?: {
+    weight: number;
   };
 }
 
@@ -54,7 +58,7 @@ export interface StudySetStats {
   __updatedAt?: number;
 }
 
-function newCard(): StudyCardStats {
+function newCardStats(): StudyCardStats {
   return {
     correct: 0,
     incorrect: 0,
@@ -64,6 +68,9 @@ function newCard(): StudyCardStats {
       interval: 0,
       repetition: 0,
       efactor: 2.5,
+    },
+    repetition: {
+      weight: 1,
     },
   };
 }
@@ -75,11 +82,11 @@ function randomCard(set: StudyCard[], prevCard: StudyCard = null): StudyCard {
 
 const StudySetCol = db.collection("studySet");
 
-function NewStudyData(set: StudySet) {
+function newStudySetStats(set: StudySet) {
   // @ts-expect-error
   const userId = db.auth.getUserId();
 
-  const newStudyData: StudySetStats = {
+  const studySetStats: StudySetStats = {
     setId: set.id,
     cards: {},
     correct: 0,
@@ -89,23 +96,23 @@ function NewStudyData(set: StudySet) {
   };
 
   if (userId) {
-    newStudyData.userId = userId;
-    newStudyData.__ObjectIDs = ["userId"];
+    studySetStats.userId = userId;
+    studySetStats.__ObjectIDs = ["userId"];
   }
 
   for (let cardId of Object.keys(set.data)) {
-    newStudyData.cards[cardId] = newCard();
+    studySetStats.cards[cardId] = newCardStats();
   }
 
-  // console.log({ newStudyData });
-  return newStudyData;
+  // console.log({ studySetStats });
+  return studySetStats;
 }
 
 function updateCardSet(
   set,
   cardId,
   _studyData: StudySetStats,
-  { wrongCount, startTime }
+  { wrongCount, startTime, mode }
 ) {
   const card = { ..._studyData.cards[cardId] };
 
@@ -148,21 +155,29 @@ function updateCardSet(
 
   // console.log({ wrongCount, startTime, elapsed, grade });
 
-  card.supermemo = supermemo(card.supermemo, grade);
+  if (mode === "supermemo") {
+    console.log(card);
+    card.supermemo = supermemo(card.supermemo, grade);
 
-  const dayInMs = 86400000;
-  //const oldDueDate = card.dueDate.getTime();
-  card.dueDate = new Date(Date.now() + card.supermemo.interval * dayInMs);
+    const dayInMs = 86400000;
+    //const oldDueDate = card.dueDate.getTime();
+    card.dueDate = new Date(Date.now() + card.supermemo.interval * dayInMs);
 
-  let earliestDueDate = card.dueDate;
-  for (const [id, card2] of Object.entries(_studyData.cards)) {
-    // Skip currentId because we already used it but more importantly, we
-    // didn't mutate _studyData.cards[currentId] so it would be the previous
-    // dueDate, i.e. before now & thus guaranteed (but incorrect) "earliest"
-    if (id !== cardId && card2.dueDate < earliestDueDate)
-      earliestDueDate = card2.dueDate;
+    let earliestDueDate = card.dueDate;
+    for (const [id, card2] of Object.entries(_studyData.cards)) {
+      // Skip currentId because we already used it but more importantly, we
+      // didn't mutate _studyData.cards[currentId] so it would be the previous
+      // dueDate, i.e. before now & thus guaranteed (but incorrect) "earliest"
+      if (id !== cardId && card2.dueDate < earliestDueDate)
+        earliestDueDate = card2.dueDate;
+    }
+    studyDataUpdate.dueDate = earliestDueDate;
+  } else if (mode === "repetition") {
+    card.repetition = {
+      // 6 so if they get it correct (5) it will still repeat (once, unweighted)
+      weight: 6 - grade,
+    };
   }
-  studyDataUpdate.dueDate = earliestDueDate;
 
   //if (studyData.dueDate.getTime() === oldDueDate) studyData.dueDate = card.dueDate;
 
@@ -192,7 +207,7 @@ function fetchDueCards(
   const now = new Date();
   const cards = [];
   for (let setCard of allCards) {
-    const studySetCard = studyData.cards[setCard.id] || newCard();
+    const studySetCard = studyData.cards[setCard.id] || newCardStats();
     if (studySetCard.dueDate <= now) cards.push(setCard);
   }
   return cards;
@@ -202,6 +217,11 @@ function StudySetLoad() {
   const router = useRouter();
   const _id = router.query._id as undefined | string;
   console.log({ _id, query: router.query });
+
+  // const [mode, setMode] = React.useState("supermemo");
+  const mode = router.query.mode || "supermemo";
+  const setMode = (mode) =>
+    router.replace({ query: { ...router.query, mode } });
 
   const isPopulated = useGongoIsPopulated();
   const set = React.useMemo(() => _id && getSet(_id), [_id]);
@@ -214,44 +234,72 @@ function StudySetLoad() {
   // console.log({ studyData });
 
   React.useEffect(() => {
+    if (!_id) return;
     if (isPopulated && !studyData) {
       // Race conditiion, let's double check with sync
       // Note, previously the if had an errant semicolon (";") afterwards,
       // so was never checked before calling the next line.  Fixed now,
       // look out for any strange behaviour.  TODO.
       if (!StudySetCol.findOne({ setId: _id }))
-        StudySetCol.insert(NewStudyData(set));
+        StudySetCol.insert(newStudySetStats(set));
     }
   }, [!!studyData, isPopulated]);
 
-  if (!studyData || !isPopulated) return <div>Initializing</div>;
+  if (!_id || !studyData || !isPopulated) return <div>Initializing</div>;
 
-  const dueCards = fetchDueCards(allCards, studyData);
-  console.log({ set, allCards, dueCards, studyData });
+  let cards;
+  if (mode === "supermemo") {
+    cards = fetchDueCards(allCards, studyData);
+    console.log({ set, allCards, cards, studyData });
 
-  if (dueCards.length === 0) {
-    const navParts = [{ title: "Study", url: "/study" }];
-    return (
-      <Container maxWidth="lg" sx={{ p: 0 }}>
-        <AppBar title={set.id} navParts={navParts} />
-        <Box sx={{ p: 2, textAlign: "center" }}>
-          <div style={{ fontSize: "500%" }}>🏆</div>
-          <Typography variant="body1">
-            You&apos;re all done for the day!
-          </Typography>
-          <br />
-          <Button variant="contained" component={Link} href="/study">
-            Back to Study Home
-          </Button>
-        </Box>
-      </Container>
-    );
+    if (cards.length === 0) {
+      const navParts = [{ title: "Study", url: "/study" }];
+      return (
+        <Container maxWidth="lg" sx={{ p: 0 }}>
+          <AppBar title={set.id} navParts={navParts} />
+          <Box sx={{ p: 2, textAlign: "center" }}>
+            <div style={{ fontSize: "500%" }}>🏆</div>
+            <Typography variant="body1">
+              You&apos;re all done for the day!
+            </Typography>
+            <br />
+            <Button variant="contained" component={Link} href="/study">
+              Back to Study Home
+            </Button>
+            <br />
+            <Button
+              sx={{ my: 1 }}
+              variant="outlined"
+              component={Link}
+              href={location.href + "?mode=repetition"}
+            >
+              Continue in Repetition Mode
+            </Button>
+          </Box>
+        </Container>
+      );
+    }
+  } else {
+    cards = [];
+    for (const setCard of allCards) {
+      const studySetCard = studyData.cards[setCard.id] || newCardStats();
+      const weight = studySetCard?.repetition?.weight || 1;
+      for (let i = 0; i < weight; i++) cards.push(setCard);
+    }
   }
 
-  return <StudySet set={set} cards={dueCards} studyData={studyData} />;
+  return (
+    <StudySet
+      set={set}
+      cards={cards}
+      studyData={studyData}
+      mode={mode}
+      setMode={setMode}
+    />
+  );
 }
 
-function StudySet({ set, cards, studyData }) {
+function StudySet({ set, cards, studyData, mode, setMode }) {
   console.log({ cards });
   const [card, setCard] = React.useState(randomCard(cards));
   const [correct, setCorrect] = React.useState(0);
@@ -275,7 +323,7 @@ function StudySet({ set, cards, studyData }) {
           setTotal(total + 1);
           setStartTime(Date.now());
         }, 200);
-      updateCardSet(set, card.id, studyData, { wrongCount, startTime });
+      updateCardSet(set, card.id, studyData, { wrongCount, startTime, mode });
     } else {
       setWrong(answer);
       setWrongCount(wrongCount + 1);
@@ -288,9 +336,24 @@ function StudySet({ set, cards, studyData }) {
     <Container maxWidth="lg" sx={{ p: 0 }}>
       <AppBar title={set.id} navParts={navParts} />
       <Box sx={{ p: 2 }}>
-        <div style={{ textAlign: "right" }}>
-          {total === 0 ? "Go!" : `${correct} / ${total}`}
-        </div>
+        <Stack
+          direction="row"
+          justifyContent="flex-end"
+          sx={{ textAlign: "right", width: "100%" }}
+        >
+          <Box sx={{ my: 1, mr: 2 }}>
+            <select
+              value={mode}
+              onChange={(event) => setMode(event.target.value)}
+            >
+              <option value="supermemo">supermemo</option>
+              <option value="repetition">repetition</option>
+            </select>
+          </Box>
+          <Box sx={{ my: 1 }}>
+            {total === 0 ? "Go!" : `${correct} / ${total}`}
+          </Box>
+        </Stack>
 
         <Question question={card.question} />
         <Box sx={{ flexGrow: 1 }}>
