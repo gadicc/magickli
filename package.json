@@ -23,7 +23,7 @@
     "gongo-server-db-mongo": "2.4.0",
     "json-rich-text": "^1.3.0",
     "lune": "^0.4.0",
-    "luxon": "^2.0.2",
+    "luxon": "^2.5.2",
     "next": "^12.2.4",
     "next-pwa": "^5.5.5",
     "passport": "^0.5.2",

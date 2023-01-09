@@ -4490,10 +4490,10 @@ lune@^0.4.0:
   resolved "https://registry.yarnpkg.com/lune/-/lune-0.4.0.tgz#4ac3faaa6cd351236815212e8db7ecd8fb5e2306"
   integrity sha512-rMdQf3UWY+fga8vo2MjXkpvqesliljvqIS2AjkEHZLhj7fpgT30S11hoEfug/yNPLy1jWLr2G2esQIzlQjbfpQ==
 
-luxon@^2.0.2:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.0.tgz#098090f67d690b247e83c090267a60b1aa8ea96c"
-  integrity sha512-IDkEPB80Rb6gCAU+FEib0t4FeJ4uVOuX1CQ9GsvU3O+JAGIgu0J7sf1OarXKaKDygTZIoJyU6YdZzTFRu+YR0A==
+luxon@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.2.tgz#17ed497f0277e72d58a4756d6a9abee4681457b6"
+  integrity sha512-Yg7/RDp4nedqmLgyH0LwgGRvMEKVzKbUdkBYyCosbHgJ+kaOUx0qzSiSatVc3DFygnirTPYnMM2P5dg2uH1WvA==
 
 magic-string@^0.25.0, magic-string@^0.25.7:
   version "0.25.9"
