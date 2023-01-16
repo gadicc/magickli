@@ -1,0 +1,20 @@
+{
+  aries: {
+    id: "aries",
+    no: 1,
+    symbol: "♈",
+    name: {
+      en: "Aries",
+    },
+    meaning: {
+      en: "Ram",
+    },
+    rulesFrom: [
+      [3, 21],
+      [4, 19],
+    ],
+    planetId: "mars",
+    elementId: "fire",
+    quadruplicity: "cardinal",
+  },
+}

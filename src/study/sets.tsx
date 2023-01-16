@@ -136,6 +136,13 @@ const sets = {
     answer: "quadruplicity",
     answers: ["cardinal", "kerubic", "mutable"],
   },
+  // 1=10 zelator
+  "zelator-alchemy-symbols": {
+    id: "zelator-alchemy-symbols",
+    data: data.alchemySymbol,
+    question: "altSymbol",
+    answer: "name.en",
+  },
 };
 
 function getSet(id: string) {
