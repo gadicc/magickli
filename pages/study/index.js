@@ -88,7 +88,7 @@ export default function Study() {
                 >
                   <TableCell component="th" scope="row">
                     <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
-                    <Link href={"/study/info/" + set.setId}>🛈</Link>
+                    <Link href={"/study/info/" + set.setId}>ℹ️</Link>
                   </TableCell>
                   <TableCell align="right">
                     {set.correct + set.incorrect > 0
