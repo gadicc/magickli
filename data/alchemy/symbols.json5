@@ -1,0 +1,112 @@
+{
+  // The Three Principles of Nature
+  sulphur: {
+    id: "sulphur",
+    symbol: "🜍",
+    altSymbol: "🜍",
+    name: {
+      en: "Sulphur",
+    },
+    category: "principles",
+    gdGrade: 1,
+  },
+  mercury: {
+    id: "mercury",
+    symbol: "☿",
+    altSymbol: "☿",
+    name: {
+      en: "Mercury",
+    },
+    category: "principles",
+    gdGrade: 1,
+  },
+  salt: {
+    id: "salt",
+    symbol: "🜔",
+    altSymbol: "🜔",
+    name: {
+      en: "Salt",
+    },
+    category: "principles",
+    gdGrade: 1,
+  },
+
+  // Metals attributed to the planets
+  lead: {
+    id: "lead",
+    symbol: "🜪",
+    altSymbol: "♄",
+    name: {
+      en: "Lead",
+    },
+    category: "planets",
+    planetId: "saturn",
+    gdGrade: 1,
+  },
+  tin: {
+    id: "tin",
+    symbol: "🜩",
+    altSymbol: "♃",
+    name: {
+      en: "Tin",
+    },
+    category: "planets",
+    planetId: "jupiter",
+    gdGrade: 1,
+  },
+  iron: {
+    id: "iron",
+    symbol: "🜜",
+    altSymbol: "♂",
+    name: {
+      en: "Iron",
+    },
+    category: "planets",
+    planetId: "mars",
+    gdGrade: 1,
+  },
+  gold: {
+    id: "gold",
+    symbol: "🜚",
+    altSymbol: "☉",
+    name: {
+      en: "Gold",
+    },
+    category: "planets",
+    planetId: "sol",
+    gdGrade: 1,
+  },
+  copper: {
+    id: "copper",
+    symbol: "🜠",
+    altSymbol: "♀",
+    name: {
+      en: "Copper / Brass",
+    },
+    category: "planets",
+    planetId: "venus",
+    gdGrade: 1,
+  },
+  quicksilver: {
+    id: "quicksilver",
+    symbol: "☿",
+    altSymbol: "☿",
+    name: {
+      en: "Quicksilver",
+    },
+    category: "planets",
+    planetId: "mercury",
+    gdGrade: 1,
+  },
+  silver: {
+    id: "silver",
+    symbol: "🜛",
+    altSymbol: "☽",
+    name: {
+      en: "Silver",
+    },
+    category: "planets",
+    planetId: "luna",
+    gdGrade: 1,
+  },
+}

@@ -15,6 +15,8 @@ const allData = {
   soul: require("./kabbalah/souls.json5").default,
 
   chakra: require("./chakras.json5").default,
+
+  alchemySymbol: require("./alchemy/symbols.json5").default,
 };
 
 function insertRefs(row) {
