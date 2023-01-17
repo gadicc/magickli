@@ -1,0 +1,17 @@
+// https://en.wikipedia.org/wiki/Geomantic_figures#The_geomantic_figures
+{
+  via: {
+    id: "via",
+    rows: [1, 1, 1, 1],
+    meaning: {
+      en: "way",
+    },
+  },
+  cauda_draconis: {
+    id: "cauda_draconis",
+    rows: [1, 1, 1, 2],
+    meaning: {
+      en: "dragon's tail",
+    },
+  },
+}

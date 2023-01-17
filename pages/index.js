@@ -5,6 +5,7 @@ import AppBar from "../components/AppBar";
 import Tiles from "../components/Tiles";
 
 import GDLogoSquished from "../src/goldendawn-logo-squished.svg";
+import GeomanticFigures from "../src/geomancy/Geomantic_figures.svg";
 
 const tiles = [
   {
@@ -21,6 +22,11 @@ const tiles = [
     img: "/pics/30aethyrs.jpg",
     title: "Enochian",
     to: "https://enochian.app/",
+  },
+  {
+    Component: () => <GeomanticFigures width="100%" />,
+    title: "Geomancy",
+    to: "/geomancy/",
   },
   {
     Component: () => <GDLogoSquished width="100%" />,

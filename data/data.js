@@ -6,6 +6,8 @@ const allData = {
 
   element: require("./elements.json5").default,
 
+  tetragram: require("./geomancy/tetragrams.json5").default,
+
   gdGrade: require("./hogd/grades.json5").default,
 
   angelicOrder: require("./kabbalah/angelicOrders.json5").default,
