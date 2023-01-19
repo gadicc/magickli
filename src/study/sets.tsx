@@ -1,7 +1,7 @@
 import React from "react";
 import Paper from "@mui/material/Paper";
 
-import data from "../../data/data.js";
+import data from "../../data/data";
 
 function SingleCharQuestion({ question }: { question: string }) {
   return (
