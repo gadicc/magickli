@@ -40,6 +40,7 @@
   "devDependencies": {
     "@prettier/plugin-pug": "^1.20.1",
     "@svgr/webpack": "^6.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
     "eslint-config-prettier": "^8.5.0",
