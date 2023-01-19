@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar({ title, navParts }) {
+export default function ButtonAppBar({ title, navParts = undefined }) {
   const classes = useStyles();
   //const router = useRouter();
 

@@ -1,16 +1,44 @@
-import React from "react";
-import AppBar from "../components/AppBar";
-import { tetragram } from "../data/data";
+import { tetragram as tetragrams } from "../../data/data";
+
+function Tetragram({
+  id,
+  width,
+  height,
+}: {
+  id: string;
+  width?: number;
+  height?: number;
+});
 
 function Tetragram({
   rows,
   width,
-  height = 50,
+  height,
 }: {
   rows: (1 | 2)[];
+  width?: number;
+  height?: number;
+});
+
+function Tetragram({
+  id,
+  rows,
+  width,
+  height = 50,
+}: {
+  id: string | undefined;
+  rows: (1 | 2)[] | undefined;
   width: number;
   height: number;
 }) {
+  if (!(rows || id))
+    throw new Error("Tetragram, either `id` or `rows` must be specified");
+  if (!rows) {
+    const tetragram = tetragrams[id];
+    if (!tetragram) throw new Error(`No Tetragram with id "${id}"`);
+    rows = tetragram.rows;
+  }
+
   const radius = 3;
   const padding = 3;
 
@@ -56,19 +84,4 @@ function Tetragram({
   );
 }
 
-export default function Geomancy() {
-  return (
-    <>
-      <AppBar title="Geomancy" navParts={[]} />
-      <div>hi</div>
-      {Object.values(tetragram).map((t) => (
-        <div>
-          {t.rows.join(",")}
-          <br />
-          <Tetragram rows={t.rows} />
-          <br />
-        </div>
-      ))}
-    </>
-  );
-}
+export default Tetragram;

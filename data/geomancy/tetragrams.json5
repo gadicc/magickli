@@ -1,17 +1,462 @@
 // https://en.wikipedia.org/wiki/Geomantic_figures#The_geomantic_figures
+
+// The Golden Dawn Journal: Book I: Divination, Ciceros, pg 147
+// The Golden Dawn Journal: Book 1: Divination, Ciceros, pg 164
+
 {
-  via: {
-    id: "via",
-    rows: [1, 1, 1, 1],
-    meaning: {
-      en: "way",
+  acquisitio: {
+    id: "acquisitio",
+    rows: [2, 1, 2, 1],
+    title: {
+      en: "Acquisitio",
     },
+    translation: {
+      en: "gain",
+    },
+    meaning: {
+      en: "Generally good for profit and gain.",
+    },
+    meanings: [
+      {},
+      { en: "Happy, success in all things." },
+      { en: "Very prosperous." },
+      { en: "Favor and riches." },
+      { en: "Good fortune and success." },
+      { en: "Good success" },
+      { en: "Good - especially if it agrees with the 5th." },
+      { en: "Reasonably good." },
+      { en: "Rather good, but not very. The sick shall die." },
+      { en: "Good in all demands." },
+      { en: "Good in suits." },
+      { en: "Good in all." },
+      { en: "Unfavourable, pain and loss." },
+    ],
+  },
+  albus: {
+    id: "albus",
+    rows: [2, 2, 1, 2],
+    title: {
+      en: "Albus",
+    },
+    translation: {
+      en: "greater fortune",
+    },
+    meaning: {
+      en: "Good for profit and for entering into a place or undertaking.",
+    },
+    meanings: [
+      {},
+      { en: "Good for marriage. Mercurial. Peace." },
+      { en: "Good in all." },
+      { en: "Very good" },
+      { en: "Very good except in War." },
+      { en: "Good." },
+      { en: "Good in all things." },
+      { en: "Good except in all things." },
+      { en: "Good." },
+      { en: "A messenger brings a letter." },
+      { en: "Excellent in all." },
+      { en: "Very good." },
+      { en: "Marvelously good." },
+    ],
+  },
+  amissio: {
+    id: "amissio",
+    title: {
+      en: "Amissio",
+    },
+    rows: [1, 2, 1, 2],
+    title: {
+      en: "Amissio",
+    },
+    translation: {
+      en: "prison",
+    },
+    meaning: {
+      en: "Good for loss of substance and sometimes for love; but very bad for gain.",
+    },
+    meanings: [
+      {},
+      { en: "Ill in all things but for prisoners" },
+      { en: "Very Ill for money, but good for love." },
+      { en: "Ill end-except for quarrels." },
+      { en: "Ill in all." },
+      { en: "Unfavourable except for agriculture." },
+      { en: "Rather unfavourable for love." },
+      { en: "Very good for love, otherwise unfavourable." },
+      { en: "Excellent in all questions." },
+      { en: "Unfavourable in all things." },
+      { en: "Unfavourable except for favor with women." },
+      { en: "Good for love, otherwise bad." },
+      { en: "Unfavourable in all things." },
+    ],
+  },
+  caput_draconis: {
+    id: "caput_draconis",
+    rows: [2, 1, 1, 1],
+    title: {
+      en: "Caput Draconis",
+    },
+    translation: {
+      en: "dragon's head",
+    },
+    meaning: {
+      en: "Good with good; evil with evil. Gives good issue for gain.",
+    },
+    meanings: [
+      {},
+      { en: "Good in all things." },
+      { en: "Good." },
+      { en: "Very good." },
+      { en: "Good save in war." },
+      { en: "Very good." },
+      { en: "Good for immorality only" },
+      { en: "Good especially for peace." },
+      { en: "Good." },
+      { en: "Very good." },
+      { en: "Good in all." },
+      { en: "Good for the church and ecclesiastical gain." },
+      { en: "Not very good." },
+    ],
+  },
+  carcer: {
+    id: "carcer",
+    rows: [1, 2, 2, 1],
+    title: {
+      en: "Carcer",
+    },
+    translation: {
+      en: "prison",
+    },
+    meaning: {
+      en: "Generally unfavourable. Delay, binding, bar, restriction.",
+    },
+    meanings: [
+      {},
+      { en: "Unfavourable except to fortify a place." },
+      { en: "Good in Saturnine questions; else unfavourable." },
+      { en: "Unfavourable." },
+      { en: "Good only for melancholy." },
+      { en: "Receive a letter within three days. Unfavourable." },
+      { en: "Very unfavourable." },
+      { en: "Unfavourable." },
+      { en: "Very unfavourable." },
+      { en: "Unfavourable in all." },
+      { en: "Unfavourable save in hldden treasure." },
+      { en: "Much anxiety." },
+      { en: "Rather good." },
+    ],
   },
   cauda_draconis: {
     id: "cauda_draconis",
+    title: {
+      en: "Cauda Draconis",
+    },
     rows: [1, 1, 1, 2],
-    meaning: {
+    translation: {
       en: "dragon's tail",
     },
+    meaning: {
+      en: "Good with evil, and evil with good. Good for loss, and for passing out of an affair.",
+    },
+    meanings: [
+      {},
+      { en: "Destroy figure if it falls here! Makes judgment worthless." },
+      { en: "Very unfavourable." },
+      { en: "Unfavourable in all" },
+      { en: "Good especially for conclusion of the matter." },
+      { en: "Very unfavourable." },
+      { en: "Rather good." },
+      { en: "Unfavourable, war, and fire." },
+      { en: "No good, except for magic" },
+      { en: "Good for science only. Bad for journeys. Robbery" },
+      { en: "Unfavourable save in works of fire." },
+      { en: "Unfavourable save for favors" },
+      { en: "Rather good." },
+    ],
+  },
+  conjunctio: {
+    id: "conjunctio",
+    rows: [2, 1, 1, 2],
+    title: {
+      en: "Conjunctio",
+    },
+    translation: {
+      en: "conjunction",
+    },
+    meaning: {
+      en: "Good with good, or evil with evil. Recovery from things lost.",
+    },
+    meanings: [
+      {},
+      { en: "Good with good, evil with evil." },
+      { en: "Commonly good." },
+      { en: "Good fortune." },
+      { en: "Good save for health; see the eighth." },
+      { en: "Medium." },
+      { en: "Good for immorality only." },
+      { en: "Rather good." },
+      { en: "Unfavourable, death." },
+      { en: "Medium good." },
+      { en: "For love, good. For sickness, unfavourable." },
+      { en: "Good in all." },
+      { en: "Medium. Bad for prisoners" },
+    ],
+  },
+  fortuna_major: {
+    id: "fortuna_major",
+    rows: [2, 2, 1, 1],
+    title: {
+      en: "Fortuna Major",
+    },
+    translation: {
+      en: "greater fortune",
+    },
+    meaning: {
+      en: "Good for gain in all things where a person has hopes to win.",
+    },
+    meanings: [
+      {},
+      { en: "Good save in secrecy" },
+      { en: "Good except in sad things." },
+      { en: "Good in all." },
+      { en: "Good in all, but melancholy." },
+      { en: "Very good in all things." },
+      { en: "Very good except for debauchery" },
+      { en: "Good in all." },
+      { en: "Moderately good." },
+      { en: "Very good." },
+      { en: "Exceedingly good. Go to superiors" },
+      { en: "Very good." },
+      { en: "Good in all." },
+    ],
+  },
+  fortuna_minor: {
+    id: "fortuna_minor",
+    rows: [1, 1, 2, 2],
+    title: {
+      en: "Fortuna Minor",
+    },
+    translation: {
+      en: "lesser fortune",
+    },
+    meaning: {
+      en: "Good in any manner in which a person wishes to proceed quickly.",
+    },
+    meanings: [
+      {},
+      { en: "Speed in victory and in love, but choleric." },
+      { en: "Very good." },
+      { en: "Good - but wrathful." },
+      { en: "Haste; rather unfavourable except for peace." },
+      { en: "Good in all things." },
+      { en: "Medium in all." },
+      { en: "Unfavourable except for war or love." },
+      { en: "Unfavourable generally." },
+      { en: "Good, but choleric" },
+      { en: "Good, except for peace." },
+      { en: "Good, especially for love" },
+      { en: "Good, except for alternation, or for serving another." },
+    ],
+  },
+  laetitia: {
+    id: "laetitia",
+    rows: [1, 2, 2, 2],
+    title: {
+      en: "Laetitia",
+    },
+    translation: {
+      en: "joy",
+    },
+    meaning: {
+      en: "Good for joy, present or to come.",
+    },
+    meanings: [
+      {},
+      { en: "Good, except in war" },
+      { en: "Sickly." },
+      { en: "Ill." },
+      { en: "Mainly good." },
+      { en: "Excellently good" },
+      { en: "Unfavourable generally." },
+      { en: "Indifferent." },
+      { en: "Unfavourable generally." },
+      { en: "Very good." },
+      { en: "Good, rather in war than in peace." },
+      { en: "Good in all." },
+      { en: "Unfavourable generally." },
+    ],
+  },
+  populus: {
+    id: "populus",
+    rows: [2, 2, 1, 1],
+    title: {
+      en: "Populus",
+    },
+    translation: {
+      en: "greater fortune",
+    },
+    meaning: {
+      en: "Sometimes good and sometimes bad; good with good, and evil with evil.",
+    },
+    meanings: [
+      {},
+      { en: "Good in marriages" },
+      { en: "Medium good." },
+      { en: "Rather good than bad." },
+      { en: "Good in all but love." },
+      { en: "Good in most things." },
+      { en: "Good." },
+      { en: "In war good; else medium." },
+      { en: "Unfavourable." },
+      { en: "Look for letters." },
+      { en: "Good." },
+      { en: "Good in all." },
+      { en: "Very unfavourable." },
+    ],
+  },
+  puella: {
+    id: "puella",
+    rows: [1, 2, 1, 1],
+    title: {
+      en: "Puella",
+    },
+    translation: {
+      en: "girl",
+    },
+    meaning: {
+      en: "Good in all demands, especially in those relating to women.",
+    },
+    meanings: [
+      {},
+      { en: "Good except in war." },
+      { en: "Very good." },
+      { en: "Good." },
+      { en: "Indifferent." },
+      { en: "Very good, but notice the aspects." },
+      { en: "Good, but especially for debauchery." },
+      { en: "Good except for war." },
+      { en: "Good." },
+      { en: "Good for music. Otherwise only medium." },
+      { en: "Good for peace." },
+      { en: "Good, and love ofladies." },
+      { en: "Good in all." },
+    ],
+  },
+  puer: {
+    id: "puer",
+    rows: [1, 1, 2, 1],
+    title: {
+      en: "Puer",
+    },
+    translation: {
+      en: "boy",
+    },
+    meaning: {
+      en: "Unfavourable in most demands, except in those relating to War or Love.",
+    },
+    meanings: [
+      {},
+      { en: "Indifferent. Best in War." },
+      { en: "Good, but with trouble" },
+      { en: "Good fortune." },
+      { en: "Unfavourable, except in war and love." },
+      { en: "Medium good." },
+      { en: "Medium." },
+      { en: "Unfavourable, save in War." },
+      { en: "Unfavourable, save for love." },
+      { en: "Unfavourable except for War" },
+      {
+        en: "Rather unfavourable. But good for love and War. Most other things medium.",
+      },
+      { en: "Medium; good favor." },
+      { en: "Very good in all." },
+    ],
+  },
+  rubeus: {
+    id: "rubeus",
+    rows: [2, 1, 2, 2],
+    title: {
+      en: "Rubeus",
+    },
+    translation: {
+      en: "red",
+    },
+    meaning: {
+      en: "Unfavourable in all that is good and Good in all that is Unfavourable.",
+    },
+    meanings: [
+      {},
+      {
+        en: "Destroy the figure if it falls here! It makes the judgment worthless.",
+      },
+      { en: "Unfavourable in all demands." },
+      { en: "Unfavourable except to let blood." },
+      { en: "Unfavourable except in War and Fire." },
+      { en: "Unfavourable save for love, and sowing seed." },
+      { en: "Unfavourable except for bloodletting." },
+      { en: "Unfavourable except for war and fire." },
+      { en: "Unfavourable." },
+      { en: "Very Unfavourable." },
+      { en: "Dissolute. Love, fire" },
+      { en: "Unfavourable, except to let blood." },
+      { en: "Unfavourable in all things." },
+    ],
+  },
+  tristitia: {
+    id: "tristitia",
+    rows: [2, 2, 2, 1],
+    title: {
+      en: "Tristitia",
+    },
+    translation: {
+      en: "greater fortune",
+    },
+    meaning: {
+      en: "Unfavourable in almost all things",
+    },
+    meanings: [
+      {},
+      { en: "Medium, but good for treasure and fortifying." },
+      { en: "Medium, but good to fortify." },
+      { en: "Unfavourable in all." },
+      { en: "Unfavourable in all." },
+      { en: "Very Unfavourable." },
+      { en: "Unfavourable, except for debauchery" },
+      { en: "Unfavourable for inheritance and magic only" },
+      { en: "Unfavourable, but in secrecy good." },
+      { en: "Unfavourable except for magic." },
+      { en: "Unfavourable except for fortifications." },
+      { en: "Unfavourable in all." },
+      { en: "Unfavourable. But good for magic and treasure." },
+    ],
+  },
+  via: {
+    id: "via",
+    rows: [1, 1, 1, 1],
+    title: {
+      en: "Via",
+    },
+    translation: {
+      en: "way",
+    },
+    meaning: {
+      en: "Injurious to the goodness of other figures generally, but good for journeys and voyages.",
+    },
+    meanings: [
+      {},
+      { en: "Unfavourable except for prison." },
+      { en: "Indifferent." },
+      { en: "Very good in all." },
+      { en: "Good in all save love." },
+      { en: "Voyages good." },
+      { en: "Unfavourable." },
+      { en: "Rather good, especially for voyages." },
+      { en: "Unfavourable" },
+      { en: "Indifferent. good for journeys." },
+      { en: "Good." },
+      { en: "Very good." },
+      { en: "Excellent." },
+    ],
   },
 }

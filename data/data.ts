@@ -1,3 +1,6 @@
+import tetragram from "./geomancy/Tetragrams";
+import geomanicHouse from "./geomancy/Houses";
+
 const allData = {
   planet: require("./astrology/planets.json5").default,
   zodiac: require("./astrology/zodiac.json5").default,
@@ -6,7 +9,9 @@ const allData = {
 
   element: require("./elements.json5").default,
 
-  tetragram: require("./geomancy/tetragrams.json5").default,
+  // tetragram: require("./geomancy/tetragrams.json5").default,
+  tetragram,
+  geomanicHouse,
 
   gdGrade: require("./hogd/grades.json5").default,
 
@@ -49,6 +54,10 @@ for (let [set, data] of Object.entries(allData)) {
   }
 }
 
+// @ts-expect-error: ok
 if (typeof window !== "undefined") window.magickData = allData;
 
-module.exports = allData;
+// module.exports = allData;
+export default allData;
+
+export { tetragram, geomanicHouse };
