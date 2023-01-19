@@ -74,6 +74,7 @@ Link.propTypes = {
   prefetch: PropTypes.bool,
 };
 
+// eslint-disable-next-line
 export default React.forwardRef((props, ref) => (
   <Link {...props} innerRef={ref} />
 ));

@@ -13,11 +13,11 @@ function defineTransport() {
     idleTimeout: 60 * 1000,
   });
 
-  // @ts-expect-error
+  // @ts-expect-error: ok
   const _origPoll = db.transport._poll.bind(db.transport);
-  // @ts-expect-error
+  // @ts-expect-error: ok
   db.transport._poll = async function () {
-    // @ts-expect-error
+    // @ts-expect-error: ok
     const userId = db.auth.getUserId();
     if (userId) {
       const result = db
@@ -30,12 +30,12 @@ function defineTransport() {
     }
     return await _origPoll();
   };
-  // @ts-expect-error
+  // @ts-expect-error: ok
   db.transport.poll();
 }
 
 function enableNetwork() {
-  // @ts-expect-error
+  // @ts-expect-error: ok
   if (db.transport) {
     console.warn("enableNetwork() called but transport already exists");
     return;

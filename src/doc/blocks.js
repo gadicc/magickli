@@ -77,6 +77,7 @@ class I extends Node {
 
 class Img extends Node {
   render(key) {
+    // eslint-disable-next-line
     return <img key={key} width="100%" src={this.block.src} />;
   }
 }
@@ -89,6 +90,7 @@ class Br extends Node {
 
 class Var extends Node {
   render(key) {
+    // eslint-disable-next-line
     const context = React.useContext(DocContext);
     return <span key={key}>{context.vars[this.block.name].value}</span>;
   }
@@ -124,6 +126,7 @@ class Task extends Node {
 
   render(key) {
     const block = this.block;
+    // eslint-disable-next-line
     const context = React.useContext(DocContext);
     const vars = context.vars;
     const roles = context.roles;
@@ -157,7 +160,9 @@ class Task extends Node {
 
     const samePreviousRole = this.prev() && this.prev().block.role === role;
 
+    // eslint-disable-next-line
     const ref = React.useRef();
+    // eslint-disable-next-line
     React.useEffect(() => {
       this.block.ref = ref;
       this.block.forMe = forMe;

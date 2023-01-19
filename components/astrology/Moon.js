@@ -53,7 +53,7 @@ function MoonDrawing({ phase, width, height, northernHemisphere = true }) {
     sweep = [0, 1];
     mag = 20 * (phase - 0.75) * 4;
   } else {
-    exit;
+    return;
   }
 
   const inclination = northernHemisphere

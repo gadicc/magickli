@@ -39,7 +39,7 @@ export default function ButtonAppBar({ title, navParts = undefined }) {
     if (navigator.share)
       navigator
         .share(data)
-        .catch((e) => alert("Error sharing. " + JSON.stringify(error)));
+        .catch((error) => alert("Error sharing. " + JSON.stringify(error)));
     else alert("Sharing not supported on this platform.");
   }
 

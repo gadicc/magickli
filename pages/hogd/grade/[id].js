@@ -94,7 +94,10 @@ export default function Planet() {
                 let json;
                 try {
                   json = JSON.stringify(grade[key]);
-                } catch (e) {}
+                } catch (error) {
+                  console.warn(error);
+                  return
+                }
                 return (
                   json && (
                     <tr key={key}>

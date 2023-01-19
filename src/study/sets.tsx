@@ -81,7 +81,7 @@ const setDefaults = {
 
 function dotProps(item, object) {
   const keys = item.split(".");
-  for (let key of keys) object = object[key];
+  for (const key of keys) object = object[key];
   return object;
 }
 
@@ -156,7 +156,7 @@ function getSet(id: string) {
   set.generateCards.bind(set);
 
   // Allow e.g. "name.en" to create (item) => item.name.en;
-  for (let key of ["question", "answer"]) {
+  for (const key of ["question", "answer"]) {
     if (typeof set[key] === "string")
       set[key] = dotProps.bind(undefined, set[key]);
   }

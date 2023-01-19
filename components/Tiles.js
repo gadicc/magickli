@@ -39,6 +39,7 @@ function Tiles({ tiles, classes }) {
                 className="MuiGridListTile-imgFullHeight"
               />
             ) : (
+              // eslint-disable-next-line
               <img
                 className={classes.img} // eslint-disable-line
                 src={tile.img}

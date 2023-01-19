@@ -15,7 +15,8 @@ function find() {
   }
 }
 
-function MercuryDrawing({ phase, width, height }) {
+/*
+function MercuryDrawing({ phase, width, height, }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +54,7 @@ function MercuryDrawing({ phase, width, height }) {
     </svg>
   );
 }
+*/
 
 function MercuryWidget({ padding = "10px 0 18px 0" }) {
   const retrograde = find();

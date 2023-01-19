@@ -84,6 +84,7 @@ async function copySVG(event) {
       const result = document.execCommand("copy");
       document.body.removeChild(textarea);
       if (result === "unsuccessful") {
+        return toast("Failed to Copy to Clipboard :(");
       }
     } else {
       throw err;

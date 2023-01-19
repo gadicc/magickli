@@ -58,8 +58,8 @@ export default function Grades() {
           </TableContainer>
           <br />
           <p>
-            Note: You'll only find material here that is readily available
-            elsewhere. However, if you're the head of an order and want private
+            Note: You&apos;ll only find material here that is readily available
+            elsewhere. However, if you&apos;re the head of an order and want private
             materials made available securely to your members, please contact
             me.
           </p>

@@ -83,7 +83,7 @@ function randomCard(set: StudyCard[], prevCard: StudyCard = null): StudyCard {
 const StudySetCol = db.collection("studySet");
 
 function newStudySetStats(set: StudySet) {
-  // @ts-expect-error
+  // @ts-expect-error: ok
   const userId = db.auth.getUserId();
 
   const studySetStats: StudySetStats = {
@@ -100,7 +100,7 @@ function newStudySetStats(set: StudySet) {
     studySetStats.__ObjectIDs = ["userId"];
   }
 
-  for (let cardId of Object.keys(set.data)) {
+  for (const cardId of Object.keys(set.data)) {
     studySetStats.cards[cardId] = newCardStats();
   }
 
@@ -183,7 +183,7 @@ function updateCardSet(
 
   // If we weren't logged in before, but are now, take this opportunity to
   // populate userId.  TODO: probably a better place to do this.
-  // @ts-expect-error
+  // @ts-expect-error: ok
   const userId = db.auth.getUserId();
   if (userId && !_studyData.userId) {
     studyDataUpdate.userId = userId;
@@ -206,7 +206,7 @@ function fetchDueCards(
 ): StudyCard[] {
   const now = new Date();
   const cards = [];
-  for (let setCard of allCards) {
+  for (const setCard of allCards) {
     const studySetCard = studyData.cards[setCard.id] || newCardStats();
     if (studySetCard.dueDate <= now) cards.push(setCard);
   }
@@ -233,6 +233,7 @@ function StudySetLoad() {
 
   // console.log({ studyData });
 
+  const studyDataExists = !!studyData;
   React.useEffect(() => {
     if (!_id) return;
     if (isPopulated && !studyData) {
@@ -243,7 +244,7 @@ function StudySetLoad() {
       if (!StudySetCol.findOne({ setId: _id }))
         StudySetCol.insert(newStudySetStats(set));
     }
-  }, [!!studyData, isPopulated]);
+  }, [studyDataExists, isPopulated, _id, set, studyData]);
 
   if (!_id || !studyData || !isPopulated) return <div>Initializing</div>;
 

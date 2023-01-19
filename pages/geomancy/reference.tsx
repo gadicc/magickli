@@ -50,7 +50,7 @@ export default function Geomancy() {
         </Typography>
         <Grid container spacing={2} p={0}>
           {Object.values(tetragrams).map((tetragram) => (
-            <Grid item xs={6} sm={4} md={3} lg={2} xl={1}>
+            <Grid key={tetragram.id} item xs={6} sm={4} md={3} lg={2} xl={1}>
               <Grid container spacing={2}>
                 <Grid item xs={8}>
                   <b>{tetragram.title.en}</b>
@@ -70,7 +70,7 @@ export default function Geomancy() {
 
         <div style={{ textAlign: "justify" }}>
           {houses.slice(1).map((house, i) => (
-            <p>
+            <p key={i}>
               <b>
                 {i + 1}
                 {nth(i + 1)} House:
@@ -85,14 +85,14 @@ export default function Geomancy() {
         </Typography>
 
         {Object.values(tetragrams).map((tetragram) => (
-          <div>
+          <div key={tetragram.id}>
             <b>{tetragram.title.en}</b>
             <br />
             <i> {tetragram.meaning.en}</i>
             <br />
             <ol>
-              {tetragram.meanings.slice(1).map((meaning) => (
-                <li>{meaning.en}</li>
+              {tetragram.meanings.slice(1).map((meaning, i) => (
+                <li key={i}>{meaning.en}</li>
               ))}
             </ol>
           </div>
