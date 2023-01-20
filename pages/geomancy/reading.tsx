@@ -237,7 +237,7 @@ function GeomancyReading() {
       for (const interpretation of interpretations) {
         const meaning =
           interpretation.tetragram.meanings[parseInt(houseNoStr)].en;
-        const isGood = !!meaning.match(/good/i);
+        const isGood = !!meaning.match(/good|happy|success/i);
         interpretation.goodState[1](isGood);
       }
     },
