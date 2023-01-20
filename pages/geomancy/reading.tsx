@@ -218,17 +218,16 @@ function GeomancyReading() {
   }
 
   function random(tetragram: number) {
-    const randomEvenOdd = () => (Math.random() > 0.5 ? 2 : 1);
-    const randomTetra = () => [
-      randomEvenOdd(),
-      randomEvenOdd(),
-      randomEvenOdd(),
-      randomEvenOdd(),
-    ];
     return function () {
+      const randomValues = new Uint32Array(4);
+      crypto.getRandomValues(randomValues);
+      const randomTetra = Array.from(
+        randomValues.map((x) => (x % 2 === 0 ? 2 : 1))
+      );
+
       const newMothers = new Array(4);
       for (let ti = 0; ti < 4; ti++)
-        newMothers[ti] = ti === tetragram ? randomTetra() : mothers[ti];
+        newMothers[ti] = ti === tetragram ? randomTetra : mothers[ti];
       setMothers(newMothers);
     };
   }
