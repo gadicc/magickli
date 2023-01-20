@@ -258,7 +258,6 @@ function GeomancyReading() {
           labelId="house-select-label"
           id="house-select"
           value={houseNoStr}
-          label="House"
           onChange={(event: SelectChangeEvent) =>
             setHouseNoStr(event.target.value as string)
           }
