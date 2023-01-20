@@ -288,12 +288,16 @@ function GeomancyReading() {
           Tap the rows to toggle between odd &amp; even
         </span>
         <br />
-        <Stack direction="row-reverse" spacing={2}>
+        <Stack
+          direction="row-reverse"
+          spacing={2}
+          justifyContent="space-around"
+        >
           {mothers.map((tetragram, ti) => (
             <Box key={ti}>
               {ti + 1}
               <br />
-              <Box sx={{ border: "1px solid black", width: 100 }}>
+              <Box sx={{ border: "1px solid black", width: 70 }}>
                 {tetragram.map((row, i) => (
                   <div
                     key={i}
@@ -323,7 +327,7 @@ function GeomancyReading() {
                     userSelect: "none",
                   }}
                 >
-                  random
+                  🎲
                 </div>
               </Box>
             </Box>
