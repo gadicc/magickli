@@ -1,5 +1,17 @@
 import React from "react";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 
 import AppBar from "../../components/AppBar";
 import Tetragram from "../../components/geomancy/Tetragram";
@@ -8,6 +20,20 @@ import {
   tetragram as tetragrams,
   geomanicHouse as houses,
 } from "../../data/data";
+
+// https://stackoverflow.com/a/57518703/1839099
+const english_ordinal_rules = new Intl.PluralRules("en", { type: "ordinal" });
+const suffixes = {
+  one: "st",
+  two: "nd",
+  few: "rd",
+  other: "th",
+};
+function ordinal(number: number) {
+  const category = english_ordinal_rules.select(number);
+  const suffix = suffixes[category];
+  return number + suffix;
+}
 
 // https://blog.stevenlevithan.com/archives/javascript-roman-numeral-converter
 function romanize(num) {
@@ -37,6 +63,68 @@ function tetragramFromRows(rows) {
   return null;
 }
 
+function interpretationText(interpretationId: string) {
+  switch (interpretationId) {
+    case "111":
+      return (
+        <span>
+          A <b>good Judge</b> made of <b>two good Witnesses</b> is <b>good</b>.
+        </span>
+      );
+
+    case "000":
+      return (
+        <span>
+          A <b>bad Judge</b> made of <b>two bad Witnesses</b> is <b>bad</b>.
+        </span>
+      );
+
+    case "101":
+    case "011":
+      return (
+        <span>
+          A <b>good Judge</b> made of mixed <b>good & bad Witnesses</b> means{" "}
+          <b>success, but delay and vexation</b>.
+        </span>
+      );
+
+    case "110":
+      return (
+        <span>
+          <b>Two good Witnesses</b> and a <b>bad Judge</b>, the result will be{" "}
+          <b>unfortunate in the end</b>.
+        </span>
+      );
+
+    case "100":
+      return (
+        <span>
+          <b>First Witness is good</b> and the <b>second bad</b>, the{" "}
+          <b>success will be very doubtful</b>.
+        </span>
+      );
+
+    case "010":
+      return (
+        <span>
+          <b>
+            First<b> Witness i</b>s bad
+          </b>{" "}
+          and the <b>second good</b>,{" "}
+          <b>unfortunate beginning will take a good turn</b>.
+        </span>
+      );
+
+    case "001":
+      return (
+        <span>
+          A <b>good Judge</b> made of <b>two bad witnesses</b>,{" "}
+          <b>(Gadi did not know what to do for this)</b>.
+        </span>
+      );
+  }
+}
+
 function TetragramStack({ title, start, tetraRows, group }) {
   return (
     <Box sx={{ textAlign: "center" }}>
@@ -44,19 +132,38 @@ function TetragramStack({ title, start, tetraRows, group }) {
       <br />
       <Stack direction="row-reverse" justifyContent="space-evenly">
         {tetraRows.map((rows, i) => (
-          <Box key={i}>
+          <Box key={i} sx={{ width: "45px", position: "relative" }}>
             {romanize(i + start)}
             <br />
             <Tetragram key={i} rows={rows} />
             <br />
-            {!group && tetragramFromRows(rows).title.en}
+            {!group && (
+              <>
+                <div
+                  style={{
+                    position: "absolute",
+                    fontSize: "80%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                  }}
+                >
+                  {tetragramFromRows(rows).title.en}
+                </div>
+                <br />
+              </>
+            )}
           </Box>
         ))}
       </Stack>
       {group && (
         <Box>
-          <ol start={start + 3} type="I" reversed>
-            {tetraRows.reverse().map((rows, i) => (
+          <ol
+            start={start + 3}
+            type="I"
+            reversed
+            style={{ fontSize: "80%", marginTop: "5px" }}
+          >
+            {[...tetraRows].reverse().map((rows, i) => (
               <li key={i}>{tetragramFromRows(rows).title.en}</li>
             ))}
           </ol>
@@ -67,14 +174,78 @@ function TetragramStack({ title, start, tetraRows, group }) {
 }
 
 function GeomancyReading() {
-  const mothers: (1 | 2)[][] = [
+  const [houseNoStr, setHouseNoStr] = React.useState("1");
+  const [mothers, setMothers] = React.useState<(1 | 2)[][]>([
     [1, 2, 1, 1],
     [1, 1, 1, 2],
     [2, 1, 1, 1],
     [1, 2, 1, 2],
-  ];
+  ]);
 
   const { daughters, nephews, witnesses, judges } = compute(mothers);
+
+  const interpretations = [
+    {
+      title: "1st Witness",
+      tetragram: tetragramFromRows(witnesses[0]),
+      goodState: React.useState(true),
+    },
+    {
+      title: "2nd Witness",
+      tetragram: tetragramFromRows(witnesses[1]),
+      goodState: React.useState(true),
+    },
+    {
+      title: "Judge",
+      tetragram: tetragramFromRows(judges[0]),
+      goodState: React.useState(true),
+    },
+  ];
+
+  const interpretationId = interpretations
+    .map((interpretation) => interpretation.goodState[0])
+    .map(Number)
+    .join("");
+
+  function toggle(tetragram: number, row: number) {
+    return function () {
+      const newMothers = new Array(4);
+      for (let ti = 0; ti < 4; ti++)
+        newMothers[ti] = ti === tetragram ? [...mothers[ti]] : mothers[ti];
+      newMothers[tetragram][row] = mothers[tetragram][row] === 2 ? 1 : 2;
+      setMothers(newMothers);
+    };
+  }
+
+  function random(tetragram: number) {
+    const randomEvenOdd = () => (Math.random() > 0.5 ? 2 : 1);
+    const randomTetra = () => [
+      randomEvenOdd(),
+      randomEvenOdd(),
+      randomEvenOdd(),
+      randomEvenOdd(),
+    ];
+    return function () {
+      const newMothers = new Array(4);
+      for (let ti = 0; ti < 4; ti++)
+        newMothers[ti] = ti === tetragram ? randomTetra() : mothers[ti];
+      setMothers(newMothers);
+    };
+  }
+
+  React.useEffect(
+    () => {
+      for (const interpretation of interpretations) {
+        const meaning =
+          interpretation.tetragram.meanings[parseInt(houseNoStr)].en;
+        const isGood = !!meaning.match(/good/i);
+        interpretation.goodState[1](isGood);
+      }
+    },
+    // This is intentional, we only care about mothers being changed.
+    // eslint-disable-next-line
+    [mothers]
+  );
 
   return (
     <>
@@ -83,7 +254,86 @@ function GeomancyReading() {
         navParts={[{ title: "Geomancy", url: "/geomancy" }]}
       />
 
-      <Container sx={{ my: 1 }}>
+      <Container sx={{ my: 1, textAlign: "center" }}>
+        <Select
+          labelId="house-select-label"
+          id="house-select"
+          value={houseNoStr}
+          label="House"
+          onChange={(event: SelectChangeEvent) =>
+            setHouseNoStr(event.target.value as string)
+          }
+        >
+          {houses.slice(1).map((house) => (
+            <MenuItem key={house.id} value={house.id}>
+              <div
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  whiteSpace: "normal",
+                }}
+              >
+                <div>
+                  <b>{ordinal(house.id)} House</b>
+                </div>
+                <div>{house.meaning.en}</div>
+              </div>
+            </MenuItem>
+          ))}
+        </Select>
+        <br />
+        <br />
+
+        <Typography variant="h6">Mothers</Typography>
+        <span style={{ fontSize: "80%", fontStyle: "italic" }}>
+          Tap the rows to toggle between odd &amp; even
+        </span>
+        <br />
+        <Stack direction="row-reverse" spacing={2}>
+          {mothers.map((tetragram, ti) => (
+            <Box key={ti}>
+              {ti + 1}
+              <br />
+              <Box sx={{ border: "1px solid black", width: 100 }}>
+                {tetragram.map((row, i) => (
+                  <div
+                    key={i}
+                    onClick={toggle(ti, i)}
+                    style={{
+                      border: "1px solid black",
+                      height: 40,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      userSelect: "none",
+                    }}
+                  >
+                    {row === 2 ? "•" : "• •"}
+                  </div>
+                ))}
+                <div
+                  onClick={random(ti)}
+                  style={{
+                    border: "1px solid black",
+                    height: 40,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    userSelect: "none",
+                  }}
+                >
+                  random
+                </div>
+              </Box>
+            </Box>
+          ))}
+        </Stack>
+        <br />
+        <hr />
+        <br />
+
         <Stack direction="row-reverse" justifyContent="space-around">
           <TetragramStack
             title="Mothers"
@@ -98,7 +348,6 @@ function GeomancyReading() {
             group={true}
           />
         </Stack>
-
         <TetragramStack
           title="Nephews"
           tetraRows={nephews}
@@ -106,7 +355,6 @@ function GeomancyReading() {
           group={false}
         />
         <br />
-
         <TetragramStack
           title="Witnesses"
           tetraRows={witnesses}
@@ -114,7 +362,6 @@ function GeomancyReading() {
           group={false}
         />
         <br />
-
         <TetragramStack
           title="Judge"
           tetraRows={judges}
@@ -122,6 +369,43 @@ function GeomancyReading() {
           group={false}
         />
         <br />
+
+        {interpretations.map((interpretation) => (
+          <>
+            <div>
+              <b>
+                {interpretation.title} ({interpretation.tetragram.title.en}) in{" "}
+                {ordinal(parseInt(houseNoStr))} House
+              </b>
+              <br />
+              {interpretation.tetragram.meanings[parseInt(houseNoStr)].en}
+            </div>
+            <ToggleButtonGroup
+              value={interpretation.goodState[0]}
+              exclusive
+              size="small"
+              onChange={(_event, isGood: boolean | null) =>
+                isGood !== null && interpretation.goodState[1](isGood)
+              }
+              aria-label={interpretation.title + " is good"}
+            >
+              <ToggleButton value={true} aria-label="left aligned">
+                👍
+              </ToggleButton>
+              <ToggleButton value={false} aria-label="left aligned">
+                👎
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <br />
+            <br />
+          </>
+        ))}
+
+        <div>
+          <b>Interpretation</b>
+          <br />
+          {interpretationText(interpretationId)}
+        </div>
       </Container>
     </>
   );

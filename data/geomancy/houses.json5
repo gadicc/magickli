@@ -5,7 +5,7 @@
   {
     id: 1,
     meaning: {
-      en: "Personality of the Querent, his life, health, habits, behavior and other personal characteristics. ",
+      en: "Personality of the Querent, his life, health, habits, behavior and other personal characteristics.",
     },
   },
   {
@@ -17,13 +17,13 @@
   {
     id: 3,
     meaning: {
-      en: "Communication, relatives by blood, letters, news, short journeys, writing, other pursuits associated with Mercury. ",
+      en: "Communication, relatives by blood, letters, news, short journeys, writing, other pursuits associated with Mercury.",
     },
   },
   {
     id: 4,
     meaning: {
-      en: "Home, inheritance, possessions, hidden treasure, environment, retirement, the conclusion of any matter. Information about theft or thieves. ",
+      en: "Home, inheritance, possessions, hidden treasure, environment, retirement, the conclusion of any matter. Information about theft or thieves.",
     },
   },
   {
@@ -35,31 +35,31 @@
   {
     id: 6,
     meaning: {
-      en: "Employees, sickness, which body parts are most likely to suffer illness or injury. Domestic animals and close relatives other than immediate family. ",
+      en: "Employees, sickness, which body parts are most likely to suffer illness or injury. Domestic animals and close relatives other than immediate family.",
     },
   },
   {
     id: 7,
     meaning: {
-      en: "Love, marriage, prostitution, partnerships. Public enemies, lawsuits, war opponents, thieves and dishonor. ",
+      en: "Love, marriage, prostitution, partnerships. Public enemies, lawsuits, war opponents, thieves and dishonor.",
     },
   },
   {
     id: 8,
     meaning: {
-      en: "Death, Wills, legacies. Poverty",
+      en: "Death, Wills, legacies. Poverty.",
     },
   },
   {
     id: 9,
     meaning: {
-      en: "Long journeys, relationships with foreigners, science, the church, art, religion dreams and divinations",
+      en: "Long journeys, relationships with foreigners, science, the church, art, religion dreams and divinations.",
     },
   },
   {
     id: 10,
     meaning: {
-      en: "Fame, reputation, honor, mother, trade authority",
+      en: "Fame, reputation, honor, mother, trade authority.",
     },
   },
   {
@@ -71,7 +71,7 @@
   {
     id: 12,
     meaning: {
-      en: "Sorrow, hospitals, intrigue, prisons, restrictions, unseen dangers, fears",
+      en: "Sorrow, hospitals, intrigue, prisons, restrictions, unseen dangers, fears.",
     },
   },
 ]
