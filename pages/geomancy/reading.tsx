@@ -68,14 +68,14 @@ function interpretationText(interpretationId: string) {
     case "111":
       return (
         <span>
-          A <b>good Judge</b> made of <b>two good Witnesses</b> is <b>good</b>.
+          A <b>good judge</b> made of <b>two good witnesses</b> is <b>good</b>.
         </span>
       );
 
     case "000":
       return (
         <span>
-          A <b>bad Judge</b> made of <b>two bad Witnesses</b> is <b>bad</b>.
+          A <b>bad judge</b> made of <b>two bad witnesses</b> is <b>bad</b>.
         </span>
       );
 
@@ -83,7 +83,7 @@ function interpretationText(interpretationId: string) {
     case "011":
       return (
         <span>
-          A <b>good Judge</b> made of mixed <b>good & bad Witnesses</b> means{" "}
+          A <b>good judge</b> made of mixed <b>good & bad witnesses</b> means{" "}
           <b>success, but delay and vexation</b>.
         </span>
       );
@@ -91,7 +91,7 @@ function interpretationText(interpretationId: string) {
     case "110":
       return (
         <span>
-          <b>Two good Witnesses</b> and a <b>bad Judge</b>, the result will be{" "}
+          <b>Two good witnesses</b> and a <b>bad judge</b>, the result will be{" "}
           <b>unfortunate in the end</b>.
         </span>
       );
@@ -99,7 +99,7 @@ function interpretationText(interpretationId: string) {
     case "100":
       return (
         <span>
-          <b>First Witness is good</b> and the <b>second bad</b>, the{" "}
+          <b>First witness is good</b> and the <b>second bad</b>, the{" "}
           <b>success will be very doubtful</b>.
         </span>
       );
@@ -108,7 +108,7 @@ function interpretationText(interpretationId: string) {
       return (
         <span>
           <b>
-            First<b> Witness i</b>s bad
+            First<b> witness i</b>s bad
           </b>{" "}
           and the <b>second good</b>,{" "}
           <b>unfortunate beginning will take a good turn</b>.
@@ -118,8 +118,8 @@ function interpretationText(interpretationId: string) {
     case "001":
       return (
         <span>
-          A <b>good Judge</b> made of <b>two bad witnesses</b>,{" "}
-          <b>(Gadi did not know what to do for this)</b>.
+          A <b>good judge</b> made of <b>two bad witnesses</b> means{" "}
+          <b>success after delays and problems</b> (note: sourced elsewhere).
         </span>
       );
   }
