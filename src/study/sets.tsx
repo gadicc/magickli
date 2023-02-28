@@ -2,6 +2,7 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 
 import data from "../../data/data";
+import Tetragram from "../../components/geomancy/Tetragram";
 
 function SingleCharQuestion({ question }: { question: string }) {
   return (
@@ -142,6 +143,50 @@ const sets = {
     data: data.alchemySymbol,
     question: "altSymbol",
     answer: "name.en",
+  },
+  "geomancy-names-translation": {
+    id: "geomancy-names-translation",
+    data: data.tetragram,
+    question: "title.en",
+    answer: "translation.en",
+  },
+  "geomancy-symbol-names": {
+    id: "geomancy-symbol-names",
+    data: data.tetragram,
+    question: (item) => <Tetragram id={item.id} />,
+    answer: "title.en",
+  },
+  "planets-hebrew-hebrew": {
+    id: "planets-hebrew-hebrew",
+    data: Object.fromEntries(
+      // Only include cards that have a name.he (i.e. 7 traditional planets)
+      // @ts-expect-error: Property 'name' does not exist on type 'unknown'
+      Object.entries(data.planet).filter(([id, data]) => data?.name?.he)
+    ),
+    question: "name.en.en",
+    answer: "name.he.he",
+  },
+  "planets-hebrew-romanized": {
+    id: "planets-hebrew-romanized",
+    data: Object.fromEntries(
+      // Only include cards that have a name.he (i.e. 7 traditional planets)
+      // @ts-expect-error: Property 'name' does not exist on type 'unknown'
+      Object.entries(data.planet).filter(([id, data]) => data?.name?.he)
+    ),
+    question: "name.en.en",
+    answer: "name.he.roman",
+  },
+  "sephirot-atziluth-divine-names-he": {
+    id: "sephirot-atziluth-divine-names-he",
+    data: data.sephirah,
+    question: "name.he",
+    answer: "godName.name.he",
+  },
+  "sephirot-atziluth-divine-names-he-roman": {
+    id: "sephirot-atziluth-divine-names-he-roman",
+    data: data.sephirah,
+    question: "name.romanization",
+    answer: "godName.name.romanization",
   },
 };
 
