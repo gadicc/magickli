@@ -1,0 +1,65 @@
+{
+  cassiel: {
+    id: "cassiel",
+    name: {
+      he: "כסיאל",
+      roman: "Kassiel",
+    },
+    planetId: "saturn",
+  },
+  sachiel: {
+    id: "sachiel",
+    name: {
+      he: "סחיאל",
+      roman: "Sachiel",
+    },
+    planetId: "jupiter",
+  },
+  zamael: {
+    id: "zamael",
+    name: {
+      he: "זמאל",
+      roman: "Zamael",
+    },
+    planetId: "mars",
+  },
+  michael: {
+    id: "michael",
+    name: {
+      he: "מיכאל",
+      roman: "Michael",
+    },
+    planetId: "sol",
+  },
+  anael: {
+    id: "anael",
+    name: {
+      he: "אנאל",
+      roman: "Anael",
+    },
+    planetId: "venus",
+  },
+  raphael: {
+    id: "raphael",
+    name: {
+      he: "רפאל",
+      roman: "Raphael",
+    },
+    planetId: "mercury",
+  },
+  gabriel: {
+    id: "gabriel",
+    name: {
+      he: "גבריאל",
+      roman: "Gabriel",
+    },
+    planetId: "luna",
+  },
+  uriel: {
+    id: "uriel",
+    name: {
+      he: "אוריאל",
+      roman: "Uriel",
+    },
+  },
+}

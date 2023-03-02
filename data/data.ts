@@ -1,8 +1,10 @@
+import planet from "./astrology/Planets";
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
+import archangel from "./kabbalah/Archangels";
 
 const allData = {
-  planet: require("./astrology/planets.json5").default,
+  planet, // : require("./astrology/planets.json5").default,
   zodiac: require("./astrology/zodiac.json5").default,
 
   hebrewLetter: require("./hebrewLetters.json5").default,
@@ -15,6 +17,7 @@ const allData = {
 
   gdGrade: require("./hogd/grades.json5").default,
 
+  archangel,
   angelicOrder: require("./kabbalah/angelicOrders.json5").default,
   godName: require("./kabbalah/godNames.json5").default,
   sephirah: require("./kabbalah/sephirot.json5").default,

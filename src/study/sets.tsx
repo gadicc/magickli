@@ -82,7 +82,15 @@ const setDefaults = {
 
 function dotProps(item, object) {
   const keys = item.split(".");
-  for (const key of keys) object = object[key];
+  for (const key of keys) {
+    if (object[key]) object = object[key];
+    else {
+      console.error(object);
+      throw new Error(
+        `No such key "${key}" of path "${item}" in ${JSON.stringify(object)}`
+      );
+    }
+  }
   return object;
 }
 
@@ -160,7 +168,6 @@ const sets = {
     id: "planets-hebrew-hebrew",
     data: Object.fromEntries(
       // Only include cards that have a name.he (i.e. 7 traditional planets)
-      // @ts-expect-error: Property 'name' does not exist on type 'unknown'
       Object.entries(data.planet).filter(([id, data]) => data?.name?.he)
     ),
     question: "name.en.en",
@@ -170,11 +177,19 @@ const sets = {
     id: "planets-hebrew-romanized",
     data: Object.fromEntries(
       // Only include cards that have a name.he (i.e. 7 traditional planets)
-      // @ts-expect-error: Property 'name' does not exist on type 'unknown'
       Object.entries(data.planet).filter(([id, data]) => data?.name?.he)
     ),
     question: "name.en.en",
     answer: "name.he.roman",
+  },
+  "planets-archangels-he": {
+    id: "planets-archangels-he",
+    data: Object.fromEntries(
+      // Only include archangels that have a planet associated with them
+      Object.entries(data.archangel).filter(([id, data]) => data?.planetId)
+    ),
+    question: "name.he",
+    answer: "planet.name.he.he",
   },
   "sephirot-atziluth-divine-names-he": {
     id: "sephirot-atziluth-divine-names-he",
