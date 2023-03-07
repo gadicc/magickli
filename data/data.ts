@@ -2,6 +2,7 @@ import planet from "./astrology/Planets";
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
 import archangel from "./kabbalah/Archangels";
+import alchemySymbol from "./alchemy/Symbols";
 
 const allData = {
   planet, // : require("./astrology/planets.json5").default,
@@ -26,7 +27,7 @@ const allData = {
 
   chakra: require("./chakras.json5").default,
 
-  alchemySymbol: require("./alchemy/symbols.json5").default,
+  alchemySymbol, // : require("./alchemy/symbols.json5").default,
 };
 
 function insertRefs(row) {
@@ -51,8 +52,8 @@ function insertRefs(row) {
   });
 }
 
-for (let [set, data] of Object.entries(allData)) {
-  for (let row of Object.values(data)) {
+for (const [set, data] of Object.entries(allData)) {
+  for (const row of Object.values(data)) {
     insertRefs(row);
   }
 }

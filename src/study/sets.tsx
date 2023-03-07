@@ -94,6 +94,15 @@ function dotProps(item, object) {
   return object;
 }
 
+type UnwrapRecord<T> = T extends Record<string, infer U> ? U : T;
+
+function filter<T>(
+  data: T,
+  func: ([id, item]: [string, UnwrapRecord<T>]) => boolean
+) {
+  return Object.fromEntries(Object.entries(data).filter(func));
+}
+
 const sets = {
   "hebrew-latin": {
     id: "hebrew-latin",
@@ -146,6 +155,24 @@ const sets = {
     answers: ["cardinal", "kerubic", "mutable"],
   },
   // 1=10 zelator
+  "alchemy-principals": {
+    id: "alchemy-principals",
+    data: filter(
+      data.alchemySymbol,
+      ([id, item]) => item.category === "principles"
+    ),
+    question: "altSymbol",
+    answer: "name.en",
+  },
+  "alchemy-planetary-metals": {
+    id: "alchemy-planetary-metals",
+    data: filter(
+      data.alchemySymbol,
+      ([id, item]) => item.category === "planets"
+    ),
+    question: "altSymbol",
+    answer: "name.en",
+  },
   "zelator-alchemy-symbols": {
     id: "zelator-alchemy-symbols",
     data: data.alchemySymbol,
