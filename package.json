@@ -18,7 +18,7 @@
     "@mui/styles": "^5.4.4",
     "date-fns": "^2.29.1",
     "dot-prop": "^6.0.1",
-    "gongo-client": "2.5.1",
+    "gongo-client": "2.5.2",
     "gongo-client-react": "0.2.1",
     "gongo-server": "3.1.0",
     "gongo-server-db-mongo": "2.4.0",

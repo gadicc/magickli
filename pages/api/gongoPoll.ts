@@ -1,21 +1,20 @@
-const GongoServer = require("gongo-server/lib/serverless").default;
-const Database = require("gongo-server-db-mongo").default;
-const ObjectID = require("gongo-server-db-mongo").ObjectID;
-
-const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1";
-
-const gs = new GongoServer({
-  db: new Database(MONGO_URL, "magickli"),
-});
+import gs, { ObjectId /* User */ } from "../../src/api-lib/db";
+import {
+  CollectionEventProps,
+  userIsAdmin,
+  userIdMatches,
+} from "gongo-server-db-mongo/lib/collection";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
-gs.publish("studySet", async (db, opts, updatedAt, auth, req) => {
+gs.publish("studySet", async (db, opts, { auth }) => {
   const userId = await auth.userId();
   console.log({ userId });
   if (!userId) return [];
 
-  const cursor = db.collection("studySet").find({ userId: ObjectID(userId) });
+  const cursor = db
+    .collection("studySet")
+    .find({ userId: new ObjectId(userId) });
 
   const results = await cursor.toArray();
   console.log({ results });
@@ -28,14 +27,14 @@ gs.publish("accounts", (db) => db.collection("accounts").find());
 
 gs.publish("files", (db) => db.collection("files").find());
 
-gs.publish("file", async (db, opts, updatedAt, auth, req) => {
+gs.publish("file", async (db, opts) => {
   // TODO, filter opts for sourceUrl, sha256, filename, etc
   //return db.collection("files").find(opts).limit(1);   TODO gongo-server
   const file = await db.collection("files").findOne(opts);
   return [{ coll: "files", entries: [file] }];
 });
 
-gs.publish("user", async (db, opts, updatedAt, auth, req) => {
+gs.publish("user", async (db, opts, { auth }) => {
   const userId = await auth.userId();
   if (!userId) return [];
 
@@ -51,4 +50,13 @@ gs.publish("user", async (db, opts, updatedAt, auth, req) => {
   ];
 });
 
-module.exports = gs.express();
+if (gs.dba) {
+  const db = gs.dba;
+
+  const studySet = db.collection("studySet");
+  studySet.allow("insert", userIdMatches);
+  studySet.allow("update", userIdMatches);
+  studySet.allow("remove", userIdMatches);
+}
+
+module.exports = gs.expressPost();

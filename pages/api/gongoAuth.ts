@@ -1,9 +1,13 @@
-const GongoServer = require("gongo-server/lib/serverless").default;
-const GongoAuth = require("gongo-server/lib/auth").default;
-const Database = require("gongo-server-db-mongo").default;
+// import type { NextApiRequest, NextApiResponse } from "next";
+import GongoServer from "gongo-server/lib/serverless";
+import GongoAuth from "gongo-server/lib/auth";
+import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
 
+/* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+// import passport from "passport";
+// import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 
 const env = process.env;
 const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
@@ -21,7 +25,7 @@ console.log({
 });
 
 const gs = new GongoServer({
-  db: new Database(MONGO_URL, "magickli"),
+  dba: new MongoDBA(MONGO_URL, "magickli"),
 });
 
 const gongoAuth = new GongoAuth(gs, passport);
@@ -32,8 +36,9 @@ gongoAuth.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: ROOT_URL + "/api/gongoAuth",
+      callbackURL: ROOT_URL + "/api/gongoAuth?service=google",
       passReqToCallback: true,
+      scope: "email+profile",
     },
     gongoAuth.passportVerify
   ),
