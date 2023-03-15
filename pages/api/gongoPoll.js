@@ -8,7 +8,7 @@ const gs = new GongoServer({
   db: new Database(MONGO_URL, "magickli"),
 });
 
-gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
+// gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
 gs.publish("studySet", async (db, opts, updatedAt, auth, req) => {
   const userId = await auth.userId();
