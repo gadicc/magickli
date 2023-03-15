@@ -32,7 +32,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-toastify": "^8.2.0",
-    "sharp": "^0.29.2",
+    "sharp": "^0.30.5",
     "supermemo": "^2.0.17",
     "tarot-deck": "^2.0.1",
     "xml-beautifier": "^0.5.0",
