@@ -92,7 +92,18 @@ class Var extends Node {
   render(key) {
     // eslint-disable-next-line
     const context = React.useContext(DocContext);
-    return <span key={key}>{context.vars[this.block.name].value}</span>;
+    const variable = context.vars[this.block.name];
+    return (
+      <span key={key}>
+        {variable ? variable.value : `NO SUCH VARIABLE "${this.block.name}"`}
+      </span>
+    );
+  }
+}
+
+class DeclareVar extends Node {
+  render(key) {
+    return null;
   }
 }
 
@@ -263,6 +274,7 @@ const blocks = {
   title: Title,
   todo: Todo,
   var: Var,
+  declareVar: DeclareVar,
   summary: Summary,
 };
 Node.registerBlocks(blocks);

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import lex from "pug-lexer";
-import parse from "pug-parser";
+import pugLex from "pug-lexer";
+import pugParse from "pug-parser";
 
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
@@ -31,12 +31,21 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 import DocContext from "../../src/doc/context.js";
 import AppBar from "../../components/AppBar.js";
-// import neophyte from "../../src/doc/neophyte.yaml";
-import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 import { Render } from "../../src/doc/blocks.js";
 
-const tokens = lex(_neophyte);
-const ast = parse(tokens, { src: _neophyte });
+// import neophyte from "../../src/doc/neophyte.yaml";
+import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
+// import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
+
+const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
+
+const docs = {
+  neophyte: prepare(_neophyte),
+  // neophyteM: prepare(_neophyteM),
+};
+
+// const tokens = lex(_neophyte);
+// const ast = parse(tokens, { src: _neophyte });
 
 function toJrt(ast) {
   const out = {};
@@ -54,8 +63,13 @@ function toJrt(ast) {
       out.type = ast.name;
     }
 
-    for (let attr of ast.attrs)
-      out[attr.name] = attr.val.replace(/^['"]+|['"]+$/g, "");
+    for (let { name, val } of ast.attrs) {
+      if (typeof val === "string") {
+        if (val === "false") out[name] = false;
+        else if (val === "true") out[name] = true;
+        else out[name] = val.replace(/^['"]+|['"]+$/g, "");
+      } else out[name] = val;
+    }
   } else if (ast.type === "Text") {
     out.type = "text";
     out.value = ast.val;
@@ -70,7 +84,7 @@ function toJrt(ast) {
 // console.log(JSON.stringify(toJrt(ast), null, "  "));
 
 //const origDoc = { children: neophyte };
-const origDoc = toJrt(ast);
+// const origDoc = toJrt(ast);
 
 function PraemonstratorWand({ size }) {
   return (
@@ -135,7 +149,7 @@ function Cross({ size, bg, fg }) {
 const roles = {
   imperator: {
     name: "Imperator",
-    symbol: <Cross fg="#3f3" bg="#f33" size={14} />,
+    symbol: <Cross fg="#3f3" bg="#f33" size={14} key="symbol" />,
     color: "red",
   },
   praemonstrator: {
@@ -160,55 +174,6 @@ const roles = {
   member: { name: "Member", color: "#ccc" },
 };
 
-const vars = [
-  {
-    name: "myRole",
-    label: "My role",
-    type: "select",
-    options: Object.keys(roles).map((role) => ({
-      value: role,
-      label: roles[role].name,
-    })),
-    default: "member",
-    collapsable: false,
-  },
-  {
-    name: "candidateName",
-    label: "Candidate's Name",
-    type: "text",
-    default: "(Candidate's Name)",
-    collapsable: true,
-  },
-  {
-    name: "candidateMotto",
-    label: "Candidate's Motto",
-    type: "text",
-    default: "(Candidate's Motto)",
-    collapsable: true,
-  },
-  {
-    name: "templeName",
-    label: "Temple",
-    type: "text",
-    default: "(name)",
-    collapsable: true,
-  },
-  {
-    name: "orderName",
-    label: "Order's Name",
-    type: "text",
-    default: "Order of the Stella Matutina",
-    collapsable: true,
-  },
-  {
-    name: "witnessed",
-    label: "Witnessed/Beheld the",
-    type: "text",
-    default: "Stella Matutina",
-    collapsable: true,
-  },
-];
-
 function HideOnScroll(props) {
   const { children, window } = props;
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -226,42 +191,44 @@ function HideOnScroll(props) {
 }
 
 function ShowVars({ vars, context }) {
-  return vars.map((v) => (
-    <span key={v.name}>
-      {(function () {
-        if (v.type === "select")
-          return (
-            <FormControl>
-              <InputLabel id={"input-" + v.name + "-label"}>
-                {v.label}
-              </InputLabel>
-              <Select
-                labelId={"input-" + v.name + "-label"}
+  return vars
+    .filter((v) => !v.hidden)
+    .map((v) => (
+      <span key={v.name}>
+        {(function () {
+          if (v.varType === "select")
+            return (
+              <FormControl>
+                <InputLabel id={"input-" + v.name + "-label"}>
+                  {v.label}
+                </InputLabel>
+                <Select
+                  labelId={"input-" + v.name + "-label"}
+                  label={v.label}
+                  value={context.vars[v.name].value}
+                  onChange={(e) => context.vars[v.name].set(e.target.value)}
+                >
+                  {v.children.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            );
+          if (v.varType === "text")
+            return (
+              <TextField
                 label={v.label}
                 value={context.vars[v.name].value}
                 onChange={(e) => context.vars[v.name].set(e.target.value)}
-              >
-                {v.options.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          );
-        if (v.type === "text")
-          return (
-            <TextField
-              label={v.label}
-              value={context.vars[v.name].value}
-              onChange={(e) => context.vars[v.name].set(e.target.value)}
-            />
-          );
-      })()}
-      <br />
-      <br />
-    </span>
-  ));
+              />
+            );
+        })()}
+        <br />
+        <br />
+      </span>
+    ));
 }
 
 function ZoomMenu({
@@ -382,20 +349,31 @@ function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
   );
 }
 
-function Doc() {
+function DocLoader() {
+  const router = useRouter();
+
+  const doc = docs[router.query._id];
+
+  if (!doc) return <div>Loading or not found...</div>;
+
+  return <Doc doc={doc} />;
+}
+
+function Doc({ doc }) {
+  const router = useRouter();
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
-  const doc = origDoc;
 
   const titles = doc.children
     .filter((c) => c.type === "title")
     .map((b) => b.text);
 
+  const vars = doc.children.filter((c) => c.type === "declareVar");
+
   const [sdOpen, setSdOpen] = React.useState(false);
   const [tocAnchorEl, setTocAnchorEl] = React.useState(null);
   const [zoomAnchorEl, setZoomAnchorEl] = React.useState(null);
 
-  const router = useRouter();
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
   const [fontSize, setFontSize] = React.useState(100);
 
@@ -419,6 +397,7 @@ function Doc() {
   }
 
   const [alwaysVars, collapsableVars] = React.useMemo(() => {
+    console.log(vars);
     const alwaysVars = [],
       collapsableVars = [];
     for (const variable of vars)
@@ -555,4 +534,4 @@ function Doc() {
 }
 
 //export default dynamic(Promise.resolve(Doc), { ssr: false });
-export default Doc;
+export default DocLoader;

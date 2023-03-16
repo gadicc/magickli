@@ -1,3 +1,58 @@
+declareVar(
+  name="myRole",
+  label="My role",
+  varType="select",
+  default="member",
+  collapsable=false
+)
+  option(value="imperator", label="Imperator")
+  option(value="praemonstrator", label="Praemonstrator")
+  option(value="cancellarius", label="Cancellarius")
+  option(value="hierophant", label="Hierophant")
+  option(value="pastHierophant", label="Past Hierophant")
+  option(value="hiereus", label="Hiereus")
+  option(value="hegemon", label="Hegemon")
+  option(value="keryx", label="Keryx")
+  option(value="stolistes", label="Stolistes")
+  option(value="dadouchos", label="Dadouchos")
+  option(value="sentinel", label="Sentinel")
+  option(value="candidate", label="Candidate")
+  option(value="member", label="Member")
+declareVar(
+  name="candidateName",
+  label="Candidate's Name",
+  varType="text",
+  default="(Candidate's Name)",
+  collapsable
+)
+declareVar(
+  name="candidateMotto",
+  label="Candidate's Motto",
+  varType="text",
+  default="(Candidate's Motto)",
+  collapsable
+)
+declareVar(
+  name="templeName",
+  label="Temple",
+  varType="text",
+  default="(name)",
+  collapsable
+)
+declareVar(
+  name="orderName",
+  label="Order's Name",
+  varType="text",
+  default="Order of the Stella Matutina",
+  collapsable
+)
+declareVar(
+  name="witnessed",
+  label="Witnessed/Beheld the",
+  varType="text",
+  default="Stella Matutina",
+  collapsable
+)
 title(text="Opening of the Hall of the Neophytes")
   | Opening of the Hall of the Neophytes
 todo diagram
