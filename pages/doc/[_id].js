@@ -72,8 +72,84 @@ function toJrt(ast) {
 //const origDoc = { children: neophyte };
 const origDoc = toJrt(ast);
 
+function PraemonstratorWand({ size }) {
+  return (
+    <svg
+      version="1.1"
+      id="svg1981"
+      width={size}
+      height={size}
+      viewBox="0 0 600 600"
+    >
+      <g
+        id="g1987"
+        transform="matrix(3.7795276,0,0,3.7795276,-78.450732,-145.97385)"
+        style={{
+          fillRule: "evenodd",
+          stroke: "#000000",
+          strokeWidth: 4,
+          strokeLinecap: "butt",
+          strokeLinejoin: "miter",
+          strokeDasharray: "none",
+          strokeOpacity: 1,
+        }}
+      >
+        <path
+          style={{ fill: "#a02c2c" }}
+          d="M 21.289256,180.58781 V 57.347003 l 77.802218,60.829677 z"
+          id="path377-7"
+        />
+        <path
+          style={{ fill: "#ffcc00" }}
+          d="M 37.974882,39.154747 H 161.21579 L 100.38606,116.957 Z"
+          id="path377-7-5"
+        />
+        <path
+          style={{ fill: "#1a1a1a" }}
+          d="M 37.974363,197.09104 H 161.21522 l -60.82973,-77.80222 z"
+          id="path377-7-5-3"
+        />
+        <path
+          style={{ fill: "#5555ff" }}
+          d="M 179.34721,55.753403 V 178.99426 l -77.80222,-60.82973 z"
+          id="path377-7-5-3-5"
+        />
+      </g>
+    </svg>
+  );
+}
+
+function Cross({ size, bg, fg }) {
+  return (
+    <svg width={size} height={size} viewBox="-5 -5 10 10">
+      <circle cx="0" cy="0" r="5" fill={bg} />
+      <circle cx="0" cy="-1" r="2" stroke={fg} strokeWidth="0.5" fill="none" />
+      <g strokeWidth="1.8">
+        <path d="M -3.4,-1 L 3.4,-1" stroke={fg} />
+        <path d="M 0,-4 L 0,4" stroke={fg} />
+      </g>
+    </svg>
+  );
+}
+
 const roles = {
+  imperator: {
+    name: "Imperator",
+    symbol: <Cross fg="#3f3" bg="#f33" size={14} />,
+    color: "red",
+  },
+  praemonstrator: {
+    name: "Praemonstrator",
+    symbol: <PraemonstratorWand size={13} key="symbol" />,
+    color: "blue",
+  },
+  cancellarius: {
+    name: "Cancellarius",
+    symbol: "✡︎",
+    color: "#ca0",
+  },
   hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
+  pastHierophant: { name: "Past Hierophant", symbol: "(🕈)", color: "red" },
   hiereus: { name: "Hiereus", symbol: "▲", color: "black" },
   hegemon: { name: "Hegemon", symbol: "✝", color: "#aaa" },
   keryx: { name: "Keryx", symbol: "☤", color: "#c55" },

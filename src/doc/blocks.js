@@ -158,6 +158,20 @@ class Task extends Node {
         !["candidate", "member"].includes(myRole) &&
         !role.substr(20).split(",").includes(myRole);
 
+    if (!["all-officers", "all"].includes(role)) {
+      const roles = role
+        // all-except-XXX, all-officers-except-XXX
+        .replace(/^all.*-except-/, "")
+        .split(",");
+      for (const role of roles)
+        if (!context.roles[role])
+          console.log(
+            "%c Invalid role: " + role,
+            "background: #ffa",
+            this.block
+          );
+    }
+
     const samePreviousRole = this.prev() && this.prev().block.role === role;
 
     // eslint-disable-next-line
@@ -225,7 +239,7 @@ class Task extends Node {
           {role !== myRole && !samePreviousRole && (
             <span className="role" style={{ color: roles[role]?.color }}>
               {roles[role]
-                ? roles[role].symbol + " " + roles[role].name
+                ? [roles[role].symbol, " ", roles[role].name]
                 : role.substr(0, 1).toUpperCase() + role.substr(1)}
             </span>
           )}
