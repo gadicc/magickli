@@ -2,6 +2,8 @@ import db, { Collection } from "gongo-client";
 import HTTPTransport from "gongo-client/lib/transports/http";
 import GongoAuth from "gongo-client/lib/auth";
 import { StudySetStats } from "../pages/study/[_id]";
+import type { User } from "./schemas/user";
+import type { UserGroup } from "./schemas/userGroup";
 
 db.extend("auth", GongoAuth);
 
@@ -13,6 +15,12 @@ function defineTransport() {
     idleTimeout: 60 * 1000,
   });
 
+  /*
+   * A bit hacky (TODO, appropriate hook in Gongo)
+   * If we previously created studySets before ever enabling network,
+   * the documents won't have a userId.  So, before any poll, update
+   * any docs without a userId with our userId.
+   */
   // @ts-expect-error: ok
   const _origPoll = db.transport._poll.bind(db.transport);
   // @ts-expect-error: ok
@@ -26,7 +34,7 @@ function defineTransport() {
           { userId: { $exists: false } },
           { $set: { userId }, $push: { __ObjectIDs: "userId" } }
         );
-      console.log(result);
+      // console.log(result);
     }
     return await _origPoll();
   };
@@ -62,8 +70,9 @@ if (typeof window !== "undefined")
 /*
  */
 
-//db.subscribe("user");
-// db.collection("users").persist();
+db.subscribe("user");
+db.collection("users").persist();
+db.collection("userGroups").persist();
 
 // db.subscribe("files");
 // db.collection("files").persist();
@@ -75,6 +84,8 @@ db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 declare module "gongo-client" {
   class Database {
     collection(name: "studySet"): Collection<StudySetStats>;
+    collection(name: "users"): Collection<User>;
+    collection(name: "userGroups"): Collection<UserGroup>;
   }
 }
 

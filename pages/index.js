@@ -6,6 +6,11 @@ import Tiles from "../components/Tiles";
 
 import GDLogoSquished from "../src/goldendawn-logo-squished.svg";
 import GeomanticFigures from "../src/geomancy/Geomantic_figures.svg";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import {
+  AdminPanelSettings,
+  AdminPanelSettingsTwoTone,
+} from "@mui/icons-material";
 
 const tiles = [
   {
@@ -45,11 +50,28 @@ const tiles = [
   },
 ];
 
+const adminTile = {
+  Component: () => (
+    <div style={{ textAlign: "center" }}>
+      <AdminPanelSettingsTwoTone sx={{ color: "#555", fontSize: "700%" }} />
+    </div>
+  ),
+  title: "Admin",
+  to: "/admin",
+};
+
 function Index() {
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+
+  const _tiles = user?.admin ? [adminTile, ...tiles] : tiles;
+
   return (
     <>
       <AppBar title="Magick.li" />
-      <Tiles tiles={tiles} />
+      <Tiles tiles={_tiles} />
     </>
   );
 }
