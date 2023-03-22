@@ -90,7 +90,9 @@ function UserRow({
             return (
               <>
                 {db.collection("userGroups").findOne(groupId).name}{" "}
-                {user.groupAdminIds.includes(groupId) && <AdminPanelSettings />}
+                {user.groupAdminIds && user.groupAdminIds.includes(groupId) && (
+                  <AdminPanelSettings />
+                )}
               </>
             );
           })}
