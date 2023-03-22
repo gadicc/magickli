@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import pugLex from "pug-lexer";
 import pugParse from "pug-parser";
+import { useGongoSub, useGongoOne } from "gongo-client-react";
 
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
@@ -37,7 +38,7 @@ import { Render } from "../../src/doc/blocks.js";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
 
-const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
+export const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
 
 const docs = {
   neophyte: prepare(_neophyte),
@@ -351,8 +352,15 @@ function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
 
 function DocLoader() {
   const router = useRouter();
+  const _id = router.query._id;
 
-  const doc = docs[router.query._id];
+  const builtinDoc = docs[_id];
+  useGongoSub("doc", !builtinDoc && { _id });
+  const dbDoc = useGongoOne(
+    (db) => !builtinDoc && db.collection("docs").find({ _id })
+  );
+
+  const doc = builtinDoc || (dbDoc && dbDoc.doc);
 
   if (!doc) return <div>Loading or not found...</div>;
 
@@ -360,6 +368,7 @@ function DocLoader() {
 }
 
 function Doc({ doc }) {
+  console.log({ doc });
   const router = useRouter();
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
@@ -397,7 +406,7 @@ function Doc({ doc }) {
   }
 
   const [alwaysVars, collapsableVars] = React.useMemo(() => {
-    console.log(vars);
+    // console.log(vars);
     const alwaysVars = [],
       collapsableVars = [];
     for (const variable of vars)

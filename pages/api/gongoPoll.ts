@@ -1,9 +1,11 @@
-import gs, { ObjectId /* User */ } from "../../src/api-lib/db";
+import type { Filter, Document } from "mongodb";
 import {
   CollectionEventProps,
   userIsAdmin,
   userIdMatches,
 } from "gongo-server-db-mongo/lib/collection";
+import gs, { ObjectId /* User */ } from "../../src/api-lib/db";
+import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -20,6 +22,19 @@ gs.publish("studySet", async (db, opts, { auth }) => {
   console.log({ results });
 
   return cursor;
+});
+
+gs.publish("docs", async (db, opts, { auth }) => {
+  const userId = await auth.userId();
+  const user =
+    userId && (await db.collection("users").findOne({ _id: userId }));
+
+  let query = { groupId: { $exists: false } } as Filter<Document>;
+
+  if (user && user.groupIds)
+    query = { $or: [query, { groupId: { $in: user.groupIds } }] };
+
+  return db.collection("docs").find(query);
 });
 
 // TODO, don't publish secrets :)
@@ -89,10 +104,78 @@ gs.publish("userGroups", async (db, opts, { auth }) => {
   if (!userId) return [];
 
   const user = await db.collection("users").findOne({ _id: userId });
-  if (!user.admin) return [];
 
-  return db.collection("userGroups").find();
+  if (user.admin) return db.collection("userGroups").find();
+
+  if (user.groupAdminIds)
+    return db
+      .collection("userGroups")
+      .find({ _id: { $in: user.groupAdminIds.map(ObjectId) } });
+  else return [];
+
+  if (!user.admin) return [];
 });
+
+gs.publish("doc", async (db, opts, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const _id = opts && opts._id;
+  const user = await db.collection("users").findOne({ _id: userId });
+  const doc = await db.collection("docs").findOne({ _id });
+  if (!doc) return [];
+
+  if (!doc.groupId || user.admin || user.groupIds.includes(doc.groupId))
+    return [
+      {
+        coll: "docs",
+        entries: [doc],
+      },
+    ];
+
+  return [];
+});
+
+async function userIsGroupAdmin(
+  doc: Document | ChangeSetUpdate | string,
+  { dba, auth, collection }: CollectionEventProps
+) {
+  const userId = await auth.userId();
+  if (!userId) return "NOT_LOGGED_IN";
+
+  const user = await dba.collection("users").findOne({ _id: userId });
+  if (!user) return "USER_NOT_FOUND";
+
+  if (typeof doc === "object" && "patch" in doc) {
+    // Update
+    const existingDoc = await collection.findOne(doc._id);
+    if (!existingDoc) return "NO_EXISTING_DOC";
+    // return userId.equals(existingDoc.userId) || "doc.userId !== userId";
+    // @ts-expect-error: ok
+    return doc.groupId &&
+      // @ts-expect-error: ok
+      !(user.groupAdminIds && user.groupAdminIds.includes(doc.groupId))
+      ? "not in group"
+      : true;
+  }
+
+  // DELETES (doc is an ObjectId)
+  if (doc instanceof ObjectId || typeof doc === "string") {
+    const docId = typeof doc === "string" ? new ObjectId(doc) : doc;
+    const existingDoc = await collection.findOne(docId);
+    if (!existingDoc) return "NO_EXISTING_DOC";
+    return (
+      userId.equals(existingDoc.userId) || "doc.userId !== userId (for delete)"
+    );
+  }
+
+  console.log({ doc, userId });
+  // return userId.equals(doc.userId) || "doc.userId !== userId";
+  return doc.groupId &&
+    !(user.groupAdminIds && user.groupAdminIds.includes(doc.groupId))
+    ? "not in group"
+    : true;
+}
 
 if (gs.dba) {
   const db = gs.dba;
@@ -108,6 +191,11 @@ if (gs.dba) {
     coll.allow("update", userIsAdmin);
     coll.allow("remove", userIsAdmin);
   }
+
+  const docs = db.collection("docs");
+  docs.allow("insert", userIsGroupAdmin);
+  docs.allow("update", userIsGroupAdmin);
+  docs.allow("remove", userIsGroupAdmin);
 }
 
 module.exports = gs.expressPost();
