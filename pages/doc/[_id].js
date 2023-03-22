@@ -35,13 +35,13 @@ import { Render } from "../../src/doc/blocks.js";
 
 // import neophyte from "../../src/doc/neophyte.yaml";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
-// import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
+import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
 
 const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
 
 const docs = {
   neophyte: prepare(_neophyte),
-  // neophyteM: prepare(_neophyteM),
+  neophyteM: prepare(_neophyteM),
 };
 
 // const tokens = lex(_neophyte);
@@ -404,7 +404,7 @@ function Doc({ doc }) {
       if (variable.collapsable) collapsableVars.push(variable);
       else alwaysVars.push(variable);
     return [alwaysVars, collapsableVars];
-  }, []);
+  }, [vars]);
 
   const [nextPos, setNextPos] = React.useState(0);
   const [currentPos, setCurrentPos] = React.useState(0);
