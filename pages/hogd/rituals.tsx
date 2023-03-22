@@ -96,7 +96,7 @@ function DocAdmin() {
           >
             <MenuItem value="none">None (Public)</MenuItem>
             {user &&
-              user.groupAdminAds &&
+              user.groupAdminIds &&
               user.groupAdminIds.map((gid) => (
                 <MenuItem key={gid} value={gid}>
                   {db.collection("userGroups").findOne(gid)?.name}
