@@ -6,31 +6,39 @@ import {
   useGongoIsPopulated,
   useGongoSub,
 } from "gongo-client-react";
+import { WithId } from "gongo-client/lib/browser/Collection";
 import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from "date-fns";
 
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Typography from "@mui/material/Typography";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import {
+  Container,
+  Button,
+  Chip,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
 
 import Link from "../../src/Link";
 import AppBar from "../../components/AppBar";
 import { sets as allSets } from "../../src/study/sets";
 import db, { enableNetwork } from "../../src/db";
+import { StudySetStats } from "./[_id]";
 
-function dueCount(set) {
+function dueCount(set: WithId<StudySetStats>) {
   let count = 0;
   const now = new Date();
 
-  for (let card of Object.values(set.cards)) if (card.dueDate <= now) count++;
+  for (const card of Object.values(set.cards)) if (card.dueDate <= now) count++;
 
   return count;
 }
@@ -38,10 +46,22 @@ function dueCount(set) {
 export default function Study() {
   const router = useRouter();
   const isPopulated = useGongoIsPopulated();
-  const currentSets = useGongoLive((db) => db.collection("studySet").find());
+  const gdGrade = router.query.gdGrade || "all";
+  const currentSets = useGongoLive((db) =>
+    db.collection("studySet").find()
+  ).filter((s) => gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade);
   const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
   const userId = useGongoUserId();
   useGongoSub("studySet");
+
+  const setGdGrade = (event: SelectChangeEvent) =>
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        gdGrade: event.target.value,
+      },
+    });
 
   const currentSetIds = React.useMemo(
     () => currentSets.map((s) => s.setId),
@@ -51,12 +71,14 @@ export default function Study() {
   const otherSets = React.useMemo(
     () =>
       Object.keys(allSets)
+        .filter((key) => gdGrade === "all" || allSets[key].gdGrade === gdGrade)
         .filter((setId) => !currentSetIds.includes(setId))
         .map((setId) => allSets[setId]),
-    [currentSetIds]
+    [currentSetIds, gdGrade]
   );
 
   React.useEffect(() => {
+    // @ts-expect-error: TODO
     if (db.transport) db.transport.poll();
   }, []);
 
@@ -67,6 +89,14 @@ export default function Study() {
       <AppBar title="Study" />
 
       <Container sx={{ py: 1 }}>
+        <Select size="small" value={gdGrade} onChange={setGdGrade}>
+          <MenuItem value="all">All Grades</MenuItem>
+          <MenuItem value="0=0">0=0</MenuItem>
+          <MenuItem value="1=10">1=10</MenuItem>
+        </Select>
+        <br />
+        <br />
+
         <Typography variant="h5" sx={{ paddingBottom: 1 }}>
           Current Sets
         </Typography>
@@ -74,38 +104,60 @@ export default function Study() {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell>Set</TableCell>
                 <TableCell align="right">Grade</TableCell>
                 <TableCell align="right">Due</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {currentSets.map((set) => (
-                <TableRow
-                  key={set._id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  // onClick={() => router.push("/study/" + set.setId)}
-                >
-                  <TableCell component="th" scope="row">
-                    <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
-                    <Link href={"/study/info/" + set.setId}>ℹ️</Link>
-                  </TableCell>
-                  <TableCell align="right">
-                    {set.correct + set.incorrect > 0
-                      ? Math.round(
-                          (set.correct / (set.correct + set.incorrect)) * 100
-                        ) + "%"
-                      : "-"}
-                  </TableCell>
-                  <TableCell align="right">
-                    {(function () {
-                      const dueCards = dueCount(set);
-                      return dueCards
-                        ? dueCards + " cards"
-                        : "in " + formatDistanceToNowStrict(set.dueDate);
-                    })()}
-                  </TableCell>
-                </TableRow>
+                <>
+                  <TableRow
+                    key={set._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    // onClick={() => router.push("/study/" + set.setId)}
+                  >
+                    <TableCell sx={{ padding: "16px 0px 16px 10px" }}>
+                      <Chip size="small" label={allSets[set.setId].gdGrade} />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
+                    </TableCell>
+                    <TableCell rowSpan={2} align="right">
+                      {set.correct + set.incorrect > 0
+                        ? Math.round(
+                            (set.correct / (set.correct + set.incorrect)) * 100
+                          ) + "%"
+                        : "-"}
+                    </TableCell>
+                    <TableCell align="right">
+                      {(function () {
+                        const dueCards = dueCount(set);
+                        return dueCards
+                          ? dueCards + " cards"
+                          : "in " + formatDistanceToNowStrict(set.dueDate);
+                      })()}
+                    </TableCell>
+                    <TableCell sx={{ padding: "16px 10px 16px 0px" }}>
+                      <Link href={"/study/info/" + set.setId}>
+                        <div
+                          style={{
+                            border: "1px solid black",
+                            borderRadius: "50%",
+                            padding: "5px 10px 5px 10px",
+                            background: "#ddd",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          i
+                        </div>
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow></TableRow>
+                </>
               ))}
             </TableBody>
           </Table>
@@ -121,6 +173,7 @@ export default function Study() {
             )}
             <Button
               disabled={!network?.enabled}
+              // @ts-expect-error: TODO
               onClick={() => db.auth.loginWithService("google")}
             >
               Login
@@ -138,6 +191,7 @@ export default function Study() {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell>Set</TableCell>
                 <TableCell align="right"># Cards</TableCell>
               </TableRow>
@@ -149,6 +203,9 @@ export default function Study() {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   onClick={() => router.push("/study/" + set.id)}
                 >
+                  <TableCell sx={{ padding: "16px 0px 16px 10px" }}>
+                    <Chip size="small" label={set.gdGrade} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     <Link href={"/study/" + set.id}>{set.id}</Link>
                   </TableCell>

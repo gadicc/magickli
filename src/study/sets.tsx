@@ -43,6 +43,18 @@ export interface StudySet {
   question: (item: unknown) => string;
   answer: (item: unknown) => string;
   answers: string[];
+  gdGrade:
+    | "0=0"
+    | "1=10"
+    | "2=9"
+    | "3=8"
+    | "4=7"
+    | "5=6"
+    | "6=5"
+    | "7=4"
+    | "8=3"
+    | "9=2"
+    | "10=1";
 }
 
 export interface StudyCard {
@@ -109,36 +121,42 @@ const sets = {
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "letter.latin",
+    gdGrade: "0=0",
   },
   "hebrew-name": {
     id: "hebrew-name",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "letter.name",
+    gdGrade: "0=0",
   },
   "hebrew-value": {
     id: "hebrew-value",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "value",
+    gdGrade: "0=0",
   },
   "hebrew-meaning": {
     id: "hebrew-meaning",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "meaning.en",
+    gdGrade: "0=0",
   },
   "planet-signs": {
     id: "planet-signs",
     data: data.planet,
     question: "symbol",
     answer: "name.en.en",
+    gdGrade: "0=0",
   },
   "zodiac-signs": {
     id: "zodiac-signs",
     data: data.zodiac,
     question: "symbol",
     answer: "name.en",
+    gdGrade: "0=0",
   },
   "zodiac-triples": {
     id: "zodiac-triples",
@@ -146,6 +164,7 @@ const sets = {
     question: "symbol",
     answer: "element.symbol",
     answers: ["🜁", "🜂", "🜄", "🜃"],
+    gdGrade: "0=0",
   },
   "zodiac-quads": {
     id: "zodiac-quads",
@@ -153,6 +172,7 @@ const sets = {
     question: "symbol",
     answer: "quadruplicity",
     answers: ["cardinal", "kerubic", "mutable"],
+    gdGrade: "0=0",
   },
   // 1=10 zelator
   "alchemy-principals": {
@@ -163,6 +183,7 @@ const sets = {
     ),
     question: "altSymbol",
     answer: "name.en",
+    gdGrade: "1=10",
   },
   "alchemy-planetary-metals": {
     id: "alchemy-planetary-metals",
@@ -172,24 +193,28 @@ const sets = {
     ),
     question: "altSymbol",
     answer: "name.en",
+    gdGrade: "1=10",
   },
   "zelator-alchemy-symbols": {
     id: "zelator-alchemy-symbols",
     data: data.alchemySymbol,
     question: "altSymbol",
     answer: "name.en",
+    gdGrade: "1=10",
   },
   "geomancy-names-translation": {
     id: "geomancy-names-translation",
     data: data.tetragram,
     question: "title.en",
     answer: "translation.en",
+    gdGrade: "1=10",
   },
   "geomancy-symbol-names": {
     id: "geomancy-symbol-names",
     data: data.tetragram,
     question: (item) => <Tetragram id={item.id} />,
     answer: "title.en",
+    gdGrade: "1=10",
   },
   "planets-hebrew-hebrew": {
     id: "planets-hebrew-hebrew",
@@ -199,6 +224,7 @@ const sets = {
     ),
     question: "name.en.en",
     answer: "name.he.he",
+    gdGrade: "1=10",
   },
   "planets-hebrew-romanized": {
     id: "planets-hebrew-romanized",
@@ -208,6 +234,7 @@ const sets = {
     ),
     question: "name.en.en",
     answer: "name.he.roman",
+    gdGrade: "1=10",
   },
   "planets-archangels-he": {
     id: "planets-archangels-he",
@@ -217,18 +244,21 @@ const sets = {
     ),
     question: "name.he",
     answer: "planet.name.he.he",
+    gdGrade: "1=10",
   },
   "sephirot-atziluth-divine-names-he": {
     id: "sephirot-atziluth-divine-names-he",
     data: data.sephirah,
     question: "name.he",
     answer: "godName.name.he",
+    gdGrade: "1=10",
   },
   "sephirot-atziluth-divine-names-he-roman": {
     id: "sephirot-atziluth-divine-names-he-roman",
     data: data.sephirah,
     question: "name.romanization",
     answer: "godName.name.romanization",
+    gdGrade: "1=10",
   },
 };
 
