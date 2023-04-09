@@ -189,7 +189,7 @@ export default function Sephirot() {
                       <div>{sephirah.godName.name.he}</div>
                       <div>{sephirah.godName.name.romanization}</div>
                     </div>
-                    <div>{sephirah.godName.name.meaning}</div>
+                    <div>{sephirah.godName.name.en}</div>
                   </div>
                 </td>
               </tr>

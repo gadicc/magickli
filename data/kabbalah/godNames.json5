@@ -3,7 +3,7 @@
     name: {
       he: "אהיה",
       romanization: "Ehiyeh",
-      meaning: "I am",
+      en: "I am",
     },
   },
 
@@ -11,7 +11,7 @@
     name: {
       he: "יה",
       romanization: "Yah",
-      meaning: "Lord",
+      en: "Lord",
     },
   },
 
@@ -19,7 +19,7 @@
     name: {
       he: "יהוה אלוהים",
       romanization: "YHVH Elohim",
-      meaning: "The Lord God",
+      en: "The Lord God",
     },
   },
 
@@ -27,7 +27,7 @@
     name: {
       he: "אל",
       romanization: "El",
-      meaning: "God",
+      en: "God",
     },
   },
 
@@ -35,7 +35,7 @@
     name: {
       he: "אלוהים גיבור",
       romanization: "Elohim Gibor",
-      meaning: "God of Power",
+      en: "God of Power",
     },
   },
 
@@ -43,7 +43,7 @@
     name: {
       he: "יהוה אלוה ודעת",
       romanization: "YHVH Eloah Ve-da'at",
-      meaning: "Lord God of Knowledge",
+      en: "Lord God of Knowledge",
     },
   },
 
@@ -51,7 +51,7 @@
     name: {
       he: "יהוה צבעות",
       romanization: "YHVH Tzva-oht",
-      meaning: "Lord of Armies",
+      en: "Lord of Armies",
     },
   },
 
@@ -59,7 +59,7 @@
     name: {
       he: "אלוהים צבעות",
       romanization: "Elohim Tzvaot",
-      meaning: "God of Armies",
+      en: "God of Armies",
     },
   },
 
@@ -67,7 +67,7 @@
     name: {
       he: "שדאי אל חי",
       romanization: "Shaddai El Chai",
-      meaning: "Almighty Living God",
+      en: "Almighty Living God",
     },
   },
 
@@ -75,7 +75,7 @@
     name: {
       he: "אדוני הארץ",
       romanization: "Adonai Ha'aretz",
-      meaning: "Lord of Earth",
+      en: "Lord of Earth",
     },
   },
 }
