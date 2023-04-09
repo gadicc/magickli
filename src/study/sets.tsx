@@ -195,13 +195,14 @@ const sets = {
     answer: "name.en",
     gdGrade: "1=10",
   },
-  "zelator-alchemy-symbols": {
-    id: "zelator-alchemy-symbols",
-    data: data.alchemySymbol,
-    question: "altSymbol",
-    answer: "name.en",
-    gdGrade: "1=10",
-  },
+  // REMOVED - split into alchemy-{principals,planetary-metals}
+  // "zelator-alchemy-symbols": {
+  //   id: "zelator-alchemy-symbols",
+  //   data: data.alchemySymbol,
+  //   question: "altSymbol",
+  //   answer: "name.en",
+  //   gdGrade: "1=10",
+  // },
   "geomancy-names-translation": {
     id: "geomancy-names-translation",
     data: data.tetragram,

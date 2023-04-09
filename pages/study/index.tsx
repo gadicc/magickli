@@ -49,7 +49,11 @@ export default function Study() {
   const gdGrade = router.query.gdGrade || "all";
   const currentSets = useGongoLive((db) =>
     db.collection("studySet").find()
-  ).filter((s) => gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade);
+  ).filter(
+    (s) =>
+      !!allSets[s.setId] &&
+      (gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade)
+  );
   const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
   const userId = useGongoUserId();
   useGongoSub("studySet");
