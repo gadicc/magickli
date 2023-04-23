@@ -10,6 +10,11 @@ import Tiles from "../../components/Tiles";
 
 const tiles = [
   {
+    img: "/pics/clock-in-the-solar-system.jpg",
+    title: "Planetary Hours",
+    to: "/astrology/planetary-hours",
+  },
+  {
     img: "/pics/planets2013.jpg",
     title: "Planets",
     to: "/astrology/planets",

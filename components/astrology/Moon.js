@@ -1,7 +1,7 @@
 import React from "react";
 import lune from "lune";
 
-import useGeo from "../../src/useGeo";
+import useGeoIP from "../../src/useGeoIP";
 
 const moonMeanInclination = 5.15; // in degrees
 
@@ -105,7 +105,7 @@ function MoonWidget({ moonPadding = "10px 0 19px 0" }) {
   const phaseNameLocal = namesLocal.en[phaseName];
   // console.log(phaseData);
 
-  const geo = useGeo();
+  const geo = useGeoIP();
   const northernHemisphere = !geo || geo.latitude > 0;
 
   return (
