@@ -105,15 +105,15 @@ function calcPlanetaryHoursForDayAndLocation(date, geo) {
 const sxNowRow = {
   "& .MuiTableCell-root": {
     fontWeight: "bold",
-    borderTop: "1px solid red",
-    borderBottom: "1px solid red",
-    borderCollapse: "separate",
+    borderTop: "1.5px solid red",
+    borderBottom: "1.5px solid red",
+    // borderCollapse: "separate",
   },
-  "& .MuiTableCell-root:first-child": {
-    borderLeft: "1px solid red",
+  "& .MuiTableCell-root:first-of-type": {
+    borderLeft: "1.5px solid red",
   },
   "& .MuiTableCell-root:last-child": {
-    borderRight: "1px solid red",
+    borderRight: "1.5px solid red",
   },
 };
 
@@ -166,7 +166,6 @@ function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
 export default function PlanetaryHours() {
   const geo = useGeoIP();
   const [planet, setPlanet] = React.useState("");
-  console.log(5, planet);
 
   if (!geo) return "Loading location...";
 
