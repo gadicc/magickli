@@ -102,9 +102,32 @@ function calcPlanetaryHoursForDayAndLocation(date, geo) {
   return hours;
 }
 
+const sxNowRow = {
+  "& .MuiTableCell-root": {
+    fontWeight: "bold",
+    borderTop: "1px solid red",
+    borderBottom: "1px solid red",
+    borderCollapse: "separate",
+  },
+  "& .MuiTableCell-root:first-child": {
+    borderLeft: "1px solid red",
+  },
+  "& .MuiTableCell-root:last-child": {
+    borderRight: "1px solid red",
+  },
+};
+
 function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
   const hours = calcPlanetaryHoursForDayAndLocation(date, geo);
-  console.log(planet);
+  const now = new Date();
+  function isNow(hour, i) {
+    const hourInMinutes =
+      hours.meta[i < 12 ? "dayHourInMinutes" : "nightHourInMinutes"];
+    return (
+      now > hour.date &&
+      now.getTime() < hour.date.getTime() + hourInMinutes * 60_000
+    );
+  }
 
   return (
     <div>
@@ -114,10 +137,13 @@ function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
             {hours.map((hour, i) => (
               <TableRow
                 key={i}
-                style={{
-                  background:
-                    hour.planet === planet ? "#cc5" : i >= 12 && "#ccc",
-                }}
+                sx={[
+                  {
+                    background:
+                      hour.planet === planet ? "#cc5" : i >= 12 && "#ccc",
+                  },
+                  isNow(hour, i) && sxNowRow,
+                ]}
               >
                 <TableCell>{(i % 12) + 1}</TableCell>
                 <TableCell>{format(hour.date, "HH:mm")}</TableCell>
