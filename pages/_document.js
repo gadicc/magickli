@@ -2,6 +2,7 @@ import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import ServerStyleSheets from "@mui/styles/ServerStyleSheets";
 import theme from "../src/theme";
+import { ConfirmDialog } from "../src/asyncConfirm";
 
 export default class MyDocument extends Document {
   render() {
@@ -95,6 +96,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <ConfirmDialog />
         </body>
       </Html>
     );
