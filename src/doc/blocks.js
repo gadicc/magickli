@@ -239,6 +239,7 @@ class Task extends Node {
               content: "*";
             }
             .role {
+              word-break: break-word;
             }
             .pg {
               position: absolute;
