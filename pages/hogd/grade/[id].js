@@ -96,7 +96,7 @@ export default function Planet() {
                   json = JSON.stringify(grade[key]);
                 } catch (error) {
                   console.warn(error);
-                  return
+                  return;
                 }
                 return (
                   json && (

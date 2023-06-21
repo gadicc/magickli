@@ -1,6 +1,6 @@
 import React from "react";
 import { DateTime } from "luxon";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import retrogrades from "../../data/astrology/retrograde.json5";
 

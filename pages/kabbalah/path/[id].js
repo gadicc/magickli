@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -79,32 +79,32 @@ export default function Sephirot() {
       <Container maxWidth="sm">
         <Box my={4}>
           {/*
-        <table width="100%">
-          <style jsx>{`
-            a.prevNextLink { text-decoration: none }
-          `}</style>
-          <tbody>
-            <tr>
-              <td>
-                <a className="prevNextLink" href="">
-                  ⬅
-                </a>
-              </td>
-              <td>
-                <TreeOfLife height="80px" topText="" active={sephirah.id} />
-              </td>
-              <td>
-                <NameBlob name={sephirah.name} />
-              </td>
-              <td>
-                <a className="prevNextLink" href="">
-                  ➡
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        */}
+      <table width="100%">
+        <style jsx>{`
+          a.prevNextLink { text-decoration: none }
+        `}</style>
+        <tbody>
+          <tr>
+            <td>
+              <a className="prevNextLink" href="">
+                ⬅
+              </a>
+            </td>
+            <td>
+              <TreeOfLife height="80px" topText="" active={sephirah.id} />
+            </td>
+            <td>
+              <NameBlob name={sephirah.name} />
+            </td>
+            <td>
+              <a className="prevNextLink" href="">
+                ➡
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      */}
 
           <div className="nav">
             <div className="prevNext">
@@ -128,10 +128,10 @@ export default function Sephirot() {
           <br />
 
           {/*
-        <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
-          <TreeOfLife width="80px" topText="" active={sephirah.id} />
-        </span>
-        */}
+      <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
+        <TreeOfLife width="80px" topText="" active={sephirah.id} />
+      </span>
+      */}
 
           <h1>
             Path {path.id.replace(/_/, "-")} ({from.name.romanization}-
