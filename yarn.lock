@@ -3544,7 +3544,7 @@ bson-objectid@^2.0.3:
   resolved "https://registry.yarnpkg.com/bson-objectid/-/bson-objectid-2.0.4.tgz#339211572ef97dc98f2d68eaee7b99b7be59a089"
   integrity sha512-vgnKAUzcDoa+AeyYwXCoHyF2q6u/8H46dxu5JN+4/TZeq/Dlinn0K6GvxsCLb3LHUJl0m/TLiEK31kUwtgocMQ==
 
-bson@^4.7.0:
+bson@^4.7.2:
   version "4.7.2"
   resolved "https://registry.yarnpkg.com/bson/-/bson-4.7.2.tgz#320f4ad0eaf5312dd9b45dc369cc48945e2a5f2e"
   integrity sha512-Ry9wCtIZ5kGqkJoi6aD8KjxFZEx78guTQDnpXWiNthsxzrxAK/i8E6pCHAIZTbaEFWcOCvbecMukfK7XUvyLpQ==
@@ -5020,15 +5020,15 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-gongo-client-react@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.1.tgz#d5160fa579a38ecc6c49c3a66902887f6323f0bc"
-  integrity sha512-1vdrM5oMEg0rM/aSnf446Xxfs32O45N1fEjaHXNAYBqpXzHu25pS/FourKi7TwmauC1sdhiUJSrPGx/4B1otbw==
+gongo-client-react@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/gongo-client-react/-/gongo-client-react-0.2.3.tgz#cb4fbbf12237ac4e5d597e53d447c8d26a67e12a"
+  integrity sha512-TFWqN6YVQgLzgqguVeGAQYdRDccPHwpkAlfyP1B2lUZojI+L5SwAqY8KcNVBUXRwkpLfBCj1iJiW2TfCVMOdFw==
 
-gongo-client@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.5.2.tgz#8b1250d1cb1919a274ba46c5366c9ab70e8b51fd"
-  integrity sha512-T3RtoQtqZz+24dEIJea3NtkMoN9aj47tSmDKPmuG2ari2GkFKOb8O4Ek2mNUYJfWnUno3V2dhFO3giBA/3xxBw==
+gongo-client@2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/gongo-client/-/gongo-client-2.5.4.tgz#c18fdd8145ee2081fbd870c51ff2d3e628ae12d5"
+  integrity sha512-weduPZmseoaDPFt+zsnX4WzZElJT6FbnXF0oWZErB0LuTNYSRt7LoLrbDHMUuaJszLkoA+MDOmg9Z5w+M4FxWA==
   dependencies:
     arson "^0.2.6"
     bson-objectid "^2.0.3"
@@ -5039,14 +5039,15 @@ gongo-client@2.5.2:
     modifyjs "^0.3.1"
     sift "^16.0.0"
 
-gongo-server-db-mongo@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.4.0.tgz#46d38cb4ad33a249783afe648b299904d63f3060"
-  integrity sha512-z2q6X6cSUGgsm59ofxM6TS80ayZk6F5dLgxn6Mkk4ln1ImkUB03CsDmepsvWQ74xttlVs4NvI33xDKRbb+5KVg==
+gongo-server-db-mongo@2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/gongo-server-db-mongo/-/gongo-server-db-mongo-2.6.0.tgz#581fea1e6f6788a69350813efee3d9a7da89bef2"
+  integrity sha512-oqJ23jpld6506ZQ1M0IpVoBkP04ELNVt/CHQ5KSOJKIhgozyuc2Kj90CuJdQRtiPxQ2OOhT89t0SO8bDGxLwRA==
   dependencies:
+    fast-json-patch "^3.1.1"
     json-pointer "^0.6.2"
     jsonpatch-to-mongodb "^1.0.0"
-    mongodb "^4.6.0"
+    mongodb "4.16.0"
 
 gongo-server@3.1.0:
   version "3.1.0"
@@ -6802,12 +6803,12 @@ mongodb-connection-string-url@^2.5.4:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@^4.6.0:
-  version "4.14.0"
-  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.14.0.tgz#3a21ca602069b2494b7066a7709056c8cece6bf6"
-  integrity sha512-coGKkWXIBczZPr284tYKFLg+KbGPPLlSbdgfKAb6QqCFt5bo5VFZ50O3FFzsw4rnkqjwT6D8Qcoo9nshYKM7Mg==
+mongodb@4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.16.0.tgz#8b0043de7b577c6a7e0ce44a2ca7315b9c0a7927"
+  integrity sha512-0EB113Fsucaq1wsY0dOhi1fmZOwFtLOtteQkiqOXGklvWMnSH3g2QS53f0KTP+/6qOkuoXE2JksubSZNmxeI+g==
   dependencies:
-    bson "^4.7.0"
+    bson "^4.7.2"
     mongodb-connection-string-url "^2.5.4"
     socks "^2.7.1"
   optionalDependencies:
