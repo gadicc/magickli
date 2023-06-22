@@ -36,7 +36,7 @@ export default async function POST(req: Request) {
   const history = messages.map((m) => {
     return m.role === "user"
       ? new HumanChatMessage(m.content)
-      : new AIChatMessage(m.content);
+      : new AIChatMessage(m.content.split("\n__META_JSON__\n")[0]);
   });
 
   // OpenAI recommends replacing newlines with spaces for best results
@@ -71,13 +71,6 @@ export default async function POST(req: Request) {
     temperature: 0, // increase temepreature to get more creative answers
   });
 
-  /*
-  const chain = VectorDBQAChain.fromLLM(model, vectorStore, {
-    k: 1,
-    returnSourceDocuments: true,
-  });
-  chain.call({ query: prompt }).catch(console.error);
-  */
   const chain = ConversationalRetrievalQAChain.fromLLM(
     model,
     vectorStore.asRetriever(),
@@ -92,6 +85,22 @@ export default async function POST(req: Request) {
     .call({
       question: prompt,
       chat_history: history,
+    })
+    .catch((error) => {
+      // Note, this does't actually catch the error, or do anything
+      // But we'll find where to put this code in the future TODO
+      let errorData;
+      if (error instanceof Error)
+        errorData = {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+          cause: error.cause,
+        };
+      else errorData = JSON.parse(JSON.stringify(error));
+      const meta = JSON.stringify({ $error: errorData });
+      handlers.handleLLMNewToken("\n__META_JSON__\n" + meta);
+      handlers.handleChainEnd();
     })
     .then((values) => {
       // NOTE: This relies on current broken behaviour of handleChainEnd not
