@@ -19,7 +19,7 @@ export interface GeoJSResult {
 }
 
 export default function useGeoIP() {
-  const [geoData, setGeoData] = useState<GeoJSResult>(null);
+  const [geoData, setGeoData] = useState<GeoJSResult | null>(null);
 
   useEffect(() => {
     fetch("https://get.geojs.io/v1/ip/geo.json")

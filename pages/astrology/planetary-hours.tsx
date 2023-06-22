@@ -140,7 +140,7 @@ function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
                 sx={[
                   {
                     background:
-                      hour.planet === planet ? "#cc5" : i >= 12 && "#ccc",
+                      hour.planet === planet ? "#cc5" : i >= 12 ? "#ccc" : "",
                   },
                   isNow(hour, i) && sxNowRow,
                 ]}

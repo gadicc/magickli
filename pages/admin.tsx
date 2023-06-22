@@ -67,7 +67,7 @@ function UserRow({
       key={user._id}
       onClick={() => toggleRow(user._id)}
       style={{
-        background: selected && "#ffa",
+        background: selected ? "#ffa" : "",
       }}
     >
       <TableCell width={50}>
@@ -89,7 +89,7 @@ function UserRow({
           user.groupIds.map((groupId) => {
             return (
               <>
-                {db.collection("userGroups").findOne(groupId).name}{" "}
+                {db.collection("userGroups").findOne(groupId)?.name}{" "}
                 {user.groupAdminIds && user.groupAdminIds.includes(groupId) && (
                   <AdminPanelSettings />
                 )}
@@ -126,7 +126,7 @@ function removeFrom(
     // ModifyJSError: $pull not implemented yet
     // db.collection("users").update(id, { $pull: { groupIds: groupId } });
 
-    const existingGroupIds = Users.findOne(id)[field] || [];
+    const existingGroupIds = Users.findOne(id)?.[field] || [];
     const newGroupIds = existingGroupIds.filter((gid) => gid != groupId);
     Users.update(id, { $set: { [field]: newGroupIds } });
   }

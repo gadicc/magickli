@@ -14,7 +14,7 @@ const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
 const ROOT_URL =
   env.ROOT_URL ||
   "http" +
-    (env.VERCEL_URL.match(/^localhost:/) ? "" : "s") +
+    (env.VERCEL_URL?.match(/^localhost:/) ? "" : "s") +
     "://" +
     env.VERCEL_URL;
 

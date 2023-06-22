@@ -45,6 +45,7 @@ function romanize(num) {
              '','I','II','III','IV','V','VI','VII','VIII','IX'];
   // prettier-ignore
   let roman = '', i = 3;
+  // @ts-expect-error: while(i--) ensures digits.pop() is defined.
   while (i--) roman = (key[+digits.pop() + i * 10] || "") + roman;
   return Array(+digits.join("") + 1).join("M") + roman;
 }
@@ -125,7 +126,19 @@ function interpretationText(interpretationId: string) {
   }
 }
 
-function TetragramStack({ title, start, tetraRows, group }) {
+type TetraRow = (1 | 2)[];
+
+function TetragramStack({
+  title,
+  start,
+  tetraRows,
+  group,
+}: {
+  title: string;
+  start: number;
+  tetraRows: TetraRow[];
+  group: boolean;
+}) {
   return (
     <Box sx={{ textAlign: "center" }}>
       <b>{title}</b>
@@ -147,7 +160,7 @@ function TetragramStack({ title, start, tetraRows, group }) {
                     transform: "translateX(-50%)",
                   }}
                 >
-                  {tetragramFromRows(rows).title.en}
+                  {tetragramFromRows(rows)?.title.en}
                 </div>
                 <br />
               </>
@@ -164,7 +177,7 @@ function TetragramStack({ title, start, tetraRows, group }) {
             style={{ fontSize: "80%", marginTop: "5px" }}
           >
             {[...tetraRows].reverse().map((rows, i) => (
-              <li key={i}>{tetragramFromRows(rows).title.en}</li>
+              <li key={i}>{tetragramFromRows(rows)?.title.en}</li>
             ))}
           </ol>
         </Box>
@@ -175,7 +188,7 @@ function TetragramStack({ title, start, tetraRows, group }) {
 
 function GeomancyReading() {
   const [houseNoStr, setHouseNoStr] = React.useState("1");
-  const [mothers, setMothers] = React.useState<(1 | 2)[][]>([
+  const [mothers, setMothers] = React.useState<TetraRow[]>([
     [1, 2, 1, 1],
     [1, 1, 1, 2],
     [2, 1, 1, 1],
@@ -236,8 +249,8 @@ function GeomancyReading() {
     () => {
       for (const interpretation of interpretations) {
         const meaning =
-          interpretation.tetragram.meanings[parseInt(houseNoStr)].en;
-        const isGood = !!meaning.match(/good|happy|success/i);
+          interpretation.tetragram?.meanings[parseInt(houseNoStr)].en;
+        const isGood = !!meaning?.match(/good|happy|success/i);
         interpretation.goodState[1](isGood);
       }
     },
@@ -376,11 +389,11 @@ function GeomancyReading() {
           <>
             <div>
               <b>
-                {interpretation.title} ({interpretation.tetragram.title.en}) in{" "}
+                {interpretation.title} ({interpretation.tetragram?.title.en}) in{" "}
                 {ordinal(parseInt(houseNoStr))} House
               </b>
               <br />
-              {interpretation.tetragram.meanings[parseInt(houseNoStr)].en}
+              {interpretation.tetragram?.meanings[parseInt(houseNoStr)].en}
             </div>
             <ToggleButtonGroup
               value={interpretation.goodState[0]}

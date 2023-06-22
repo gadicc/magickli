@@ -112,6 +112,7 @@ function filter<T>(
   data: T,
   func: ([id, item]: [string, UnwrapRecord<T>]) => boolean
 ) {
+  // @ts-expect-error: this broke on an upgrade, TODO anoter day
   return Object.fromEntries(Object.entries(data).filter(func));
 }
 

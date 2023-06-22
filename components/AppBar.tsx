@@ -22,7 +22,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar({ title, navParts = undefined }) {
+export default function ButtonAppBar({
+  title,
+  navParts,
+}: {
+  title: string;
+  navParts?: { title: string; url: string }[];
+}) {
   const classes = useStyles();
   //const router = useRouter();
 
@@ -31,7 +37,7 @@ export default function ButtonAppBar({ title, navParts = undefined }) {
       title: title + " - magick.li",
       text:
         'Check out "' + title + '" on magick.li, the open source magick app!',
-      url: window.location,
+      url: window.location.href,
     };
 
     //console.log({ data });

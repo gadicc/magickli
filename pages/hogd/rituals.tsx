@@ -64,6 +64,12 @@ function DocAdmin() {
       userId,
       groupId,
       createdAt: new Date(),
+    } as {
+      title: string;
+      doc: { children: [] }; // TODO
+      userId: string;
+      groupId?: string;
+      createdAt: Date;
     };
     if (!groupId || groupId === "" || groupId === "public") delete doc.groupId;
 
@@ -133,7 +139,7 @@ export default function Rituals() {
   useGongoSub("docs");
   const navParts = [{ title: "HOGD", url: "/hogd" }];
   const dbDocs = useGongoLive((db) => db.collection("docs").find());
-  const docs = [...builtInDocs, ...dbDocs] as unknown as Partial<typeof dbDocs>;
+  const docs = [...builtInDocs, ...dbDocs] as unknown as typeof dbDocs;
 
   return (
     <>

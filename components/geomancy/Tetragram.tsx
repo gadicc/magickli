@@ -26,18 +26,19 @@ function Tetragram({
   width,
   height = 50,
 }: {
-  id: string | undefined;
-  rows: (1 | 2)[] | undefined;
-  width: number;
-  height: number;
+  id?: string;
+  rows?: (1 | 2)[];
+  width?: number;
+  height?: number;
 }) {
   if (!(rows || id))
     throw new Error("Tetragram, either `id` or `rows` must be specified");
-  if (!rows) {
+  if (id) {
     const tetragram = tetragrams[id];
     if (!tetragram) throw new Error(`No Tetragram with id "${id}"`);
     rows = tetragram.rows;
   }
+  if (!rows) throw new Error("No rows (TypeScript says this can happen)");
 
   const radius = 3;
   const padding = 3;

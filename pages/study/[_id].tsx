@@ -21,6 +21,7 @@ import AppBar from "../../components/AppBar";
 import getSet, { StudyCard, StudySet } from "../../src/study/sets";
 import db from "../../src/db";
 import { Stack } from "@mui/material";
+import { StudyCardDataItem } from "../../src/study/sets";
 
 /*
 export async function getServerSideProps(context) {
@@ -34,12 +35,12 @@ export interface StudyCardStats {
   incorrect: number;
   time: number;
   dueDate: Date;
-  supermemo?: {
+  supermemo: {
     interval: number;
     repetition: number;
     efactor: number;
   };
-  repetition?: {
+  repetition: {
     weight: number;
   };
 }
@@ -75,7 +76,10 @@ function newCardStats(): StudyCardStats {
   };
 }
 
-function randomCard(set: StudyCard[], prevCard: StudyCard = null): StudyCard {
+function randomCard(
+  set: StudyCard[],
+  prevCard: StudyCard | null = null
+): StudyCard {
   const newCard = set[Math.floor(Math.random() * set.length)];
   return newCard === prevCard ? randomCard(set, prevCard) : newCard;
 }
@@ -117,9 +121,9 @@ function updateCardSet(
   const card = { ..._studyData.cards[cardId] };
 
   interface StudyDataUpdate {
-    correct?: number;
-    incorrect?: number;
-    time?: number;
+    correct: number;
+    incorrect: number;
+    time: number;
     dueDate?: Date;
     userId?: string;
     [key: string]: unknown; // e.g. $set: { ["cards.card_id"]: card }
@@ -195,9 +199,10 @@ function updateCardSet(
   // *i.e., we mutate the original record, then ask to update it, but there's
   // "no change".
   console.log({ $set: studyDataUpdate });
-  StudySetCol.update(_studyData._id, {
-    $set: studyDataUpdate,
-  });
+  if (_studyData._id)
+    StudySetCol.update(_studyData._id, {
+      $set: studyDataUpdate,
+    });
 }
 
 function fetchDueCards(
@@ -205,7 +210,7 @@ function fetchDueCards(
   studyData: StudySetStats
 ): StudyCard[] {
   const now = new Date();
-  const cards = [];
+  const cards: StudyCard[] = [];
   for (const setCard of allCards) {
     const studySetCard = studyData.cards[setCard.id] || newCardStats();
     if (studySetCard.dueDate <= now) cards.push(setCard);
@@ -242,11 +247,14 @@ function StudySetLoad() {
       // so was never checked before calling the next line.  Fixed now,
       // look out for any strange behaviour.  TODO.
       if (!StudySetCol.findOne({ setId: _id }))
-        StudySetCol.insert(newStudySetStats(set));
+        if (set) StudySetCol.insert(newStudySetStats(set));
     }
   }, [studyDataExists, isPopulated, _id, set, studyData]);
 
   if (!_id || !studyData || !isPopulated) return <div>Initializing</div>;
+
+  if (!allCards) throw new Error("allCards not set");
+  if (!set) throw new Error("set not defined");
 
   let cards;
   if (mode === "supermemo") {
@@ -305,7 +313,7 @@ function StudySet({ set, cards, studyData, mode, setMode }) {
   const [card, setCard] = React.useState(randomCard(cards));
   const [correct, setCorrect] = React.useState(0);
   const [total, setTotal] = React.useState(0);
-  const [wrong, setWrong] = React.useState(null);
+  const [wrong, setWrong] = React.useState<string | null>(null);
   const [wrongCount, setWrongCount] = React.useState(0);
   const [startTime, setStartTime] = React.useState(Date.now());
   const Question = set.Question;
@@ -365,7 +373,7 @@ function StudySet({ set, cards, studyData, mode, setMode }) {
                   fullWidth
                   variant="outlined"
                   style={{
-                    color: wrong && answer === card.answer && "white",
+                    color: wrong && answer === card.answer ? "white" : "",
                     background: wrong
                       ? answer === wrong
                         ? "red"

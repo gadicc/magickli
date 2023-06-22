@@ -30,9 +30,9 @@ import Popover from "@mui/material/Popover";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
-import DocContext from "../../src/doc/context.js";
-import AppBar from "../../components/AppBar.js";
-import { Render } from "../../src/doc/blocks.js";
+import DocContext from "../../src/doc/context";
+import AppBar from "../../components/AppBar";
+import { Render } from "../../src/doc/blocks";
 
 // import neophyte from "../../src/doc/neophyte.yaml";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";

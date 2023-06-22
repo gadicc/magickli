@@ -42,12 +42,14 @@ gs.publish("accounts", (db) => db.collection("accounts").find());
 
 gs.publish("files", (db) => db.collection("files").find());
 
+/*
 gs.publish("file", async (db, opts) => {
   // TODO, filter opts for sourceUrl, sha256, filename, etc
   //return db.collection("files").find(opts).limit(1);   TODO gongo-server
   const file = await db.collection("files").findOne(opts);
   return [{ coll: "files", entries: [file] }];
 });
+*/
 
 gs.publish("user", async (db, opts, { auth }) => {
   const userId = await auth.userId();
@@ -71,7 +73,7 @@ gs.publish("users", async (db, opts, { auth }) => {
   if (!userId) return [];
 
   const user = await db.collection("users").findOne({ _id: userId });
-  if (!user.admin) return [];
+  if (!user?.admin) return [];
 
   const query = {};
   const realUsers = await db.collection("users").getReal();
@@ -105,15 +107,15 @@ gs.publish("userGroups", async (db, opts, { auth }) => {
 
   const user = await db.collection("users").findOne({ _id: userId });
 
-  if (user.admin) return db.collection("userGroups").find();
+  if (user?.admin) return db.collection("userGroups").find();
 
-  if (user.groupAdminIds)
+  if (user?.groupAdminIds)
     return db
       .collection("userGroups")
       .find({ _id: { $in: user.groupAdminIds.map(ObjectId) } });
   else return [];
 
-  if (!user.admin) return [];
+  if (!user?.admin) return [];
 });
 
 gs.publish("doc", async (db, opts, { auth }) => {
@@ -125,7 +127,7 @@ gs.publish("doc", async (db, opts, { auth }) => {
   const doc = await db.collection("docs").findOne({ _id });
   if (!doc) return [];
 
-  if (!doc.groupId || user.admin || user.groupIds.includes(doc.groupId))
+  if (!doc.groupId || user?.admin || user?.groupIds.includes(doc.groupId))
     return [
       {
         coll: "docs",
