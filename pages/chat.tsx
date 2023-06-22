@@ -7,11 +7,13 @@ import {
   Add,
   AddCircle,
   AddOutlined,
+  Autorenew,
   ExpandMore,
   HourglassTop,
   Person,
   PlusOne,
   Send,
+  StopCircle,
 } from "@mui/icons-material";
 
 import AppBar from "../components/AppBar";
@@ -21,6 +23,8 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
+  Chip,
   CircularProgress,
   Container,
   IconButton,
@@ -48,6 +52,8 @@ export default function Chat() {
     handleInputChange,
     handleSubmit,
     isLoading,
+    reload,
+    stop,
   } = useChat();
   // console.log({ messages, input, isLoading });
   React.useEffect(() => {
@@ -76,7 +82,13 @@ export default function Chat() {
               {m.role === "user" ? (
                 <Person />
               ) : (
-                <img src="/pentagram.png" width="32px" height="32px" />
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src="/pentagram.png"
+                  alt="AI User"
+                  width="32px"
+                  height="32px"
+                />
               )}
             </div>
             <div style={{ width: "50px", flexGrow: 1 }}>
@@ -109,6 +121,7 @@ export default function Chat() {
           </div>
         ))}
       </div>
+      <div style={{ height: "28px" }}>&nbsp;</div>
       <div ref={ref}></div>
       <div
         style={{
@@ -120,6 +133,56 @@ export default function Chat() {
             "linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 12px)",
         }}
       >
+        {messages.length > 1 && !isLoading && (
+          <div
+            style={{
+              bottom: 80,
+              position: "absolute",
+              padding: "10px",
+              textAlign: "center",
+              width: "100%",
+            }}
+          >
+            <Chip
+              icon={<Autorenew fontSize="small" />}
+              label="Regenerate Response"
+              onClick={() => reload()}
+              sx={{
+                "&:hover": {
+                  background: "#dadada",
+                },
+                border: "1px solid #dfdfdf",
+                background: "#f0f0f0",
+                boxShadow: "0 0 5px white",
+              }}
+            />
+          </div>
+        )}
+        {isLoading && (
+          <div
+            style={{
+              bottom: 80,
+              position: "absolute",
+              padding: "10px",
+              textAlign: "center",
+              width: "100%",
+            }}
+          >
+            <Chip
+              icon={<StopCircle fontSize="small" />}
+              label="Stop Generating"
+              onClick={() => stop()}
+              sx={{
+                "&:hover": {
+                  background: "#dadada",
+                },
+                border: "1px solid #dfdfdf",
+                background: "#f0f0f0",
+                boxShadow: "0 0 5px white",
+              }}
+            />
+          </div>
+        )}{" "}
         <form onSubmit={handleSubmit}>
           <TextField
             fullWidth
