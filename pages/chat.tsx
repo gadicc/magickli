@@ -3,7 +3,16 @@ import React from "react";
 import { Message, useChat } from "ai/react";
 import ReactMarkdown from "react-markdown";
 
-import { ExpandMore, HourglassTop, Person, Send } from "@mui/icons-material";
+import {
+  Add,
+  AddCircle,
+  AddOutlined,
+  ExpandMore,
+  HourglassTop,
+  Person,
+  PlusOne,
+  Send,
+} from "@mui/icons-material";
 
 import AppBar from "../components/AppBar";
 import Admin from "./admin";
@@ -32,8 +41,14 @@ function metaMessage(message: Message) {
 export default function Chat() {
   const ref = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useChat();
+  const {
+    messages,
+    setMessages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+  } = useChat();
   // console.log({ messages, input, isLoading });
   React.useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -112,9 +127,21 @@ export default function Chat() {
             value={input}
             onChange={handleInputChange}
             InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <IconButton
+                    onClick={(e) => setMessages([])}
+                    edge="start"
+                    title="New Chat"
+                  >
+                    <AddCircle />
+                  </IconButton>
+                </InputAdornment>
+              ),
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
+                    title="Send Message"
                     onClick={(e) => buttonRef.current?.click()}
                     edge="end"
                     disabled={isLoading || input === ""}
