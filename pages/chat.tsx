@@ -93,6 +93,45 @@ export default function Chat() {
             </div>
             <div style={{ width: "50px", flexGrow: 1 }}>
               <ReactMarkdown linkTarget="_blank">{m.content}</ReactMarkdown>
+              {(function () {
+                if (m.meta) {
+                  const docs = m.meta.sourceDocuments.filter(
+                    (doc) => doc.pageContent.length > 5
+                  );
+                  if (docs.length === 0) return null;
+                  return (
+                    <details>
+                      <summary>Sources</summary>
+                      <ol>
+                        <style jsx>{`
+                          li {
+                            font-size: 90%;
+                          }
+                          li + li {
+                            margin-top: 1em;
+                          }
+                        `}</style>
+                        {docs.map((doc, i) => (
+                          <li key={i}>
+                            <details>
+                              <summary>
+                                {" "}
+                                <i>{doc.metadata["pdf.info.Title"]}</i>,{" "}
+                                {doc.metadata["pdf.info.Author"]}, page{" "}
+                                {doc.metadata["loc.pageNumber"]}.
+                              </summary>
+                              <p style={{ fontSize: "75%" }}>
+                                {doc.pageContent}
+                              </p>
+                            </details>
+                          </li>
+                        ))}
+                      </ol>
+                    </details>
+                  );
+                }
+              })()}
+              {/*
               {m.meta && (
                 <>
                   {m.meta.sourceDocuments.map((doc, i) =>
@@ -105,7 +144,8 @@ export default function Chat() {
                           <AccordionDetails>
                             <p style={{ fontSize: "75%" }}>{doc.pageContent}</p>
                             <p>
-                              {/* <b>Source:</b>{" "} */}
+                              {/* <b>Source:</b>{" "} */
+              /*}
                               <i>{doc.metadata["pdf.info.Title"]}</i>,{" "}
                               {doc.metadata["pdf.info.Author"]}, page{" "}
                               {doc.metadata["loc.pageNumber"]}.
@@ -117,6 +157,7 @@ export default function Chat() {
                   )}
                 </>
               )}
+            */}
             </div>
           </div>
         ))}
