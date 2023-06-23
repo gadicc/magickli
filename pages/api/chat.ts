@@ -17,9 +17,9 @@ Chat History:
 Follow Up Input: {question}
 Standalone question:`;
 
-const QA_PROMPT = `You are a helpful AI assistant. Use the following pieces of context to answer the question at the end.
-If you don't know the answer, just say you don't know. DO NOT try to make up an answer.
-If the question is not related to the context, politely respond that you are tuned to only answer questions that are related to the context.
+const QA_PROMPT = `You are a helpful assistant.
+Use the following context to supplement your current knowledge in answering the question at the end.
+In the case of a conflict, information from the context takes precedence.
 
 {context}
 
@@ -68,7 +68,7 @@ export default async function POST(req: Request) {
     openAIApiKey: process.env.OPENAI_API_KEY,
     // callbackManager: CallbackManager.fromHandlers(handlers),
     callbacks: [handlers],
-    temperature: 0, // increase temepreature to get more creative answers
+    temperature: 1, // increase temepreature to get more creative answers
   });
 
   const chain = ConversationalRetrievalQAChain.fromLLM(
