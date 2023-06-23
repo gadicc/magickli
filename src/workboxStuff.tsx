@@ -1,5 +1,5 @@
 // import { t } from "@lingui/macro";
-const t = (t) => t;
+const t = String.raw.bind(String);
 import asyncConfirm from "./asyncConfirm";
 
 if (typeof navigator === "object" && "serviceWorker" in navigator) {
