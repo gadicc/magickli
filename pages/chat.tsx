@@ -169,6 +169,7 @@ export default function Chat() {
         style={{
           position: "sticky",
           bottom: 0,
+          left: 0,
           padding: "15px 10px 10px 10px",
           width: "100%",
           backgroundImage:
@@ -179,6 +180,7 @@ export default function Chat() {
           <div
             style={{
               bottom: 80,
+              left: 0,
               position: "absolute",
               padding: "10px",
               textAlign: "center",
