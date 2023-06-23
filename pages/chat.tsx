@@ -163,11 +163,11 @@ export default function Chat() {
           </div>
         ))}
       </div>
-      <div style={{ height: "28px" }}>&nbsp;</div>
+      <div style={{ height: "130px" }}>&nbsp;</div>
       <div ref={ref}></div>
       <div
         style={{
-          position: "sticky",
+          position: "fixed",
           bottom: 0,
           left: 0,
           padding: "15px 10px 10px 10px",
@@ -181,7 +181,7 @@ export default function Chat() {
             style={{
               bottom: 80,
               left: 0,
-              position: "absolute",
+              position: "fixed",
               padding: "10px",
               textAlign: "center",
               width: "100%",

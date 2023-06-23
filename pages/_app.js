@@ -6,6 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../src/theme";
 import db from "../src/db";
 import workboxStuff from "../src/workboxStuff";
+import "../src/global.css";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
