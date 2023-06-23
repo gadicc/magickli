@@ -8,6 +8,7 @@ import {
   AddCircle,
   AddOutlined,
   Autorenew,
+  DeleteForever,
   ExpandMore,
   HourglassTop,
   Person,
@@ -238,7 +239,7 @@ export default function Chat() {
                     edge="start"
                     title="New Chat"
                   >
-                    <AddCircle />
+                    <DeleteForever />
                   </IconButton>
                 </InputAdornment>
               ),
