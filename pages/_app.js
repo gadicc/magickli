@@ -7,6 +7,7 @@ import theme from "../src/theme";
 import db from "../src/db";
 import workboxStuff from "../src/workboxStuff";
 import "../src/global.css";
+import { ConfirmDialog } from "../src/asyncConfirm";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -37,6 +38,7 @@ export default function MyApp(props) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
+          <ConfirmDialog />
         </ThemeProvider>
       </StyledEngineProvider>
     </React.Fragment>
