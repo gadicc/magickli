@@ -98,6 +98,7 @@ export default function Chat() {
               backgroundColor: m.role === "assistant" ? "#f7f7f7" : "",
               borderTop: m.role === "assistant" ? "1px solid #ccc" : "",
               borderBottom: m.role === "assistant" ? "1px solid #ccc" : "",
+              overflowX: "auto",
             }}
           >
             <div style={{ width: "50px", marginTop: "19px" }}>
