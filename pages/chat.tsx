@@ -296,7 +296,12 @@ export default function Chat() {
             />
           </div>
         )}{" "}
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            autoscroll.current = true;
+            handleSubmit(e);
+          }}
+        >
           <TextField
             fullWidth
             placeholder="Send a message"
