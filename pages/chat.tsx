@@ -1,7 +1,10 @@
 "use client";
 import React from "react";
 import { Message, useChat } from "ai/react";
+
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeAddClasses from "rehype-add-classes";
 
 import {
   Add,
@@ -33,6 +36,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
+const remarkPlugins = [remarkGfm];
+const rehypePlugins = [[rehypeAddClasses, { table: "rehype-table" }]];
 
 function metaMessage(message: Message) {
   const parts = message.content.split("\n__META_JSON__\n");
@@ -66,7 +72,6 @@ export default function Chat() {
   return (
     <>
       <AppBar title="MagickGPT" />
-
       <div id="messages">
         {messages.map(metaMessage).map((m) => (
           <div
@@ -92,8 +97,44 @@ export default function Chat() {
                 />
               )}
             </div>
-            <div style={{ width: "50px", flexGrow: 1 }}>
-              <ReactMarkdown linkTarget="_blank">{m.content}</ReactMarkdown>
+            <style>{`
+              .ai_content table {
+                margin-top: 1em;
+                margin-bottom: 1em;
+                border-spacing: 0;
+                border-collapse: collapse;
+              }
+              .ai_content table tr {
+                background-color: #fff;
+                border-top: 1px solid #c6cbd1;
+              }
+              .ai_content table tbody tr:nth-child(odd) {
+                background-color: #f6f8fa;
+              }
+              .ai_content table th,
+              .ai_content table td {
+                padding: 6px 13px;
+                border: 1px solid #dfe2e5;
+              }
+              .ai_content table th {
+                font-weight: 600;
+              }
+              .ai_content li {
+                font-size: 90%;
+              }
+              .ai_content li + li {
+                margin-top: 1em;
+              }
+            `}</style>
+            <div className="ai_content" style={{ width: "50px", flexGrow: 1 }}>
+              <ReactMarkdown
+                linkTarget="_blank"
+                remarkPlugins={remarkPlugins}
+                // @ts-expect-error: its fine
+                rehypePlugins={rehypePlugins}
+              >
+                {m.content}
+              </ReactMarkdown>
               {(function () {
                 if (m.meta) {
                   const docs = m.meta.sourceDocuments.filter(
@@ -104,14 +145,6 @@ export default function Chat() {
                     <details>
                       <summary>Sources</summary>
                       <ol>
-                        <style jsx>{`
-                          li {
-                            font-size: 90%;
-                          }
-                          li + li {
-                            margin-top: 1em;
-                          }
-                        `}</style>
                         {docs.map((doc, i) => (
                           <li key={i}>
                             <details>
