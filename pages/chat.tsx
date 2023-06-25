@@ -65,11 +65,25 @@ export default function Chat() {
     stop,
   } = useChat();
   // console.log({ messages, input, isLoading });
+  const autoscroll = React.useRef(true);
+
   React.useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
+    if (autoscroll.current) window.scrollTo(0, document.body.scrollHeight);
     // ref.current?.scrollIntoViewIfNeeded();
     // console.log({ messages });
   }, [messages]);
+
+  React.useEffect(() => {
+    function checkScroll() {
+      const el = document.documentElement;
+      const atBottom = el.scrollHeight - el.clientHeight - el.scrollTop < 1;
+      if (atBottom) autoscroll.current = true;
+      else autoscroll.current = false;
+    }
+    const func = (...args) => console.log(args);
+    document.addEventListener("scrollend", checkScroll);
+    return () => document.removeEventListener("scrollend", checkScroll);
+  }, []);
 
   return (
     <>
