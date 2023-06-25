@@ -71,6 +71,14 @@ export default async function POST(req: Request) {
     temperature: 1, // increase temepreature to get more creative answers
   });
 
+  // Use a separate model to build question so we don't stream that answer.
+  // https://github.com/hwchase17/langchain/issues/5608
+  const questionGenerationModel = new OpenAI({
+    modelName: "gpt-4",
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    temperature: 0.5,
+  });
+
   const chain = ConversationalRetrievalQAChain.fromLLM(
     model,
     vectorStore.asRetriever(),
@@ -78,6 +86,9 @@ export default async function POST(req: Request) {
       qaTemplate: QA_PROMPT,
       questionGeneratorTemplate: CONDENSE_PROMPT,
       returnSourceDocuments: true, //The number of source documents returned is 4 by default
+      questionGeneratorChainOptions: {
+        llm: questionGenerationModel,
+      },
     }
   );
 
