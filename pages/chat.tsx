@@ -5,6 +5,8 @@ import { Message, useChat } from "ai/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeAddClasses from "rehype-add-classes";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 import {
   Add,
@@ -132,6 +134,25 @@ export default function Chat() {
                 remarkPlugins={remarkPlugins}
                 // @ts-expect-error: its fine
                 rehypePlugins={rehypePlugins}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        {...props}
+                        style={dark}
+                        language={match[1]}
+                        PreTag="div"
+                      >
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code {...props} className={className}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
               >
                 {m.content}
               </ReactMarkdown>
