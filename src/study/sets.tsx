@@ -270,10 +270,10 @@ const sets = {
     answer: "godName.name.romanization",
     gdGrade: "1=10",
   },
-  "zelator-alchemy-terms": {
-    id: "zelator-alchemy-terms",
-    question: "name.en",
-    answer: "term.en",
+  "alchemy-basic-terms": {
+    id: "alchemy-basic-terms",
+    question: "question",
+    answer: "answer",
     gdGrade: "1=10",
     data: (function () {
       const gradeTerms = Object.values(data.alchemyTerm).filter(
@@ -282,18 +282,22 @@ const sets = {
 
       // Create a new card for each term, i.e. for data items with
       // two terms, create two cards.
-      const terms: any = [];
+      const newData: [string, Omit<StudyCard, "answers">][] = [];
       for (const item of gradeTerms) {
         let i = 1;
-        for (const term of item.terms.en)
-          terms.push({
-            id: item.id + "-" + i++,
-            name: item.name,
-            term: { en: term },
-          });
+        for (const term of item.terms.en) {
+          const id = item.id + "-" + i++;
+          newData.push([
+            id,
+            {
+              id,
+              question: item.name.en,
+              answer: term,
+            },
+          ]);
+        }
       }
-      console.log(terms);
-      return terms;
+      return Object.fromEntries(newData);
     })(),
   },
   "elementals-titles": {
@@ -315,7 +319,6 @@ const sets = {
           id,
           question: kerub.title.en,
           answer: kerub.face.romanization + " | " + kerub.face.he,
-          //           answer: kerub.zodiac?.symbol + " " + kerub.zodiac?.name.en,
         },
       ])
     ),
