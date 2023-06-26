@@ -1,4 +1,4 @@
-type PlanetID =
+type PlanetId =
   | "sol"
   | "mercury"
   | "venus"
@@ -15,7 +15,7 @@ type PlanetID =
 type LangObject = { en?: string; roman?: string };
 
 interface Planet {
-  id: PlanetID;
+  id: PlanetId;
   symbol: string;
   hebrewLetterId: string; // TODO, HebrewLetterID
   name: {
@@ -26,10 +26,10 @@ interface Planet {
 }
 
 type Planets = {
-  [key in PlanetID]: Planet;
+  [key in PlanetId]: Planet;
 };
 
 const planets: Planets = require("./planets.json5").default;
 
-export type { Planet, Planets, PlanetID };
+export type { Planet, Planets, PlanetId };
 export default planets;

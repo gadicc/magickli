@@ -1,6 +1,6 @@
-import type { Planet, PlanetID } from "../astrology/Planets";
+import type { Planet, PlanetId } from "../astrology/Planets";
 
-type ArchangelID =
+type ArchangelId =
   | "kassiel"
   | "sachiel"
   | "zamael"
@@ -13,17 +13,17 @@ type ArchangelID =
 type LangObject = { he: string; roman: string };
 
 interface Archangel {
-  id: ArchangelID;
+  id: ArchangelId;
   name: LangObject;
-  planetId: PlanetID;
+  planetId: PlanetId;
   planet?: Planet;
 }
 
 type Archangels = {
-  [key in ArchangelID]: Archangel;
+  [key in ArchangelId]: Archangel;
 };
 
 const archangels: Archangels = require("./archangels.json5").default;
 
-export type { Archangel, Archangels, ArchangelID };
+export type { Archangel, Archangels, ArchangelId };
 export default archangels;

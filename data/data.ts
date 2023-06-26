@@ -1,9 +1,11 @@
 import planet from "./astrology/Planets";
+import zodiac from "./astrology/Zodiac";
 
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
 
 import archangel from "./kabbalah/Archangels";
+import kerub from "./kabbalah/Kerubim";
 
 import alchemySymbol from "./alchemy/Symbols";
 import alchemyTerm from "./alchemy/Terms";
@@ -11,26 +13,31 @@ import element from "./alchemy/Elements";
 import elemental from "./alchemy/Elementals";
 
 const allData = {
+  // ASTROLOGY
   planet, // : require("./astrology/planets.json5").default,
-  zodiac: require("./astrology/zodiac.json5").default,
+  zodiac, // : require("./astrology/zodiac.json5").default,
 
   hebrewLetter: require("./hebrewLetters.json5").default,
 
+  // GEOMANCY
   // tetragram: require("./geomancy/tetragrams.json5").default,
   tetragram,
   geomanicHouse,
 
   gdGrade: require("./hogd/grades.json5").default,
 
+  // KABBALAH
   archangel,
   angelicOrder: require("./kabbalah/angelicOrders.json5").default,
   godName: require("./kabbalah/godNames.json5").default,
+  kerub,
   sephirah: require("./kabbalah/sephirot.json5").default,
   tolPath: require("./kabbalah/paths.json5").default,
   soul: require("./kabbalah/souls.json5").default,
 
   chakra: require("./chakras.json5").default,
 
+  // ALCHEMY
   alchemySymbol, // : require("./alchemy/symbols.json5").default,
   alchemyTerm,
   element,

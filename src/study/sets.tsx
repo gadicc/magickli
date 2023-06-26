@@ -272,6 +272,9 @@ const sets = {
   },
   "zelator-alchemy-terms": {
     id: "zelator-alchemy-terms",
+    question: "name.en",
+    answer: "term.en",
+    gdGrade: "1=10",
     data: (function () {
       const gradeTerms = Object.values(data.alchemyTerm).filter(
         (term) => term.gdGrade === 1
@@ -292,9 +295,6 @@ const sets = {
       console.log(terms);
       return terms;
     })(),
-    question: "name.en",
-    answer: "term.en",
-    gdGrade: "1=10",
   },
   "elementals-titles": {
     id: "elementals-titles",
@@ -302,6 +302,39 @@ const sets = {
     question: "namePlural.en",
     answer: "title.en",
     gdGrade: "1=10",
+  },
+  "kerubim-face": {
+    id: "kerubim-face",
+    question: "question",
+    answer: "answer",
+    gdGrade: "1=10",
+    data: Object.fromEntries(
+      Object.entries(data.kerub).map(([id, kerub]) => [
+        id,
+        {
+          id,
+          question: kerub.title.en,
+          answer: kerub.face.romanization + " | " + kerub.face.he,
+          //           answer: kerub.zodiac?.symbol + " " + kerub.zodiac?.name.en,
+        },
+      ])
+    ),
+  },
+  "kerubim-zodiac": {
+    id: "kerubim-zodiac",
+    question: "question",
+    answer: "answer",
+    gdGrade: "1=10",
+    data: Object.fromEntries(
+      Object.entries(data.kerub).map(([id, kerub]) => [
+        id,
+        {
+          id,
+          question: kerub.title.en,
+          answer: kerub.zodiac?.symbol + " " + kerub.zodiac?.name.en,
+        },
+      ])
+    ),
   },
 };
 

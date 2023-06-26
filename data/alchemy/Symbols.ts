@@ -1,4 +1,4 @@
-import { PlanetID } from "../astrology/Planets";
+import { PlanetId } from "../astrology/Planets";
 
 type AlchemySymbolID =
   | "sulphur"
@@ -22,7 +22,7 @@ interface AlchemySymbol {
     en: string;
   };
   category: "planets" | "principles";
-  planetId?: PlanetID;
+  planetId?: PlanetId;
   gdGrade?: number; // 1,
 }
 
