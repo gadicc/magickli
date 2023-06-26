@@ -5,6 +5,12 @@ import data from "../../data/data";
 import Tetragram from "../../components/geomancy/Tetragram";
 import { AlchemyTerms } from "../../data/alchemy/Terms";
 
+// https://stackoverflow.com/a/56773391/1839099
+function omit(key, obj) {
+  const { [key]: omitted, ...rest } = obj;
+  return rest;
+}
+
 function SingleCharQuestion({ question }: { question: string }) {
   return (
     <Paper
@@ -351,6 +357,29 @@ const sets = {
     data: data.fourWorlds,
     question: "name.romanization",
     answer: "residentsTitle.en",
+    gdGrade: "1=10",
+  },
+  "ten-heavens": {
+    id: "ten-heavens",
+    data: omit("daat", data.sephirah),
+    question: (sephirah) => sephirah.index + ". " + sephirah.name.romanization,
+    answer: (sephirah) => {
+      if (sephirah?.tenHeavens?.en)
+        return (
+          sephirah.tenHeavens.en + " / " + sephirah.tenHeavens.romanization
+        );
+      const planet = sephirah?.planet;
+      return (
+        "Sphere of " +
+        (planet.id === "sol"
+          ? "Sol"
+          : planet.id === "luna"
+          ? "Luna"
+          : planet.name.en.en) +
+        " / " +
+        planet.name.he.roman
+      );
+    },
     gdGrade: "1=10",
   },
 };
