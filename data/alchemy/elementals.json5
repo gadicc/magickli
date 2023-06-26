@@ -1,0 +1,54 @@
+{
+  gnome: {
+    id: "gnome",
+    name: {
+      en: "Gnome",
+    },
+    namePlural: {
+      en: "Gnomes",
+    },
+    title: {
+      en: "Spirits of Earth",
+    },
+    elementId: "earth",
+  },
+  sylph: {
+    id: "sylph",
+    name: {
+      en: "Sylph",
+    },
+    namePlural: {
+      en: "Sylphs",
+    },
+    title: {
+      en: "Spirits of Air",
+    },
+    elementId: "air",
+  },
+  undine: {
+    id: "undine",
+    name: {
+      en: "Undine",
+    },
+    namePlural: {
+      en: "Undines",
+    },
+    title: {
+      en: "Spirits of Water",
+    },
+    elementId: "water",
+  },
+  salamander: {
+    id: "salamander",
+    name: {
+      en: "Salamander",
+    },
+    namePlural: {
+      en: "Salamanders",
+    },
+    title: {
+      en: "Spirits of Fire",
+    },
+    elementId: "fire",
+  },
+}

@@ -4,6 +4,8 @@ import geomanicHouse from "./geomancy/Houses";
 import archangel from "./kabbalah/Archangels";
 import alchemySymbol from "./alchemy/Symbols";
 import alchemyTerm from "./alchemy/Terms";
+import elements from "./alchemy/Elements";
+import elementals from "./alchemy/Elementals";
 
 const allData = {
   planet, // : require("./astrology/planets.json5").default,
@@ -30,6 +32,8 @@ const allData = {
 
   alchemySymbol, // : require("./alchemy/symbols.json5").default,
   alchemyTerm,
+  elements,
+  elementals,
 };
 
 function insertRefs(row) {

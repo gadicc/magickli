@@ -296,6 +296,13 @@ const sets = {
     answer: "term.en",
     gdGrade: "1=10",
   },
+  "elementals-titles": {
+    id: "elementals-titles",
+    data: data.elementals,
+    question: "namePlural.en",
+    answer: "title.en",
+    gdGrade: "1=10",
+  },
 };
 
 function getSet(id: string) {

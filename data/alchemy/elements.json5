@@ -1,0 +1,30 @@
+{
+  earth: {
+    id: "earth",
+    name: {
+      en: "Earth",
+    },
+    elementalId: "gnome",
+  },
+  air: {
+    id: "air",
+    name: {
+      en: "Air",
+    },
+    elementalId: "sylph",
+  },
+  water: {
+    id: "water",
+    name: {
+      en: "Water",
+    },
+    elementalId: "undine",
+  },
+  fire: {
+    id: "fire",
+    name: {
+      en: "Fire",
+    },
+    elementalId: "salamander",
+  },
+}
