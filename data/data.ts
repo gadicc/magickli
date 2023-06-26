@@ -3,6 +3,7 @@ import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
 import archangel from "./kabbalah/Archangels";
 import alchemySymbol from "./alchemy/Symbols";
+import alchemyTerm from "./alchemy/Terms";
 
 const allData = {
   planet, // : require("./astrology/planets.json5").default,
@@ -28,6 +29,7 @@ const allData = {
   chakra: require("./chakras.json5").default,
 
   alchemySymbol, // : require("./alchemy/symbols.json5").default,
+  alchemyTerm,
 };
 
 function insertRefs(row) {

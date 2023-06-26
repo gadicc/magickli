@@ -1,20 +1,74 @@
 {
-  aries: {
-    id: "aries",
-    no: 1,
-    symbol: "♈",
+  "sol-philosophorum": {
+    id: "sol-philosophorum",
     name: {
-      en: "Aries",
+      en: "Sol Philosophorum",
     },
-    meaning: {
-      en: "Ram",
+    terms: {
+      en: [
+        "Pure living Alchemical Spirit of Gold",
+        "Refined Essence of Heat & Dryness",
+      ],
     },
-    rulesFrom: [
-      [3, 21],
-      [4, 19],
-    ],
-    planetId: "mars",
-    elementId: "fire",
-    quadruplicity: "cardinal",
+    gdGrade: 1,
+  },
+  "luna-philosophorum": {
+    id: "luna-philosophorum",
+    name: {
+      en: "Luna Philosophorum",
+    },
+    terms: {
+      en: [
+        "Pure living Alchemical Spirit of Silver",
+        "Refined Essence of Heat & Moisture",
+      ],
+    },
+    gdGrade: 1,
+  },
+  "green-lion": {
+    id: "green-lion",
+    name: {
+      en: "Green Lion",
+    },
+    terms: {
+      en: ["Stem and Root of Radical Essence of Metals"],
+    },
+    gdGrade: 1,
+  },
+  "black-dragon": {
+    id: "black-dragon",
+    name: {
+      en: "Black Dragon",
+    },
+    terms: {
+      en: ["Death - Putrafaction - Decay"],
+    },
+    gdGrade: 1,
+  },
+  king: {
+    id: "king",
+    name: {
+      en: "The King",
+    },
+    terms: {
+      en: [
+        "Red - Qabalistic Microprosopus",
+        "Tiphareth - Analogous to Gold and the Sun",
+      ],
+    },
+    gdGrade: 1,
+  },
+  queen: {
+    id: "queen",
+    name: {
+      en: "The Queen",
+    },
+    terms: {
+      en: [
+        "White - Qabalistic Bride of Microprosopus",
+        "Malkah - Analogous to Silver and the Moon",
+      ],
+    },
+    gdGrade: 1,
   },
 }

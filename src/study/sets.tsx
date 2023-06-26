@@ -3,10 +3,18 @@ import Paper from "@mui/material/Paper";
 
 import data from "../../data/data";
 import Tetragram from "../../components/geomancy/Tetragram";
+import { AlchemyTerms } from "../../data/alchemy/Terms";
 
 function SingleCharQuestion({ question }: { question: string }) {
   return (
-    <Paper sx={{ my: 2, p: 2, fontSize: "500%", textAlign: "center" }}>
+    <Paper
+      sx={{
+        my: 2,
+        p: 2,
+        fontSize: question.length < 7 ? "500%" : "150%",
+        textAlign: "center",
+      }}
+    >
       {question}
     </Paper>
   );
@@ -260,6 +268,32 @@ const sets = {
     data: data.sephirah,
     question: "name.romanization",
     answer: "godName.name.romanization",
+    gdGrade: "1=10",
+  },
+  "zelator-alchemy-terms": {
+    id: "zelator-alchemy-terms",
+    data: (function () {
+      const gradeTerms = Object.values(data.alchemyTerm).filter(
+        (term) => term.gdGrade === 1
+      );
+
+      // Create a new card for each term, i.e. for data items with
+      // two terms, create two cards.
+      const terms: any = [];
+      for (const item of gradeTerms) {
+        let i = 1;
+        for (const term of item.terms.en)
+          terms.push({
+            id: item.id + "-" + i++,
+            name: item.name,
+            term: { en: term },
+          });
+      }
+      console.log(terms);
+      return terms;
+    })(),
+    question: "name.en",
+    answer: "term.en",
     gdGrade: "1=10",
   },
 };
