@@ -117,7 +117,7 @@ export default function Study() {
             </TableHead>
             <TableBody>
               {currentSets.map((set) => (
-                <>
+                <React.Fragment key={set._id}>
                   <TableRow
                     key={set._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -161,7 +161,7 @@ export default function Study() {
                     </TableCell>
                   </TableRow>
                   <TableRow></TableRow>
-                </>
+                </React.Fragment>
               ))}
             </TableBody>
           </Table>
