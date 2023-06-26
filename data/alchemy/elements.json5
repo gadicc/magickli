@@ -1,6 +1,7 @@
 {
   earth: {
     id: "earth",
+    symbol: "🜃",
     name: {
       en: "Earth",
     },
@@ -8,6 +9,7 @@
   },
   air: {
     id: "air",
+    symbol: "🜁",
     name: {
       en: "Air",
     },
@@ -15,6 +17,7 @@
   },
   water: {
     id: "water",
+    symbol: "🜄",
     name: {
       en: "Water",
     },
@@ -22,9 +25,18 @@
   },
   fire: {
     id: "fire",
+    symbol: "🜂",
     name: {
       en: "Fire",
     },
     elementalId: "salamander",
+  },
+  spirit: {
+    id: "spirit",
+    symbol: "☸",
+    name: {
+      en: "Spirit",
+    },
+    elementalId: "",
   },
 }

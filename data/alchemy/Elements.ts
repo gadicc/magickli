@@ -7,6 +7,7 @@ type LangObject = { en: string };
 interface Element {
   id: ElementId;
   name: LangObject;
+  symbol: string;
   elementalId: ElementalId;
   elemental?: Elemental;
 }

@@ -1,19 +1,20 @@
 import planet from "./astrology/Planets";
+
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
+
 import archangel from "./kabbalah/Archangels";
+
 import alchemySymbol from "./alchemy/Symbols";
 import alchemyTerm from "./alchemy/Terms";
-import elements from "./alchemy/Elements";
-import elementals from "./alchemy/Elementals";
+import element from "./alchemy/Elements";
+import elemental from "./alchemy/Elementals";
 
 const allData = {
   planet, // : require("./astrology/planets.json5").default,
   zodiac: require("./astrology/zodiac.json5").default,
 
   hebrewLetter: require("./hebrewLetters.json5").default,
-
-  element: require("./elements.json5").default,
 
   // tetragram: require("./geomancy/tetragrams.json5").default,
   tetragram,
@@ -32,8 +33,8 @@ const allData = {
 
   alchemySymbol, // : require("./alchemy/symbols.json5").default,
   alchemyTerm,
-  elements,
-  elementals,
+  element,
+  elemental,
 };
 
 function insertRefs(row) {

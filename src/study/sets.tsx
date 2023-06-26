@@ -298,7 +298,7 @@ const sets = {
   },
   "elementals-titles": {
     id: "elementals-titles",
-    data: data.elementals,
+    data: data.elemental,
     question: "namePlural.en",
     answer: "title.en",
     gdGrade: "1=10",
