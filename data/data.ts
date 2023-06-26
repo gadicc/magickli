@@ -6,6 +6,7 @@ import geomanicHouse from "./geomancy/Houses";
 
 import archangel from "./kabbalah/Archangels";
 import kerub from "./kabbalah/Kerubim";
+import fourWorlds from "./kabbalah/FourWorlds";
 
 import alchemySymbol from "./alchemy/Symbols";
 import alchemyTerm from "./alchemy/Terms";
@@ -29,6 +30,7 @@ const allData = {
   // KABBALAH
   archangel,
   angelicOrder: require("./kabbalah/angelicOrders.json5").default,
+  fourWorlds,
   godName: require("./kabbalah/godNames.json5").default,
   kerub,
   sephirah: require("./kabbalah/sephirot.json5").default,

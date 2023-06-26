@@ -339,6 +339,20 @@ const sets = {
       ])
     ),
   },
+  "four-worlds-desc": {
+    id: "four-worlds-desc",
+    data: data.fourWorlds,
+    question: "name.romanization",
+    answer: "desc.en",
+    gdGrade: "1=10",
+  },
+  "four-worlds-residents": {
+    id: "four-worlds-residents",
+    data: data.fourWorlds,
+    question: "name.romanization",
+    answer: "residentsTitle.en",
+    gdGrade: "1=10",
+  },
 };
 
 function getSet(id: string) {

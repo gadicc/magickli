@@ -1,0 +1,46 @@
+{
+  atzilut: {
+    id: "atzilut",
+    name: {
+      en: "Nobility",
+      romanization: "Atzilut",
+      he: "אצילות",
+    },
+    desc: {
+      en: "Archetypal",
+    },
+    residentsTitle: {
+      en: "Pure Deity",
+    },
+  },
+  briah: {
+    id: "briah",
+    name: {
+      en: "Creation",
+      romanization: "Briah",
+      he: "בריאה",
+    },
+    desc: { en: "Creative" },
+    residentsTitle: { en: "Archangelic" },
+  },
+  yetzirah: {
+    id: "yetzirah",
+    name: {
+      en: "Formation",
+      romanization: "Yetzirah",
+      he: "יצירה",
+    },
+    desc: { en: "Formative" },
+    residentsTitle: { en: "Angelic" },
+  },
+  assiah: {
+    id: "assiah",
+    name: {
+      en: "Doing",
+      romanization: "Assiah",
+      he: "עשייה",
+    },
+    desc: { en: "Action" },
+    residentsTitle: { en: "Man, Matter, Shells, Demons" },
+  },
+}
