@@ -69,6 +69,7 @@ function insertRefs(row) {
 }
 
 for (const [set, data] of Object.entries(allData)) {
+  if (Array.isArray(data)) continue;
   for (const row of Object.values(data)) {
     insertRefs(row);
   }
