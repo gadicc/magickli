@@ -174,7 +174,7 @@ export function FylfotCross({
                     cursor: onClick ? "pointer" : undefined,
                   }}
                 >
-                  {item.symbol}
+                  {item.symbol + "\uFE0F"}
                 </td>
               );
             })}
@@ -219,10 +219,7 @@ export default function FylfotCrossPage() {
     setCells(unflat(flat));
   }
 
-  const navParts = [
-    { title: "HOGD", url: "/hogd" },
-    { title: "Symbols", url: "/hogd/symbols/" },
-  ];
+  const navParts = [{ title: "Symbols", url: "/hogd/symbols/" }];
 
   return (
     <>
