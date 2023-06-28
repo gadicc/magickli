@@ -16,6 +16,23 @@ const tiles = [
     title: "Rituals",
     to: "/hogd/rituals",
   },
+  {
+    Component: () => (
+      <div
+        style={{
+          marginTop: 30,
+          textAlign: "center",
+          fontSize: "300%",
+          color: "black",
+          textDecoration: "none",
+        }}
+      >
+        ✭
+      </div>
+    ),
+    title: "Symbols",
+    to: "/hogd/symbols",
+  },
 ];
 
 function HOGD() {

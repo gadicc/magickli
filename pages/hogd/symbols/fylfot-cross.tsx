@@ -1,0 +1,302 @@
+"use client";
+import React from "react";
+
+import {
+  Button,
+  Checkbox,
+  Chip,
+  Container,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  Stack,
+} from "@mui/material";
+
+import data from "../../../data/data";
+import AppBar from "../../../components/AppBar";
+
+// Durstenfeld shuffle (optimized version of Fisher-Yates)
+// https://stackoverflow.com/a/12646864/1839099
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function unflat(flat, split = 5) {
+  const unflat: (string | null)[][] = [[], [], [], [], []];
+  for (let i = 0, row = -1; i < flat.length; i++) {
+    if (i % split === 0) row++;
+    console.log(unflat);
+    unflat[row].push(flat[i]);
+  }
+  return unflat;
+}
+
+const fylfot = [
+  ["fire", "sagittarius", "leo", null, "water"],
+  [null, null, "aries", null, "pisces"],
+  ["taurus", "capricorn", "sol", "cancer", "scorpio"],
+  ["virgo", null, "libra", null, null],
+  ["earth", null, "aquarius", "gemini", "air"],
+];
+
+const fylfotEmpty = [
+  ["cursor", "", "", null, ""],
+  [null, null, "", null, ""],
+  ["", "", "", "", ""],
+  ["", null, "", null, null],
+  ["", null, "", "", ""],
+];
+
+function typeFromId(id) {
+  if (id === "sol") return "planet";
+  if (["earth", "air", "water", "fire"].includes(id)) return "element";
+  return "zodiac";
+}
+
+const colorFromElement = {
+  fire: "red",
+  water: "blue",
+  air: "yellow",
+  earth: "#333",
+};
+
+const flashingColorFromColor = {
+  red: "green",
+  blue: "yellow",
+  yellow: "purple",
+  "#333": "red",
+};
+
+function elementFromPos(row: number, col: number) {
+  if (row < 2) return col < 3 ? "fire" : "water";
+  if (row === 2) {
+    if (col === 2) return "sol";
+    return col < 2 ? "earth" : "water";
+  }
+  if (row > 2) return col < 2 ? "earth" : "air";
+  return "invalid-position";
+}
+
+export function FylfotCross({
+  cells = fylfot,
+  onClick,
+  showColors = true,
+}: {
+  cells: (string | null)[][];
+  onClick?: (
+    id: string | null,
+    rowIndex: number,
+    colIndex: number,
+    correctId: string
+  ) => void;
+  showColors: boolean;
+}) {
+  console.log(cells);
+
+  return (
+    <table>
+      <style jsx>{`
+        table {
+          margin: 20px auto;
+          border-collapse: collapse;
+        }
+        td {
+          width: 1.5em;
+          font-size: 200%;
+          text-align: center;
+          vertical-align: middle;
+        }
+        td:not(:empty) {
+          border: 1px solid black;
+        }
+      `}</style>
+      <tbody>
+        {cells.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((id, colIndex) => {
+              const correctId = fylfot[rowIndex][colIndex];
+              const isCorrect = id === correctId;
+
+              const _onClick = () =>
+                onClick && onClick(id, rowIndex, colIndex, correctId as string);
+
+              let background: undefined | string = undefined;
+              let color: undefined | string = undefined;
+              const opacity = isCorrect ? 1 : 0.5;
+
+              if (showColors && id !== "sol") {
+                const element = elementFromPos(rowIndex, colIndex);
+                background = colorFromElement[element] as string;
+                color = flashingColorFromColor[background];
+              }
+              const style = { background, color, opacity };
+
+              if (id === null) return <td key={colIndex} />;
+              if (id === "")
+                return (
+                  <td
+                    key={colIndex}
+                    onClick={_onClick}
+                    style={{
+                      ...style,
+                      cursor: onClick ? "pointer" : undefined,
+                    }}
+                  >
+                    &nbsp;
+                  </td>
+                );
+              if (id === "cursor")
+                return (
+                  <td
+                    key={colIndex}
+                    style={{
+                      ...style,
+                      border: "2px solid " + (showColors ? color : "red"),
+                    }}
+                  >
+                    &nbsp;
+                  </td>
+                );
+
+              const type = typeFromId(id);
+              const item = data[type][id];
+              // console.log([id, type, item]);
+
+              return (
+                <td
+                  key={colIndex}
+                  onClick={_onClick}
+                  style={{
+                    ...style,
+                    cursor: onClick ? "pointer" : undefined,
+                  }}
+                >
+                  {item.symbol}
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+const fylfotSymbols = fylfot.flat(2).filter(Boolean) as string[];
+fylfotSymbols.sort();
+
+export default function FylfotCrossPage() {
+  const [showColors, setShowColors] = React.useState(true);
+  const [cells, setCells] = React.useState<(string | null)[][]>(fylfotEmpty);
+  const [used, setUsed] = React.useState<string[]>([]);
+  const [testing, setTesting] = React.useState(false);
+
+  function crossClick(id: string, rowIndex, colIndex, correctId) {
+    console.log({ id, rowIndex, colIndex, correctId });
+    setUsed(used.filter((item) => item !== id));
+    const flat = cells.flat(2);
+    if (used.length < fylfotSymbols.length) flat[flat.indexOf("cursor")] = "";
+    if (id) flat[flat.indexOf(id)] = "cursor";
+    const newCells = unflat(flat);
+    if (!id) newCells[rowIndex][colIndex] = "cursor";
+    setCells(newCells);
+  }
+
+  function optionsClick(id: string) {
+    setUsed([...used, id]);
+
+    const flat = cells.flat(2);
+    flat[flat.indexOf("cursor")] = id;
+
+    const indexes = flat
+      .map((x, i) => (x === "" ? i : null))
+      .filter(Boolean) as number[];
+    flat[indexes[Math.floor(Math.random() * indexes.length)]] = "cursor";
+
+    setCells(unflat(flat));
+  }
+
+  const navParts = [
+    { title: "HOGD", url: "/hogd" },
+    { title: "Symbols", url: "/hogd/symbols/" },
+  ];
+
+  return (
+    <>
+      <AppBar title="Fylfot Cross" navParts={navParts} />
+      <Container sx={{ p: 2 }}>
+        <FylfotCross
+          cells={testing ? cells : fylfot}
+          onClick={crossClick}
+          showColors={showColors}
+        />
+        {testing && (
+          <div>
+            {fylfotSymbols.map((id) => {
+              const type = typeFromId(id);
+              const item = data[type][id];
+              const inUse = used.includes(id);
+              // console.log(item);
+              return (
+                <Chip
+                  sx={{
+                    m: 1,
+                    p: 0.5,
+                    userSelect: "none",
+                    cursor: "pointer",
+                    fontSize: "130%",
+                  }}
+                  key={id}
+                  label={item.symbol}
+                  onClick={() => optionsClick(id)}
+                  disabled={inUse}
+                />
+              );
+            })}
+          </div>
+        )}
+        <div>
+          <Grid container>
+            <Grid item xs={6}>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={showColors}
+                      onChange={() => setShowColors(!showColors)}
+                    />
+                  }
+                  label="Show Colors"
+                />
+              </FormGroup>
+            </Grid>
+            {!testing && (
+              <Grid item xs={6} sx={{ textAlign: "right" }}>
+                <Button variant="outlined" onClick={() => setTesting(true)}>
+                  Test me!
+                </Button>
+              </Grid>
+            )}
+          </Grid>
+        </div>
+        <div style={{ fontSize: "80%", textAlign: "justify" }}>
+          The symbol of the Sun is at the center of the cross at the point of
+          stillness, while the zodiacal signs divided into the four triplicities
+          make up the arms of the cross. The cardinal signs all begin at the
+          center of the cross next to the solar symbol, followed by the fixed
+          and mutable signs. The arms terminate with the elemental symbols of
+          each triplicity. The whole cross represents the center of the universe
+          giving rise to the celestial signs, which then formulate the elements
+          of the physical world (source:{" "}
+          <a href="https://www.goldendawnshop.com/product/fylfot-cross/">
+            Golden Dawn Shop
+          </a>
+          ).
+        </div>
+      </Container>
+    </>
+  );
+}
