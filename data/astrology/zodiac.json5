@@ -2,7 +2,8 @@
   aries: {
     id: "aries",
     no: 1,
-    symbol: "♈",
+    symbol: "♈︎",
+    emoji: "♈️",
     name: {
       en: "Aries",
     },
@@ -21,7 +22,8 @@
   taurus: {
     id: "taurus",
     no: 2,
-    symbol: "♉",
+    symbol: "♉︎",
+    emoji: "♉",
     name: {
       en: "Taurus",
     },
@@ -40,7 +42,8 @@
   gemini: {
     id: "gemini",
     no: 3,
-    symbol: "♊",
+    symbol: "♊︎",
+    emoji: "♊",
     name: {
       en: "Gemini",
     },
@@ -59,7 +62,8 @@
   cancer: {
     id: "cancer",
     no: 4,
-    symbol: "♋",
+    symbol: "♋︎",
+    emoji: "♋",
     name: {
       en: "Cancer",
     },
@@ -78,7 +82,8 @@
   leo: {
     id: "leo",
     no: 5,
-    symbol: "♌",
+    symbol: "♌︎",
+    emoji: "♌",
     name: {
       en: "Leo",
     },
@@ -97,7 +102,8 @@
   virgo: {
     id: "virgo",
     no: 6,
-    symbol: "♍",
+    symbol: "♍︎",
+    emoji: "♍",
     name: {
       en: "Virgo",
     },
@@ -116,7 +122,8 @@
   libra: {
     id: "libra",
     no: 7,
-    symbol: "♎",
+    symbol: "♎︎",
+    emoji: "♎",
     name: {
       en: "Libra",
     },
@@ -135,7 +142,8 @@
   scorpio: {
     id: "scorpio",
     no: 8,
-    symbol: "♏",
+    symbol: "♏︎",
+    emoji: "♏",
     name: {
       en: "Scorpio",
     },
@@ -154,7 +162,8 @@
   sagittarius: {
     id: "sagittarius",
     no: 9,
-    symbol: "♐",
+    symbol: "♐︎",
+    emoji: "♐",
     name: {
       en: "Sagittarius",
     },
@@ -173,7 +182,8 @@
   capricorn: {
     id: "capricorn",
     no: 10,
-    symbol: "♑",
+    symbol: "♑︎",
+    emoji: "♑",
     name: {
       en: "Capricorn",
     },
@@ -192,7 +202,8 @@
   aquarius: {
     id: "aquarius",
     no: 11,
-    symbol: "♒",
+    symbol: "♒︎",
+    emoji: "♒",
     name: {
       en: "Aquarius",
     },
@@ -211,7 +222,8 @@
   pisces: {
     id: "pisces",
     no: 12,
-    symbol: "♓",
+    symbol: "♓︎",
+    emoji: "♓",
     name: {
       en: "Pisces",
     },
