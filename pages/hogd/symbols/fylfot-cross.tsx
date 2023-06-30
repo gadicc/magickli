@@ -230,6 +230,16 @@ export default function FylfotCrossPage() {
           onClick={crossClick}
           showColors={showColors}
         />
+        <div
+          style={{
+            textAlign: "center",
+            fontSize: "50%",
+            margin: "5px 0 8px 0",
+          }}
+        >
+          NB: This is NOT the Nazi symbol, see{" "}
+          <a href="#swastika">note below</a>.
+        </div>
         {testing && (
           <div>
             {fylfotSymbols.map((id) => {
@@ -280,18 +290,37 @@ export default function FylfotCrossPage() {
           </Grid>
         </div>
         <div style={{ fontSize: "80%", textAlign: "justify" }}>
-          The symbol of the Sun is at the center of the cross at the point of
-          stillness, while the zodiacal signs divided into the four triplicities
-          make up the arms of the cross. The cardinal signs all begin at the
-          center of the cross next to the solar symbol, followed by the fixed
-          and mutable signs. The arms terminate with the elemental symbols of
-          each triplicity. The whole cross represents the center of the universe
-          giving rise to the celestial signs, which then formulate the elements
-          of the physical world (source:{" "}
-          <a href="https://www.goldendawnshop.com/product/fylfot-cross/">
-            Golden Dawn Shop
-          </a>
-          ).
+          <p>
+            <b>Construction:</b> The symbol of the Sun is at the center of the
+            cross at the point of stillness, while the zodiacal signs divided
+            into the four triplicities make up the arms of the cross. The
+            cardinal signs all begin at the center of the cross next to the
+            solar symbol, followed by the fixed and mutable signs. The arms
+            terminate with the elemental symbols of each triplicity. The whole
+            cross represents the center of the universe giving rise to the
+            celestial signs, which then formulate the elements of the physical
+            world (source:{" "}
+            <a href="https://www.goldendawnshop.com/product/fylfot-cross/">
+              Golden Dawn Shop
+            </a>
+            ).
+          </p>
+          <a name="swastika" />
+          <p>
+            <b>History:</b> The swastika (卐 or 卍) is a symbol of divinity and
+            spirituality in Hinduism, Buddhism, and many other Asian, certain
+            European and Native American cultures and religions. It&apos;s been
+            around since at least 10,000 B.C.E. and is most commonly associated
+            with good fortune and auspiciousness. The Nazis appropriated the
+            right-facing variant and rotated it 45° (
+            <span
+              style={{ display: "inline-block", transform: "rotate(45deg)" }}
+            >
+              卐
+            </span>
+            ). You can read more on{" "}
+            <a href="https://en.wikipedia.org/wiki/Swastika">Wikipedia</a>.
+          </p>
         </div>
       </Container>
     </>
