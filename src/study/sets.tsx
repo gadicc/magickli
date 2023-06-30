@@ -382,6 +382,13 @@ const sets = {
     },
     gdGrade: "1=10",
   },
+  "sephirot-stones": {
+    id: "sephirot-stones",
+    data: omit("daat", data.sephirah),
+    question: "name.romanization",
+    answer: "stone",
+    gdGrade: "1=10",
+  },
 };
 
 function getSet(id: string) {
