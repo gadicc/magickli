@@ -313,7 +313,7 @@ export default function FylfotCrossPage() {
             </a>
             ).
           </p>
-          <a name="swastika" />
+          <a id="swastika" />
           <p>
             <b>History:</b> The swastika (卐 or 卍) is a symbol of divinity and
             spirituality in Hinduism, Buddhism, and many other Asian, certain
