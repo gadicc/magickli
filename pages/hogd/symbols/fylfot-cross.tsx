@@ -175,7 +175,12 @@ export function FylfotCross({
                     cursor: onClick ? "pointer" : undefined,
                   }}
                 >
-                  {item.symbol + "\uFE0F"}
+                  {
+                    // U+FE0E is Unicode Variation Selector VS15,
+                    // i.e. prefer text character to emoji, so
+                    // we can style it ourselves.
+                    item.symbol + "\uFE0E"
+                  }
                 </td>
               );
             })}
