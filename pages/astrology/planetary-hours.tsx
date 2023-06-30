@@ -26,6 +26,7 @@ import {
 import AppBar from "../../components/AppBar";
 import useGeoIP from "../../src/useGeoIP";
 import { ExpandMore } from "@mui/icons-material";
+import OpenSource from "../../src/OpenSource";
 
 // Useful Resources:
 // https://plentifulearth.com/calculate-planetary-hours/
@@ -279,15 +280,8 @@ export default function PlanetaryHours() {
           Planetary influences sourced from The Key of Solomon,{" "}
           <a href="https://sacred-texts.com/grim/kos/kos07.htm">chapter 2</a>{" "}
           (MacGregor Mathers, 1888).
-          <br />
-          <br />
-          Magick.li is open-source. You can see the code used to generate this
-          page{" "}
-          <a href="https://github.com/gadicc/magickli/tree/master/pages/astrology/planetary-hours.tsx">
-            here
-          </a>
-          .
         </Box>
+        <OpenSource href="/pages/astrology/planetary-hours.tsx" />
       </Container>
     </>
   );

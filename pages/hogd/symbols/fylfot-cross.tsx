@@ -14,6 +14,7 @@ import {
 
 import data from "../../../data/data";
 import AppBar from "../../../components/AppBar";
+import OpenSource from "../../../src/OpenSource";
 
 // Durstenfeld shuffle (optimized version of Fisher-Yates)
 // https://stackoverflow.com/a/12646864/1839099
@@ -322,6 +323,7 @@ export default function FylfotCrossPage() {
             <a href="https://en.wikipedia.org/wiki/Swastika">Wikipedia</a>.
           </p>
         </div>
+        <OpenSource href="/pages/hogd/symbols/fylfot-cross.tsx" />
       </Container>
     </>
   );
