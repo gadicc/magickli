@@ -15,6 +15,7 @@ import {
 import data from "../../../data/data";
 import AppBar from "../../../components/AppBar";
 import OpenSource from "../../../src/OpenSource";
+import Symbols from "../symbols";
 
 // Durstenfeld shuffle (optimized version of Fisher-Yates)
 // https://stackoverflow.com/a/12646864/1839099
@@ -173,6 +174,7 @@ export function FylfotCross({
                   style={{
                     ...style,
                     cursor: onClick ? "pointer" : undefined,
+                    fontFamily: "monospace !important",
                   }}
                 >
                   {
@@ -326,6 +328,18 @@ export default function FylfotCrossPage() {
             </span>
             ). You can read more on{" "}
             <a href="https://en.wikipedia.org/wiki/Swastika">Wikipedia</a>.
+          </p>
+          <p>
+            <b>Symbol issues:</b> Chrome incorrectly shows Emoji for some
+            symbols on certain platforms (e.g. Android), which breaks color and
+            styling (
+            <a
+              title="Chrome often ignores emoji and text variation selectors U+FE0F and U+FE0E"
+              href="https://bugs.chromium.org/p/chromium/issues/detail?id=964527"
+            >
+              issue #964527
+            </a>
+            )
           </p>
         </div>
         <OpenSource href="/pages/hogd/symbols/fylfot-cross.tsx" />
