@@ -12,28 +12,111 @@ import {
   AccordionSummary,
   Typography,
   Button,
+  Box,
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 
 import AppBar from "../../components/AppBar";
 import keys, { EnochianKey } from "../../data/enochian/Keys";
+import dictionary from "../../data/enochian/Dictionary";
 import EnochianFont from "../../src/enochian/enochianFont";
+
+const s = {
+  keyParagraph: {
+    textAlign: "justify" as const,
+  },
+  selectedKey: {
+    background: "yellow",
+  },
+};
+
+function Dictionary({
+  selectedKey,
+}: {
+  selectedKey: { key: number; subkey: number };
+}) {
+  const key = keys[selectedKey.key];
+  const sub = key.subkeys[selectedKey.subkey];
+  const dict = dictionary[sub.enochianLatin] || {
+    meanings: [],
+    pronounciations: [],
+  };
+  return (
+    <table width="100%">
+      <tbody>
+        <tr>
+          <td style={{ width: "33%", textAlign: "left" }}>
+            {sub.enochianLatin}
+          </td>
+          <td style={{ width: "33%", textAlign: "center" }}>
+            {dict.pronounciations.length &&
+              dict.pronounciations[0].pronounciation}
+          </td>
+          <td
+            style={{ width: "33%", textAlign: "right", ...EnochianFont.style }}
+          >
+            {sub.enochianLatin}
+          </td>
+        </tr>
+        {dict.meanings.map((meaning, i) => (
+          <tr key={i}>
+            <td colSpan="3" style={{ textAlign: "center" }}>
+              {meaning.meaning} ({meaning.source}) {meaning.source2}{" "}
+              {meaning.note}
+            </td>
+          </tr>
+        ))}
+        <tr>
+          <td colSpan="3" style={{ textAlign: "center" }}>
+            {sub.english} (Dee book)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Key {key.key}.{sub.subkey}
+          </td>
+          <td></td>
+          <td style={{ textAlign: "right" }}>
+            {dict.gematria ? "Gematria " + dict.gematria.join(", ") : ""}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+}
 
 function KeyText({
   enochianKey,
   lang,
   enochianFont,
+  selectedKey,
+  setSelectedKey,
 }: {
   enochianKey: EnochianKey;
   lang: "enochian" | "english" | "both";
   enochianFont: boolean;
+  selectedKey: { key: number; subkey: number } | null;
+  setSelectedKey: ({ key, subkey }: { key: number; subkey: number }) => void;
 }) {
   if (lang === "english")
     return (
-      <div style={{ textAlign: "justify" }}>
+      <div style={s.keyParagraph}>
         {enochianKey.subkeys.map((subkey) => (
           <React.Fragment key={subkey.subkey}>
-            <span>{subkey.english}</span>{" "}
+            <span
+              style={
+                selectedKey &&
+                selectedKey.key === enochianKey.key &&
+                selectedKey.subkey === subkey.subkey
+                  ? s.selectedKey
+                  : undefined
+              }
+              onClick={() =>
+                setSelectedKey({ key: enochianKey.key, subkey: subkey.subkey })
+              }
+            >
+              {subkey.english}
+            </span>{" "}
           </React.Fragment>
         ))}
       </div>
@@ -42,12 +125,24 @@ function KeyText({
   if (lang === "enochian")
     return (
       <div
-        style={{ textAlign: "justify" }}
-        className={enochianFont ? EnochianFont.className : undefined}
+        style={{ ...s.keyParagraph, ...(enochianFont && EnochianFont.style) }}
       >
         {enochianKey.subkeys.map((subkey) => (
           <React.Fragment key={subkey.subkey}>
-            <span>{subkey.enochianLatin}</span>{" "}
+            <span
+              style={
+                selectedKey &&
+                selectedKey.key === enochianKey.key &&
+                selectedKey.subkey === subkey.subkey
+                  ? s.selectedKey
+                  : undefined
+              }
+              onClick={() =>
+                setSelectedKey({ key: enochianKey.key, subkey: subkey.subkey })
+              }
+            >
+              {subkey.enochianLatin}
+            </span>{" "}
           </React.Fragment>
         ))}
       </div>
@@ -60,15 +155,26 @@ function KeyText({
           {enochianKey.subkeys.map(
             (subkey) =>
               subkey.subkey > 0 && (
-                <tr key={subkey.subkey}>
+                <tr
+                  key={subkey.subkey}
+                  style={
+                    selectedKey &&
+                    selectedKey.key === enochianKey.key &&
+                    selectedKey.subkey === subkey.subkey
+                      ? s.selectedKey
+                      : undefined
+                  }
+                  onClick={() =>
+                    setSelectedKey({
+                      key: enochianKey.key,
+                      subkey: subkey.subkey,
+                    })
+                  }
+                >
                   <td>
                     {enochianKey.key}.{subkey.subkey}
                   </td>
-                  <td
-                    className={
-                      enochianFont ? EnochianFont.className : undefined
-                    }
-                  >
+                  <td style={enochianFont ? EnochianFont.style : {}}>
                     {subkey.enochianLatin}
                   </td>
                   <td>{subkey.english}</td>
@@ -88,6 +194,10 @@ const navParts = [{ title: "Enochian", url: "/enochian" }];
 export default function Keys() {
   const [lang, setLang] = React.useState<EnochianLang>("english");
   const [enochianFont, setEnochianFont] = React.useState<boolean>(false);
+  const [selectedKey, setSelectedKey] = React.useState<{
+    key: number;
+    subkey: number;
+  } | null>(null);
 
   return (
     <>
@@ -119,13 +229,13 @@ export default function Keys() {
             <FormControlLabel value="both" control={<Radio />} label="Both" />
             {["enochian", "both"].includes(lang) && (
               <Button onClick={() => setEnochianFont(!enochianFont)}>
-                <span style={{ color: enochianFont ? undefined : "red" }}>
-                  A
-                </span>
+                <span style={enochianFont ? {} : { color: "red" }}>A</span>
                 &nbsp;
                 <span
-                  style={{ color: enochianFont ? "red" : undefined }}
-                  className={EnochianFont.className}
+                  style={{
+                    color: enochianFont ? "red" : undefined,
+                    ...EnochianFont.style,
+                  }}
                 >
                   A
                 </span>
@@ -152,12 +262,28 @@ export default function Keys() {
                     enochianKey={key}
                     lang={lang}
                     enochianFont={enochianFont}
+                    selectedKey={selectedKey}
+                    setSelectedKey={setSelectedKey}
                   />
                 </AccordionDetails>
               </Accordion>
             )
         )}
       </Container>
+      {selectedKey && (
+        <Box
+          sx={{
+            p: 1,
+            position: "sticky",
+            bottom: 0,
+            background: "rgba(0,0,0,0.8)",
+            color: "#fafafa",
+          }}
+          onClick={() => setSelectedKey(null)}
+        >
+          <Dictionary selectedKey={selectedKey} />
+        </Box>
+      )}
     </>
   );
 }

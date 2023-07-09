@@ -20,6 +20,9 @@ const allData = {
 
   hebrewLetter: require("./hebrewLetters.json5").default,
 
+  // ENOCHIAN
+  enochianLetter: require("./enochian/letters.json5").default,
+
   // GEOMANCY
   // tetragram: require("./geomancy/tetragrams.json5").default,
   tetragram,
