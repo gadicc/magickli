@@ -45,12 +45,15 @@ function dueCount(set: WithId<StudySetStats>) {
 
 export default function Study() {
   const router = useRouter();
-  const tags =
-    (router.query.tags &&
-      (Array.isArray(router.query.tags)
-        ? router.query.tags
-        : router.query.tags.split(","))) ||
-    [];
+  const tags = React.useMemo(
+    () =>
+      (router.query.tags &&
+        (Array.isArray(router.query.tags)
+          ? router.query.tags
+          : router.query.tags.split(","))) ||
+      [],
+    [router.query.tags]
+  );
   const isPopulated = useGongoIsPopulated();
   const gdGrade = router.query.gdGrade || "all";
   const currentSets = useGongoLive((db) =>
@@ -90,7 +93,7 @@ export default function Study() {
         )
         .filter((setId) => !currentSetIds.includes(setId))
         .map((setId) => allSets[setId]),
-    [currentSetIds, gdGrade]
+    [currentSetIds, gdGrade, tags]
   );
 
   React.useEffect(() => {
