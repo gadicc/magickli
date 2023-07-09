@@ -26,7 +26,7 @@ const tiles = [
   {
     img: "/pics/30aethyrs.jpg",
     title: "Enochian",
-    to: "https://enochian.app/",
+    to: "/enochian/",
   },
   {
     Component: () => <GeomanticFigures width="100%" />,

@@ -42,7 +42,7 @@ function Tiles({ tiles, classes }) {
               // eslint-disable-next-line
               <img
                 className={classes.img} // eslint-disable-line
-                src={tile.img}
+                src={typeof tile.img === "object" ? tile.img.src : tile.img}
                 alt={tile.title}
               />
             )}
