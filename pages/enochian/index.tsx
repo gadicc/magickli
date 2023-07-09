@@ -8,6 +8,7 @@ import orationThumb from "../../src/enochian/img/oration-thumb.jpg";
 import firstKey from "../../src/enochian/img/enochianFirstKey.png";
 import enochianAbc from "../../src/enochian/img/enochianAbc.png";
 import dictionaryImg from "../../src/enochian/img/dictionary.jpg";
+import { Box } from "@mui/material";
 
 const tiles = [
   {
@@ -29,6 +30,11 @@ const tiles = [
     img: dictionaryImg,
     title: "Dictionary",
     to: "/enochian/dictionary",
+  },
+  {
+    Component: () => <Box>Tablets</Box>,
+    title: "Tablets",
+    to: "/enochian/tablets",
   },
 ];
 
