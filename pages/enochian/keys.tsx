@@ -60,14 +60,14 @@ function Dictionary({
         </tr>
         {dict.meanings.map((meaning, i) => (
           <tr key={i}>
-            <td colSpan="3" style={{ textAlign: "center" }}>
+            <td colSpan={3} style={{ textAlign: "center" }}>
               {meaning.meaning} ({meaning.source}) {meaning.source2}{" "}
               {meaning.note}
             </td>
           </tr>
         ))}
         <tr>
-          <td colSpan="3" style={{ textAlign: "center" }}>
+          <td colSpan={3} style={{ textAlign: "center" }}>
             {sub.english} (Dee book)
           </td>
         </tr>
