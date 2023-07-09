@@ -45,6 +45,12 @@ function dueCount(set: WithId<StudySetStats>) {
 
 export default function Study() {
   const router = useRouter();
+  const tags =
+    (router.query.tags &&
+      (Array.isArray(router.query.tags)
+        ? router.query.tags
+        : router.query.tags.split(","))) ||
+    [];
   const isPopulated = useGongoIsPopulated();
   const gdGrade = router.query.gdGrade || "all";
   const currentSets = useGongoLive((db) =>
@@ -52,7 +58,9 @@ export default function Study() {
   ).filter(
     (s) =>
       !!allSets[s.setId] &&
-      (gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade)
+      (gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade) &&
+      (!tags.length ||
+        tags.every((tag) => allSets[s.setId].tags?.includes(tag)))
   );
   const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
   const userId = useGongoUserId();
@@ -76,6 +84,10 @@ export default function Study() {
     () =>
       Object.keys(allSets)
         .filter((key) => gdGrade === "all" || allSets[key].gdGrade === gdGrade)
+        .filter(
+          (key) =>
+            !tags || tags.every((tag) => allSets[key].tags?.includes(tag))
+        )
         .filter((setId) => !currentSetIds.includes(setId))
         .map((setId) => allSets[setId]),
     [currentSetIds, gdGrade]

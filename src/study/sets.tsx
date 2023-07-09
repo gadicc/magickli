@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import data from "../../data/data";
 import Tetragram from "../../components/geomancy/Tetragram";
 import { AlchemyTerms } from "../../data/alchemy/Terms";
+import enochianFont from "../enochian/enochianFont";
 
 // https://stackoverflow.com/a/56773391/1839099
 function omit(key, obj) {
@@ -11,7 +12,13 @@ function omit(key, obj) {
   return rest;
 }
 
-function SingleCharQuestion({ question }: { question: string }) {
+function SingleCharQuestion({
+  question,
+  style,
+}: {
+  question: string;
+  style: Record<string, unknown>;
+}) {
   return (
     <Paper
       sx={{
@@ -19,6 +26,7 @@ function SingleCharQuestion({ question }: { question: string }) {
         p: 2,
         fontSize: question.length < 7 ? "500%" : "150%",
         textAlign: "center",
+        ...style,
       }}
     >
       {question}
@@ -388,6 +396,24 @@ const sets = {
     question: "name.romanization",
     answer: "stone",
     gdGrade: "1=10",
+  },
+  "enochian-letters-latin": {
+    id: "enochian-letters-latin",
+    data: data.enochianLetter,
+    question: "enochian",
+    questionStyle: enochianFont.style,
+    answer: "english",
+    tags: ["enochian"],
+    gdGrade: "?",
+  },
+  "enochian-letter-names": {
+    id: "enochian-letter-names",
+    data: data.enochianLetter,
+    question: "enochian",
+    questionStyle: enochianFont.style,
+    answer: "title",
+    tags: ["enochian"],
+    gdGrade: "?",
   },
 };
 

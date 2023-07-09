@@ -8,7 +8,6 @@ import orationThumb from "../../src/enochian/img/oration-thumb.jpg";
 import firstKey from "../../src/enochian/img/enochianFirstKey.png";
 import enochianAbc from "../../src/enochian/img/enochianAbc.png";
 import dictionaryImg from "../../src/enochian/img/dictionary.jpg";
-console.log({ orationThumb });
 
 const tiles = [
   {
@@ -24,7 +23,7 @@ const tiles = [
   {
     img: enochianAbc,
     title: "Learn",
-    to: "/enochian/learn",
+    to: "/study?tags=enochian",
   },
   {
     img: dictionaryImg,
@@ -36,7 +35,7 @@ const tiles = [
 function Enochian() {
   return (
     <>
-      <AppBar title="Kabbalah" />
+      <AppBar title="Enochian" />
       <Tiles tiles={tiles} />
     </>
   );

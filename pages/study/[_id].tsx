@@ -364,7 +364,7 @@ function StudySet({ set, cards, studyData, mode, setMode }) {
           </Box>
         </Stack>
 
-        <Question question={card.question} />
+        <Question question={card.question} style={set.questionStyle} />
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={1}>
             {card.answers.map((answer, i) => (

@@ -203,7 +203,7 @@ export default function Keys() {
     <>
       <AppBar title="Keys / Calls" navParts={navParts} />
 
-      <Container>
+      <Container sx={{ background: "#fafafa" }}>
         <FormControl>
           {/*
           <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
@@ -245,7 +245,7 @@ export default function Keys() {
         </FormControl>
       </Container>
 
-      <Container>
+      <Container sx={{ background: "#fafafa" }}>
         {keys.map(
           (key) =>
             key.key > 0 && (
