@@ -12,6 +12,7 @@ import {
 import AppBar from "../../components/AppBar";
 import enochianTablets, { EnochianTablet } from "../../data/enochian/Tablets";
 import EnochianFont from "../../src/enochian/enochianFont";
+import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
 
 const navParts = [{ title: "Enochian", url: "/enochian" }];
 
@@ -236,8 +237,23 @@ export default function Tablets() {
         <br />
 
         <Tablet id={elementId} enochianFont={enochianFont} ref={ref} />
+        <CopyPasteExport ref={ref} filename={`enochian-${elementId}-tablet`} />
+        <div style={{ textAlign: "center", fontSize: "90%" }}>
+          Enochian Font: <a href="XXX">TODO</a>
+        </div>
         <br />
       </Container>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
     </>
   );
 }

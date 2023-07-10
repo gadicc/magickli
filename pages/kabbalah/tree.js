@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import beautify from "xml-beautifier";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -30,108 +29,10 @@ function getServerSideProps(context) {
 }
 */
 
-function getSvgText() {
-  return document.getElementById("TreeOfLife").outerHTML.replace(
-    // since React doesn't support namespace tags
-    'xmlns="http://www.w3.org/2000/svg"',
-    'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
-  );
-}
-
-function downloadSVG() {
-  const svgText = getSvgText();
-  const pretty = beautify(svgText);
-  const data = encodeURIComponent(pretty);
-
-  const download = document.getElementById("downloadSVG");
-  download.setAttribute("download", "TreeOfLife-magickli-export.svg");
-  download.setAttribute("href-lang", "image/svg+xml");
-  download.setAttribute("href", "data:image/svg+xml;charset=utf-8," + data);
-}
-
-async function downloadPNG() {
-  const canvas = await drawnCanvas();
-  const pngBlob = await new Promise((resolve) =>
-    canvas.toBlob(resolve, "image/png", 0.9)
-  );
-
-  const url = URL.createObjectURL(pngBlob);
-  const download = document.getElementById("downloadPNG");
-  download.setAttribute("download", "TreeOfLife-magickli-export.png");
-  download.setAttribute("href-lang", "image/png");
-  download.setAttribute("href", url);
-}
-
-async function copySVG(event) {
-  event.preventDefault();
-
-  const svgText = getSvgText();
-  const blob = new Blob([svgText], { type: "image/svg+xml" });
-  const item = new ClipboardItem({ "image/svg+xml": blob });
-
-  try {
-    await navigator.clipboard.write([item]);
-  } catch (err) {
-    if (
-      err.message === "Type image/svg+xml not supported on write." ||
-      err.message.match(/is not defined/)
-    ) {
-      // Fallback (and actually only way possible at time of writing)
-      const textarea = document.createElement("textarea");
-      textarea.value = svgText;
-      document.body.appendChild(textarea);
-      textarea.select();
-      const result = document.execCommand("copy");
-      document.body.removeChild(textarea);
-      if (result === "unsuccessful") {
-        return toast("Failed to Copy to Clipboard :(");
-      }
-    } else {
-      throw err;
-    }
-  }
-
-  toast("✅ Copied to clipboard as SVG");
-}
-
-async function drawnCanvas() {
-  const svgText = getSvgText();
-  const svgBlob = new Blob([svgText], { type: "image/svg+xml;charset=utf-8" });
-
-  const svgImage = new Image();
-  const svgUrl = URL.createObjectURL(svgBlob);
-  await new Promise((resolve) => {
-    svgImage.onload = resolve;
-    svgImage.src = svgUrl;
-  });
-  URL.revokeObjectURL(svgUrl);
-
-  const canvas = document.createElement("canvas");
-  canvas.height = 1080;
-  canvas.width = svgImage.width * (1080 / svgImage.height);
-
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(svgImage, 0, 0);
-
-  return canvas;
-}
-
-async function copyPNG(event) {
-  event.preventDefault();
-
-  const canvas = await drawnCanvas();
-  const pngBlob = await new Promise((resolve) =>
-    canvas.toBlob(resolve, "image/png", 0.9)
-  );
-
-  const item = new ClipboardItem({ "image/png": pngBlob });
-  await navigator.clipboard.write([item]);
-  toast("✅ PNG copied to clipboard");
-}
-
 function TreeOfLife() {
   const navParts = [{ title: "Kabbalah", url: "/kabbalah" }];
   const router = useRouter();
+  const ref = React.useRef(null);
 
   const opts = {};
   const defaults = {
@@ -325,30 +226,14 @@ function TreeOfLife() {
             letterAttr={opts.letterAttr}
             flip={opts.flip}
             showDaat={opts.showDaat}
+            ref={ref}
           />
 
           <br />
           <br />
 
+          <CopyPasteExport ref={ref} filename="TreeOfLife-magickli-export" />
           <div style={{ textAlign: "center", fontSize: "90%" }}>
-            Download:{" "}
-            <a href="#" id="downloadSVG" onClick={downloadSVG}>
-              SVG
-            </a>
-            {" | "}
-            <a href="#" id="downloadPNG" onClick={downloadPNG}>
-              PNG
-            </a>
-            <br />
-            Copy to Clipboard:{" "}
-            <a href="#" id="copySVG" onClick={copySVG}>
-              SVG
-            </a>
-            {" | "}
-            <a href="#" id="copyPNG" onClick={copyPNG}>
-              PNG
-            </a>
-            <br />
             Hebrew Font:{" "}
             <a href="https://magick.li/fonts/NotoSansHebrew-Regular.ttf">
               NotoSansHebrew-Regular.ttf

@@ -48,22 +48,25 @@ function LineOutline({ x1, y1, x2, y2, offset = 5, ...args }) {
  * browser, but was very inconsistent when exporting into external programs.
  */
 
-function TreeOfLife({
-  width,
-  height,
-  labels,
-  colorScale,
-  field,
-  topText = "index",
-  bottomText = "",
-  letterAttr = "hermetic",
-  active,
-  pathHref,
-  sephirahHref,
-  activePath,
-  flip,
-  showDaat,
-}) {
+const TreeOfLife = React.forwardRef(function TreeOfLife(
+  {
+    width,
+    height,
+    labels,
+    colorScale,
+    field,
+    topText = "index",
+    bottomText = "",
+    letterAttr = "hermetic",
+    active,
+    pathHref,
+    sephirahHref,
+    activePath,
+    flip,
+    showDaat,
+  },
+  ref
+) {
   const color = colorScale ? colorScale + "Web" : "queenWeb";
   width = width || "100%";
   field = field || "index";
@@ -182,8 +185,9 @@ function TreeOfLife({
     return specialPositions[letterAttr][path.id] || 0.5;
   }
 
-  const ref = React.useRef();
+  const innerRef = React.useRef();
   const router = useRouter();
+  React.useImperativeHandle(ref, () => innerRef.current);
 
   React.useEffect(() => {
     ref.current.querySelectorAll("a").forEach((a) => {
@@ -207,7 +211,7 @@ function TreeOfLife({
       id="TreeOfLife"
       width={width}
       height={height}
-      ref={ref}
+      ref={innerRef}
     >
       <style type="text/css">
         {`
@@ -575,6 +579,6 @@ function TreeOfLife({
       )}
     </svg>
   );
-}
+});
 
 export default TreeOfLife;
