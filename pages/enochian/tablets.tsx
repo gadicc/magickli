@@ -147,7 +147,7 @@ function Grid({
                   fontWeight: enochianFont ? "bold" : undefined,
                   fontSize: size - 2 - (enochianFont ? 4 : 0),
                   textAnchor: "middle",
-                  fill: color,
+                  fill: color || undefined,
                   ...(enochianFont ? EnochianFont.style : {}),
                 }}
               >
