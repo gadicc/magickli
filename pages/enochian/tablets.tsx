@@ -239,7 +239,8 @@ export default function Tablets() {
         <Tablet id={elementId} enochianFont={enochianFont} ref={ref} />
         <CopyPasteExport ref={ref} filename={`enochian-${elementId}-tablet`} />
         <div style={{ textAlign: "center", fontSize: "90%" }}>
-          Enochian Font: <a href="XXX">TODO</a>
+          Enochian Font:{" "}
+          <a href="https://fonts2u.com/enochian-plain.font">enochian-plain</a>
         </div>
         <br />
       </Container>
