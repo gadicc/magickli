@@ -44,6 +44,11 @@ const tiles = [
     to: "/kabbalah",
   },
   {
+    img: "/pics/magic-book.jpg",
+    title: "Magick Journal",
+    to: "https://majou.app/",
+  },
+  {
     img: "/pics/study.jpg",
     title: "Study",
     to: "/study",
