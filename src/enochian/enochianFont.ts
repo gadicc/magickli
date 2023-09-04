@@ -21,4 +21,7 @@ enochianFont.style.direction = "rtl";
 // @ts-expect-error: todo
 enochianFont.style.unicodeBidi = "bidi-override";
 
+enochianFont.style.fontFamily += ", 'Enochian Plain', 'Enochian'";
+console.log({ enochianFont });
+
 export default enochianFont;
