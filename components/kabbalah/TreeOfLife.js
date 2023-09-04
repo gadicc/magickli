@@ -190,7 +190,7 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
   React.useImperativeHandle(ref, () => innerRef.current);
 
   React.useEffect(() => {
-    ref.current.querySelectorAll("a").forEach((a) => {
+    innerRef.current.querySelectorAll("a").forEach((a) => {
       a.onclick = function (e) {
         const href = a.getAttribute("xlink:href");
         e.preventDefault();
@@ -360,6 +360,7 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                   to.y = s.y + r * Math.sin(to.angle * rads);
                   out.push(
                     <path
+                      key={i}
                       style={{
                         fill: colors[i],
                         stroke: "#000000",
