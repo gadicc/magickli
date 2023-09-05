@@ -37,11 +37,13 @@ import { Render } from "../../src/doc/blocks";
 // import neophyte from "../../src/doc/neophyte.yaml";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 // import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
+import _zelator from "!!raw-loader!../../src/doc/1=10.jade";
 
 export const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
 
 const docs = {
   neophyte: prepare(_neophyte),
+  zelator: prepare(_zelator),
   // neophyteM: prepare(_neophyteM),
 };
 

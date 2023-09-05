@@ -39,6 +39,10 @@ const builtInDocs = [
     _id: "neophyte",
     title: "0=0 Grade of the Neophyte",
   },
+  {
+    _id: "zelator",
+    title: "1=10 Grade of the Zelator",
+  },
 ];
 
 function DocAdmin() {
