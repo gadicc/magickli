@@ -233,6 +233,14 @@ class Task extends Node {
       };
     });
 
+    function renderChildren(node, children) {
+      return children ? children.map((child, i) => child.render(i)) : null;
+    }
+
+    const footnotes = this.children.find(
+      (node) => node.block.type === "footnotes"
+    );
+
     return (
       <div key={key} ref={ref}>
         <Paper
@@ -292,10 +300,82 @@ class Task extends Node {
             </span>
           )}
           <span className="pg">{key}</span>
-          {block.say && <div className="say">{this.renderChildren()}</div>}
-          {block.do && <div className="do">{this.renderChildren()}</div>}
+          {block.say && (
+            <div className="say">
+              {renderChildren(
+                this,
+                this.children.filter((node) => node.block.type != "footnotes")
+              )}
+            </div>
+          )}
+          {block.do && (
+            <div className="do">
+              {renderChildren(
+                this,
+                this.children.filter((node) => node.block.type != "footnotes")
+              )}
+            </div>
+          )}
+          {footnotes && footnotes.render()}
         </Paper>
       </div>
+    );
+  }
+}
+
+class Footnote extends Node {
+  render(key) {
+    console.log(1);
+    let footnotes = null;
+    for (let parent = this.parent; parent; parent = parent.parent) {
+      console.log(this.parent);
+      for (const child of parent.children) {
+        console.log(child);
+        // or child.block.type === "footnotes"
+        if (child instanceof Footnotes) {
+          footnotes = child;
+          break;
+        }
+      }
+    }
+
+    let location = "";
+    if (footnotes) {
+      if (!footnotes.footnotes) footnotes.footnotes = [];
+      location = footnotes.footnotes.indexOf(this);
+      if (location === -1) {
+        footnotes.footnotes.push(this);
+        location = 0;
+      }
+    }
+    console.log({ footnotes });
+
+    return <sup>{location + 1}</sup>;
+  }
+}
+
+class Footnotes extends Node {
+  render(key) {
+    return (
+      <details key={key}>
+        <style jsx>{`
+          details {
+            margin-top: 15px;
+          }
+          ol {
+            padding-inline-start: 15px;
+          }
+          ol li {
+            text-indent: 0px;
+          }
+        `}</style>
+        <summary>Footnotes</summary>
+        <ol>
+          {this.footnotes.map((footnote, i) => (
+            <li key={i}>{footnote.renderChildren()}</li>
+          ))}
+        </ol>
+      </details>
     );
   }
 }
@@ -317,6 +397,8 @@ const blocks = {
   var: Var,
   declareVar: DeclareVar,
   summary: Summary,
+  footnote: Footnote,
+  footnotes: Footnotes,
 
   grade: Grade,
 };
