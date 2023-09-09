@@ -1,7 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import pugLex from "pug-lexer";
-import pugParse from "pug-parser";
 import { useGongoSub, useGongoOne } from "gongo-client-react";
 
 import Box from "@mui/material/Box";
@@ -34,12 +32,11 @@ import DocContext from "../../src/doc/context";
 import AppBar from "../../components/AppBar";
 import { Render } from "../../src/doc/blocks";
 
+import { prepare } from "../../src/doc/prepare";
 // import neophyte from "../../src/doc/neophyte.yaml";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 // import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
 import _zelator from "!!raw-loader!../../src/doc/1=10.jade";
-
-export const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
 
 const docs = {
   neophyte: prepare(_neophyte),
@@ -47,47 +44,9 @@ const docs = {
   // neophyteM: prepare(_neophyteM),
 };
 
-// const tokens = lex(_neophyte);
-// const ast = parse(tokens, { src: _neophyte });
-
-function toJrt(ast) {
-  const out = {};
-
-  // if (ast.type === "Block") return ast.nodes.map(toJrt);
-  //
-  if (ast.type === "Tag") {
-    if (ast.name === "say") {
-      out.type = "task";
-      out.say = true;
-    } else if (ast.name === "do") {
-      out.type = "task";
-      out.do = true;
-    } else {
-      out.type = ast.name;
-    }
-
-    for (let { name, val } of ast.attrs) {
-      if (typeof val === "string") {
-        if (val === "false") out[name] = false;
-        else if (val === "true") out[name] = true;
-        else out[name] = val.replace(/^['"]+|['"]+$/g, "");
-      } else out[name] = val;
-    }
-  } else if (ast.type === "Text") {
-    out.type = "text";
-    out.value = ast.val;
-  }
-
-  if (ast.nodes) out.children = ast.nodes.map(toJrt);
-  if (ast.block) out.children = ast.block.nodes.map(toJrt);
-  return out;
-}
-
-// console.log(JSON.stringify(ast, null, "  "));
-// console.log(JSON.stringify(toJrt(ast), null, "  "));
-
-//const origDoc = { children: neophyte };
-// const origDoc = toJrt(ast);
+// Note: make sure not to export anything except the react component
+// in this file, otherwise React Fast Refresh will need to do a
+// Full Reload.
 
 function PraemonstratorWand({ size }) {
   return (

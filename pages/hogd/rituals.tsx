@@ -32,7 +32,7 @@ import { Edit } from "@mui/icons-material";
 import AppBar from "../../components/AppBar";
 import Data from "../../data/data";
 import Link from "../../src/Link";
-import { prepare } from "../../pages/doc/[_id]";
+import { prepare } from "../../src/doc/prepare";
 
 const builtInDocs = [
   {
