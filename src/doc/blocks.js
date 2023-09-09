@@ -13,7 +13,7 @@ class Title extends Node {
       <Paper key={key} sx={{ p: 1, mb: 1, background: "#fff" }}>
         <a name={this.block.text.replace(/ /g, "_")}></a>
         <Typography variant="h5">
-          {this.block.value || this.renderChildren()}
+          {this.block.value || this.block.text || this.renderChildren()}
         </Typography>
       </Paper>
     );
