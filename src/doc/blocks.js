@@ -27,12 +27,25 @@ class Grade extends Node {
     return (
       <span
         key={key}
+        className="grade"
         style={{
           display: "inline-block",
           position: "relative",
           textIndent: "0px",
         }}
       >
+        {/* eslint-disable-next-line react/no-unknown-property */}
+        <style jsx global>{`
+          [style*="font-style: italic"] .grade {
+            // Doesn't seem to work with descendant selectors
+            color: red;
+          }
+          .note .grade,
+          .do .grade {
+            transform: skew(-20deg);
+            font-style: normal;
+          }
+        `}</style>
         <style jsx>{`
           .circled {
             border: 1px solid;
@@ -47,8 +60,12 @@ class Grade extends Node {
             display: inline-block;
             text-align: center;
           }
+          .equals {
+            padding: 0 5px 0 5px;
+          }
         `}</style>
-        <span className="circled">{parts[0]}</span>=
+        <span className="circled">{parts[0]}</span>
+        <span className="equals">=</span>
         <span className="squared">{parts[1]}</span>
       </span>
     );
@@ -88,6 +105,24 @@ class Br extends Node {
   }
 }
 
+class ul extends Node {
+  render(key) {
+    return <ul key={key}>{this.renderChildren()}</ul>;
+  }
+}
+
+class ol extends Node {
+  render(key) {
+    return <ol key={key}>{this.renderChildren()}</ol>;
+  }
+}
+
+class li extends Node {
+  render(key) {
+    return <li key={key}>{this.renderChildren()}</li>;
+  }
+}
+
 class Var extends Node {
   render(key) {
     // eslint-disable-next-line
@@ -112,6 +147,7 @@ class Note extends Node {
     return (
       <Paper
         key={key}
+        className="note"
         style={{ fontStyle: "italic" }}
         sx={{ p: 1, mb: 1, mx: 2.5, background: "#f4f4f4" }}
       >
@@ -266,17 +302,23 @@ class Task extends Node {
 
 const blocks = {
   b: B,
-  br: Br,
-  grade: Grade,
   i: I,
+  br: Br,
   img: Img,
+  ul,
+  ol,
+  li,
+
   note: Note,
   task: Task,
   title: Title,
   todo: Todo,
+
   var: Var,
   declareVar: DeclareVar,
   summary: Summary,
+
+  grade: Grade,
 };
 Node.registerBlocks(blocks);
 
