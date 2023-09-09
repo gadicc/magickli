@@ -237,10 +237,6 @@ class Task extends Node {
       return children ? children.map((child, i) => child.render(i)) : null;
     }
 
-    const footnotes = this.children.find(
-      (node) => node.block.type === "footnotes"
-    );
-
     return (
       <div key={key} ref={ref}>
         <Paper
@@ -316,7 +312,21 @@ class Task extends Node {
               )}
             </div>
           )}
-          {footnotes && footnotes.render()}
+          {(() => {
+            let footnotes = this.children.find(
+              (node) => node instanceof Footnotes
+            );
+
+            // This section needs to happen after renderChildren above, otherwise
+            // this.footnotes won't exist yet.
+            if (!footnotes && this.footnotes) {
+              footnotes = new Footnotes({ type: "footnotes" });
+              footnotes.footnotes = this.footnotes;
+              console.log(2, { footnotes });
+            }
+
+            return footnotes && footnotes.render();
+          })()}
         </Paper>
       </div>
     );
@@ -325,17 +335,19 @@ class Task extends Node {
 
 class Footnote extends Node {
   render(key) {
-    console.log(1);
     let footnotes = null;
     for (let parent = this.parent; parent; parent = parent.parent) {
-      console.log(this.parent);
       for (const child of parent.children) {
-        console.log(child);
         // or child.block.type === "footnotes"
         if (child instanceof Footnotes) {
           footnotes = child;
           break;
         }
+      }
+      if (footnotes) break;
+      if (parent instanceof Task) {
+        footnotes = parent;
+        break;
       }
     }
 
