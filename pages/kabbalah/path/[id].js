@@ -134,8 +134,7 @@ export default function Sephirot() {
     */}
 
           <h1>
-            Path {path.id.replace(/_/, "-")} ({from.name.romanization}-
-            {to.name.romanization})
+            Path {path.id.replace(/_/, "-")} ({from.name.roman}-{to.name.roman})
           </h1>
 
           <h2>Hermetic Tradition</h2>

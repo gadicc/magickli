@@ -108,7 +108,7 @@ export default function Sephirot() {
         }
       `}</style>
 
-      <AppBar title={sephirah.name.romanization} navParts={navParts} />
+      <AppBar title={sephirah.name.roman} navParts={navParts} />
       <Container maxWidth="sm">
         <Box my={4}>
           {/*
@@ -174,7 +174,7 @@ export default function Sephirot() {
                   <div className="nameDiv">
                     <div>
                       <div>{sephirah.name.he}</div>
-                      <div>{sephirah.name.romanization}</div>
+                      <div>{sephirah.name.roman}</div>
                     </div>
                     <div>{sephirah.name.en}</div>
                   </div>
@@ -187,7 +187,7 @@ export default function Sephirot() {
                   <div className="nameDiv">
                     <div>
                       <div>{sephirah.godName.name.he}</div>
-                      <div>{sephirah.godName.name.romanization}</div>
+                      <div>{sephirah.godName.name.roman}</div>
                     </div>
                     <div>{sephirah.godName.name.en}</div>
                   </div>
@@ -200,7 +200,7 @@ export default function Sephirot() {
                   <div className="nameDiv">
                     <div>
                       <div>{sephirah.angelicOrder.name.he}</div>
-                      <div>{sephirah.angelicOrder.name.romanization}</div>
+                      <div>{sephirah.angelicOrder.name.roman}</div>
                     </div>
                     <div>{sephirah.angelicOrder.name.en}</div>
                   </div>

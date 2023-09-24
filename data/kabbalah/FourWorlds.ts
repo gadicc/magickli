@@ -2,7 +2,7 @@ type FourWorldId = "atzilut" | "briah" | "yetzirah" | "assiah";
 
 interface FourWorld {
   id: FourWorldId;
-  name: { en: string; he: string; romanization: string };
+  name: { en: string; he: string; roman: string };
   desc: { en: string };
   residentsTitle: { en: string };
 }

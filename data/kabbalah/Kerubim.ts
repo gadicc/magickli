@@ -6,7 +6,7 @@ type KerubId = "earth" | "air" | "water" | "fire";
 interface Kerub {
   id: KerubId;
   title: { en: string };
-  face: { en: string; he: string; romanization: string };
+  face: { en: string; he: string; roman: string };
   zodiacId: ZodiacId;
   zodiac?: Zodiac;
   elementId: ElementId;

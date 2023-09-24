@@ -3,7 +3,7 @@
     id: "atzilut",
     name: {
       en: "Nobility",
-      romanization: "Atzilut",
+      roman: "Atzilut",
       he: "אצילות",
     },
     desc: {
@@ -17,7 +17,7 @@
     id: "briah",
     name: {
       en: "Creation",
-      romanization: "Briah",
+      roman: "Briah",
       he: "בריאה",
     },
     desc: { en: "Creative" },
@@ -27,7 +27,7 @@
     id: "yetzirah",
     name: {
       en: "Formation",
-      romanization: "Yetzirah",
+      roman: "Yetzirah",
       he: "יצירה",
     },
     desc: { en: "Formative" },
@@ -37,7 +37,7 @@
     id: "assiah",
     name: {
       en: "Doing",
-      romanization: "Assiah",
+      roman: "Assiah",
       he: "עשייה",
     },
     desc: { en: "Action" },

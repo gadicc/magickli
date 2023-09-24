@@ -7,7 +7,7 @@
     face: {
       en: "Bull",
       he: "שור",
-      romanization: "Shor",
+      roman: "Shor",
     },
     zodiacId: "taurus",
     elementId: "earth",
@@ -20,7 +20,7 @@
     face: {
       en: "Man",
       he: "אדם",
-      romanization: "Adam",
+      roman: "Adam",
     },
     zodiacId: "aquarius",
     elementId: "air",
@@ -33,7 +33,7 @@
     face: {
       en: "Eagle",
       he: "נשר",
-      romanization: "Nesher",
+      roman: "Nesher",
     },
     zodiacId: "scorpio",
     elementId: "water",
@@ -46,7 +46,7 @@
     face: {
       en: "Lion",
       he: "אריה",
-      romanization: "Aryeh",
+      roman: "Aryeh",
     },
     zodiacId: "leo",
     elementId: "fire",

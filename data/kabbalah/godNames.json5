@@ -2,7 +2,7 @@
   ehiyeh: {
     name: {
       he: "אהיה",
-      romanization: "Ehiyeh",
+      roman: "Ehiyeh",
       en: "I am",
     },
   },
@@ -10,7 +10,7 @@
   yah: {
     name: {
       he: "יה",
-      romanization: "Yah",
+      roman: "Yah",
       en: "Lord",
     },
   },
@@ -18,7 +18,7 @@
   "yhvh-elohim": {
     name: {
       he: "יהוה אלוהים",
-      romanization: "YHVH Elohim",
+      roman: "YHVH Elohim",
       en: "The Lord God",
     },
   },
@@ -26,7 +26,7 @@
   el: {
     name: {
       he: "אל",
-      romanization: "El",
+      roman: "El",
       en: "God",
     },
   },
@@ -34,7 +34,7 @@
   "elohim-gibor": {
     name: {
       he: "אלוהים גיבור",
-      romanization: "Elohim Gibor",
+      roman: "Elohim Gibor",
       en: "God of Power",
     },
   },
@@ -42,7 +42,7 @@
   "yhvh-eloha-vedaat": {
     name: {
       he: "יהוה אלוה ודעת",
-      romanization: "YHVH Eloah Ve-da'at",
+      roman: "YHVH Eloah Ve-da'at",
       en: "Lord God of Knowledge",
     },
   },
@@ -50,7 +50,7 @@
   "yhvh-tzvaot": {
     name: {
       he: "יהוה צבעות",
-      romanization: "YHVH Tzva-oht",
+      roman: "YHVH Tzva-oht",
       en: "Lord of Armies",
     },
   },
@@ -58,7 +58,7 @@
   "elohim-tzvaot": {
     name: {
       he: "אלוהים צבעות",
-      romanization: "Elohim Tzvaot",
+      roman: "Elohim Tzvaot",
       en: "God of Armies",
     },
   },
@@ -66,7 +66,7 @@
   "shadai-el-chai": {
     name: {
       he: "שדאי אל חי",
-      romanization: "Shaddai El Chai",
+      roman: "Shaddai El Chai",
       en: "Almighty Living God",
     },
   },
@@ -74,7 +74,7 @@
   "adonai-haaretz": {
     name: {
       he: "אדוני הארץ",
-      romanization: "Adonai Ha'aretz",
+      roman: "Adonai Ha'aretz",
       en: "Lord of Earth",
     },
   },

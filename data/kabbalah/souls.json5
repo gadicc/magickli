@@ -4,7 +4,7 @@
     name: {
       en: "unity",
       he: "יחידה",
-      romanization: "yechida",
+      roman: "yechida",
     },
   },
 
@@ -13,7 +13,7 @@
     name: {
       en: "life",
       he: "חיה",
-      romanization: "chaya",
+      roman: "chaya",
     },
   },
 
@@ -22,7 +22,7 @@
     name: {
       en: "psyche",
       he: "נשמה",
-      romanization: "neshama",
+      roman: "neshama",
     },
   },
 
@@ -31,7 +31,7 @@
     name: {
       en: "spirit",
       he: "רוח",
-      romanization: "ruach",
+      roman: "ruach",
     },
   },
 
@@ -40,7 +40,7 @@
     name: {
       en: "life-force",
       he: "נפש",
-      romanization: "nephesh",
+      roman: "nephesh",
     },
   },
 
@@ -49,7 +49,7 @@
     name: {
       en: "body",
       he: "גוף",
-      romanization: "guph",
+      roman: "guph",
     },
   },
 }

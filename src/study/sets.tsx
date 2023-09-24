@@ -280,8 +280,8 @@ const sets = {
   "sephirot-atziluth-divine-names-he-roman": {
     id: "sephirot-atziluth-divine-names-he-roman",
     data: data.sephirah,
-    question: "name.romanization",
-    answer: "godName.name.romanization",
+    question: "name.roman",
+    answer: "godName.name.roman",
     gdGrade: "1=10",
   },
   "alchemy-basic-terms": {
@@ -332,7 +332,7 @@ const sets = {
         {
           id,
           question: kerub.title.en,
-          answer: kerub.face.romanization + " | " + kerub.face.he,
+          answer: kerub.face.roman + " | " + kerub.face.he,
         },
       ])
     ),
@@ -356,26 +356,24 @@ const sets = {
   "four-worlds-desc": {
     id: "four-worlds-desc",
     data: data.fourWorlds,
-    question: "name.romanization",
+    question: "name.roman",
     answer: "desc.en",
     gdGrade: "1=10",
   },
   "four-worlds-residents": {
     id: "four-worlds-residents",
     data: data.fourWorlds,
-    question: "name.romanization",
+    question: "name.roman",
     answer: "residentsTitle.en",
     gdGrade: "1=10",
   },
   "ten-heavens": {
     id: "ten-heavens",
     data: omit("daat", data.sephirah),
-    question: (sephirah) => sephirah.index + ". " + sephirah.name.romanization,
+    question: (sephirah) => sephirah.index + ". " + sephirah.name.roman,
     answer: (sephirah) => {
       if (sephirah?.tenHeavens?.en)
-        return (
-          sephirah.tenHeavens.en + " / " + sephirah.tenHeavens.romanization
-        );
+        return sephirah.tenHeavens.en + " / " + sephirah.tenHeavens.roman;
       const planet = sephirah?.planet;
       return (
         "Sphere of " +
@@ -393,7 +391,7 @@ const sets = {
   "sephirot-stones": {
     id: "sephirot-stones",
     data: omit("daat", data.sephirah),
-    question: "name.romanization",
+    question: "name.roman",
     answer: "stone",
     gdGrade: "1=10",
   },

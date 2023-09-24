@@ -36,7 +36,7 @@ function TreeOfLife() {
 
   const opts = {};
   const defaults = {
-    field: "name.romanization",
+    field: "name.roman",
     topText: "index",
     bottomText: "name.en",
     colorScale: "queen",
@@ -66,27 +66,27 @@ function TreeOfLife() {
     "index",
     "angelicOrder.name.en",
     "angelicOrder.name.he",
-    "angelicOrder.name.romanization",
+    "angelicOrder.name.roman",
     "archangel",
     "body",
     "bodyPos",
     "chakra.name.en",
     "chakra.name.sa",
-    "chakra.name.romanization",
+    "chakra.name.roman",
     "godName.name.en",
     "godName.name.he",
-    "godName.name.romanization",
+    "godName.name.roman",
     "gdGrade.id",
     "gdGrade.name",
     "name.en",
     "name.he",
-    "name.romanization",
+    "name.roman",
     "planets",
     "scent",
     "stone",
     "soul.name.en",
     "soul.name.he",
-    "soul.name.romanization",
+    "soul.name.roman",
   ];
 
   return (
@@ -249,7 +249,7 @@ function TreeOfLife() {
                   href={"/kabbalah/sephirah/" + sephirah.id}
                   color="secondary"
                 >
-                  {sephirah.name.romanization}
+                  {sephirah.name.roman}
                 </Link>
               </li>
             ))}

@@ -3,7 +3,7 @@
     name: {
       he: "חיות הקודש",
       en: "Holy Living Creatures",
-      romanization: "Chayot Hakodesh",
+      roman: "Chayot Hakodesh",
     },
   },
 
@@ -11,7 +11,7 @@
     name: {
       he: "אופנים",
       en: "Wheels",
-      romanization: "Auphaneem",
+      roman: "Auphaneem",
     },
   },
 
@@ -19,7 +19,7 @@
     name: {
       he: "אראלים",
       en: "Thrones",
-      romanization: "Ar'aleem",
+      roman: "Ar'aleem",
     },
   },
 
@@ -27,7 +27,7 @@
     name: {
       he: "חשמלים",
       en: "Shining Ones",
-      romanization: "Chashmaleem",
+      roman: "Chashmaleem",
     },
   },
 
@@ -35,7 +35,7 @@
     name: {
       he: "שרפים",
       en: "Flaming Ones",
-      romanization: "Serapheem",
+      roman: "Seraphim",
     },
   },
 
@@ -43,7 +43,7 @@
     name: {
       he: "מלאכים",
       en: "Messengers",
-      romanization: "Malecheem",
+      roman: "Malecheem",
     },
   },
 
@@ -51,7 +51,7 @@
     name: {
       he: "אלוהים",
       en: "Gods & Goddesses",
-      romanization: "Eloheem",
+      roman: "Eloheem",
     },
   },
 
@@ -59,7 +59,7 @@
     name: {
       he: "בני אלוהים",
       en: "Children of the Gods",
-      romanization: "Bnei Eloheem",
+      roman: "Bnei Eloheem",
     },
   },
 
@@ -67,7 +67,7 @@
     name: {
       he: "כרובים",
       en: "Strong Ones",
-      romanization: "Kerubeem",
+      roman: "Kerubeem",
     },
   },
 
@@ -75,7 +75,7 @@
     name: {
       he: "אישים",
       en: "Souls of Fire",
-      romanization: "Isheem",
+      roman: "Isheem",
     },
   },
 
@@ -83,7 +83,7 @@
     name: {
       he: "",
       en: "",
-      romanization: "",
+      roman: "",
     },
   },
 }

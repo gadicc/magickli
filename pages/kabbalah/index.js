@@ -10,6 +10,16 @@ const tiles = [
     title: "Tree of Life",
     to: "/kabbalah/tree",
   },
+  {
+    Component: () => (
+      <div style={{ textAlign: "center" }}>
+        <div style={{ fontSize: "400%" }}>יהוה</div>
+        <div>שם המפורש</div>
+      </div>
+    ),
+    title: "Shem HaMephorash",
+    to: "/kabbalah/yhvh",
+  },
 ];
 
 function Kabbalah() {

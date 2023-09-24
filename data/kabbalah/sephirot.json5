@@ -4,7 +4,7 @@
     id: "keter",
     name: {
       he: "כתר",
-      romanization: "Keter",
+      roman: "Keter",
       en: "Crown",
     },
     color: {
@@ -21,7 +21,7 @@
     tenHeavens: {
       en: "1st Swirlings / Primum Mobile",
       he: "ראשית הגלגלים",
-      romanization: "Roshit haGilgalim",
+      roman: "Roshit haGilgalim",
     },
     stone: "diamond",
     archangelId: "metatron",
@@ -37,7 +37,7 @@
     name: {
       he: "חכמה",
       en: "Wisdom",
-      romanization: "Chochmah",
+      roman: "Chochmah",
     },
     color: {
       king: "soft-blue",
@@ -52,7 +52,7 @@
     bodyPos: "left-temple",
     tenHeavens: {
       en: "The Zodiac",
-      romanization: "Mazalot",
+      roman: "Mazalot",
       he: "מזלות",
     },
     stone: "Star Ruby; Turquoise",
@@ -70,7 +70,7 @@
     name: {
       he: "בינה",
       en: "Understanding",
-      romanization: "Binah",
+      roman: "Binah",
     },
     color: {
       king: "deep-red-violet",
@@ -100,7 +100,7 @@
     name: {
       he: "חסד",
       en: "Mercy",
-      romanization: "Chesed",
+      roman: "Chesed",
     },
     color: {
       king: "deep-violet",
@@ -130,7 +130,7 @@
     name: {
       he: "גבורה",
       en: "Strength",
-      romanization: "Gevurah",
+      roman: "Gevurah",
     },
     color: {
       king: "orange",
@@ -159,7 +159,7 @@
     name: {
       he: "תפארת",
       en: "Beauty",
-      romanization: "Tiferet",
+      roman: "Tiferet",
     },
     color: {
       king: "rose-pink",
@@ -188,7 +188,7 @@
     name: {
       he: "נצח",
       en: "Victory",
-      romanization: "Netzach",
+      roman: "Netzach",
     },
     color: {
       king: "yellow-orange",
@@ -217,7 +217,7 @@
     name: {
       he: "הוד",
       en: "Splendor",
-      romanization: "Hod",
+      roman: "Hod",
     },
     color: {
       king: "violet",
@@ -246,7 +246,7 @@
     name: {
       he: "יסוד",
       en: "Foundation",
-      romanization: "Yesod",
+      roman: "Yesod",
     },
     color: {
       king: "blue-violet",
@@ -276,7 +276,7 @@
     name: {
       he: "מלכות",
       en: "Kingdom",
-      romanization: "Malchut",
+      roman: "Malchut",
     },
     color: {
       king: "yellow",
@@ -293,7 +293,7 @@
     tenHeavens: {
       en: "Sphere of the Elements",
       he: "עולם יסודות",
-      romanization: "Olam Yesodoth",
+      roman: "Olam Yesodoth",
     },
     stone: "rock crystal",
     archangel: "sandalphon",
@@ -309,7 +309,7 @@
     name: {
       he: "דעת",
       en: "Knowledge",
-      romanization: "Da'at",
+      roman: "Da'at",
     },
     color: {
       queen: "lavendar",

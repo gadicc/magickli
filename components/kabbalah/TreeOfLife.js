@@ -93,7 +93,7 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
     index: 32,
     "name.en": 10,
     "name.he": 20,
-    "name.romanization": 12,
+    "name.roman": 12,
     "godName.name.he": 20,
   };
   const fontSize = fontSizeFromFieldName[field] || 10;

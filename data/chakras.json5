@@ -5,7 +5,7 @@
     name: {
       en: "Root",
       sa: "मूलाधार",
-      romanization: "Muladhara",
+      roman: "Muladhara",
     },
     meaning: {
       en: "Root",
@@ -24,7 +24,7 @@
     name: {
       en: "Sacral",
       sa: "स्वाधिष्ठान",
-      romanization: "Svadhishthana",
+      roman: "Svadhishthana",
     },
     meaning: {
       en: "Where the self is established",
@@ -43,7 +43,7 @@
     name: {
       en: "Solar Plexus",
       sa: "मणिपूर",
-      romanization: "Manipura",
+      roman: "Manipura",
     },
     meaning: {
       en: "Jewel city",
@@ -62,7 +62,7 @@
     name: {
       en: "Heart",
       sa: "अनाहत",
-      romanization: "Anahata",
+      roman: "Anahata",
     },
     meaning: {
       en: "Unstruck",
@@ -81,7 +81,7 @@
     name: {
       en: "Throat",
       sa: "विशुद्ध",
-      romanization: "Vishuddha",
+      roman: "Vishuddha",
     },
     meaning: {
       en: "Purest",
@@ -100,7 +100,7 @@
     name: {
       en: "Third Eye",
       sa: "आज्ञा",
-      romanization: "Ajna",
+      roman: "Ajna",
     },
     meaning: {
       en: "Command",
@@ -115,7 +115,7 @@
     name: {
       en: "Crown",
       sa: "सहस्रार",
-      romanization: "Sahasrara",
+      roman: "Sahasrara",
     },
     meaning: {
       en: "Thousand-petaled",
