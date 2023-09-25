@@ -2,16 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
 import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { SessionProvider } from "next-auth/react";
 import CssBaseline from "@mui/material/CssBaseline";
+
 import theme from "../src/theme";
 import db from "../src/db";
 import workboxStuff from "../src/workboxStuff";
 import "../src/global.css";
 import { ConfirmDialog } from "../src/asyncConfirm";
 
-export default function MyApp(props) {
-  const { Component, pageProps } = props;
-
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector("#jss-server-side");
@@ -35,10 +38,12 @@ export default function MyApp(props) {
       </Head>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <Component {...pageProps} />
-          <ConfirmDialog />
+          <SessionProvider session={session}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            <Component {...pageProps} />
+            <ConfirmDialog />
+          </SessionProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </React.Fragment>
