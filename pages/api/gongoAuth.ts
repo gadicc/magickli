@@ -1,7 +1,6 @@
 // import type { NextApiRequest, NextApiResponse } from "next";
-import GongoServer from "gongo-server/lib/serverless";
 import GongoAuth from "gongo-server/lib/auth";
-import MongoDBA, { MongoDbaUser } from "gongo-server-db-mongo";
+import gs from "../../src/api-lib/db";
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const passport = require("passport");
@@ -22,10 +21,6 @@ console.log({
   ENV_ROOT_URL: env.ROOT_URL,
   ENV_VERCEL_URL: env.VERCEL_URL,
   CHOSEN_ROOT_URL: ROOT_URL,
-});
-
-const gs = new GongoServer({
-  dba: new MongoDBA(MONGO_URL, "magickli"),
 });
 
 const gongoAuth = new GongoAuth(gs, passport);
