@@ -10,7 +10,7 @@ const tiles = [
       <div style={{ margin: "auto", textAlign: "center" }}>72 Angels</div>
     ),
     title: "72 Angels",
-    to: "/kabbalah/yhvh/72",
+    to: "/kabbalah/yhvh/72angels",
   },
 ];
 

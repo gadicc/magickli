@@ -5,17 +5,9 @@
 interface Angel {
   name: { en: string; he: string };
   text: { en: string; fr: string };
-  governs: {
-    startDate: {
-      day: number;
-      month: number;
-    };
-    endDate: {
-      day: number;
-      month: number;
-    };
-  };
-  godName: string;
+  attribute: { en: string };
+  presidesOver: [number, number][];
+  godName?: string;
   angelicOrderId: string;
   // angelicOrder: AngelicOrder;
 }
