@@ -20,6 +20,23 @@ const tiles = [
     Component: () => (
       <div
         style={{
+          marginTop: 50,
+          textAlign: "center",
+          fontSize: "200%",
+          color: "black",
+          textDecoration: "none",
+        }}
+      >
+        Sigils
+      </div>
+    ),
+    title: "Sigils",
+    to: "/hogd/sigils",
+  },
+  {
+    Component: () => (
+      <div
+        style={{
           marginTop: 30,
           textAlign: "center",
           fontSize: "300%",
