@@ -272,7 +272,8 @@ export default React.forwardRef(function RoseSigil(
         const secondLastPoint =
           points[
             points.length -
-              (sigilText[points.length - 1] === sigilText[points.length - 2]
+              (sigilText[points.length - 1] === sigilText[points.length - 2] &&
+              points.length > 2
                 ? 3
                 : 2)
           ];
