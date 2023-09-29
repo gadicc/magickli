@@ -203,13 +203,17 @@ export default React.forwardRef(function RoseSigil(
       {(function () {
         let d = "";
         const points = sigilTokens.map((letter) => letterPoint(letter));
-        if (points.length < 2) return null;
+        if (points.length === 0) return null;
 
         // Circle at the start
-        const start = pointFromEndOfLine(points[1], points[0], -1);
-        const end = pointFromEndOfLine(points[1], points[0], 1);
+        const start = points[1]
+          ? pointFromEndOfLine(points[1], points[0], -1)
+          : { x: points[0].x - 1, y: points[0].y };
+        const end = points[1]
+          ? pointFromEndOfLine(points[1], points[0], 1)
+          : { x: points[0].x + 1, y: points[0].y };
         d +=
-          `M ${end.x},${end.y}` +
+          `M ${end.x},${end.y} ` +
           `A 1,1 0 1,0 ${start.x},${start.y} ` +
           `A 1,1 0 1,0 ${end.x},${end.y} `;
 
@@ -264,22 +268,26 @@ export default React.forwardRef(function RoseSigil(
         } /* for (point) */
 
         // Small perpendicular line at the end
-        const lastPoint = points[points.length - 1];
-        const secondLastPoint =
-          points[
-            points.length -
-              (sigilText[points.length - 1] === sigilText[points.length - 2] &&
-              points.length > 2
-                ? 3
-                : 2)
-          ];
-        const finalPoints = calculatePerpendicularPointsAtEnd(
-          { x: secondLastPoint.x, y: secondLastPoint.y },
-          { x: lastPoint.x, y: lastPoint.y },
-          2
-        );
+        if (points.length > 1) {
+          const lastPoint = points[points.length - 1];
+          const secondLastPoint =
+            points[
+              points.length -
+                (sigilText[points.length - 1] ===
+                  sigilText[points.length - 2] && points.length > 2
+                  ? 3
+                  : 2)
+            ];
+          const finalPoints = calculatePerpendicularPointsAtEnd(
+            { x: secondLastPoint.x, y: secondLastPoint.y },
+            { x: lastPoint.x, y: lastPoint.y },
+            2
+          );
 
-        d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
+          d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
+        }
+
+        // console.log(d);
 
         return (
           <path
