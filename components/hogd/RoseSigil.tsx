@@ -278,6 +278,8 @@ export default function RoseSigil({
           2
         );
 
+        d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
+
         return (
           <>
             <circle
@@ -295,16 +297,6 @@ export default function RoseSigil({
               fill="none"
               ref={pathRef}
               d={d}
-            />
-
-            <path
-              // Perpendicular line at the end
-              stroke="red"
-              fill="none"
-              d={
-                "M" +
-                finalPoints.map((point) => point.x + "," + point.y).join(" L ")
-              }
             />
           </>
         );
