@@ -107,9 +107,11 @@ export default React.forwardRef(function RoseSigil(
   {
     sigilText,
     showRose = true,
+    animate = true,
   }: {
     sigilText: string;
     showRose: boolean;
+    animate: boolean;
   },
   ref: React.Ref<SVGSVGElement>
 ) {
@@ -120,13 +122,13 @@ export default React.forwardRef(function RoseSigil(
     if (pathRef.current) {
       const animationDuration = sigilTokens.length / 4;
       const length = pathRef.current.getTotalLength();
-      pathRef.current.style.strokeDasharray = length.toString();
-      pathRef.current.style.strokeDashoffset = length.toString();
+      pathRef.current.style.strokeDasharray = animate ? length.toString() : "";
+      pathRef.current.style.strokeDashoffset = animate ? length.toString() : "";
       // pathRef.current.style.animation = `dash ${animationDuration}s linear 1s forwards 1`; // + ++renderCount.current;
       pathRef.current.classList.remove("path");
       // @ts-expect-error: trick to trigger reflow
       void pathRef.current.offsetWidth;
-      pathRef.current.classList.add("path");
+      if (animate) pathRef.current.classList.add("path");
     }
   }, [sigilText]);
 

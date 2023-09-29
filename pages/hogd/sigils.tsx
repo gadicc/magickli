@@ -4,6 +4,7 @@ import {
   Container,
   FormControlLabel,
   FormGroup,
+  Stack,
   TextField,
 } from "@mui/material";
 import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
@@ -21,6 +22,7 @@ export default function Sigils() {
   const ref = React.useRef(null);
   const [sigilText, setSigilText] = React.useState("גדי");
   const [showRose, setShowRose] = React.useState(true);
+  const [animate, setAnimate] = React.useState(true);
 
   const rectified = (function () {
     const text = sigilText;
@@ -67,15 +69,26 @@ export default function Sigils() {
           </div>
         )}
         <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={showRose}
-                onChange={() => setShowRose(!showRose)}
-              />
-            }
-            label="Show Rose"
-          />
+          <Stack direction="row">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showRose}
+                  onChange={() => setShowRose(!showRose)}
+                />
+              }
+              label="Show Rose"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={animate}
+                  onChange={() => setAnimate(!animate)}
+                />
+              }
+              label="Animate"
+            />
+          </Stack>
         </FormGroup>
 
         {rectified != sigilText && <div>Rectified text: {rectified}</div>}
@@ -83,6 +96,7 @@ export default function Sigils() {
           ref={ref}
           sigilText={isValid ? rectified : ""}
           showRose={showRose}
+          animate={animate}
         />
         <CopyPasteExport ref={ref} filename={`RoseSigil-${rectified}`} />
         <ToastContainer
