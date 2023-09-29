@@ -117,7 +117,6 @@ export default function RoseSigil({
     if (pathRef.current) {
       const animationDuration = sigilTokens.length / 4;
       const length = pathRef.current.getTotalLength();
-      console.log({ length });
       pathRef.current.style.strokeDasharray = length.toString();
       pathRef.current.style.strokeDashoffset = length.toString();
       // pathRef.current.style.animation = `dash ${animationDuration}s linear 1s forwards 1`; // + ++renderCount.current;
@@ -133,7 +132,7 @@ export default function RoseSigil({
       <style jsx>
         {`
           .path {
-            animation: dash ${sigilTokens.length / 4}s linear 1s forwards 1;
+            animation: dash ${sigilTokens.length / 4}s linear 0s forwards 1;
           }
 
           @keyframes dash {
@@ -217,7 +216,6 @@ export default function RoseSigil({
           if (next) {
             if (prev) {
               const slope = (prev.y - p.y) / (prev.x - p.x);
-              console.log({ slope });
 
               // On (near-) straight lines, do a loop to emphasize that the
               // point is indeed part of the sigil and we're not just passing
@@ -240,14 +238,12 @@ export default function RoseSigil({
               // If the next token is the same token, do a squiqqle
               if (next && sigilTokens[i] == sigilTokens[i + 1]) {
                 const r = 1;
-                console.log("doubling", sigilTokens[i], i);
                 const justBefore = pointFromEndOfLine(prev, p, 0.7);
                 const justBefore2 = pointFromEndOfLine(prev, p, 0.35);
                 const nextNext = points[i + 2];
                 const nextAngle =
                   nextNext &&
                   toDegrees(angleBetweenTwoPointsAndVertex(prev, nextNext, p));
-                console.log({ nextAngle });
                 const side = nextAngle < 0 ? "1" : "0";
                 d += "L " + justBefore.x + "," + justBefore.y + " ";
                 d += `A 2,1 0 1,${side} ${justBefore2.x},${justBefore2.y}`;
@@ -260,8 +256,6 @@ export default function RoseSigil({
 
           d += "L " + p.x + "," + p.y + " ";
         } /* for (point) */
-
-        console.log("d", d);
 
         // Small perpendicular line at the end
         const lastPoint = points[points.length - 1];
