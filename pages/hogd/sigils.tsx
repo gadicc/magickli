@@ -32,12 +32,19 @@ export default function Sigils() {
       .replaceAll("ץ", "צ");
   })();
 
+  const charsValid = rectified
+    .split("")
+    .map((letter) => letterIJ(letter)[0] >= 0);
+  const isValid = charsValid.indexOf(false) === -1;
+
+  /*
   const isValid = (function () {
     for (const letter of rectified) {
       if (letterIJ(letter)[0] < 0) return false;
     }
     return true;
   })();
+  */
 
   return (
     <div>
@@ -49,7 +56,16 @@ export default function Sigils() {
           value={sigilText}
           onChange={(e) => setSigilText(e.target.value)}
         />
-        {!isValid && <div>Invalid characters</div>}
+        {!isValid && (
+          <div>
+            Invalid characters:{" "}
+            {charsValid.map((valid, i) => (
+              <span key={i} style={{ color: valid ? "" : "red" }}>
+                {sigilText[i]}
+              </span>
+            ))}
+          </div>
+        )}
         <FormGroup>
           <FormControlLabel
             control={
