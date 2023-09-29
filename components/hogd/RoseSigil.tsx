@@ -130,7 +130,7 @@ export default React.forwardRef(function RoseSigil(
       void pathRef.current.offsetWidth;
       if (animate) pathRef.current.classList.add("path");
     }
-  }, [sigilText]);
+  }, [sigilTokens, animate]);
 
   return (
     <svg
@@ -201,23 +201,20 @@ export default React.forwardRef(function RoseSigil(
       )}
 
       {(function () {
+        let d = "";
         const points = sigilTokens.map((letter) => letterPoint(letter));
         if (points.length < 2) return null;
 
         // Circle at the start
-        const startCircle = { x: 0, y: 0, radius: 2 };
-        const firstPoint = points[0];
-        const secondPoint = points[1];
-        const lengthFromFirstToSecond = Math.sqrt(
-          (points[1].x - points[0].x) ** 2 + (points[1].y - points[0].y) ** 2
-        );
-        const destLength = lengthFromFirstToSecond + startCircle.radius;
-        const ratio = destLength / lengthFromFirstToSecond;
-        startCircle.x = (1 - ratio) * secondPoint.x + ratio * firstPoint.x;
-        startCircle.y = (1 - ratio) * secondPoint.y + ratio * firstPoint.y;
+        const start = pointFromEndOfLine(points[1], points[0], -0.2);
+        const end = pointFromEndOfLine(points[1], points[0], 0.2);
+        console.log(start, end);
+        d +=
+          `M ${end.x},${end.y}` +
+          `A 1,1 0 1,0 ${start.x},${start.y} ` +
+          `A 1,1 0 1,0 ${end.x},${end.y} `;
 
         // Connecting line
-        let d = "M " + points[0].x + "," + points[0].y + " ";
         for (let i = 1; i < points.length; i++) {
           const p = points[i],
             prev = points[i - 1],
@@ -286,24 +283,13 @@ export default React.forwardRef(function RoseSigil(
         d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
 
         return (
-          <>
-            <circle
-              // Circle before starting point
-              cx={startCircle.x}
-              cy={startCircle.y}
-              r={startCircle.radius}
-              stroke="red"
-              fill="none"
-            />
-
-            <path
-              // Connecting path
-              stroke="red"
-              fill="none"
-              ref={pathRef}
-              d={d}
-            />
-          </>
+          <path
+            // Connecting path
+            stroke="red"
+            fill="none"
+            ref={pathRef}
+            d={d}
+          />
         );
       })()}
     </svg>
