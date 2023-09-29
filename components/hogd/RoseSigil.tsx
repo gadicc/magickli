@@ -111,8 +111,38 @@ export default function RoseSigil({
   showRose: boolean;
 }) {
   const sigilTokens = sigilText.split("");
+  const pathRef = React.useRef<SVGPathElement>(null);
+  const renderCount = React.useRef(0);
+  React.useEffect(() => {
+    if (pathRef.current) {
+      const animationDuration = sigilTokens.length / 4;
+      const length = pathRef.current.getTotalLength();
+      console.log({ length });
+      pathRef.current.style.strokeDasharray = length.toString();
+      pathRef.current.style.strokeDashoffset = length.toString();
+      // pathRef.current.style.animation = `dash ${animationDuration}s linear 1s forwards 1`; // + ++renderCount.current;
+      pathRef.current.classList.remove("path");
+      // @ts-expect-error: trick to trigger reflow
+      void pathRef.current.offsetWidth;
+      pathRef.current.classList.add("path");
+    }
+  }, [sigilText]);
+
   return (
     <svg viewBox="-50 -50 100 100">
+      <style jsx>
+        {`
+          .path {
+            animation: dash ${sigilTokens.length / 4}s linear 1s forwards 1;
+          }
+
+          @keyframes dash {
+            to {
+              stroke-dashoffset: 0;
+            }
+          }
+        `}
+      </style>
       {showRose && (
         <>
           {" "}
@@ -263,7 +293,7 @@ export default function RoseSigil({
               // Connecting path
               stroke="red"
               fill="none"
-              // d={"M " + points.map((p) => `${p.x},${p.y}`).join(" L ")}
+              ref={pathRef}
               d={d}
             />
 
