@@ -1,15 +1,20 @@
 import React from "react";
+
 import {
   Checkbox,
   Container,
   FormControlLabel,
   FormGroup,
+  IconButton,
+  InputAdornment,
   Stack,
   TextField,
 } from "@mui/material";
+
 import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
 import AppBar from "../../components/AppBar";
 import RoseSigil, { letterIJ } from "../../components/hogd/RoseSigil";
+import { Clear } from "@mui/icons-material";
 
 const navParts = [
   {
@@ -23,6 +28,7 @@ export default function Sigils() {
   const [sigilText, setSigilText] = React.useState("גדי");
   const [showRose, setShowRose] = React.useState(true);
   const [animate, setAnimate] = React.useState(true);
+  const [showKeys, setShowKeys] = React.useState(false);
 
   const rectified = (function () {
     const text = sigilText;
@@ -56,7 +62,22 @@ export default function Sigils() {
           placeholder="Sigil text"
           size="small"
           value={sigilText}
+          dir="rtl"
+          lang="he"
           onChange={(e) => setSigilText(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={() => {
+                    setSigilText("");
+                  }}
+                >
+                  <Clear />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         {!isValid && (
           <div>
@@ -88,10 +109,37 @@ export default function Sigils() {
               }
               label="Animate"
             />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showKeys}
+                  onChange={() => setShowKeys(!showKeys)}
+                />
+              }
+              label="Show Keys"
+            />
           </Stack>
         </FormGroup>
 
         {rectified != sigilText && <div>Rectified text: {rectified}</div>}
+
+        {showKeys && (
+          <div style={{ direction: "rtl" }}>
+            {"אבגדהוזחטיכךלמםנןסעפףצץקרשת←".split("").map((letter, i) => (
+              <button
+                key={i}
+                style={{ margin: "1px" }}
+                onClick={() => {
+                  if (letter === "←") setSigilText(sigilText.slice(0, -1));
+                  else setSigilText(sigilText + letter);
+                }}
+              >
+                {letter}
+              </button>
+            ))}
+          </div>
+        )}
+
         <RoseSigil
           ref={ref}
           sigilText={isValid ? rectified : ""}

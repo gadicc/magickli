@@ -79,7 +79,7 @@ function dotProduct2D(p1: Point, p2: Point) {
 }
 
 function lengthBetweenTwoPoints(p1: Point, p2: Point) {
-  return Math.sqrt(((p1.x - p2.x) ^ 2) + ((p1.y - p2.y) ^ 2));
+  return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
 
 // Subtract vertex from p1,p2 to normalize on x-axis and calc angle
@@ -206,9 +206,8 @@ export default React.forwardRef(function RoseSigil(
         if (points.length < 2) return null;
 
         // Circle at the start
-        const start = pointFromEndOfLine(points[1], points[0], -0.2);
-        const end = pointFromEndOfLine(points[1], points[0], 0.2);
-        console.log(start, end);
+        const start = pointFromEndOfLine(points[1], points[0], -1);
+        const end = pointFromEndOfLine(points[1], points[0], 1);
         d +=
           `M ${end.x},${end.y}` +
           `A 1,1 0 1,0 ${start.x},${start.y} ` +
