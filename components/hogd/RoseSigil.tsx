@@ -1,3 +1,5 @@
+import React from "react";
+
 const letters = [
   ["א", "מ", "ש"],
   ["פ", "ר", "ב", "ד", "ג", "ת", "כ"],
@@ -64,6 +66,43 @@ function calculatePerpendicularPointsAtEnd(
   return [pointA, pointB];
 }
 
+function angleInDegreesBetween(point1: Point, point2: Point) {
+  return (Math.atan2(point2.y - point1.y, point2.x - point1.x) * 180) / Math.PI;
+}
+
+function toDegrees(radians: number) {
+  return (radians * 180) / Math.PI;
+}
+
+function dotProduct2D(p1: Point, p2: Point) {
+  return p1.x * p2.x + p1.y * p2.y;
+}
+
+function lengthBetweenTwoPoints(p1: Point, p2: Point) {
+  return Math.sqrt(((p1.x - p2.x) ^ 2) + ((p1.y - p2.y) ^ 2));
+}
+
+// Subtract vertex from p1,p2 to normalize on x-axis and calc angle
+function angleBetweenTwoPointsAndVertex(p1: Point, p2: Point, vertex: Point) {
+  return (
+    Math.atan2(p2.y - vertex.y, p2.x - vertex.x) -
+    Math.atan2(p1.y - vertex.y, p1.x - vertex.x)
+  );
+}
+
+function pointAtFractionOfLine(p1: Point, p2: Point, frac: number): Point {
+  return {
+    x: p1.x + (p2.x - p1.x) * frac,
+    y: p1.y + (p2.y - p1.y) * frac,
+  };
+}
+
+function pointFromEndOfLine(p1: Point, p2: Point, distance: number): Point {
+  const length = lengthBetweenTwoPoints(p1, p2);
+  const frac = distance / length;
+  return pointAtFractionOfLine(p1, p2, 1 - frac);
+}
+
 export default function RoseSigil({
   sigilText,
   showRose = true,
@@ -91,7 +130,7 @@ export default function RoseSigil({
             const offset = -Math.PI / 2 - (i == 1 ? slice / 2 : 0);
             const radius = 10 * (i + 1) + 5;
             return (
-              <>
+              <React.Fragment key={i}>
                 <circle
                   key={i}
                   cx={0}
@@ -116,7 +155,7 @@ export default function RoseSigil({
                     </text>
                   );
                 })}
-              </>
+              </React.Fragment>
             );
           })}
         </>
@@ -138,9 +177,71 @@ export default function RoseSigil({
         startCircle.x = (1 - ratio) * secondPoint.x + ratio * firstPoint.x;
         startCircle.y = (1 - ratio) * secondPoint.y + ratio * firstPoint.y;
 
+        // Connecting line
+        let d = "M " + points[0].x + "," + points[0].y + " ";
+        for (let i = 1; i < points.length; i++) {
+          const p = points[i],
+            prev = points[i - 1],
+            next = points[i + 1];
+
+          if (next) {
+            if (prev) {
+              const slope = (prev.y - p.y) / (prev.x - p.x);
+              console.log({ slope });
+
+              // On (near-) straight lines, do a loop to emphasize that the
+              // point is indeed part of the sigil and we're not just passing
+              // through.
+              const range = 10;
+              const angle = toDegrees(
+                angleBetweenTwoPointsAndVertex(prev, next, p)
+              );
+              if (angle > 180 - range && angle < 180 + range) {
+                const r = 1;
+                const justBefore = pointAtFractionOfLine(prev, p, 0.9);
+
+                d += "L " + justBefore.x + "," + justBefore.y + " ";
+                d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
+                d += `A ${r},${r} 0 1,1 ${justBefore.x},${justBefore.y} `;
+                d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
+                continue;
+              } /* if (near-) straight line */
+
+              // If the next token is the same token, do a squiqqle
+              if (next && sigilTokens[i] == sigilTokens[i + 1]) {
+                const r = 1;
+                console.log("doubling", sigilTokens[i], i);
+                const justBefore = pointFromEndOfLine(prev, p, 0.7);
+                const justBefore2 = pointFromEndOfLine(prev, p, 0.35);
+                const nextNext = points[i + 2];
+                const nextAngle =
+                  nextNext &&
+                  toDegrees(angleBetweenTwoPointsAndVertex(prev, nextNext, p));
+                console.log({ nextAngle });
+                const side = nextAngle < 0 ? "1" : "0";
+                d += "L " + justBefore.x + "," + justBefore.y + " ";
+                d += `A 2,1 0 1,${side} ${justBefore2.x},${justBefore2.y}`;
+                d += `A 2,1 0 1,${side} ${p.x},${p.y}`;
+                i++;
+                continue;
+              }
+            } /* if (prev) */
+          } /* if (next) */
+
+          d += "L " + p.x + "," + p.y + " ";
+        } /* for (point) */
+
+        console.log("d", d);
+
         // Small perpendicular line at the end
         const lastPoint = points[points.length - 1];
-        const secondLastPoint = points[points.length - 2];
+        const secondLastPoint =
+          points[
+            points.length -
+              (sigilText[points.length - 1] === sigilText[points.length - 2]
+                ? 3
+                : 2)
+          ];
         const finalPoints = calculatePerpendicularPointsAtEnd(
           { x: secondLastPoint.x, y: secondLastPoint.y },
           { x: lastPoint.x, y: lastPoint.y },
@@ -150,6 +251,7 @@ export default function RoseSigil({
         return (
           <>
             <circle
+              // Circle before starting point
               cx={startCircle.x}
               cy={startCircle.y}
               r={startCircle.radius}
@@ -158,11 +260,15 @@ export default function RoseSigil({
             />
 
             <path
+              // Connecting path
               stroke="red"
               fill="none"
-              d={"M " + points.map((p) => `${p.x},${p.y}`).join(" L ")}
+              // d={"M " + points.map((p) => `${p.x},${p.y}`).join(" L ")}
+              d={d}
             />
+
             <path
+              // Perpendicular line at the end
               stroke="red"
               fill="none"
               d={

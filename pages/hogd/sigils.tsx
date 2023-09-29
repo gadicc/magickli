@@ -19,7 +19,7 @@ const navParts = [
 ];
 
 export default function Sigils() {
-  const [sigilText, setSigilText] = React.useState("אפה");
+  const [sigilText, setSigilText] = React.useState("גדי");
   const [showRose, setShowRose] = React.useState(true);
 
   const rectified = (function () {
