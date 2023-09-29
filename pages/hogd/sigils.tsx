@@ -6,8 +6,7 @@ import {
   FormGroup,
   TextField,
 } from "@mui/material";
-import { CheckBox } from "@mui/icons-material";
-
+import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
 import AppBar from "../../components/AppBar";
 import RoseSigil, { letterIJ } from "../../components/hogd/RoseSigil";
 
@@ -19,6 +18,7 @@ const navParts = [
 ];
 
 export default function Sigils() {
+  const ref = React.useRef(null);
   const [sigilText, setSigilText] = React.useState("גדי");
   const [showRose, setShowRose] = React.useState(true);
 
@@ -63,7 +63,23 @@ export default function Sigils() {
         </FormGroup>
 
         {rectified != sigilText && <div>Rectified text: {rectified}</div>}
-        <RoseSigil sigilText={isValid ? rectified : ""} showRose={showRose} />
+        <RoseSigil
+          ref={ref}
+          sigilText={isValid ? rectified : ""}
+          showRose={showRose}
+        />
+        <CopyPasteExport ref={ref} filename={`RoseSigil-${rectified}`} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={1500}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover
+        />
       </Container>
     </div>
   );

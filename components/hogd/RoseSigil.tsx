@@ -103,16 +103,19 @@ function pointFromEndOfLine(p1: Point, p2: Point, distance: number): Point {
   return pointAtFractionOfLine(p1, p2, 1 - frac);
 }
 
-export default function RoseSigil({
-  sigilText,
-  showRose = true,
-}: {
-  sigilText: string;
-  showRose: boolean;
-}) {
+export default React.forwardRef(function RoseSigil(
+  {
+    sigilText,
+    showRose = true,
+  }: {
+    sigilText: string;
+    showRose: boolean;
+  },
+  ref: React.Ref<SVGSVGElement>
+) {
   const sigilTokens = sigilText.split("");
   const pathRef = React.useRef<SVGPathElement>(null);
-  const renderCount = React.useRef(0);
+
   React.useEffect(() => {
     if (pathRef.current) {
       const animationDuration = sigilTokens.length / 4;
@@ -128,7 +131,12 @@ export default function RoseSigil({
   }, [sigilText]);
 
   return (
-    <svg viewBox="-50 -50 100 100">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      viewBox="-50 -50 100 100"
+      ref={ref}
+    >
       <style jsx>
         {`
           .path {
@@ -297,4 +305,4 @@ export default function RoseSigil({
       })()}
     </svg>
   );
-}
+});

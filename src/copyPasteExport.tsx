@@ -4,10 +4,21 @@ import beautify from "xml-beautifier";
 import "react-toastify/dist/ReactToastify.css";
 
 function getSvgText(element) {
-  return element.outerHTML.replace(
-    // since React doesn't support namespace tags
-    'xmlns="http://www.w3.org/2000/svg"',
-    'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
+  const text = element.outerHTML;
+
+  if (!text.match(/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/))
+    throw new Error("No XMLNS attribute found on SVG element, it won't work.");
+
+  return (
+    text
+      .replace(
+        // since React doesn't support namespace tags
+        'xmlns="http://www.w3.org/2000/svg"',
+        'xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
+      )
+      // assume this is only used for path annimations
+      .replace(/stroke-dasharray: [\d\\.]+;? ?/g, "")
+      .replace(/stroke-dashoffset: [\d\\.]+;? ?/g, "")
   );
 }
 
@@ -89,8 +100,9 @@ async function drawnCanvas(element) {
 
   const svgImage = new Image();
   const svgUrl = URL.createObjectURL(svgBlob);
-  await new Promise((resolve) => {
+  await new Promise((resolve, reject) => {
     svgImage.onload = resolve;
+    svgImage.onerror = reject;
     svgImage.src = svgUrl;
   });
   URL.revokeObjectURL(svgUrl);
@@ -114,7 +126,7 @@ async function copyPNG(event, element) {
   event.preventDefault();
 
   const canvas = await drawnCanvas(element);
-  if (!canvas) return;
+  if (!canvas) return alert("No Canvas");
   const pngBlob: Blob | null = await new Promise((resolve) =>
     canvas.toBlob(resolve, "image/png", 0.9)
   );
