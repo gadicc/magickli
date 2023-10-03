@@ -213,42 +213,57 @@ function objective(points: Point[], x: number[]) {
   let score = 0;
   const points2 = arrayToPoints(x);
 
-  // Increase score to maximise the angles between all points
-  for (let i = 1; i < points.length - 1; i++) {
-    score += angleBetweenTwoPointsAndVertex(
-      points2[i - 1],
-      points2[i + 1],
-      points2[i]
+  // Angles between the points
+  for (let i = 1; i < points2.length - 1; i++) {
+    let angle = Math.abs(
+      toDegrees(
+        angleBetweenTwoPointsAndVertex(
+          points2[i - 1],
+          points2[i + 1],
+          points2[i]
+        )
+      )
     );
-  }
+    if (angle > 180) angle -= 180;
+    // console.log(i, angle);
+    // if (angle < 20) score -= angle * 100;
+    // else
 
-  // Penalize points that are too far from their original center
+    // [REWARD] Wider angles are better, less overlap, clearer to see.
+    score += angle;
+  }
+  // console.log("total", score);
+
+  // Distance between computed points and their original centers
+  const MAX_DISTANCE_FROM_ORIGIN = 4.6;
   for (let i = 0; i < points.length; i++) {
-    const d = Math.sqrt(
-      (points[i].x - points2[i].x) ** 2 + (points[i].y - points2[i].y) ** 2
-    );
-    // if (d > 5) score -= 10 * d;
-    // console.log("distance", d, points[i], points2[i]);
-    // if (d < 4.8) score -= 10 * d;
-    if (d > 5) score -= 5 * d ** 2;
+    const distance = lengthBetweenTwoPoints(points[i], points2[i]);
+    // console.log("p" + i + " distance from origin: " + distance);
+    // [PENALIZE] points that are too far away from their original center
+    if (distance > MAX_DISTANCE_FROM_ORIGIN) score -= 50 * distance;
   }
 
-  // Reward based on distance between points around same center
+  // Reward based on distance between all points around same center
   const repeatedPoints: Record<string, number[]> = {};
-  for (let i = 0; i < points.length; i++) {
-    const pStr = points[i].x.toFixed(2) + "," + points[i].y.toFixed(2);
+  for (let i = 0; i < points2.length; i++) {
+    const pStr = points2[i].x.toFixed(2) + "," + points2[i].y.toFixed(2);
     const rp = repeatedPoints[pStr] || (repeatedPoints[pStr] = []);
     rp.push(i);
   }
   for (const indices of Object.values(repeatedPoints)) {
     for (let i = 1; i < indices.length; i++) {
       const idx = indices[i];
-      const d = Math.sqrt(
-        (points[idx].x - points[idx - 1].x) ** 2 +
-          (points[idx].y - points[idx - 1].y) ** 2
-      );
-      score += d * 1000;
+      const d = lengthBetweenTwoPoints(points2[idx], points2[idx - 1]);
+      score += d / 9;
     }
+  }
+
+  // Length of connecting line between each point
+  for (let i = 1; i < points2.length; i++) {
+    const length = lengthBetweenTwoPoints(points2[i - 1], points2[i]);
+    // console.log(i, d);
+    // [REWARD]
+    // score -= length * 10;
   }
 
   // console.log("SCORE: ", score);
