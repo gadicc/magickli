@@ -1,4 +1,5 @@
 import React from "react";
+import nlopt from "nlopt-js";
 
 const letters = [
   ["א", "מ", "ש"],
@@ -103,34 +104,213 @@ function pointFromEndOfLine(p1: Point, p2: Point, distance: number): Point {
   return pointAtFractionOfLine(p1, p2, 1 - frac);
 }
 
+function arrayToPoints(array: number[]) {
+  const points: Point[] = [];
+  for (let i = 0; i < array.length; i += 2) {
+    points.push({ x: array[i], y: array[i + 1] });
+  }
+  return points;
+}
+
+function pointsToArray(points: Point[]) {
+  return points.map((p) => [p.x, p.y]).flat();
+}
+
+function pathFromPoints({
+  points,
+  sigilTokens,
+}: {
+  points: Point[];
+  sigilTokens: string[];
+}) {
+  let d = "";
+  if (points.length === 0) return "";
+
+  // Circle at the start
+  const start = points[1]
+    ? pointFromEndOfLine(points[1], points[0], -1)
+    : { x: points[0].x - 1, y: points[0].y };
+  const end = points[1]
+    ? pointFromEndOfLine(points[1], points[0], 1)
+    : { x: points[0].x + 1, y: points[0].y };
+  d +=
+    `M ${end.x},${end.y} ` +
+    `A 1,1 0 1,0 ${start.x},${start.y} ` +
+    `A 1,1 0 1,0 ${end.x},${end.y} `;
+
+  // Connecting line
+  for (let i = 1; i < points.length; i++) {
+    const p = points[i],
+      prev = points[i - 1],
+      next = points[i + 1];
+
+    if (next) {
+      if (prev) {
+        const slope = (prev.y - p.y) / (prev.x - p.x);
+
+        // On (near-) straight lines, do a loop to emphasize that the
+        // point is indeed part of the sigil and we're not just passing
+        // through.
+        const range = 10;
+        const angle = toDegrees(angleBetweenTwoPointsAndVertex(prev, next, p));
+        if (angle > 180 - range && angle < 180 + range) {
+          const r = 1;
+          const justBefore = pointAtFractionOfLine(prev, p, 0.9);
+
+          d += "L " + justBefore.x + "," + justBefore.y + " ";
+          d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
+          d += `A ${r},${r} 0 1,1 ${justBefore.x},${justBefore.y} `;
+          d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
+          continue;
+        } /* if (near-) straight line */
+
+        // If the next token is the same token, do a squiqqle
+        if (next && sigilTokens[i] == sigilTokens[i + 1]) {
+          const r = 1;
+          const justBefore = pointFromEndOfLine(prev, p, 0.7);
+          const justBefore2 = pointFromEndOfLine(prev, p, 0.35);
+          const nextNext = points[i + 2];
+          const nextAngle =
+            nextNext &&
+            toDegrees(angleBetweenTwoPointsAndVertex(prev, nextNext, p));
+          const side = nextAngle < 0 ? "1" : "0";
+          d += "L " + justBefore.x + "," + justBefore.y + " ";
+          d += `A 2,1 0 1,${side} ${justBefore2.x},${justBefore2.y}`;
+          d += `A 2,1 0 1,${side} ${p.x},${p.y}`;
+          i++;
+          continue;
+        }
+      } /* if (prev) */
+    } /* if (next) */
+
+    d += "L " + p.x + "," + p.y + " ";
+  } /* for (point) */
+
+  // Small perpendicular line at the end
+  if (points.length > 1) {
+    const lastPoint = points[points.length - 1];
+    const secondLastPoint =
+      points[
+        points.length -
+          (sigilTokens[points.length - 1] === sigilTokens[points.length - 2] &&
+          points.length > 2
+            ? 3
+            : 2)
+      ];
+    const finalPoints = calculatePerpendicularPointsAtEnd(
+      { x: secondLastPoint.x, y: secondLastPoint.y },
+      { x: lastPoint.x, y: lastPoint.y },
+      2
+    );
+
+    d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
+  }
+
+  return d;
+}
+
+function objective(points: Point[], x: number[]) {
+  let score = 0;
+  const points2 = arrayToPoints(x);
+
+  // Increase score to maximise the angles between all points
+  for (let i = 1; i < points.length - 1; i++) {
+    score += angleBetweenTwoPointsAndVertex(
+      points2[i - 1],
+      points2[i + 1],
+      points2[i]
+    );
+  }
+
+  // Penalize points that are too far from their original center
+  for (let i = 0; i < points.length; i++) {
+    const d = Math.sqrt(
+      (points[i].x - points2[i].x) ** 2 + (points[i].y - points2[i].y) ** 2
+    );
+    // if (d > 5) score -= 10 * d;
+    // console.log("distance", d, points[i], points2[i]);
+    // if (d < 4.8) score -= 10 * d;
+    if (d > 5) score -= 5 * d ** 2;
+  }
+
+  // Reward based on distance between points around same center
+  const repeatedPoints: Record<string, number[]> = {};
+  for (let i = 0; i < points.length; i++) {
+    const pStr = points[i].x.toFixed(2) + "," + points[i].y.toFixed(2);
+    const rp = repeatedPoints[pStr] || (repeatedPoints[pStr] = []);
+    rp.push(i);
+  }
+  for (const indices of Object.values(repeatedPoints)) {
+    for (let i = 1; i < indices.length; i++) {
+      const idx = indices[i];
+      const d = Math.sqrt(
+        (points[idx].x - points[idx - 1].x) ** 2 +
+          (points[idx].y - points[idx - 1].y) ** 2
+      );
+      score += d * 1000;
+    }
+  }
+
+  // console.log("SCORE: ", score);
+  return score;
+}
+
 export default React.forwardRef(function RoseSigil(
   {
     sigilText,
     showRose = true,
     animate = true,
+    debug = false,
   }: {
     sigilText: string;
     showRose: boolean;
     animate: boolean;
+    debug: boolean;
   },
   ref: React.Ref<SVGSVGElement>
 ) {
-  const sigilTokens = sigilText.split("");
+  const sigilTokens = React.useMemo(() => sigilText.split(""), [sigilText]);
   const pathRef = React.useRef<SVGPathElement>(null);
+  const points = React.useMemo(
+    () => sigilTokens.map((letter) => letterPoint(letter)),
+    [sigilTokens]
+  );
+  const [res, setRes] = React.useState<null | {
+    success: boolean;
+    value: number;
+    x: number[];
+  }>(null);
 
   React.useEffect(() => {
-    if (pathRef.current) {
-      const animationDuration = sigilTokens.length / 4;
+    (async () => {
+      await nlopt.ready;
+      const opt = new nlopt.Optimize(
+        nlopt.Algorithm.LN_COBYLA,
+        2 * points.length
+      );
+      opt.setMaxObjective(objective.bind(null, points), 1e-4);
+      const res = opt.optimize(pointsToArray(points));
+      nlopt.GC.flush();
+      setRes(res);
+    })();
+  }, [points]);
+
+  const points2 = res && res.x && arrayToPoints(res.x);
+
+  React.useEffect(() => {
+    if (pathRef.current && points2) {
+      const animationDuration = points2.length / 4;
       const length = pathRef.current.getTotalLength();
       pathRef.current.style.strokeDasharray = animate ? length.toString() : "";
       pathRef.current.style.strokeDashoffset = animate ? length.toString() : "";
-      // pathRef.current.style.animation = `dash ${animationDuration}s linear 1s forwards 1`; // + ++renderCount.current;
       pathRef.current.classList.remove("path");
       // @ts-expect-error: trick to trigger reflow
       void pathRef.current.offsetWidth;
       if (animate) pathRef.current.classList.add("path");
     }
-  }, [sigilTokens, animate]);
+  }, [animate, points2]);
+
+  const roseStrokeColor = "rgba(0,0,0,.4)";
 
   return (
     <svg
@@ -159,7 +339,7 @@ export default React.forwardRef(function RoseSigil(
             cx={0}
             cy={0}
             r={10}
-            stroke="black"
+            stroke={roseStrokeColor}
             strokeWidth={0.5}
             fill="none"
           />
@@ -175,23 +355,37 @@ export default React.forwardRef(function RoseSigil(
                   cx={0}
                   cy={0}
                   r={10 * (i + 2)}
-                  stroke="black"
+                  stroke={roseStrokeColor}
                   strokeWidth={0.5}
                   fill="none"
                 />
                 {row.map((letter, j) => {
                   const angle = offset - slice * j;
                   return (
-                    <text
-                      key={j}
-                      x={radius * Math.cos(angle)}
-                      y={radius * Math.sin(angle)}
-                      textAnchor="middle"
-                      fontSize={10}
-                      dominantBaseline="middle"
-                    >
-                      {letter}
-                    </text>
+                    <>
+                      {debug && (
+                        <circle
+                          cx={radius * Math.cos(angle)}
+                          cy={radius * Math.sin(angle)}
+                          r={5}
+                          stroke={roseStrokeColor}
+                          strokeWidth={0.5}
+                          strokeDasharray={0.2}
+                          fill="none"
+                        />
+                      )}
+                      <text
+                        key={j}
+                        x={radius * Math.cos(angle)}
+                        y={radius * Math.sin(angle)}
+                        fill={roseStrokeColor}
+                        textAnchor="middle"
+                        fontSize={10}
+                        dominantBaseline="middle"
+                      >
+                        {letter}
+                      </text>
+                    </>
                   );
                 })}
               </React.Fragment>
@@ -200,105 +394,22 @@ export default React.forwardRef(function RoseSigil(
         </>
       )}
 
-      {(function () {
-        let d = "";
-        const points = sigilTokens.map((letter) => letterPoint(letter));
-        if (points.length === 0) return null;
+      {debug && (
+        <path
+          // Connecting path
+          stroke="#aa0"
+          fill="none"
+          d={pathFromPoints({ points, sigilTokens })}
+        />
+      )}
 
-        // Circle at the start
-        const start = points[1]
-          ? pointFromEndOfLine(points[1], points[0], -1)
-          : { x: points[0].x - 1, y: points[0].y };
-        const end = points[1]
-          ? pointFromEndOfLine(points[1], points[0], 1)
-          : { x: points[0].x + 1, y: points[0].y };
-        d +=
-          `M ${end.x},${end.y} ` +
-          `A 1,1 0 1,0 ${start.x},${start.y} ` +
-          `A 1,1 0 1,0 ${end.x},${end.y} `;
-
-        // Connecting line
-        for (let i = 1; i < points.length; i++) {
-          const p = points[i],
-            prev = points[i - 1],
-            next = points[i + 1];
-
-          if (next) {
-            if (prev) {
-              const slope = (prev.y - p.y) / (prev.x - p.x);
-
-              // On (near-) straight lines, do a loop to emphasize that the
-              // point is indeed part of the sigil and we're not just passing
-              // through.
-              const range = 10;
-              const angle = toDegrees(
-                angleBetweenTwoPointsAndVertex(prev, next, p)
-              );
-              if (angle > 180 - range && angle < 180 + range) {
-                const r = 1;
-                const justBefore = pointAtFractionOfLine(prev, p, 0.9);
-
-                d += "L " + justBefore.x + "," + justBefore.y + " ";
-                d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
-                d += `A ${r},${r} 0 1,1 ${justBefore.x},${justBefore.y} `;
-                d += `A ${r},${r} 0 1,1 ${p.x},${p.y} `;
-                continue;
-              } /* if (near-) straight line */
-
-              // If the next token is the same token, do a squiqqle
-              if (next && sigilTokens[i] == sigilTokens[i + 1]) {
-                const r = 1;
-                const justBefore = pointFromEndOfLine(prev, p, 0.7);
-                const justBefore2 = pointFromEndOfLine(prev, p, 0.35);
-                const nextNext = points[i + 2];
-                const nextAngle =
-                  nextNext &&
-                  toDegrees(angleBetweenTwoPointsAndVertex(prev, nextNext, p));
-                const side = nextAngle < 0 ? "1" : "0";
-                d += "L " + justBefore.x + "," + justBefore.y + " ";
-                d += `A 2,1 0 1,${side} ${justBefore2.x},${justBefore2.y}`;
-                d += `A 2,1 0 1,${side} ${p.x},${p.y}`;
-                i++;
-                continue;
-              }
-            } /* if (prev) */
-          } /* if (next) */
-
-          d += "L " + p.x + "," + p.y + " ";
-        } /* for (point) */
-
-        // Small perpendicular line at the end
-        if (points.length > 1) {
-          const lastPoint = points[points.length - 1];
-          const secondLastPoint =
-            points[
-              points.length -
-                (sigilText[points.length - 1] ===
-                  sigilText[points.length - 2] && points.length > 2
-                  ? 3
-                  : 2)
-            ];
-          const finalPoints = calculatePerpendicularPointsAtEnd(
-            { x: secondLastPoint.x, y: secondLastPoint.y },
-            { x: lastPoint.x, y: lastPoint.y },
-            2
-          );
-
-          d += "L " + finalPoints.map((p) => p.x + "," + p.y).join(" L ");
-        }
-
-        // console.log(d);
-
-        return (
-          <path
-            // Connecting path
-            stroke="red"
-            fill="none"
-            ref={pathRef}
-            d={d}
-          />
-        );
-      })()}
+      <path
+        // Connecting path
+        stroke="red"
+        fill="none"
+        ref={pathRef}
+        d={pathFromPoints({ points: points2 || points, sigilTokens })}
+      />
     </svg>
   );
 });

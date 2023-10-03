@@ -29,6 +29,7 @@ export default function Sigils() {
   const [showRose, setShowRose] = React.useState(true);
   const [animate, setAnimate] = React.useState(true);
   const [showKeys, setShowKeys] = React.useState(false);
+  const [debug, setDebug] = React.useState(false);
 
   const rectified = (function () {
     const text = sigilText;
@@ -118,6 +119,12 @@ export default function Sigils() {
               }
               label="Show Keys"
             />
+            <FormControlLabel
+              control={
+                <Checkbox checked={debug} onChange={() => setDebug(!debug)} />
+              }
+              label="Debug"
+            />
           </Stack>
         </FormGroup>
 
@@ -145,6 +152,7 @@ export default function Sigils() {
           sigilText={isValid ? rectified : ""}
           showRose={showRose}
           animate={animate}
+          debug={debug}
         />
         <CopyPasteExport ref={ref} filename={`RoseSigil-${rectified}`} />
         <ToastContainer
