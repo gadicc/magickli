@@ -152,7 +152,9 @@ function pathFromPoints({
         // point is indeed part of the sigil and we're not just passing
         // through.
         const range = 10;
-        const angle = toDegrees(angleBetweenTwoPointsAndVertex(prev, next, p));
+        const angle = Math.abs(
+          toDegrees(angleBetweenTwoPointsAndVertex(prev, next, p))
+        );
         if (angle > 180 - range && angle < 180 + range) {
           const r = 1;
           const justBefore = pointAtFractionOfLine(prev, p, 0.9);
@@ -297,17 +299,18 @@ export default React.forwardRef(function RoseSigil(
   }>(null);
 
   React.useEffect(() => {
-    (async () => {
-      await nlopt.ready;
-      const opt = new nlopt.Optimize(
-        nlopt.Algorithm.LN_COBYLA,
-        2 * points.length
-      );
-      opt.setMaxObjective(objective.bind(null, points), 1e-4);
-      const res = opt.optimize(pointsToArray(points));
-      nlopt.GC.flush();
-      setRes(res);
-    })();
+    if (points.length)
+      (async () => {
+        await nlopt.ready;
+        const opt = new nlopt.Optimize(
+          nlopt.Algorithm.LN_COBYLA,
+          2 * points.length
+        );
+        opt.setMaxObjective(objective.bind(null, points), 1e-4);
+        const res = opt.optimize(pointsToArray(points));
+        nlopt.GC.flush();
+        setRes(res);
+      })();
   }, [points]);
 
   const points2 = res && res.x && arrayToPoints(res.x);
