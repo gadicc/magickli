@@ -380,7 +380,7 @@ export default React.forwardRef(function RoseSigil(
                 {row.map((letter, j) => {
                   const angle = offset - slice * j;
                   return (
-                    <>
+                    <React.Fragment key={j}>
                       {debug && (
                         <circle
                           cx={radius * Math.cos(angle)}
@@ -403,7 +403,7 @@ export default React.forwardRef(function RoseSigil(
                       >
                         {letter}
                       </text>
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </React.Fragment>
