@@ -18,13 +18,13 @@
       },
     },
     godNameId: "yhvh-eloha-vedaat",
+    archangelId: "michael",
   },
 
   mercury: {
     id: "mercury",
     symbol: "☿",
     hebrewLetterId: "bet",
-    godNameId: "elohim-tzvaot",
     name: {
       en: {
         en: "Mercury",
@@ -34,6 +34,8 @@
         roman: "Kochav",
       },
     },
+    godNameId: "elohim-tzvaot",
+    archangelId: "raphael",
   },
 
   venus: {
@@ -50,6 +52,7 @@
       },
     },
     godNameId: "yhvh-tzvaot",
+    archangelId: "anael",
   },
 
   earth: {
@@ -66,7 +69,6 @@
     id: "luna",
     symbol: "☾",
     hebrewLetterId: "gimel",
-    godNameId: "shaddai-el-chai",
     name: {
       en: {
         en: "Moon",
@@ -77,6 +79,8 @@
         en: "White",
       },
     },
+    godNameId: "shaddai-el-chai",
+    archangelId: "gabriel",
   },
 
   mars: {
@@ -93,6 +97,7 @@
       },
     },
     godNameId: "elohim-gibor",
+    archangelId: "zamael",
   },
 
   jupiter: {
@@ -110,6 +115,7 @@
       },
     },
     godNameId: "el",
+    archangelId: "sachiel",
   },
 
   saturn: {
@@ -126,6 +132,7 @@
     },
     hebrewLetterId: "tav",
     godNameId: "yhvh-elohim",
+    archangelId: "cassiel",
   },
 
   uranus: {

@@ -15,12 +15,14 @@ import alchemyTerm from "./alchemy/Terms";
 import element from "./alchemy/Elements";
 import elemental from "./alchemy/Elementals";
 
+import hebrewLetter from "./HebrewLetters";
+
 const allData = {
   // ASTROLOGY
   planet, // : require("./astrology/planets.json5").default,
   zodiac, // : require("./astrology/zodiac.json5").default,
 
-  hebrewLetter: require("./hebrewLetters.json5").default,
+  hebrewLetter, // : require("./hebrewLetters.json5").default,
 
   // ENOCHIAN
   enochianLetter: require("./enochian/letters.json5").default,

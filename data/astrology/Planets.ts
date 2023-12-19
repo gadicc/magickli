@@ -1,3 +1,7 @@
+import { HebrewLetter, HebrewLetterId } from "../HebrewLetters";
+import { Archangel, ArchangelId } from "../kabbalah/Archangels";
+import { GodNameId } from "../kabbalah/GodNames";
+
 type PlanetId =
   | "sol"
   | "mercury"
@@ -12,17 +16,20 @@ type PlanetId =
   | "rahu"
   | "ketu";
 
-type LangObject = { en?: string; roman?: string };
+type LangObject = { en?: string; roman?: string; he?: string };
 
 interface Planet {
   id: PlanetId;
   symbol: string;
-  hebrewLetterId: string; // TODO, HebrewLetterID
+  hebrewLetterId: HebrewLetterId;
+  hebrewLetter?: HebrewLetter;
   name: {
     en: LangObject;
     he: LangObject;
   };
-  godNameId: string; // TODO, GodNameID
+  godNameId: GodNameId;
+  archangelId: ArchangelId;
+  archangel?: Archangel;
 }
 
 type Planets = {
