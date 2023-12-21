@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { decycle } from "cycle";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -49,7 +50,7 @@ export default function Planet() {
               {Object.keys(planet).map((key) => (
                 <tr key={key}>
                   <td>{key}</td>
-                  <td>{JSON.stringify(planet[key])}</td>
+                  <td>{JSON.stringify(decycle(planet[key]))}</td>
                 </tr>
               ))}
             </tbody>

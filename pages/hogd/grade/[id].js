@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { decycle } from "cycle";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -93,7 +94,7 @@ export default function Planet() {
               {Object.keys(grade).map((key) => {
                 let json;
                 try {
-                  json = JSON.stringify(grade[key]);
+                  json = JSON.stringify(decycle(grade[key]));
                 } catch (error) {
                   console.warn(error);
                   return;

@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { decycle } from "cycle";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -264,7 +265,7 @@ export default function Sephirot() {
                     {typeof sephirah[key] === "string"
                       ? sephirah[key].substr(0, 1).toUpperCase() +
                         sephirah[key].substr(1)
-                      : JSON.stringify(sephirah[key])}
+                      : JSON.stringify(decycle(sephirah[key]))}
                   </td>
                 </tr>
               ))}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/legacy/image";
+import { decycle } from "cycle";
 
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -193,7 +194,7 @@ export default function Sephirot() {
                     {typeof path[key] === "string"
                       ? path[key].substr(0, 1).toUpperCase() +
                         path[key].substr(1)
-                      : JSON.stringify(path[key])}
+                      : JSON.stringify(decycle(path[key]))}
                   </td>
                 </tr>
               ))}
