@@ -5,6 +5,7 @@ import AppBar from "../../components/AppBar";
 import Tiles from "../../components/Tiles";
 import SevenBranchedCandleStick from "../../components/hogd/SevenBranchedCandleStick";
 // import { FylfotCross } from "../../pages/hogd/symbols/fylfot-cross";
+import TableOfShewbread from "../../components/hogd/TableOfShewbread";
 
 const tiles = [
   {
@@ -29,6 +30,12 @@ const tiles = [
     // img: "/pics/treeOfLife.jpg",
     title: "7B Candlestick",
     to: "symbols/candlestick",
+  },
+  {
+    Component: () => <TableOfShewbread />,
+    // img: "/pics/treeOfLife.jpg",
+    title: "Shewbread Table",
+    to: "symbols/shewbread",
   },
 ];
 

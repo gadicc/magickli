@@ -2,6 +2,10 @@ import React from "react";
 
 import data from "../../data/data";
 import { PlanetId } from "../../data/astrology/Planets";
+import zodiacs, { Zodiac, ZodiacId } from "../../data/astrology/Zodiac";
+import tribesOfIsrael from "../../data/kabbalah/TribesOfIsrael";
+
+const zodiacArray = Object.values(zodiacs);
 
 interface Point {
   x: number;
@@ -50,22 +54,38 @@ const branches: PlanetId[] = [
   "luna",
 ];
 
-function Branch({ index }: { index: number }) {
+const yhvH = {
+  y: "י",
+  h: "ה",
+  v: "ו",
+  H: "הּ",
+};
+const transToHeb = (str: string) =>
+  str
+    .split("")
+    .map((c) => yhvH[c] || c)
+    .join("");
+
+function Branch({ zodiac, index }: { zodiac: Zodiac; index: number }) {
+  const numBranches = 12;
   const radius = 7.4; // TODO, work it out properly
-  const center = degreesToPointOnCircle((index * 360) / 7 - 90, 25 + radius);
+  const center = degreesToPointOnCircle(
+    (-index * 360) / numBranches - 90,
+    25 + radius
+  );
   const points = [
     degreesToPointOnCircle(90, radius, center),
     degreesToPointOnCircle(90 + 360 / 3, radius, center),
     degreesToPointOnCircle(90 + (360 / 3) * 2, radius, center),
   ];
 
-  const planetId = branches[index];
-  const planet = data.planet[planetId];
-  // console.log(planet);
   const texts = [
-    planet.archangel?.name.he,
-    planet.hebrewLetter?.letter?.he,
-    planet.name.he.he,
+    transToHeb(zodiac.tetragrammatonPermutation),
+    "הוזחטילנסעצק"[index],
+    tribesOfIsrael[zodiac.tribeOfIsraelId].name.he,
+    // planet.archangel?.name.he,
+    // planet.hebrewLetter?.letter?.he,
+    // planet.name.he.he,
   ];
 
   // With extend radius so text is offset from the side of the triangle
@@ -95,10 +115,10 @@ function Branch({ index }: { index: number }) {
     radius - 0.4,
     center
   );
-  const rotation = (360 / 7) * index;
+  const rotation = (360 / numBranches) * -index;
 
   return (
-    <g transform={`rotate(${rotation} ${center.x} ${center.y})`}>
+    <g key={index} transform={`rotate(${rotation} ${center.x} ${center.y})`}>
       <circle
         cx={center.x}
         cy={center.y}
@@ -123,7 +143,7 @@ function Branch({ index }: { index: number }) {
         fontSize="4"
         fontWeight="bold"
       >
-        {planet.symbol}
+        {zodiac.symbol}
       </text>
 
       {texts.map((text, i) => (
@@ -150,12 +170,11 @@ function Branch({ index }: { index: number }) {
   );
 }
 
-export default React.forwardRef(function SevenBranchedCandleStick(
+export default React.forwardRef(function TableOfShewbread(
   _opts,
   ref: React.Ref<SVGSVGElement>
 ) {
   const pathRef = React.useRef<SVGPathElement>(null);
-  const indexes = [0, 1, 2, 3, 4, 5, 6];
 
   return (
     <svg
@@ -182,7 +201,7 @@ export default React.forwardRef(function SevenBranchedCandleStick(
         strokeWidth=".5"
       />
 
-      {/* Heptagram */}
+      {/* Heptagram }
       {(function () {
         // Start from bottom left corner, to top, etc.
         const orderedIndexes = [4, 0, 3, 6, 2, 5, 1, 4];
@@ -200,9 +219,10 @@ export default React.forwardRef(function SevenBranchedCandleStick(
             .join(" L ");
         return <path d={d} fill="none" stroke="black" strokeWidth=".5" />;
       })()}
+      */}
 
-      {indexes.map((i) => (
-        <Branch key={i} index={i} />
+      {zodiacArray.map((zodiac, i) => (
+        <Branch key={i} zodiac={zodiac} index={i} />
       ))}
     </svg>
   );

@@ -1,0 +1,100 @@
+{
+  reuben: {
+    id: "reuben",
+    name: {
+      en: "Reuben",
+      he: "ראובן",
+    },
+  },
+  simeon: {
+    id: "simeon",
+    name: {
+      en: "Simeon",
+      he: "שמעון",
+    },
+  },
+  levi: {
+    id: "levi",
+    name: {
+      en: "Levi",
+      he: "לוי",
+    },
+  },
+  judah: {
+    id: "judah",
+    name: {
+      en: "Judah",
+      he: "יהודה",
+    },
+  },
+  dan: {
+    id: "dan",
+    name: {
+      en: "Dan",
+      he: "דן",
+    },
+  },
+  naphtali: {
+    id: "naphtali",
+    name: {
+      en: "Naphtali",
+      he: "נפתלי",
+    },
+  },
+  gad: {
+    id: "gad",
+    name: {
+      en: "Gad",
+      he: "גד",
+    },
+  },
+  asher: {
+    id: "asher",
+    name: {
+      en: "Asher",
+      he: "אשר",
+    },
+  },
+  issachar: {
+    id: "issachar",
+    name: {
+      en: "Issachar",
+      he: "יששכר",
+    },
+  },
+  zebulun: {
+    id: "zebulun",
+    name: {
+      en: "Zebulun",
+      he: "זבולון",
+    },
+  },
+  joseph: {
+    id: "joseph",
+    name: {
+      en: "Joseph",
+      he: "יוסף",
+    },
+  },
+  benjamin: {
+    id: "benjamin",
+    name: {
+      en: "Benjamin",
+      he: "בנימין",
+    },
+  },
+  ephraim: {
+    id: "ephraim",
+    name: {
+      en: "Ephraim",
+      he: "אפרים",
+    },
+  },
+  manasseh: {
+    id: "manasseh",
+    name: {
+      en: "Menasseh",
+      he: "בנימין",
+    },
+  },
+}

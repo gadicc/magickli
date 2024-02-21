@@ -1,5 +1,9 @@
 import type { Element, ElementId } from "../alchemy/Elements";
 import type { Planet, PlanetId } from "./Planets";
+import type {
+  TribeOfIsrael,
+  TribeOfIsraelId,
+} from "../kabbalah/TribesOfIsrael";
 
 type ZodiacId =
   | "aries"
@@ -38,6 +42,9 @@ interface Zodiac {
   elementId: ElementId;
   element?: Element;
   quadruplicity: "cardinal" | "kerubic" | "mutable";
+  tribeOfIsraelId: TribeOfIsraelId;
+  tribeOfIsrael?: TribeOfIsrael;
+  tetragrammatonPermutation: string;
 }
 
 type Zodiacs = {
