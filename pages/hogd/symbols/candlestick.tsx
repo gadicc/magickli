@@ -17,15 +17,21 @@ import AppBar from "../../../components/AppBar";
 import OpenSource from "../../../src/OpenSource";
 import Symbols from "../symbols";
 import SevenBranchedCandleStick from "../../../components/hogd/SevenBranchedCandleStick";
+import CopyPasteExport from "../../../src/copyPasteExport";
 
 export default function CandleStickPage() {
   const navParts = [{ title: "Symbols", url: "/hogd/symbols/" }];
+  const ref = React.useRef(null);
 
   return (
     <>
       <AppBar title="7B Candlestick" navParts={navParts} />
       <Container sx={{ p: 2 }}>
-        <SevenBranchedCandleStick />
+        <SevenBranchedCandleStick ref={ref} />
+        <CopyPasteExport
+          ref={ref}
+          filename="SevenBranchedCandleStick-magickli-export"
+        />
         <OpenSource href="/pages/hogd/symbols/candlestick.tsx" />
       </Container>
     </>
