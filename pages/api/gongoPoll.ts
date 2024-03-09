@@ -38,7 +38,8 @@ gs.publish("docs", async (db, opts, { auth }) => {
 });
 
 // TODO, don't publish secrets :)
-gs.publish("accounts", (db) => db.collection("accounts").find());
+// gs.publish("accounts", (db) => db.collection("accounts").find());
+gs.publish("accounts", (db) => []);
 
 gs.publish("files", (db) => db.collection("files").find());
 

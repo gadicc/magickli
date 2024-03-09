@@ -9,6 +9,7 @@ import {
 import { WithId } from "gongo-client/lib/browser/Collection";
 import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from "date-fns";
+import { signIn } from "next-auth/react";
 
 import {
   Container,
@@ -192,8 +193,7 @@ export default function Study() {
             )}
             <Button
               disabled={!network?.enabled}
-              // @ts-expect-error: TODO
-              onClick={() => db.auth.loginWithService("google")}
+              onClick={() => signIn() /*db.auth.loginWithService("google")*/}
             >
               Login
             </Button>
