@@ -94,7 +94,7 @@ function TreeOfLife() {
       <Head>
         <title key="title">Kabbalistic Tree of Life </title>
 
-        <meta property="og:site_name" content="magick.li" />
+        <meta property="og:site_name" content="magick.ly" />
         <meta property="og:title" content="Kabbalistic Tree of Life" />
         <meta
           property="og:description"
@@ -102,12 +102,12 @@ function TreeOfLife() {
           Tree of Life image and info."
         />
         <meta property="og:type" content="website" />
-        {/* "https://magick.li/kabbalah/tree" + "?" + urlQuery */}
-        <meta property="og:url" content="https://magick.li/kabbalah/tree" />
-        {/* "https://magick.li/api/treeOfLife?v=1&fmt=webp&width=1200&height=630&" + urlQuery */}
+        {/* "https://magick.ly/kabbalah/tree" + "?" + urlQuery */}
+        <meta property="og:url" content="https://magick.ly/kabbalah/tree" />
+        {/* "https://magick.ly/api/treeOfLife?v=1&fmt=webp&width=1200&height=630&" + urlQuery */}
         <meta
           property="og:image"
-          content="https://magick.li/feature/kabbalah/tree.webp?v=2"
+          content="https://magick.ly/feature/kabbalah/tree.webp?v=2"
         />
         <meta property="og:image:type" content="image/webp" />
         <meta property="og:image:width" content="1200" />
@@ -235,7 +235,7 @@ function TreeOfLife() {
           <CopyPasteExport ref={ref} filename="TreeOfLife-magickli-export" />
           <div style={{ textAlign: "center", fontSize: "90%" }}>
             Hebrew Font:{" "}
-            <a href="https://magick.li/fonts/NotoSansHebrew-Regular.ttf">
+            <a href="https://magick.ly/fonts/NotoSansHebrew-Regular.ttf">
               NotoSansHebrew-Regular.ttf
             </a>
           </div>

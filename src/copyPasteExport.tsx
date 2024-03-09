@@ -171,7 +171,7 @@ const CopyPasteExport = React.forwardRef(function CopyPasteExport(
       <br />
       {/*
       Hebrew Font:{" "}
-      <a href="https://magick.li/fonts/NotoSansHebrew-Regular.ttf">
+      <a href="https://magick.ly/fonts/NotoSansHebrew-Regular.ttf">
         NotoSansHebrew-Regular.ttf
       </a>
       */}

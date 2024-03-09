@@ -30,7 +30,7 @@ export default function MyApp({
   return (
     <React.Fragment>
       <Head>
-        <title key="title">Magick.li</title>
+        <title key="title">Magick.ly</title>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"

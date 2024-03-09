@@ -217,11 +217,11 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
         {`
         @font-face {
           font-family: 'Noto Sans';
-          src: local('Noto Sans'), url('https://magick.li/fonts/NotoSans-Regular.ttf') format('truetype')
+          src: local('Noto Sans'), url('https://magick.ly/fonts/NotoSans-Regular.ttf') format('truetype')
         }
         @font-face {
           font-family: 'Noto Sans Hebrew';
-          src: local("Noto Sans Hebrew"), url('https://magick.li/fonts/NotoSansHebrew-Regular.ttf') format('truetype')
+          src: local("Noto Sans Hebrew"), url('https://magick.ly/fonts/NotoSansHebrew-Regular.ttf') format('truetype')
         }
         svg#TreeOfLife {
           font-family: 'Noto Sans', 'Noto Sans Hebrew', Arial, sans-serif;

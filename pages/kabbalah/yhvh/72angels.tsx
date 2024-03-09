@@ -280,7 +280,7 @@ function SevenyTwo() {
       </div>
       <br />
       <Container sx={{ fontSize: "80%", textAlign: "justify" }}>
-        Magick.li is open-source. You can see the code used to generate this
+        Magick.ly is open-source. You can see the code used to generate this
         page{" "}
         <a href="https://github.com/gadicc/magickli/blob/master/pages/kabbalah/yhvh/72angels.tsx">
           here

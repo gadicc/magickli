@@ -35,7 +35,7 @@ export default function treeOfLifeSVG(req, res) {
     /*
     svgText = svgText.replace(
       /url('\/fonts\//g,
-      "url('https://magick.li/fonts/",
+      "url('https://magick.ly/fonts/",
     );
     */
 

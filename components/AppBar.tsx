@@ -34,9 +34,9 @@ export default function ButtonAppBar({
 
   function share() {
     const data = {
-      title: title + " - magick.li",
+      title: title + " - magick.ly",
       text:
-        'Check out "' + title + '" on magick.li, the open source magick app!',
+        'Check out "' + title + '" on magick.ly, the open source magick app!',
       url: window.location.href,
     };
 

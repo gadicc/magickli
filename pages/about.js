@@ -14,7 +14,7 @@ export default function Sequence() {
       <Container maxWidth="sm">
         <Box my={4}>
           <p>
-            <i>Magick.li - the open source Magick app</i>
+            <i>Magick.ly - the open source Magick app</i>
           </p>
 
           <p>

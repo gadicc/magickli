@@ -75,7 +75,7 @@ function Index() {
 
   return (
     <>
-      <AppBar title="Magick.li" />
+      <AppBar title="Magick.ly" />
       <Tiles tiles={_tiles} />
     </>
   );
