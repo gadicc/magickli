@@ -68,10 +68,10 @@ const transToHeb = (str: string) =>
 
 function Branch({ zodiac, index }: { zodiac: Zodiac; index: number }) {
   const numBranches = 12;
-  const radius = 7.4; // TODO, work it out properly
+  const radius = 8; // TODO, work it out properly
   const center = degreesToPointOnCircle(
     (-index * 360) / numBranches - 90,
-    25 + radius
+    23.7 + radius
   );
   const points = [
     degreesToPointOnCircle(90, radius, center),
@@ -170,11 +170,51 @@ function Branch({ zodiac, index }: { zodiac: Zodiac; index: number }) {
   );
 }
 
+const innerCircleData = [
+  { angelId: "raphael", kerub: "אדם", symbol: "👨" },
+  { angelId: "michael", kerub: "אריה", symbol: "🦁" },
+  { angelId: "gabriel", kerub: "נשר", symbol: "🦅" },
+  { angelId: "uriel", kerub: "שור", symbol: "🐂" },
+];
+
+const innerRadius = 23.5;
+const pentagramRadius = innerRadius * 0.45;
+const innerCircleRadius = (innerRadius - pentagramRadius) / 2;
+
+// We use this center point since Raphael's circle is not rotated when
+// looking at the table.  We then rely on transform-rotate to place the
+// remaining inner circles and present contents at correct angles.
+const raphaelCircleCenter = degreesToPointOnCircle(
+  90,
+  innerRadius - innerCircleRadius
+);
+
+const innerCircles = innerCircleData.map((data, index) => ({
+  ...data,
+  radius: innerCircleRadius,
+  center: degreesToPointOnCircle(
+    (270 + 90 * index) % 360,
+    innerRadius - innerCircleRadius
+  ),
+}));
+
 export default React.forwardRef(function TableOfShewbread(
   _opts,
   ref: React.Ref<SVGSVGElement>
 ) {
   const pathRef = React.useRef<SVGPathElement>(null);
+
+  const innerTriangles = [0, 30, 60, 90].map((offset) => [
+    degreesToPointOnCircle(30 + offset, innerRadius),
+    degreesToPointOnCircle(150 + offset, innerRadius),
+    degreesToPointOnCircle(270 + offset, innerRadius),
+  ]);
+
+  // degrees = 360 / 5 = 72;
+  // offset = 270 (top point of cirlce) - 288 (degrees at index 4) = -18
+  const pentagramPoints = [3, 0, 2, 4, 1].map((index) =>
+    degreesToPointOnCircle(index * 72 - 18, pentagramRadius)
+  );
 
   return (
     <svg
@@ -195,35 +235,76 @@ export default React.forwardRef(function TableOfShewbread(
       <circle
         cx="0"
         cy="0"
-        r="25"
+        r={innerRadius}
         fill="none"
         stroke="black"
         strokeWidth=".5"
       />
 
-      {/* Heptagram }
-      {(function () {
-        // Start from bottom left corner, to top, etc.
-        const orderedIndexes = [4, 0, 3, 6, 2, 5, 1, 4];
-        const d =
-          "M " +
-          orderedIndexes
-            .concat([0])
-            .map((i) => {
-              const p = degreesToPointOnCircle(
-                (i * 360) / indexes.length - 90,
-                25
-              );
-              return `${p.x} ${p.y}`;
-            })
-            .join(" L ");
-        return <path d={d} fill="none" stroke="black" strokeWidth=".5" />;
-      })()}
-      */}
+      <g>
+        {innerTriangles.map((triangle, i) => (
+          <path
+            key={i}
+            d={`M ${triangle[0].x} ${triangle[0].y} L ${triangle[1].x} ${triangle[1].y} L ${triangle[2].x} ${triangle[2].y} Z`}
+            fill="none"
+            stroke="black"
+            strokeWidth=".5"
+          />
+        ))}
+      </g>
+
+      <path
+        d={`M ${pentagramPoints.map((p) => `${p.x} ${p.y}`).join(" L ")} Z`}
+        fill="none"
+        stroke="black"
+        strokeWidth=".5"
+      />
 
       {zodiacArray.map((zodiac, i) => (
         <Branch key={i} zodiac={zodiac} index={i} />
       ))}
+
+      <g>
+        {innerCircles.map((circle, i) => (
+          <g key={i} transform={`rotate(${90 * i}, 0, 0)`}>
+            <circle
+              cx={raphaelCircleCenter.x}
+              cy={raphaelCircleCenter.y}
+              r={circle.radius}
+              fill="white"
+              stroke="black"
+              strokeWidth=".5"
+            />
+            <text
+              x={raphaelCircleCenter.x}
+              y={raphaelCircleCenter.y - 5}
+              textAnchor="middle"
+              dominantBaseline="hanging"
+              fontSize={2.5}
+            >
+              {circle.angelId}
+            </text>
+            <text
+              x={raphaelCircleCenter.x}
+              y={raphaelCircleCenter.y}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              fontSize={4}
+            >
+              {circle.symbol}
+            </text>
+            <text
+              x={raphaelCircleCenter.x}
+              y={raphaelCircleCenter.y + 5}
+              textAnchor="middle"
+              dominantBaseline="text-top"
+              fontSize={2.5}
+            >
+              {circle.kerub}
+            </text>
+          </g>
+        ))}
+      </g>
     </svg>
   );
 });
