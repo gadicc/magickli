@@ -125,13 +125,13 @@ function Branch({ zodiac, index }: { zodiac: Zodiac; index: number }) {
         r={radius}
         fill="none"
         stroke="black"
-        strokeWidth="0.5"
+        strokeWidth="0.35"
       />
       <path
         d={`M ${bottom.x} ${bottom.y} L ${topLeft.x} ${topLeft.y} L ${topRight.x} ${topRight.y} L ${bottom.x} ${bottom.y}`}
         fill="none"
         stroke="black"
-        strokeWidth="0.5"
+        strokeWidth="0.35"
       />
 
       <text
@@ -198,6 +198,50 @@ const innerCircles = innerCircleData.map((data, index) => ({
   ),
 }));
 
+function TextOnCircle({
+  text,
+  center,
+  radius,
+  position,
+  offset = 0,
+}: {
+  text: string;
+  center: Point;
+  radius: number;
+  position: "inner-top" | "inner-bottom";
+  offset?: number;
+}) {
+  const fontSize = 2.5;
+  const textPathId = `text-path-${text}-${position}`;
+  radius -= offset;
+
+  return (
+    <g>
+      <path
+        id={textPathId}
+        d={`M ${center.x - radius} ${center.y} A ${radius} ${radius} 0 1 ${
+          position === "inner-top" ? 1 : 0
+        } ${center.x + radius} ${center.y}`}
+        fill="none"
+        stroke="none"
+      />
+      <text>
+        <textPath
+          href={`#${textPathId}`}
+          textAnchor="middle"
+          dominantBaseline={
+            position === "inner-top" ? "text-before-edge" : "text-after-edge"
+          }
+          startOffset="50%"
+          fontSize={fontSize}
+        >
+          {text}
+        </textPath>
+      </text>
+    </g>
+  );
+}
+
 export default React.forwardRef(function TableOfShewbread(
   _opts,
   ref: React.Ref<SVGSVGElement>
@@ -230,7 +274,7 @@ export default React.forwardRef(function TableOfShewbread(
         r="40"
         fill="none"
         stroke="black"
-        strokeWidth=".5"
+        strokeWidth=".35"
       />
       <circle
         cx="0"
@@ -238,7 +282,7 @@ export default React.forwardRef(function TableOfShewbread(
         r={innerRadius}
         fill="none"
         stroke="black"
-        strokeWidth=".5"
+        strokeWidth=".35"
       />
 
       <g>
@@ -248,7 +292,7 @@ export default React.forwardRef(function TableOfShewbread(
             d={`M ${triangle[0].x} ${triangle[0].y} L ${triangle[1].x} ${triangle[1].y} L ${triangle[2].x} ${triangle[2].y} Z`}
             fill="none"
             stroke="black"
-            strokeWidth=".5"
+            strokeWidth=".35"
           />
         ))}
       </g>
@@ -257,7 +301,7 @@ export default React.forwardRef(function TableOfShewbread(
         d={`M ${pentagramPoints.map((p) => `${p.x} ${p.y}`).join(" L ")} Z`}
         fill="none"
         stroke="black"
-        strokeWidth=".5"
+        strokeWidth=".35"
       />
 
       {zodiacArray.map((zodiac, i) => (
@@ -266,42 +310,36 @@ export default React.forwardRef(function TableOfShewbread(
 
       <g>
         {innerCircles.map((circle, i) => (
-          <g key={i} transform={`rotate(${90 * i}, 0, 0)`}>
+          <g key={i} transform={`rotate(${180 + 90 * i}, 0, 0)`}>
             <circle
               cx={raphaelCircleCenter.x}
               cy={raphaelCircleCenter.y}
               r={circle.radius}
               fill="white"
               stroke="black"
-              strokeWidth=".5"
+              strokeWidth=".35"
             />
-            <text
-              x={raphaelCircleCenter.x}
-              y={raphaelCircleCenter.y - 5}
-              textAnchor="middle"
-              dominantBaseline="hanging"
-              fontSize={2.5}
-            >
-              {circle.angelId}
-            </text>
+            <TextOnCircle
+              text={circle.angelId}
+              center={raphaelCircleCenter}
+              radius={circle.radius}
+              position="inner-top"
+            />
             <text
               x={raphaelCircleCenter.x}
               y={raphaelCircleCenter.y}
               textAnchor="middle"
-              dominantBaseline="middle"
-              fontSize={4}
+              dominantBaseline="central"
+              fontSize={5}
             >
               {circle.symbol}
             </text>
-            <text
-              x={raphaelCircleCenter.x}
-              y={raphaelCircleCenter.y + 5}
-              textAnchor="middle"
-              dominantBaseline="text-top"
-              fontSize={2.5}
-            >
-              {circle.kerub}
-            </text>
+            <TextOnCircle
+              text={circle.kerub}
+              center={raphaelCircleCenter}
+              radius={circle.radius}
+              position="inner-bottom"
+            />
           </g>
         ))}
       </g>
