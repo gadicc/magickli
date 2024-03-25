@@ -31,7 +31,7 @@ import {
 
 import Link from "../../src/Link";
 import AppBar from "../../components/AppBar";
-import { sets as allSets } from "../../src/study/sets";
+import { sets as allSets, tags as allTags } from "../../src/study/sets";
 import db, { enableNetwork } from "../../src/db";
 import { StudySetStats } from "./[_id]";
 
@@ -51,8 +51,7 @@ export default function Study() {
       (router.query.tags &&
         (Array.isArray(router.query.tags)
           ? router.query.tags
-          : router.query.tags.split(","))) ||
-      [],
+          : router.query.tags.split(","))) || ["all"],
     [router.query.tags]
   );
   const isPopulated = useGongoIsPopulated();
@@ -63,7 +62,7 @@ export default function Study() {
     (s) =>
       !!allSets[s.setId] &&
       (gdGrade === "all" || allSets[s.setId].gdGrade === gdGrade) &&
-      (!tags.length ||
+      (tags[0] === "all" ||
         tags.every((tag) => allSets[s.setId].tags?.includes(tag)))
   );
   const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
@@ -76,6 +75,14 @@ export default function Study() {
       query: {
         ...router.query,
         gdGrade: event.target.value,
+      },
+    });
+  const setTags = (event: SelectChangeEvent) =>
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        tags: [event.target.value],
       },
     });
 
@@ -113,10 +120,17 @@ export default function Study() {
           <MenuItem value="all">All Grades</MenuItem>
           <MenuItem value="0=0">0=0</MenuItem>
           <MenuItem value="1=10">1=10</MenuItem>
+        </Select>{" "}
+        <Select size="small" value={tags[0]} onChange={setTags}>
+          <MenuItem value="all">All Tags</MenuItem>
+          {allTags.map((tag) => (
+            <MenuItem key={tag} value={tag}>
+              {tag}
+            </MenuItem>
+          ))}
         </Select>
         <br />
         <br />
-
         <Typography variant="h5" sx={{ paddingBottom: 1 }}>
           Current Sets
         </Typography>
@@ -237,7 +251,6 @@ export default function Study() {
           </Table>
         </TableContainer>
         <br />
-
         <Typography variant="h5">Requests</Typography>
         <Typography variant="body2">
           Happily taking requests for new sets, contact details on the{" "}
