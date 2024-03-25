@@ -55,16 +55,13 @@ export interface StudyCardDataItem {
   [key: string]: unknown;
 }
 
-export interface StudySet {
-  // methods
-  Question: typeof SingleCharQuestion;
-  generateCards: typeof generateCards;
+export interface StudySetData<T = StudyCardDataItem> {
   // data
   id: string;
-  data: StudyCardDataItem[];
-  question: (item: unknown) => string;
-  answer: (item: unknown) => string;
-  answers: string[];
+  data: Record<string, T>;
+  question: string | ((item: T) => string | JSX.Element);
+  answer: string | ((item: T) => string);
+  answers?: string[];
   gdGrade:
     | "0=0"
     | "1=10"
@@ -76,7 +73,17 @@ export interface StudySet {
     | "7=4"
     | "8=3"
     | "9=2"
-    | "10=1";
+    | "10=1"
+    | "?";
+  tags?: string[];
+}
+
+export interface StudySet<T = StudyCardDataItem> extends StudySetData<T> {
+  // methods
+  Question: typeof SingleCharQuestion;
+  generateCards: typeof generateCards;
+  answer: (item: T) => string;
+  answers: string[];
 }
 
 export interface StudyCard {
@@ -102,7 +109,7 @@ function generateCards(this: StudySet) {
     return {
       // setId: name,
       id: item.id,
-      question: question(item),
+      question: typeof question === "function" ? question(item) : question,
       answer: answer(item),
       answers,
     } as StudyCard;
@@ -138,49 +145,49 @@ function filter<T>(
   return Object.fromEntries(Object.entries(data).filter(func));
 }
 
-const sets = {
+const sets: Record<string, StudySetData<unknown>> = {
   "hebrew-latin": {
     id: "hebrew-latin",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "letter.latin",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-name": {
     id: "hebrew-name",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "letter.name",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-value": {
     id: "hebrew-value",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "value",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-meaning": {
     id: "hebrew-meaning",
     data: data.hebrewLetter,
     question: "letter.he",
     answer: "meaning.en",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.hebrewLetter.aleph>,
   "planet-signs": {
     id: "planet-signs",
     data: data.planet,
     question: "symbol",
     answer: "name.en.en",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.planet.earth>,
   "zodiac-signs": {
     id: "zodiac-signs",
     data: data.zodiac,
     question: "symbol",
     answer: "name.en",
     gdGrade: "0=0",
-  },
+  } as StudySetData<typeof data.zodiac.aries>,
   "zodiac-triples": {
     id: "zodiac-triples",
     data: data.zodiac,
@@ -207,7 +214,7 @@ const sets = {
     question: "altSymbol",
     answer: "name.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.alchemySymbol>,
   "alchemy-planetary-metals": {
     id: "alchemy-planetary-metals",
     data: filter(
@@ -217,7 +224,7 @@ const sets = {
     question: "altSymbol",
     answer: "name.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.alchemySymbol>,
   // REMOVED - split into alchemy-{principals,planetary-metals}
   // "zelator-alchemy-symbols": {
   //   id: "zelator-alchemy-symbols",
@@ -232,14 +239,14 @@ const sets = {
     question: "title.en",
     answer: "translation.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.tetragram.via>,
   "geomancy-symbol-names": {
     id: "geomancy-symbol-names",
     data: data.tetragram,
     question: (item) => <Tetragram id={item.id} />,
     answer: "title.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.tetragram.via>,
   "planets-hebrew-hebrew": {
     id: "planets-hebrew-hebrew",
     data: Object.fromEntries(
@@ -249,7 +256,7 @@ const sets = {
     question: "name.en.en",
     answer: "name.he.he",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.planet.earth>,
   "planets-hebrew-romanized": {
     id: "planets-hebrew-romanized",
     data: Object.fromEntries(
@@ -259,7 +266,7 @@ const sets = {
     question: "name.en.en",
     answer: "name.he.roman",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.planet.earth>,
   "planets-archangels-he": {
     id: "planets-archangels-he",
     data: Object.fromEntries(
@@ -269,21 +276,21 @@ const sets = {
     question: "name.he",
     answer: "planet.name.he.he",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.archangel.michael>,
   "sephirot-atziluth-divine-names-he": {
     id: "sephirot-atziluth-divine-names-he",
     data: data.sephirah,
     question: "name.he",
     answer: "godName.name.he",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.sephirah.keter>,
   "sephirot-atziluth-divine-names-he-roman": {
     id: "sephirot-atziluth-divine-names-he-roman",
     data: data.sephirah,
     question: "name.roman",
     answer: "godName.name.roman",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.sephirah>,
   "alchemy-basic-terms": {
     id: "alchemy-basic-terms",
     question: "question",
@@ -320,7 +327,7 @@ const sets = {
     question: "namePlural.en",
     answer: "title.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.elemental.gnome>,
   "kerubim-face": {
     id: "kerubim-face",
     question: "question",
@@ -336,7 +343,7 @@ const sets = {
         },
       ])
     ),
-  },
+  } as StudySetData<Partial<typeof data.kerub.air>>,
   "kerubim-zodiac": {
     id: "kerubim-zodiac",
     question: "question",
@@ -352,21 +359,21 @@ const sets = {
         },
       ])
     ),
-  },
+  } as StudySetData<Partial<typeof data.kerub.air>>,
   "four-worlds-desc": {
     id: "four-worlds-desc",
     data: data.fourWorlds,
     question: "name.roman",
     answer: "desc.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.fourWorlds.atzilut>,
   "four-worlds-residents": {
     id: "four-worlds-residents",
     data: data.fourWorlds,
     question: "name.roman",
     answer: "residentsTitle.en",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.fourWorlds.atzilut>,
   "ten-heavens": {
     id: "ten-heavens",
     data: omit("daat", data.sephirah),
@@ -387,14 +394,14 @@ const sets = {
       );
     },
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.sephirah>,
   "sephirot-stones": {
     id: "sephirot-stones",
     data: omit("daat", data.sephirah),
     question: "name.roman",
     answer: "stone",
     gdGrade: "1=10",
-  },
+  } as StudySetData<typeof data.sephirah>,
   "enochian-letters-latin": {
     id: "enochian-letters-latin",
     data: data.enochianLetter,
@@ -403,7 +410,7 @@ const sets = {
     answer: "english",
     tags: ["enochian"],
     gdGrade: "?",
-  },
+  } as StudySetData<typeof data.enochianLetter.un>,
   "enochian-letter-names": {
     id: "enochian-letter-names",
     data: data.enochianLetter,
@@ -412,12 +419,13 @@ const sets = {
     answer: "title",
     tags: ["enochian"],
     gdGrade: "?",
-  },
+  } as StudySetData<typeof data.enochianLetter.un>,
 };
 
 function getSet(id: string) {
   if (!sets[id]) throw new Error("No such set");
 
+  // @ts-expect-error: TODO
   const set: StudySet = {
     ...setDefaults,
     ...sets[id],
@@ -434,5 +442,14 @@ function getSet(id: string) {
   return set;
 }
 
-export { sets };
+const tags = Array.from(
+  new Set(
+    Object.values(sets)
+      .flatMap((set) => set.tags)
+      .filter(Boolean)
+  )
+);
+
+// console.log({ sets, tags });
+export { sets, tags };
 export default getSet;
