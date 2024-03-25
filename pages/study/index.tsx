@@ -104,6 +104,8 @@ export default function Study() {
     [currentSetIds, gdGrade, tags]
   );
 
+  const sortedTags = React.useMemo(() => [...allTags].sort(), []);
+
   React.useEffect(() => {
     // @ts-expect-error: TODO
     if (db.transport) db.transport.poll();
@@ -123,7 +125,7 @@ export default function Study() {
         </Select>{" "}
         <Select size="small" value={tags[0]} onChange={setTags}>
           <MenuItem value="all">All Tags</MenuItem>
-          {allTags.map((tag) => (
+          {sortedTags.map((tag) => (
             <MenuItem key={tag} value={tag}>
               {tag}
             </MenuItem>

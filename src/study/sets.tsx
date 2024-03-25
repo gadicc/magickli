@@ -152,6 +152,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "letter.he",
     answer: "letter.latin",
     gdGrade: "0=0",
+    tags: ["hebrew"],
   } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-name": {
     id: "hebrew-name",
@@ -159,6 +160,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "letter.he",
     answer: "letter.name",
     gdGrade: "0=0",
+    tags: ["hebrew"],
   } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-value": {
     id: "hebrew-value",
@@ -166,6 +168,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "letter.he",
     answer: "value",
     gdGrade: "0=0",
+    tags: ["hebrew"],
   } as StudySetData<typeof data.hebrewLetter.aleph>,
   "hebrew-meaning": {
     id: "hebrew-meaning",
@@ -173,6 +176,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "letter.he",
     answer: "meaning.en",
     gdGrade: "0=0",
+    tags: ["hebrew"],
   } as StudySetData<typeof data.hebrewLetter.aleph>,
   "planet-signs": {
     id: "planet-signs",
@@ -180,6 +184,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "symbol",
     answer: "name.en.en",
     gdGrade: "0=0",
+    tags: ["astrology"],
   } as StudySetData<typeof data.planet.earth>,
   "zodiac-signs": {
     id: "zodiac-signs",
@@ -187,6 +192,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "symbol",
     answer: "name.en",
     gdGrade: "0=0",
+    tags: ["astrology"],
   } as StudySetData<typeof data.zodiac.aries>,
   "zodiac-triples": {
     id: "zodiac-triples",
@@ -195,6 +201,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     answer: "element.symbol",
     answers: ["🜁", "🜂", "🜄", "🜃"],
     gdGrade: "0=0",
+    tags: ["astrology"],
   },
   "zodiac-quads": {
     id: "zodiac-quads",
@@ -203,6 +210,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     answer: "quadruplicity",
     answers: ["cardinal", "kerubic", "mutable"],
     gdGrade: "0=0",
+    tags: ["astrology"],
   },
   // 1=10 zelator
   "alchemy-principals": {
@@ -214,6 +222,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "altSymbol",
     answer: "name.en",
     gdGrade: "1=10",
+    tags: ["alchemy"],
   } as StudySetData<typeof data.alchemySymbol>,
   "alchemy-planetary-metals": {
     id: "alchemy-planetary-metals",
@@ -224,6 +233,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "altSymbol",
     answer: "name.en",
     gdGrade: "1=10",
+    tags: ["alchemy"],
   } as StudySetData<typeof data.alchemySymbol>,
   // REMOVED - split into alchemy-{principals,planetary-metals}
   // "zelator-alchemy-symbols": {
@@ -239,6 +249,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "title.en",
     answer: "translation.en",
     gdGrade: "1=10",
+    tags: ["geomancy"],
   } as StudySetData<typeof data.tetragram.via>,
   "geomancy-symbol-names": {
     id: "geomancy-symbol-names",
@@ -246,6 +257,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: (item) => <Tetragram id={item.id} />,
     answer: "title.en",
     gdGrade: "1=10",
+    tags: ["geomancy"],
   } as StudySetData<typeof data.tetragram.via>,
   "planets-hebrew-hebrew": {
     id: "planets-hebrew-hebrew",
@@ -256,6 +268,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.en.en",
     answer: "name.he.he",
     gdGrade: "1=10",
+    tags: ["astrology"],
   } as StudySetData<typeof data.planet.earth>,
   "planets-hebrew-romanized": {
     id: "planets-hebrew-romanized",
@@ -266,6 +279,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.en.en",
     answer: "name.he.roman",
     gdGrade: "1=10",
+    tags: ["astrology"],
   } as StudySetData<typeof data.planet.earth>,
   "planets-archangels-he": {
     id: "planets-archangels-he",
@@ -276,6 +290,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.he",
     answer: "planet.name.he.he",
     gdGrade: "1=10",
+    tags: ["astrology", "kabbalah"],
   } as StudySetData<typeof data.archangel.michael>,
   "sephirot-atziluth-divine-names-he": {
     id: "sephirot-atziluth-divine-names-he",
@@ -283,6 +298,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.he",
     answer: "godName.name.he",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.sephirah.keter>,
   "sephirot-atziluth-divine-names-he-roman": {
     id: "sephirot-atziluth-divine-names-he-roman",
@@ -290,12 +306,14 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.roman",
     answer: "godName.name.roman",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.sephirah>,
   "alchemy-basic-terms": {
     id: "alchemy-basic-terms",
     question: "question",
     answer: "answer",
     gdGrade: "1=10",
+    tags: ["alchemy"],
     data: (function () {
       const gradeTerms = Object.values(data.alchemyTerm).filter(
         (term) => term.gdGrade === 1
@@ -327,12 +345,14 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "namePlural.en",
     answer: "title.en",
     gdGrade: "1=10",
+    tags: ["elemental"],
   } as StudySetData<typeof data.elemental.gnome>,
   "kerubim-face": {
     id: "kerubim-face",
     question: "question",
     answer: "answer",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
     data: Object.fromEntries(
       Object.entries(data.kerub).map(([id, kerub]) => [
         id,
@@ -349,6 +369,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "question",
     answer: "answer",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
     data: Object.fromEntries(
       Object.entries(data.kerub).map(([id, kerub]) => [
         id,
@@ -366,6 +387,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.roman",
     answer: "desc.en",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.fourWorlds.atzilut>,
   "four-worlds-residents": {
     id: "four-worlds-residents",
@@ -373,6 +395,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.roman",
     answer: "residentsTitle.en",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.fourWorlds.atzilut>,
   "ten-heavens": {
     id: "ten-heavens",
@@ -394,6 +417,7 @@ const sets: Record<string, StudySetData<unknown>> = {
       );
     },
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.sephirah>,
   "sephirot-stones": {
     id: "sephirot-stones",
@@ -401,6 +425,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     question: "name.roman",
     answer: "stone",
     gdGrade: "1=10",
+    tags: ["kabbalah"],
   } as StudySetData<typeof data.sephirah>,
   "enochian-letters-latin": {
     id: "enochian-letters-latin",
