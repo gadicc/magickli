@@ -272,7 +272,7 @@ function StudySetLoad() {
               You&apos;re all done for the day!
             </Typography>
             <br />
-            <Button variant="contained" component={Link} href="/study">
+            <Button variant="contained" onClick={() => router.back()}>
               Back to Study Home
             </Button>
             <br />
