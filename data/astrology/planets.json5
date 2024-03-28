@@ -3,6 +3,45 @@
 
    */
 
+  "primum-mobile": {
+    id: "primum-mobile",
+    name: {
+      en: {
+        en: "Primum Mobile",
+      },
+      he: {
+        he: "ראשית הגלגולים",
+        roman: "Roshit HaGilgulim",
+      },
+    },
+  },
+
+  zodiac: {
+    id: "zodiac",
+    name: {
+      en: {
+        en: "Zodiac",
+      },
+      he: {
+        he: "מזלות",
+        roman: "Mazalot",
+      },
+    },
+  },
+
+  "olam-yesodot": {
+    id: "olam-yesodot",
+    name: {
+      en: {
+        en: "World of Foundations",
+      },
+      he: {
+        he: "עולם היסודות",
+        roman: "Olam haYesodot",
+      },
+    },
+  },
+
   sol: {
     id: "sol",
     symbol: "☉",

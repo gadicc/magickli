@@ -18,10 +18,11 @@
     scent: "ambergris",
     body: "cranium",
     bodyPos: "above-head",
+    planetId: "primum-mobile",
     tenHeavens: {
       en: "1st Swirlings / Primum Mobile",
-      he: "ראשית הגלגלים",
-      roman: "Roshit haGilgalim",
+      he: "ראשית הגלגולים",
+      roman: "Roshit haGilgulim",
     },
     stone: "diamond",
     archangelId: "metatron",
@@ -50,6 +51,7 @@
     godNameId: "yah",
     body: "left-face",
     bodyPos: "left-temple",
+    planetId: "zodiac",
     tenHeavens: {
       en: "The Zodiac",
       roman: "Mazalot",
@@ -290,6 +292,7 @@
     scent: "",
     body: "feet",
     bodyPos: "feet",
+    planetId: "olam-yesodot",
     tenHeavens: {
       en: "Sphere of the Elements",
       he: "עולם יסודות",
