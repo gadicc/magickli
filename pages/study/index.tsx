@@ -34,6 +34,7 @@ import AppBar from "../../components/AppBar";
 import { sets as allSets, tags as allTags } from "../../src/study/sets";
 import db, { enableNetwork } from "../../src/db";
 import { StudySetStats } from "./[_id]";
+import { Info } from "@mui/icons-material";
 
 function dueCount(set: WithId<StudySetStats>) {
   let count = 0;
@@ -140,61 +141,58 @@ export default function Study() {
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
                 <TableCell>Set</TableCell>
-                <TableCell align="right">Grade</TableCell>
                 <TableCell align="right">Due</TableCell>
-                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {currentSets.map((set) => (
-                <React.Fragment key={set._id}>
+              {currentSets.map((set) => {
+                const dueCards = dueCount(set);
+
+                return (
                   <TableRow
                     key={set._id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{
+                      opacity: dueCards ? 1 : 0.5,
+                      "&:last-child td, &:last-child th": { border: 0 },
+                    }}
                     // onClick={() => router.push("/study/" + set.setId)}
                   >
-                    <TableCell sx={{ padding: "16px 0px 16px 10px" }}>
-                      <Chip size="small" label={allSets[set.setId].gdGrade} />
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      <Link href={"/study/" + set.setId}>{set.setId}</Link>{" "}
-                    </TableCell>
-                    <TableCell rowSpan={2} align="right">
-                      {set.correct + set.incorrect > 0
-                        ? Math.round(
-                            (set.correct / (set.correct + set.incorrect)) * 100
-                          ) + "%"
-                        : "-"}
-                    </TableCell>
-                    <TableCell align="right">
-                      {(function () {
-                        const dueCards = dueCount(set);
-                        return dueCards
-                          ? dueCards + " cards"
-                          : "in " + formatDistanceToNowStrict(set.dueDate);
-                      })()}
-                    </TableCell>
-                    <TableCell sx={{ padding: "16px 10px 16px 0px" }}>
-                      <Link href={"/study/info/" + set.setId}>
-                        <div
-                          style={{
-                            border: "1px solid black",
-                            borderRadius: "50%",
-                            padding: "5px 10px 5px 10px",
-                            background: "#ddd",
-                            fontWeight: "bold",
+                    <TableCell>
+                      <Link href={"/study/" + set.setId}>{set.setId}</Link>
+                      <div style={{ marginTop: 5 }}>
+                        <Chip size="small" label={allSets[set.setId].gdGrade} />{" "}
+                        <Chip
+                          component={Link}
+                          href={"/study/info/" + set.setId}
+                          clickable
+                          icon={<Info />}
+                          sx={{
+                            "& .MuiChip-label": {
+                              lineHeight: "1em",
+                            },
                           }}
-                        >
-                          i
-                        </div>
-                      </Link>
+                          size="small"
+                          label={
+                            set.correct + set.incorrect > 0
+                              ? Math.round(
+                                  (set.correct /
+                                    (set.correct + set.incorrect)) *
+                                    100
+                                ) + "%"
+                              : "-"
+                          }
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell align="right" sx={{ _verticalAlign: "top" }}>
+                      {dueCards
+                        ? dueCards + " cards"
+                        : "in " + formatDistanceToNowStrict(set.dueDate)}
                     </TableCell>
                   </TableRow>
-                  <TableRow></TableRow>
-                </React.Fragment>
-              ))}
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
