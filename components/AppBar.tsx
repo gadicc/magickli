@@ -7,8 +7,13 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from "@mui/icons-material/Home";
 import ShareIcon from "@mui/icons-material/Share";
+import { useGongoOne, useGongoUserId } from "gongo-client-react";
+import { signIn, signOut } from "next-auth/react";
 
 import Link from "../src/Link";
+import { Avatar, Menu, MenuItem } from "@mui/material";
+import { AccountCircle, Login } from "@mui/icons-material";
+import db, { enableNetwork } from "../src/db";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +36,23 @@ export default function ButtonAppBar({
 }) {
   const classes = useStyles();
   //const router = useRouter();
+
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const avatarSrc = user?.image || user?.photos?.[0]?.value;
+  const network = useGongoOne((db) => db.gongoStore.find({ _id: "network" }));
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUserClose = () => {
+    setAnchorEl(null);
+  };
 
   function share() {
     const data = {
@@ -84,6 +106,67 @@ export default function ButtonAppBar({
           >
             <ShareIcon />
           </IconButton>
+          {userId ? (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleUserMenu}
+                color="inherit"
+              >
+                {avatarSrc ? (
+                  <Avatar
+                    alt={
+                      typeof user?.displayName === "string"
+                        ? user.displayName
+                        : "avatar"
+                    }
+                    src={avatarSrc}
+                    imgProps={{ referrerPolicy: "no-referrer" }}
+                  />
+                ) : (
+                  <AccountCircle />
+                )}
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleUserClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    signOut();
+                    handleUserClose();
+                  }}
+                >
+                  Logout
+                </MenuItem>
+              </Menu>
+            </div>
+          ) : (
+            <Button
+              variant="text"
+              sx={{ color: "white" }}
+              onClick={() => {
+                if (!network) enableNetwork();
+                signIn();
+              }}
+            >
+              <Login />
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>
