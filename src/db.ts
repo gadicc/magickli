@@ -1,12 +1,16 @@
 import db, { Collection } from "gongo-client";
+import { getSession } from "next-auth/react";
 import HTTPTransport from "gongo-client/lib/transports/http";
-import GongoAuth from "gongo-client/lib/auth";
+// import GongoAuth from "gongo-client/lib/auth";
 import { StudySetStats } from "../pages/study/[_id]";
 import type { Doc, User, UserGroup } from "./schemas";
 
-db.extend("auth", GongoAuth);
+// db.extend("auth", GongoAuth);
 
 function defineTransport() {
+  // remove old gongoStore auth (now we use next-auth)
+  db.gongoStore.remove({ _id: "auth" });
+
   db.extend("transport", HTTPTransport, {
     // pollInterval: 60 * 1000,
     pollInterval: false,
@@ -24,8 +28,8 @@ function defineTransport() {
   const _origPoll = db.transport._poll.bind(db.transport);
   // @ts-expect-error: ok
   db.transport._poll = async function () {
-    // @ts-expect-error: ok
-    const userId = db.auth.getUserId();
+    const session = await getSession();
+    const userId = session?.user.id;
     if (userId) {
       const result = db
         .collection("studySet")
