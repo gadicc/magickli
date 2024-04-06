@@ -37,11 +37,13 @@ import { prepare } from "../../src/doc/prepare";
 import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 // import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
 import _zelator from "!!raw-loader!../../src/doc/1=10.jade";
+// import _healing from "!!raw-loader!../../src/doc/healing.jade";
 
 const docs = {
   neophyte: prepare(_neophyte),
   zelator: prepare(_zelator),
   // neophyteM: prepare(_neophyteM),
+  // healing: prepare(_healing),
 };
 
 // Note: make sure not to export anything except the react component
@@ -133,7 +135,9 @@ const roles = {
   dadouchos: { name: "Dadouchos", symbol: "卍", color: "#cc5" },
   sentinel: { name: "Sentinel", symbol: "𓂀", color: "#777" },
   candidate: { name: "Candidate", symbol: "🤠", color: "#fcf" },
+  aspirant: { name: "Aspirant", symbol: "🤒", color: "#fcf" },
   member: { name: "Member", color: "#ccc" },
+  psaltis: { name: "Psaltis", symbol: "🎵", color: "#c55" },
 };
 
 function HideOnScroll(props) {
