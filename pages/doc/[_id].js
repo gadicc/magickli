@@ -5,12 +5,8 @@ import { useGongoSub, useGongoOne } from "gongo-client-react";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import ListIcon from "@mui/icons-material/List";
-import Avatar from "@mui/material/Avatar";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import Stack from "@mui/material/Stack";
@@ -21,7 +17,6 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import Popover from "@mui/material/Popover";
@@ -31,6 +26,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import DocContext from "../../src/doc/context";
 import AppBar from "../../components/AppBar";
 import { Render } from "../../src/doc/blocks";
+import "../../public/fonts/FrankRuehlCLM-stylesheet.css";
 
 import { prepare } from "../../src/doc/prepare";
 // import neophyte from "../../src/doc/neophyte.yaml";
@@ -38,12 +34,14 @@ import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
 // import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
 import _zelator from "!!raw-loader!../../src/doc/1=10.jade";
 // import _healing from "!!raw-loader!../../src/doc/healing.jade";
+// import _chesedTalisman from "!!raw-loader!../../src/doc/chesed-talisman.jade";
 
 const docs = {
   neophyte: prepare(_neophyte),
   zelator: prepare(_zelator),
   // neophyteM: prepare(_neophyteM),
   // healing: prepare(_healing),
+  // "chesed-talisman": prepare(_chesedTalisman),
 };
 
 // Note: make sure not to export anything except the react component
@@ -332,8 +330,41 @@ function DocLoader() {
   return <Doc doc={doc} />;
 }
 
+// Ok for whatever reason this stops the error but doesn't "catch" it (i.e. no logs)
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    console.error(1, error);
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    // Example "componentStack":
+    //   in ComponentThatThrows (created by App)
+    //   in ErrorBoundary (created by App)
+    //   in div (created by App)
+    //   in App
+    console.error(2, error, info /*.componentStack */);
+  }
+
+  render() {
+    // console.log(this.state);
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
+
 function Doc({ doc }) {
-  console.log({ doc });
+  // console.log({ doc });
   const router = useRouter();
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
@@ -435,9 +466,25 @@ function Doc({ doc }) {
         </div>
 
         <br />
-        <DocContext.Provider value={context}>
-          <Render doc={doc} />
-        </DocContext.Provider>
+
+        <div
+          className="docBody"
+          style={
+            {
+              // fontFamily: "Frank Ruehl CLM, Roboto, Helvetica, Arial, sans-serif",
+            }
+          }
+        >
+          <DocContext.Provider value={context}>
+            {process.env.NODE_ENV === "development" ? (
+              <ErrorBoundary>
+                <Render doc={doc} />
+              </ErrorBoundary>
+            ) : (
+              <Render doc={doc} />
+            )}
+          </DocContext.Provider>
+        </div>
       </Box>
 
       <SpeedDial
