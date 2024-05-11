@@ -24,7 +24,6 @@ function Groups({ groups }: { groups: UserGroup[] }) {
 
   function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
-    // @ts-expect-error: todo, insert partials in gongo
     db.collection("userGroups").insert({ name: groupName });
     setGroupName("");
   }
