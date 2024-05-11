@@ -288,13 +288,15 @@ class Task extends Node {
               color: #ddd;
             }
           `}</style>
-          {role !== myRole && !samePreviousRole && (
-            <span className="role" style={{ color: roles[role]?.color }}>
-              {roles[role]
-                ? [roles[role].symbol, " ", roles[role].name]
-                : role.substr(0, 1).toUpperCase() + role.substr(1)}
-            </span>
-          )}
+          {
+            /* role !== myRole && */ !samePreviousRole && (
+              <span className="role" style={{ color: roles[role]?.color }}>
+                {roles[role]
+                  ? [roles[role].symbol, " ", roles[role].name]
+                  : role.substr(0, 1).toUpperCase() + role.substr(1)}
+              </span>
+            )
+          }
           <span className="pg">{key}</span>
           {block.say && (
             <div className="say">
@@ -392,6 +394,36 @@ class Footnotes extends Node {
   }
 }
 
+class Stylesheet extends Node {
+  render(key) {
+    return <link key={key} rel="stylesheet" href={this.block.href} />;
+  }
+}
+
+class Span extends Node {
+  render(key) {
+    const { type, children, ..._attrs } = this.block;
+    const attrs = _attrs || {};
+    // console.log("span", attrs);
+
+    return (
+      <span
+        key={key}
+        {...attrs}
+        style={
+          attrs.style &&
+          JSON.parse(
+            // https://stackoverflow.com/a/34763398/1839099
+            attrs.style.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ')
+          )
+        }
+      >
+        {this.renderChildren()}
+      </span>
+    );
+  }
+}
+
 const blocks = {
   b: B,
   i: I,
@@ -400,6 +432,8 @@ const blocks = {
   ul,
   ol,
   li,
+  span: Span,
+  stylesheet: Stylesheet,
 
   note: Note,
   task: Task,
