@@ -201,4 +201,5 @@ if (gs.dba) {
   docs.allow("remove", userIsGroupAdmin);
 }
 
-module.exports = gs.expressPost();
+const handler = gs.expressPost();
+export default handler;

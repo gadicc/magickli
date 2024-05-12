@@ -9,6 +9,10 @@ module.exports = withPWA({
     ignoreDuringBuilds: true,
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // https://stackoverflow.com/questions/64926174/module-not-found-cant-resolve-fs-in-next-js-application
+    // ./node_modules/nlopt-js/dist/index.js; Module not found: Can't resolve 'fs'
+    config.resolve.fallback = { fs: false };
+
     config.module.rules.push({
       test: /\.json5$/i,
       loader: "json5-loader",

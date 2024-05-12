@@ -37,15 +37,15 @@
     "luxon": "^2.0.2",
     "mongodb": "6.2.0",
     "music-metadata": "7.14.0",
-    "next": "13.4.6",
+    "next": "14.2.3",
     "next-auth": "^4.23.1",
     "next-pwa": "^5.5.5",
     "nlopt-js": "^0.1.1",
     "openai-edge": "1.1.0",
     "passport": "^0.5.2",
     "passport-google-oauth20": "^2.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "15.5.0",
     "react-toastify": "^8.2.0",
@@ -66,7 +66,7 @@
     "@types/jest": "^29.2.6",
     "@typescript-eslint/eslint-plugin": "5.60.0",
     "eslint": "8.10.0",
-    "eslint-config-next": "13.4.6",
+    "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^8.5.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
@@ -81,7 +81,5 @@
   "resolutions": {
     "corpora": "https://github.com/dariusk/corpora/tarball/ff1941630dc5a7aa3d4459fc038cb7a04ec93cb0"
   },
-  "browser": {
-    "fs": false
-  }
+  "browser": {}
 }
