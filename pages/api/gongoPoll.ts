@@ -139,6 +139,75 @@ gs.publish("doc", async (db, opts, { auth }) => {
   return [];
 });
 
+async function templeAdminHelper(auth, db, templeIdStr) {
+  const userId = await auth.userId();
+  if (!userId) return { userId, isTempleAdmin: false };
+
+  const templeId = new ObjectId(templeIdStr);
+
+  const membership = await db.collection("templeMemberships").findOne({
+    userId,
+    templeId,
+  });
+  let isTempleAdmin = membership?.admin || false;
+
+  if (!isTempleAdmin) {
+    const user = await db.collection("users").findOne({ _id: userId });
+    if (user.admin) isTempleAdmin = true;
+  }
+
+  return { userId, isTempleAdmin, templeId };
+}
+
+gs.publish("templesForAdmins", async (db, opts, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const user = await db.collection("users").findOne({ _id: userId });
+  if (user?.admin) return db.collection("temples").find();
+
+  const templeIds = (
+    await db
+      .collection("templeMemberships")
+      .find({ userId, admin: true })
+      .project({ templeId: true })
+      .toArray()
+  ).map((tm) => tm.templeId);
+
+  return db.collection("temples").find({ _id: { $in: templeIds } });
+});
+
+gs.publish("templeForTempleAdmin", async (db, { _id }, { auth }) => {
+  const { isTempleAdmin, templeId } = await templeAdminHelper(auth, db, _id);
+  if (!isTempleAdmin) return [];
+  return db.collection("temples").find({ _id: templeId }).limit(1);
+});
+
+gs.publish("usersForTempleAdmin", async (db, { _id }, { auth }) => {
+  const { userId, isTempleAdmin } = await templeAdminHelper(auth, db, _id);
+  if (!isTempleAdmin) return [];
+
+  const memberships = await db
+    .collection("templeMemberships")
+    .find({ templeId: new ObjectId(_id), userId: { $ne: userId } })
+    .toArray();
+
+  return [
+    {
+      coll: "templeMemberships",
+      entries: memberships,
+    },
+    {
+      coll: "users",
+      entries: await db
+        .collection("users")
+        .find({ _id: { $in: memberships.map((m) => m.userId) } })
+        .project({ _id: true, displayName: true, emails: true })
+        .toArray(),
+    },
+  ];
+});
+
 async function userIsGroupAdmin(
   doc: Document | ChangeSetUpdate | string,
   { dba, auth, collection }: CollectionEventProps
@@ -188,7 +257,7 @@ if (gs.dba) {
   studySet.allow("update", userIdMatches);
   studySet.allow("remove", userIdMatches);
 
-  for (const collName of ["users", "userGroups"]) {
+  for (const collName of ["users", "userGroups", "temples"]) {
     const coll = db.collection(collName);
     coll.allow("insert", userIsAdmin);
     coll.allow("update", userIsAdmin);
