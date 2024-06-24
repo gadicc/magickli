@@ -8,6 +8,11 @@ module.exports = withPWA({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // See also alternative with patch-package:
+    // https://stackoverflow.com/a/77722836/1839099
+    serverComponentsExternalPackages: ["pdf-parse"],
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // https://stackoverflow.com/questions/64926174/module-not-found-cant-resolve-fs-in-next-js-application
     // ./node_modules/nlopt-js/dist/index.js; Module not found: Can't resolve 'fs'

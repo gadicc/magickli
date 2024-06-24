@@ -7,6 +7,8 @@ import remarkGfm from "remark-gfm";
 import rehypeAddClasses from "rehype-add-classes";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { ToastContainer, toast } from "react-toastify";
+import { Document as LangChainDocument } from "@langchain/core/documents";
 
 import {
   Add,
@@ -54,6 +56,10 @@ function metaMessage(message: Message) {
 export default function Chat() {
   const ref = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const [sourcesForMessages, setSourcesForMessages] = React.useState<
+    Record<string, LangChainDocument[]>
+  >({});
+
   const {
     messages,
     setMessages,
@@ -63,8 +69,28 @@ export default function Chat() {
     isLoading,
     reload,
     stop,
-  } = useChat();
-  // console.log({ messages, input, isLoading });
+  } = useChat({
+    api: "/chat/api",
+    onResponse(response) {
+      const sourcesHeader = response.headers.get("x-sources");
+      const sources = sourcesHeader
+        ? JSON.parse(Buffer.from(sourcesHeader, "base64").toString("utf8"))
+        : [];
+      const messageIndexHeader = response.headers.get("x-message-index");
+      if (sources.length && messageIndexHeader !== null) {
+        setSourcesForMessages({
+          ...sourcesForMessages,
+          [messageIndexHeader]: sources,
+        });
+      }
+    },
+    onError: (e) => {
+      toast(e.message, {
+        theme: "dark",
+      });
+    },
+  });
+  // console.log({ messages, input, isLoading, sourcesForMessages });
   const autoscroll = React.useRef(true);
 
   React.useEffect(() => {
@@ -89,32 +115,36 @@ export default function Chat() {
     <>
       <AppBar title="MagickGPT" />
       <div id="messages">
-        {messages.map(metaMessage).map((m) => (
-          <div
-            key={m.id}
-            style={{
-              display: "flex",
-              padding: "2px 15px 2px 15px",
-              backgroundColor: m.role === "assistant" ? "#f7f7f7" : "",
-              borderTop: m.role === "assistant" ? "1px solid #ccc" : "",
-              borderBottom: m.role === "assistant" ? "1px solid #ccc" : "",
-              overflowX: "auto",
-            }}
-          >
-            <div style={{ width: "50px", marginTop: "19px" }}>
-              {m.role === "user" ? (
-                <Person />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src="/pentagram.png"
-                  alt="AI User"
-                  width="32px"
-                  height="32px"
-                />
-              )}
-            </div>
-            <style>{`
+        {messages.map(metaMessage).map((m, i) => {
+          const sourceKey = (messages.length /* - 1 */ - i).toString();
+          const sources = i > 0 ? sourcesForMessages[sourceKey] : null;
+
+          return (
+            <div
+              key={m.id}
+              style={{
+                display: "flex",
+                padding: "2px 15px 2px 15px",
+                backgroundColor: m.role === "assistant" ? "#f7f7f7" : "",
+                borderTop: m.role === "assistant" ? "1px solid #ccc" : "",
+                borderBottom: m.role === "assistant" ? "1px solid #ccc" : "",
+                overflowX: "auto",
+              }}
+            >
+              <div style={{ width: "50px", marginTop: "19px" }}>
+                {m.role === "user" ? (
+                  <Person />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src="/pentagram.png"
+                    alt="AI User"
+                    width="32px"
+                    height="32px"
+                  />
+                )}
+              </div>
+              <style>{`
               .ai_content table {
                 margin-top: 1em;
                 margin-bottom: 1em;
@@ -143,94 +173,61 @@ export default function Chat() {
                 margin-top: 1em;
               }
             `}</style>
-            <div className="ai_content" style={{ width: "50px", flexGrow: 1 }}>
-              <ReactMarkdown
-                linkTarget="_blank"
-                remarkPlugins={remarkPlugins}
-                // @ts-expect-error: its fine
-                rehypePlugins={rehypePlugins}
-                components={{
-                  code({ node, inline, className, children, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        {...props}
-                        style={dark}
-                        language={match[1]}
-                        PreTag="div"
-                      >
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code {...props} className={className}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
+              <div
+                className="ai_content"
+                style={{ width: "50px", flexGrow: 1 }}
               >
-                {m.content}
-              </ReactMarkdown>
-              {(function () {
-                if (m.meta) {
-                  const docs = m.meta.sourceDocuments.filter(
-                    (doc) => doc.pageContent.length > 5
-                  );
-                  if (docs.length === 0) return null;
-                  return (
-                    <details>
-                      <summary>Sources</summary>
-                      <ol>
-                        {docs.map((doc, i) => (
-                          <li key={i}>
-                            <details>
-                              <summary>
-                                {" "}
-                                <i>{doc.metadata["pdf.info.Title"]}</i>,{" "}
-                                {doc.metadata["pdf.info.Author"]}, page{" "}
-                                {doc.metadata["loc.pageNumber"]}.
-                              </summary>
-                              <p style={{ fontSize: "75%" }}>
-                                {doc.pageContent}
-                              </p>
-                            </details>
-                          </li>
-                        ))}
-                      </ol>
-                    </details>
-                  );
-                }
-              })()}
-              {/*
-              {m.meta && (
-                <>
-                  {m.meta.sourceDocuments.map((doc, i) =>
-                    doc.pageContent.length < 5 ? null : (
-                      <Box key={i} sx={{ mb: 1 }}>
-                        <Accordion>
-                          <AccordionSummary expandIcon={<ExpandMore />}>
-                            <Typography>Source {i + 1}</Typography>
-                          </AccordionSummary>
-                          <AccordionDetails>
+                <ReactMarkdown
+                  linkTarget="_blank"
+                  remarkPlugins={remarkPlugins}
+                  // @ts-expect-error: its fine
+                  rehypePlugins={rehypePlugins}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || "");
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          {...props}
+                          style={dark}
+                          language={match[1]}
+                          PreTag="div"
+                        >
+                          {String(children).replace(/\n$/, "")}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code {...props} className={className}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                >
+                  {m.content}
+                </ReactMarkdown>
+                {sources && (
+                  <details>
+                    <summary>Sources</summary>
+                    <ol>
+                      {sources.map((doc, i) => (
+                        <li key={i}>
+                          <details>
+                            <summary>
+                              {" "}
+                              <i>{doc.metadata.pdf.info.Title}</i>,{" "}
+                              {doc.metadata.pdf.info.Author}, page{" "}
+                              {doc.metadata.loc.pageNumber}.
+                            </summary>
                             <p style={{ fontSize: "75%" }}>{doc.pageContent}</p>
-                            <p>
-                              {/* <b>Source:</b>{" "} */
-              /*}
-                              <i>{doc.metadata["pdf.info.Title"]}</i>,{" "}
-                              {doc.metadata["pdf.info.Author"]}, page{" "}
-                              {doc.metadata["loc.pageNumber"]}.
-                            </p>
-                          </AccordionDetails>
-                        </Accordion>
-                      </Box>
-                    )
-                  )}
-                </>
-              )}
-            */}
+                          </details>
+                        </li>
+                      ))}
+                    </ol>
+                  </details>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div style={{ height: "130px" }}>&nbsp;</div>
       <div ref={ref}></div>
@@ -342,6 +339,17 @@ export default function Chat() {
           know Gadi or Aaron).
         </div>
       </div>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
     </>
   );
 }
