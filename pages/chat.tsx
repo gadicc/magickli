@@ -11,30 +11,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { Document as LangChainDocument } from "@langchain/core/documents";
 
 import {
-  Add,
-  AddCircle,
-  AddOutlined,
   Autorenew,
   DeleteForever,
-  ExpandMore,
-  HourglassTop,
   Person,
-  PlusOne,
   Send,
   StopCircle,
 } from "@mui/icons-material";
 
 import AppBar from "../components/AppBar";
-import Admin from "./admin";
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
   Chip,
   CircularProgress,
-  Container,
   IconButton,
   InputAdornment,
   TextField,
@@ -213,9 +200,17 @@ export default function Chat() {
                           <details>
                             <summary>
                               {" "}
-                              <i>{doc.metadata.pdf.info.Title}</i>,{" "}
-                              {doc.metadata.pdf.info.Author}, page{" "}
-                              {doc.metadata.loc.pageNumber}.
+                              <i>
+                                {doc.metadata["pdf.info.Title"] ||
+                                  doc.metadata.pdf.info.Title}
+                              </i>
+                              ,{" "}
+                              {doc.metadata["pdf.info.Author"] ||
+                                doc.metadata.pdf.info.Author}
+                              , page{" "}
+                              {doc.metadata["loc.pageNumber"] ||
+                                doc.metadata.loc.pageNumber}
+                              .
                             </summary>
                             <p style={{ fontSize: "75%" }}>{doc.pageContent}</p>
                           </details>

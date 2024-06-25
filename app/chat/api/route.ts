@@ -10,9 +10,11 @@ import {
   StringOutputParser,
 } from "@langchain/core/output_parsers";
 
-import { vectorStore } from "../openai";
+// import { vectorStore as createVectorStore } from "../openai"; // MongoDB
+import { Pinecone } from "@pinecone-database/pinecone";
+import { PineconeStore } from "@langchain/pinecone";
 
-// export const runtime = "edge";
+export const runtime = "edge";
 
 const combineDocumentsFn = (docs: Document[]) => {
   // console.log("combineDocsFn", docs);
@@ -85,7 +87,15 @@ export async function POST(req: Request) {
       */
     });
 
-    const vectorstore = vectorStore();
+    // const vectorStore = createVectorStore();
+
+    // Uses PINECONE_API_KEY and PINECONE_ENVIRONMENT
+    const pinecone = new Pinecone();
+    const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
+    const vectorStore = await PineconeStore.fromExistingIndex(
+      new OpenAIEmbeddings(),
+      { pineconeIndex, namespace: process.env.PINECONE_NAME_SPACE! }
+    );
 
     /**
      * We use LangChain Expression Language to compose two chains.
@@ -107,7 +117,7 @@ export async function POST(req: Request) {
       resolveWithDocuments = resolve;
     });
 
-    const retriever = vectorstore.asRetriever({
+    const retriever = vectorStore.asRetriever({
       searchType: "mmr",
       searchKwargs: { fetchK: 10, lambda: 0.25 },
       callbacks: [
@@ -123,6 +133,7 @@ export async function POST(req: Request) {
     /*
     retriever.invoke("neophyte");
     const docs = await documentPromise;
+    console.log("docs", docs);
     return NextResponse.json({ message: "Success" }, { status: 200 });
     */
 
@@ -168,7 +179,9 @@ export async function POST(req: Request) {
         metadata: doc.metadata,
       };
     });
+
     console.log("Sources data:", sourcesData);
+    // return NextResponse.json({ message: "Success" }, { status: 200 });
 
     const serializedSources = Buffer.from(JSON.stringify(sourcesData)).toString(
       "base64"
