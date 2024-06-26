@@ -191,11 +191,13 @@ export async function POST(req: Request) {
 
     const meta: ChatMessageMetaData = { sources: sourcesData };
 
+    const encoder = new TextEncoder();
+    const prepend = encoder.encode(
+      "\n__META_JSON__\n" + JSON.stringify(meta) + "\n__META_JSON__\n"
+    );
     const transform = new TransformStream({
       start(controller) {
-        controller.enqueue(
-          "\n__META_JSON__\n" + JSON.stringify(meta) + "\n__META_JSON__\n"
-        );
+        controller.enqueue(prepend);
       },
       transform(chunk, controller) {
         controller.enqueue(chunk);
