@@ -63,6 +63,13 @@ Question: {question}
 `;
 const answerPrompt = PromptTemplate.fromTemplate(ANSWER_TEMPLATE);
 
+export interface ChatMessageMetaData {
+  sources: {
+    pageContent: string;
+    metadata: Record<string, any>;
+  }[];
+}
+
 /**
  * This handler initializes and calls a retrieval chain. It composes the chain using
  * LangChain Expression Language. See the docs for more information:
@@ -77,7 +84,7 @@ export async function POST(req: Request) {
     const currentMessageContent = messages[messages.length - 1].content;
 
     const model = new ChatOpenAI({
-      modelName: "gpt-4",
+      modelName: "gpt-4o",
       temperature: 1, // increase temepreature to get more creative answers
       /*
       streaming: true,
@@ -173,26 +180,29 @@ export async function POST(req: Request) {
 
     const sourcesData = documents.map((doc) => {
       return {
-        // pageContent: doc.pageContent,
+        pageContent: doc.pageContent,
         // pageContent: doc.pageContent.slice(0, 50) + "...",
-        pageContent: doc.pageContent.slice(0, 250) + "...",
         metadata: doc.metadata,
       };
     });
 
-    console.log("Sources data:", sourcesData);
+    // console.log("Sources data:", sourcesData);
     // return NextResponse.json({ message: "Success" }, { status: 200 });
 
-    const serializedSources = Buffer.from(JSON.stringify(sourcesData)).toString(
-      "base64"
-    );
+    const meta: ChatMessageMetaData = { sources: sourcesData };
 
-    return new StreamingTextResponse(stream, {
-      headers: {
-        "x-message-index": (previousMessages.length + 1).toString(),
-        "x-sources": serializedSources,
+    const transform = new TransformStream({
+      start(controller) {
+        controller.enqueue(
+          "\n__META_JSON__\n" + JSON.stringify(meta) + "\n__META_JSON__\n"
+        );
+      },
+      transform(chunk, controller) {
+        controller.enqueue(chunk);
       },
     });
+
+    return new StreamingTextResponse(stream.pipeThrough(transform));
   } catch (e) {
     return NextResponse.json({ message: "Error Processing" }, { status: 500 });
   }

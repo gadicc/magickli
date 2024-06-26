@@ -9,6 +9,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ToastContainer, toast } from "react-toastify";
 import { Document as LangChainDocument } from "@langchain/core/documents";
+import type { ChatMessageMetaData } from "../app/chat/api/route";
 
 import {
   Autorenew,
@@ -35,8 +36,8 @@ function metaMessage(message: Message) {
   const parts = message.content.split("\n__META_JSON__\n");
   return {
     ...message,
-    content: parts[0],
-    meta: parts[1] ? JSON.parse(parts[1]) : null,
+    meta: parts[2] ? (JSON.parse(parts[1]) as ChatMessageMetaData) : null,
+    content: parts[2] || parts[0],
   };
 }
 
@@ -58,19 +59,6 @@ export default function Chat() {
     stop,
   } = useChat({
     api: "/chat/api",
-    onResponse(response) {
-      const sourcesHeader = response.headers.get("x-sources");
-      const sources = sourcesHeader
-        ? JSON.parse(Buffer.from(sourcesHeader, "base64").toString("utf8"))
-        : [];
-      const messageIndexHeader = response.headers.get("x-message-index");
-      if (sources.length && messageIndexHeader !== null) {
-        setSourcesForMessages({
-          ...sourcesForMessages,
-          [messageIndexHeader]: sources,
-        });
-      }
-    },
     onError: (e) => {
       toast(e.message, {
         theme: "dark",
@@ -102,10 +90,7 @@ export default function Chat() {
     <>
       <AppBar title="MagickGPT" />
       <div id="messages">
-        {messages.map(metaMessage).map((m, i) => {
-          const sourceKey = (messages.length /* - 1 */ - i).toString();
-          const sources = i > 0 ? sourcesForMessages[sourceKey] : null;
-
+        {messages.map(metaMessage).map((m) => {
           return (
             <div
               key={m.id}
@@ -191,34 +176,36 @@ export default function Chat() {
                 >
                   {m.content}
                 </ReactMarkdown>
-                {sources && (
+                {m.meta?.sources ? (
                   <details>
                     <summary>Sources</summary>
                     <ol>
-                      {sources.map((doc, i) => (
+                      {m.meta.sources.map((source, i) => (
                         <li key={i}>
                           <details>
                             <summary>
                               {" "}
                               <i>
-                                {doc.metadata["pdf.info.Title"] ||
-                                  doc.metadata.pdf.info.Title}
+                                {source.metadata["pdf.info.Title"] ||
+                                  source.metadata.pdf.info.Title}
                               </i>
                               ,{" "}
-                              {doc.metadata["pdf.info.Author"] ||
-                                doc.metadata.pdf.info.Author}
+                              {source.metadata["pdf.info.Author"] ||
+                                source.metadata.pdf.info.Author}
                               , page{" "}
-                              {doc.metadata["loc.pageNumber"] ||
-                                doc.metadata.loc.pageNumber}
+                              {source.metadata["loc.pageNumber"] ||
+                                source.metadata.loc.pageNumber}
                               .
                             </summary>
-                            <p style={{ fontSize: "75%" }}>{doc.pageContent}</p>
+                            <p style={{ fontSize: "75%" }}>
+                              {source.pageContent}
+                            </p>
                           </details>
                         </li>
                       ))}
                     </ol>
                   </details>
-                )}
+                ) : null}
               </div>
             </div>
           );
