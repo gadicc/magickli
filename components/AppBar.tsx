@@ -5,8 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import HomeIcon from "@mui/icons-material/Home";
-import ShareIcon from "@mui/icons-material/Share";
+
+import { Home, Share } from "@mui/icons-material";
 import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import { signIn, signOut } from "next-auth/react";
 
@@ -82,7 +82,7 @@ export default function ButtonAppBar({
               aria-label="menu"
               size="large"
             >
-              <HomeIcon />
+              <Home />
             </IconButton>
           </Link>
           <Typography variant="h6" className={classes.title}>
@@ -104,7 +104,7 @@ export default function ButtonAppBar({
             onClick={share}
             size="large"
           >
-            <ShareIcon />
+            <Share />
           </IconButton>
           {userId ? (
             <div>
