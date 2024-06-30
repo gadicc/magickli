@@ -9,7 +9,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ToastContainer, toast } from "react-toastify";
 import { Document as LangChainDocument } from "@langchain/core/documents";
-import type { ChatMessageMetaData } from "../app/chat/api/route";
+import type { ChatMessageMetaData } from "./api/route";
 
 import {
   Autorenew,
@@ -19,7 +19,6 @@ import {
   StopCircle,
 } from "@mui/icons-material";
 
-import AppBar from "../components/AppBar";
 import {
   Chip,
   CircularProgress,
@@ -88,7 +87,6 @@ export default function Chat() {
 
   return (
     <>
-      <AppBar title="MagickGPT" />
       <div id="messages">
         {messages.map(metaMessage).map((m) => {
           return (
