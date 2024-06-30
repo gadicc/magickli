@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
+import Image from "next/image";
 //import Link from '@mui/material/Link';
 
-import AppBar from "../components/AppBar";
-import Tiles from "../components/Tiles";
+import Tiles from "@/components/Tiles";
 
-import GDLogoSquished from "../src/goldendawn-logo-squished.svg";
-import GeomanticFigures from "../src/geomancy/Geomantic_figures.svg";
+import GDLogoSquished from "@/goldendawn-logo-squished.svg";
+import GeomanticFigures from "@/geomancy/Geomantic_figures.svg";
+import MagicalTemple from "./img/magical-temple.webp";
 import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import {
   AdminPanelSettings,
@@ -53,6 +54,13 @@ const tiles = [
     title: "Study",
     to: "/study",
   },
+  {
+    title: "Temple",
+    to: "/temple",
+    Component: () => (
+      <Image src={MagicalTemple} fill={true} alt="A Magical Temple" />
+    ),
+  },
 ];
 
 const adminTile = {
@@ -73,12 +81,7 @@ function Index() {
 
   const _tiles = user?.admin ? [adminTile, ...tiles] : tiles;
 
-  return (
-    <>
-      <AppBar title="Magick.ly" />
-      <Tiles tiles={_tiles} />
-    </>
-  );
+  return <Tiles tiles={_tiles} />;
 }
 
 export default Index;
