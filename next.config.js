@@ -1,10 +1,12 @@
-const withPWA = require("next-pwa")({
+import NextPWA from "next-pwa";
+
+const withPWA = NextPWA({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
   skipWaiting: false,
 });
 
-module.exports = withPWA({
+export default withPWA({
   eslint: {
     ignoreDuringBuilds: true,
   },
