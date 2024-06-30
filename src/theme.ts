@@ -28,5 +28,4 @@ const theme = createTheme({
   },
 });
 
-console.log(theme);
 export default theme;
