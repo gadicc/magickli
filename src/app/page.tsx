@@ -58,7 +58,14 @@ const tiles = [
     title: "Temples",
     to: "/temples",
     Component: () => (
-      <Image src={MagicalTemple} fill={true} alt="A Magical Temple" />
+      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+        <Image
+          src={MagicalTemple}
+          fill={true}
+          alt="A Magical Temple"
+          sizes="(max-width: 1200px) 300px"
+        />
+      </div>
     ),
   },
 ];
