@@ -6,4 +6,5 @@ export interface TempleMembership extends GongoClientDocument {
   templeId: string;
   grade: number;
   admin?: boolean;
+  addedAt: Date;
 }

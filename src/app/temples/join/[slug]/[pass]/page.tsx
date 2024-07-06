@@ -52,6 +52,7 @@ export default async function TemplesJoinPage({
     userId,
     templeId: temple._id,
     grade: 0,
+    addedAt: new Date(),
   });
 
   return <Page message="You have successfully joined the temple." />;
