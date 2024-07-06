@@ -4,7 +4,6 @@ import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
 
 import {
   Container,
-  Icon,
   IconButton,
   Paper,
   Table,
@@ -19,7 +18,7 @@ import {
 
 import "@/db";
 import { Temple } from "@/schemas";
-import { Edit, Save } from "@mui/icons-material";
+import { CheckBox, ContentCopy, Edit, Save, Share } from "@mui/icons-material";
 import { QRCode } from "react-qrcode";
 
 function Users({ templeId }: { templeId: string }) {
@@ -71,6 +70,7 @@ function JoinInfo({ temple }: { temple: Temple }) {
     location.origin + `/temples/join/${temple.slug}/${temple.joinPass}`;
   const [editingJoinPass, setEditingJoinPass] = React.useState(false);
   const [joinPass, setJoinPass] = React.useState(temple.joinPass || "");
+  const [justCopied, setJustCopied] = React.useState(false);
 
   return (
     <div>
@@ -133,14 +133,44 @@ function JoinInfo({ temple }: { temple: Temple }) {
         <div>
           <QRCode value={joinUrl} style={{ float: "right" }} />
           <div>
-            To have members join, have them <b>first</b> sign up on the sign,
-            and <b>then</b> either 1) send them this link, 2) have them scan the
-            QR code, or 3) have them click on their avatar, choose "Account", in
-            the "Temple Memberships" section, enter the Slug and Join Pass.
+            To have members join, either:
+            <ul>
+              <li>Let them scan the adjacent QR code</li>
+              <li>Send them the link below</li>
+              <li>
+                Direct them to the website, click on "Temples", and enter the{" "}
+                <i>slug</i> and <i>join pass</i> above.
+              </li>
+            </ul>
           </div>
-          <br />
           <div>
             <a href={joinUrl}>{joinUrl}</a>
+            <IconButton
+              disabled={justCopied}
+              onClick={() => {
+                navigator.clipboard.writeText(joinUrl);
+                setJustCopied(true);
+                setTimeout(() => setJustCopied(false), 2000);
+              }}
+            >
+              {justCopied ? <CheckBox /> : <ContentCopy />}
+            </IconButton>
+            {"share" in navigator ? (
+              <IconButton
+                disabled={justCopied}
+                onClick={() => {
+                  const data = {
+                    title: "Magick.ly",
+                    text: "Join " + temple.name + " Temple",
+                    url: joinUrl,
+                  };
+                  console.log(data);
+                  navigator.share(data);
+                }}
+              >
+                <Share />
+              </IconButton>
+            ) : null}
           </div>
         </div>
       ) : (
@@ -156,12 +186,14 @@ export default function AdminTemplesPage({ params: { _id } }) {
   if (!temple) return <div>Temple loading or not found...</div>;
 
   return (
-    <Container sx={{ my: 2 }}>
-      <Typography variant="h5">{temple?.name} Temple</Typography>
-      <br />
-      <JoinInfo temple={temple} />
-      <br />
-      <Users templeId={_id} />
-    </Container>
+    <>
+      <Container sx={{ my: 2 }}>
+        <Typography variant="h5">{temple?.name} Temple</Typography>
+        <br />
+        <JoinInfo temple={temple} />
+        <br />
+        <Users templeId={_id} />
+      </Container>
+    </>
   );
 }
