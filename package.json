@@ -60,7 +60,7 @@
     "react-markdown": "^8.0.7",
     "react-qrcode": "^0.3.6",
     "react-syntax-highlighter": "15.5.0",
-    "react-toastify": "^8.2.0",
+    "react-toastify": "10.0.5",
     "rehype-add-classes": "^1.0.0",
     "remark-gfm": "^3.0.1",
     "sharp": "^0.29.2",
