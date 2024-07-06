@@ -1,6 +1,5 @@
 // import IPData from "ipdata";
 import { NextApiRequest } from "next";
-import { NextRequest } from "next/server";
 
 /*
 let ipdata: IPData | null = null;
@@ -14,7 +13,7 @@ if (typeof window !== "object") {
 
 // taken from gongo;
 // TODO: export a method like this from gongo-server, that accepts x-fw number.
-function ipFromReq(req: NextApiRequest | NextRequest) {
+function ipFromReq(req: NextApiRequest) {
   // TODO, doesn't work on edge.
   let ip;
   if (req.headers["x-forwarded-for"]) {
@@ -22,7 +21,6 @@ function ipFromReq(req: NextApiRequest | NextRequest) {
       ip = req.headers["x-forwarded-for"].split(",")[0].trim();
     else ip = req.headers["x-forwarded-for"][0];
   } else {
-    // @ts-expect-error: TODO
     ip = (req.socket || req.connection)?.remoteAddress;
   }
   if (!ip)
