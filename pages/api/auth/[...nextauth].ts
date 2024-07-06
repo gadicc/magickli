@@ -63,6 +63,11 @@ export const authOptions = {
 
   callbacks: {
     // async session() <-- further below since it needs req/res access
+    // NB, overrided below as per above.  this is used for OTHER route handlers.
+    async session({ session, user }: { session: Session; user: AdapterUser }) {
+      session.user.id = user.id;
+      return session;
+    },
   },
 
   providers: [
