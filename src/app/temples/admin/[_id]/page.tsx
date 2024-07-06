@@ -138,7 +138,7 @@ function JoinInfo({ temple }: { temple: Temple }) {
               <li>Let them scan the adjacent QR code</li>
               <li>Send them the link below</li>
               <li>
-                Direct them to the website, click on "Temples", and enter the{" "}
+                Direct them to the website, click on &quot;Temples&quot;, and enter the{" "}
                 <i>slug</i> and <i>join pass</i> above.
               </li>
             </ul>

@@ -52,8 +52,8 @@ export default function TemplePage() {
 
       <Typography variant="h5">Join a Temple</Typography>
       <p>
-        If your temple uses Magick.ly services, they'll provide you with the
-        following:
+        If your temple uses Magick.ly services, they&apos;ll provide you with
+        the following:
       </p>
       <form onSubmit={onSubmit}>
         <TextField

@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const formData: FormData = await req.formData();
     const uploadedFiles = formData.getAll("filepond");
     let fileName = "";
-    let parsedText = "";
+    // let parsedText = "";
 
     if (uploadedFiles && uploadedFiles.length > 0) {
       // Parse the data from uploaded file
