@@ -226,11 +226,21 @@ gs.publish("userTemplesAndMemberships", async (db, opts, { auth }) => {
     },
     {
       coll: "temples",
-      entries: await db
-        .collection("temples")
-        .find({ _id: { $in: memberships.map((m) => m.templeId) } })
-        .project({ joinPass: false })
-        .toArray(),
+      entries: (
+        await db
+          .collection("temples")
+          .find({ _id: { $in: memberships.map((m) => m.templeId) } })
+          .toArray()
+      ).map((temple) => {
+        const membership = memberships.find((m) =>
+          m.templeId.equals(temple._id)
+        );
+        if (membership?.admin) return temple;
+        else {
+          const { joinPass, ...rest } = temple;
+          return rest;
+        }
+      }),
     },
   ];
 });

@@ -32,7 +32,14 @@ export default function TemplePage() {
         {temples.map((temple) => (
           <li key={temple._id}>
             {temple.name} (grade {temple.membership.grade}
-            {temple.membership.admin ? ", admin" : ""})
+            {temple.membership.admin ? (
+              <span>
+                , <a href={"/temples/admin/" + temple._id}>admin</a>
+              </span>
+            ) : (
+              ""
+            )}
+            )
           </li>
         ))}
       </ul>

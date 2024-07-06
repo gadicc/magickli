@@ -25,7 +25,7 @@ export default function AdminTemplesPage() {
       <ol>
         {temples.map((temple) => (
           <li key={temple._id} style={{ marginBottom: 5 }}>
-            <a href={"/admin/temples/" + temple._id}>{temple.name}</a>
+            <a href={"/temples/admin/" + temple._id}>{temple.name}</a>
           </li>
         ))}
         <li>

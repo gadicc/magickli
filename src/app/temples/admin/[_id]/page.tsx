@@ -23,6 +23,7 @@ import { Edit, Save } from "@mui/icons-material";
 import { QRCode } from "react-qrcode";
 
 function Users({ templeId }: { templeId: string }) {
+  useGongoSub("userTemplesAndMemberships");
   useGongoSub("usersForTempleAdmin", { _id: templeId });
   const memberships = useGongoLive((db) =>
     db.collection("templeMemberships").find({ templeId })
@@ -66,7 +67,8 @@ function Users({ templeId }: { templeId: string }) {
 }
 
 function JoinInfo({ temple }: { temple: Temple }) {
-  const joinUrl = location.origin + `/join/${temple.slug}/${temple.joinPass}`;
+  const joinUrl =
+    location.origin + `/temples/join/${temple.slug}/${temple.joinPass}`;
   const [editingJoinPass, setEditingJoinPass] = React.useState(false);
   const [joinPass, setJoinPass] = React.useState(temple.joinPass || "");
 
