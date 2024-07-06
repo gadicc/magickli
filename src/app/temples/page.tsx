@@ -28,21 +28,25 @@ export default function TemplePage() {
   return (
     <Container sx={{ my: 2 }}>
       <Typography variant="h5">My Temples</Typography>
-      <ul>
-        {temples.map((temple) => (
-          <li key={temple._id}>
-            {temple.name} (grade {temple.membership.grade}
-            {temple.membership.admin ? (
-              <span>
-                , <a href={"/temples/admin/" + temple._id}>admin</a>
-              </span>
-            ) : (
-              ""
-            )}
-            )
-          </li>
-        ))}
-      </ul>
+      {temples.length === 0 ? (
+        <p>You are not currently a member of any temples.</p>
+      ) : (
+        <ul>
+          {temples.map((temple) => (
+            <li key={temple._id}>
+              {temple.name} (grade {temple.membership.grade}
+              {temple.membership.admin ? (
+                <span>
+                  , <a href={"/temples/admin/" + temple._id}>admin</a>
+                </span>
+              ) : (
+                ""
+              )}
+              )
+            </li>
+          ))}
+        </ul>
+      )}
 
       <br />
 

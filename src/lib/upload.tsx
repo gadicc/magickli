@@ -2,7 +2,7 @@ import React from "react";
 import type {
   FileEntry,
   FileError,
-} from "@/../app/api/file2/createFileFromBuffer";
+} from "@/app/api/file2/createFileFromBuffer";
 import { sha256bytes } from "./sha256";
 
 export default function Upload({
