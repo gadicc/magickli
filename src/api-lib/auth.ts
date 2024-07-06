@@ -1,24 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import NextAuth, { Session } from "next-auth";
-// import { MongoDBAdapter } from "@auth/mongodb-adapter";
-// import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-// import clientPromise from "../../src/api-lib/mongodb";
-
-// import GithubProvider from "next-auth/providers/github";
-// import GithubProvider from "../../../src/api-lib/GithubProvider";
+import NextAuth from "next-auth";
+// import GitHub from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-/*
-import TwitterProvider, {
-  TwitterLegacyProfile,
-} from "next-auth/providers/twitter";
-*/
 
-import gs from "../../../src/api-lib/db"; // -full
-import GongoAuthAdapter, {
-  AdapterUser,
-} from "../../../src/api-lib/gongoAuthAdapter";
-import { ipFromReq } from "../../../src/api-lib/ipCheck";
-import { ObjectId } from "bson";
+import gs from "./db"; // -full
+import GongoAuthAdapter, { AdapterUser } from "./gongoAuthAdapter";
+import { ObjectId } from "gongo-server-db-mongo";
+import { ipFromReq } from "./ipCheck";
 
 interface Service {
   service: string;
@@ -58,11 +45,17 @@ function newUserFromService<T extends Record<string, unknown>>(
   };
 }
 
-export const authOptions = {
+const authOptions = {
   adapter: GongoAuthAdapter(gs),
 
   callbacks: {
     // async session() <-- further below since it needs req/res access
+    /*
+    redirect: async (...args) => {
+      console.log(args);
+      return;
+    },
+    */
   },
 
   providers: [
@@ -114,7 +107,7 @@ export const authOptions = {
             id: profile.sub,
             displayName: profile.name,
             name: {
-              familyName: profile.family_name,
+              familyName: profile.family_name || "",
               givenName: profile.given_name,
             },
             emails: [
@@ -163,20 +156,14 @@ export const authOptions = {
   ],
 };
 
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  // @ ts-expect-error: problem with MongoDBAdapter
-  return await NextAuth(req, res, {
+export const { auth, handlers, signIn, signOut } = NextAuth((req) => {
+  if (!req) return authOptions;
+
+  return {
     ...authOptions,
     callbacks: {
       ...authOptions.callbacks,
-      // Let's only put callbacks here that require access to req/res.
-      async session({
-        session,
-        user,
-      }: {
-        session: Session;
-        user: AdapterUser;
-      }) {
+      async session({ session, user }) {
         session.user.id = user.id;
         // console.log("session", session);
 
@@ -201,5 +188,5 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         return session;
       },
     },
-  });
-}
+  };
+});
