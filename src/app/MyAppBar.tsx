@@ -21,7 +21,6 @@ import db, { enableNetwork } from "@/db";
 import pathnames from "./pathnames";
 // import { SITE_TITLE } from "@/api-lib/consts";
 const SITE_TITLE = "Magick.ly";
-console.log("MyApPBar");
 
 export default function ButtonAppBar() {
   const pathname = usePathname();

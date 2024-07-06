@@ -55,8 +55,8 @@ const tiles = [
     to: "/study",
   },
   {
-    title: "Temple",
-    to: "/temple",
+    title: "Temples",
+    to: "/temples",
     Component: () => (
       <Image src={MagicalTemple} fill={true} alt="A Magical Temple" />
     ),

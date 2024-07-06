@@ -208,6 +208,33 @@ gs.publish("usersForTempleAdmin", async (db, { _id }, { auth }) => {
   ];
 });
 
+gs.publish("userTemplesAndMemberships", async (db, opts, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const memberships = await db
+    .collection("templeMemberships")
+    .find({ userId: new ObjectId(userId) })
+    .toArray();
+
+  if (!memberships) return [];
+
+  return [
+    {
+      coll: "templeMemberships",
+      entries: memberships,
+    },
+    {
+      coll: "temples",
+      entries: await db
+        .collection("temples")
+        .find({ _id: { $in: memberships.map((m) => m.templeId) } })
+        .project({ joinPass: false })
+        .toArray(),
+    },
+  ];
+});
+
 async function userIsGroupAdmin(
   doc: Document | ChangeSetUpdate | string,
   { dba, auth, collection }: CollectionEventProps
