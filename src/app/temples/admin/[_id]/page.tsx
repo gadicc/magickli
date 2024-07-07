@@ -217,7 +217,10 @@ function Users({ templeId }: { templeId: string }) {
                   {user.membership.addedAt.toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  <IconButton size="small">
+                  <IconButton
+                    size="small"
+                    href={`/temples/admin/${templeId}/membership/${user.membership._id}`}
+                  >
                     <Edit fontSize="small" />
                   </IconButton>
                 </TableCell>

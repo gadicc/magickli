@@ -1,7 +1,7 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
-// import { LocalizationProvider } from "@mui/x-date-pickers";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function ClientProviders({
   children,
@@ -10,9 +10,9 @@ export default function ClientProviders({
 }) {
   return (
     <SessionProvider>
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}> */}
-      {children}
-      {/* </SessionProvider></LocalizationProvider> */}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {children}
+      </LocalizationProvider>
     </SessionProvider>
   );
 }
