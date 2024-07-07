@@ -1,6 +1,11 @@
 "use client";
 import React from "react";
-import { useGongoSub, useGongoLive, db } from "gongo-client-react";
+import {
+  useGongoSub,
+  useGongoLive,
+  db,
+  useGongoUserId,
+} from "gongo-client-react";
 import slug from "slug";
 
 import { Container, Typography } from "@mui/material";
@@ -10,12 +15,16 @@ import "@/db";
 export default function AdminTemplesPage() {
   useGongoSub("templesForAdmins");
   const temples = useGongoLive((db) => db.collection("temples").find());
+  const userId = useGongoUserId();
   const [newTempleName, setNewTempleName] = React.useState("");
 
   function addTemple() {
-    const insertedDoc = db
-      .collection("temples")
-      .insert({ name: newTempleName, slug: slug(newTempleName) });
+    if (!userId) return alert("No user id");
+    const insertedDoc = db.collection("temples").insert({
+      name: newTempleName,
+      slug: slug(newTempleName),
+      createdBy: userId,
+    });
     setNewTempleName("");
   }
 

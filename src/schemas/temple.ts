@@ -5,4 +5,5 @@ export interface Temple extends GongoClientDocument {
   name: string;
   slug: string;
   joinPass?: string;
+  createdBy: string;
 }
