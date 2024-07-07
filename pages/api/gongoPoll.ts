@@ -286,6 +286,55 @@ async function userIsGroupAdmin(
     : true;
 }
 
+async function userIsTempleAdmin(
+  doc: Document | ChangeSetUpdate | string,
+  { dba, auth, collection }: CollectionEventProps
+) {
+  const userId = await auth.userId();
+  if (!userId) return "NOT_LOGGED_IN";
+
+  const user = await dba.collection("users").findOne({ _id: userId });
+  if (!user) return "USER_NOT_FOUND";
+
+  async function getMembership(doc) {
+    const templeId = collection.name === "temples" ? doc._id : doc.templeId;
+    if (!templeId) return null;
+
+    return await dba.collection("templeMemberships").findOne({
+      userId,
+      templeId,
+    });
+  }
+
+  if (typeof doc === "object" && "patch" in doc) {
+    // Update
+    const existingDoc = await collection.findOne(doc._id);
+    if (!existingDoc) return "NO_EXISTING_DOC";
+
+    const membership = await getMembership(existingDoc);
+    return membership?.admin || user.admin || "not temple admin";
+  }
+
+  // DELETES (doc is an ObjectId)
+  if (doc instanceof ObjectId || typeof doc === "string") {
+    const docId = typeof doc === "string" ? new ObjectId(doc) : doc;
+    const existingDoc = await collection.findOne(docId);
+    if (!existingDoc) return "NO_EXISTING_DOC";
+
+    const membership = await getMembership(existingDoc);
+    return membership?.admin || user.admin || "not temple admin";
+  }
+
+  if (collection.name === "temples") {
+    // Anyone can create a Temple.  And can't be a temple admin for
+    // an uncreated temple.
+    return true;
+  }
+
+  const membership = await getMembership(doc);
+  return membership?.admin || user.admin || "not temple admin";
+}
+
 if (gs.dba) {
   const db = gs.dba;
 
@@ -294,7 +343,7 @@ if (gs.dba) {
   studySet.allow("update", userIdMatches);
   studySet.allow("remove", userIdMatches);
 
-  for (const collName of ["users", "userGroups", "temples"]) {
+  for (const collName of ["users", "userGroups"]) {
     const coll = db.collection(collName);
     coll.allow("insert", userIsAdmin);
     coll.allow("update", userIsAdmin);
@@ -305,6 +354,16 @@ if (gs.dba) {
   docs.allow("insert", userIsGroupAdmin);
   docs.allow("update", userIsGroupAdmin);
   docs.allow("remove", userIsGroupAdmin);
+
+  const temples = db.collection("temples");
+  temples.allow("insert", userIsTempleAdmin);
+  temples.allow("update", userIsTempleAdmin);
+  temples.allow("remove", userIsTempleAdmin);
+
+  const templeMemberships = db.collection("templeMemberships");
+  templeMemberships.allow("insert", userIsTempleAdmin);
+  templeMemberships.allow("update", userIsTempleAdmin);
+  templeMemberships.allow("remove", userIsTempleAdmin);
 }
 
 const handler = gs.expressPost();

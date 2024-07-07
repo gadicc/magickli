@@ -26,6 +26,20 @@ export default function AdminTemplesPage() {
       createdBy: userId,
     });
     setNewTempleName("");
+
+    const templeId = insertedDoc._id;
+    if (!templeId)
+      return alert(
+        "Failed to insert temple membership, no temple id in inserted doc"
+      );
+
+    db.collection("templeMemberships").insert({
+      userId,
+      templeId,
+      admin: true,
+      grade: 0,
+      addedAt: new Date(),
+    });
   }
 
   return (

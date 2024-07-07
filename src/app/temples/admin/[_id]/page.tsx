@@ -4,8 +4,13 @@ import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
 
 import {
   Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
   IconButton,
   Paper,
+  Radio,
+  RadioGroup,
   Table,
   TableBody,
   TableCell,
@@ -20,50 +25,6 @@ import "@/db";
 import { Temple } from "@/schemas";
 import { CheckBox, ContentCopy, Edit, Save, Share } from "@mui/icons-material";
 import { QRCode } from "react-qrcode";
-
-function Users({ templeId }: { templeId: string }) {
-  useGongoSub("userTemplesAndMemberships");
-  useGongoSub("usersForTempleAdmin", { _id: templeId });
-  const memberships = useGongoLive((db) =>
-    db.collection("templeMemberships").find({ templeId })
-  );
-
-  const users = React.useMemo(() => {
-    return memberships.map((m) => ({
-      ...db.collection("users").findOne({ _id: m.userId }),
-      membership: m,
-    }));
-  }, [memberships]);
-
-  return (
-    <div>
-      <Typography variant="h6">Users</Typography>
-      <TableContainer component={Paper}>
-        <Table aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell width={50}>Grade</TableCell>
-              <TableCell>Name</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow
-                key={user._id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {user.membership.grade}
-                </TableCell>
-                <TableCell>{user.displayName}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
-}
 
 function JoinInfo({ temple }: { temple: Temple }) {
   const joinUrl =
@@ -138,8 +99,8 @@ function JoinInfo({ temple }: { temple: Temple }) {
               <li>Let them scan the adjacent QR code</li>
               <li>Send them the link below</li>
               <li>
-                Direct them to the website, click on &quot;Temples&quot;, and enter the{" "}
-                <i>slug</i> and <i>join pass</i> above.
+                Direct them to the website, click on &quot;Temples&quot;, and
+                enter the <i>slug</i> and <i>join pass</i> above.
               </li>
             </ul>
           </div>
@@ -176,6 +137,95 @@ function JoinInfo({ temple }: { temple: Temple }) {
       ) : (
         <div>Set a join pass above to show the invite link and QR code</div>
       )}
+    </div>
+  );
+}
+
+function Users({ templeId }: { templeId: string }) {
+  const [sortBy, setSortBy] = React.useState("addedAt");
+
+  useGongoSub("userTemplesAndMemberships");
+  useGongoSub("usersForTempleAdmin", { _id: templeId });
+
+  const memberships = useGongoLive((db) =>
+    db.collection("templeMemberships").find({ templeId })
+  );
+
+  const _users = React.useMemo(() => {
+    return memberships.map((m) => ({
+      ...db.collection("users").findOne({ _id: m.userId }),
+      membership: m,
+    }));
+  }, [memberships]);
+
+  const users = React.useMemo(() => {
+    const users = [..._users];
+    // @ts-expect-error: huh?
+    users.sort((a, b) => {
+      if (sortBy === "addedAt") {
+        return a.membership.addedAt.getTime() - b.membership.addedAt.getTime();
+      } else if (sortBy === "grade") {
+        return a.membership.grade - b.membership.grade;
+      } else if (sortBy === "name") {
+        return (a.displayName || "").localeCompare(b.displayName || "");
+      }
+    });
+    return users;
+  }, [_users, sortBy]);
+
+  return (
+    <div>
+      <Typography variant="h6">Users</Typography>
+      <FormControl>
+        <FormLabel id="sortBy-radio-buttons-group-label">Sort By</FormLabel>
+        <RadioGroup
+          aria-labelledby="sortBy-radio-buttons-group-label"
+          defaultValue="addedAt"
+          name="radio-buttons-group"
+          row
+        >
+          <FormControlLabel
+            value="addedAt"
+            control={<Radio />}
+            label="Added at"
+          />
+          <FormControlLabel value="grade" control={<Radio />} label="Grade" />
+          <FormControlLabel value="name" control={<Radio />} label="Name" />
+        </RadioGroup>
+      </FormControl>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell width={50}>Grade</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Added</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow
+                key={user._id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {user.membership.grade}
+                </TableCell>
+                <TableCell>{user.displayName}</TableCell>
+                <TableCell>
+                  {user.membership.addedAt.toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  <IconButton size="small">
+                    <Edit fontSize="small" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
