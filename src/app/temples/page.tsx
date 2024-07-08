@@ -1,12 +1,18 @@
 "use client";
 import { Button, Container, TextField, Typography } from "@mui/material";
-import { db, useGongoLive, useGongoSub } from "gongo-client-react";
+import {
+  db,
+  useGongoLive,
+  useGongoSub,
+  useGongoUserId,
+} from "gongo-client-react";
 import React from "react";
 
 export default function TemplePage() {
+  const userId = useGongoUserId();
   useGongoSub("userTemplesAndMemberships");
   const memberships = useGongoLive((db) =>
-    db.collection("templeMemberships").find()
+    db.collection("templeMemberships").find({ userId })
   );
   const temples = React.useMemo(
     () =>
