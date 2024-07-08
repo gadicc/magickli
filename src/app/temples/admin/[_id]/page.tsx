@@ -3,9 +3,11 @@ import React from "react";
 import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
 
 import {
+  Checkbox,
   Container,
   FormControl,
   FormControlLabel,
+  FormGroup,
   FormLabel,
   IconButton,
   Paper,
@@ -23,7 +25,14 @@ import {
 
 import "@/db";
 import { Temple } from "@/schemas";
-import { CheckBox, ContentCopy, Edit, Save, Share } from "@mui/icons-material";
+import {
+  AdminPanelSettings,
+  CheckBox,
+  ContentCopy,
+  Edit,
+  Save,
+  Share,
+} from "@mui/icons-material";
 import { QRCode } from "react-qrcode";
 
 function JoinInfo({ temple }: { temple: Temple }) {
@@ -143,6 +152,7 @@ function JoinInfo({ temple }: { temple: Temple }) {
 
 function Users({ templeId }: { templeId: string }) {
   const [sortBy, setSortBy] = React.useState("addedAt");
+  const [useMotto, setUseMotto] = React.useState(false);
 
   useGongoSub("userTemplesAndMemberships");
   useGongoSub("usersForTempleAdmin", { _id: templeId });
@@ -167,11 +177,17 @@ function Users({ templeId }: { templeId: string }) {
       } else if (sortBy === "grade") {
         return a.membership.grade - b.membership.grade;
       } else if (sortBy === "name") {
+        if (useMotto)
+          return (
+            (a.membership.motto || "").localeCompare(
+              b.membership.motto || ""
+            ) || (a.displayName || "").localeCompare(b.displayName || "")
+          );
         return (a.displayName || "").localeCompare(b.displayName || "");
       }
     });
     return users;
-  }, [_users, sortBy]);
+  }, [_users, sortBy, useMotto]);
 
   return (
     <div>
@@ -180,7 +196,8 @@ function Users({ templeId }: { templeId: string }) {
         <FormLabel id="sortBy-radio-buttons-group-label">Sort By</FormLabel>
         <RadioGroup
           aria-labelledby="sortBy-radio-buttons-group-label"
-          defaultValue="addedAt"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
           name="radio-buttons-group"
           row
         >
@@ -193,6 +210,17 @@ function Users({ templeId }: { templeId: string }) {
           <FormControlLabel value="name" control={<Radio />} label="Name" />
         </RadioGroup>
       </FormControl>
+      <FormGroup>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={useMotto}
+              onChange={(e) => setUseMotto(e.target.checked)}
+            />
+          }
+          label="Motto"
+        />
+      </FormGroup>
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
@@ -210,9 +238,19 @@ function Users({ templeId }: { templeId: string }) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {user.membership.grade}
+                  {user.membership.grade}{" "}
+                  {user.membership.admin ? (
+                    <AdminPanelSettings
+                      fontSize="small"
+                      sx={{ verticalAlign: "bottom" }}
+                    />
+                  ) : null}
                 </TableCell>
-                <TableCell>{user.displayName}</TableCell>
+                <TableCell>
+                  {useMotto
+                    ? user.membership.motto || "(" + user.displayName + ")"
+                    : user.displayName}{" "}
+                </TableCell>
                 <TableCell>
                   {user.membership.addedAt.toLocaleDateString()}
                 </TableCell>

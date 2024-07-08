@@ -17,6 +17,7 @@ import dayjs, { type Dayjs } from "dayjs";
 export const templeMembershipSchema = z.object({
   _id: z.string(),
   userId: z.string(),
+  motto: z.string().optional(),
   templeId: z.string(),
   grade: z.coerce.number().int().positive(),
   admin: z.boolean().optional(),

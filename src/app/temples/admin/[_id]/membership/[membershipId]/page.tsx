@@ -76,30 +76,38 @@ export default function TemplesAdminEditMembershipPage({
       <br />
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
-          {...fr("grade")}
-          type="number"
-          label="Grade"
+          {...fr("motto")}
+          label="Motto"
           InputLabelProps={{ shrink: true }}
+          fullWidth
+          sx={{ marginBottom: 2 }}
         />
-        <br />
-        <Controller
-          name="admin"
-          control={control}
-          render={({ field }) => (
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={field.value || false}
-                    onChange={field.onChange}
-                    onBlur={field.onBlur}
-                  />
-                }
-                label="Admin"
-              />
-            </FormGroup>
-          )}
-        />
+        <Stack direction="row" spacing={2} sx={{ marginBottom: 2 }}>
+          <TextField
+            {...fr("grade")}
+            type="number"
+            label="Grade"
+            InputLabelProps={{ shrink: true }}
+          />
+          <Controller
+            name="admin"
+            control={control}
+            render={({ field }) => (
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={field.value || false}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                    />
+                  }
+                  label="Admin"
+                />
+              </FormGroup>
+            )}
+          />
+        </Stack>
         <Stack spacing={1} direction="row">
           <Button
             variant="outlined"
