@@ -168,8 +168,8 @@ function Users({ templeId }: { templeId: string }) {
     }));
   }, [memberships]);
 
-  const order = -1;
   const users = React.useMemo(() => {
+    const order = ["addedAt", "grade"].includes(sortBy) ? -1 : 1;
     const users = [..._users];
     // @ts-expect-error: huh?
     users.sort((a, b) => {
@@ -192,7 +192,7 @@ function Users({ templeId }: { templeId: string }) {
       }
     });
     return users;
-  }, [_users, sortBy, useMotto, order]);
+  }, [_users, sortBy, useMotto]);
 
   return (
     <div>
