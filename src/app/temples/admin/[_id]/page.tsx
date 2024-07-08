@@ -168,26 +168,31 @@ function Users({ templeId }: { templeId: string }) {
     }));
   }, [memberships]);
 
+  const order = -1;
   const users = React.useMemo(() => {
     const users = [..._users];
     // @ts-expect-error: huh?
     users.sort((a, b) => {
       if (sortBy === "addedAt") {
-        return a.membership.addedAt.getTime() - b.membership.addedAt.getTime();
+        return (
+          (a.membership.addedAt.getTime() - b.membership.addedAt.getTime()) *
+          order
+        );
       } else if (sortBy === "grade") {
-        return a.membership.grade - b.membership.grade;
+        return (a.membership.grade - b.membership.grade) * order;
       } else if (sortBy === "name") {
         if (useMotto)
           return (
-            (a.membership.motto || "").localeCompare(
+            ((a.membership.motto || "").localeCompare(
               b.membership.motto || ""
-            ) || (a.displayName || "").localeCompare(b.displayName || "")
+            ) || (a.displayName || "").localeCompare(b.displayName || "")) *
+            order
           );
-        return (a.displayName || "").localeCompare(b.displayName || "");
+        return (a.displayName || "").localeCompare(b.displayName || "") * order;
       }
     });
     return users;
-  }, [_users, sortBy, useMotto]);
+  }, [_users, sortBy, useMotto, order]);
 
   return (
     <div>
