@@ -22,7 +22,11 @@ export const templeMembershipSchema = z.object({
   grade: z.coerce.number().int().positive(),
   admin: z.boolean().optional(),
   addedAt: z.date(),
-  memberSince: z.date().optional(),
+  memberSince: z
+    .date()
+    .or(z.instanceof(dayjs as unknown as typeof Dayjs))
+    .or(z.null())
+    .optional(),
 });
 
 export type TempleMembership = GongoClientDocument &

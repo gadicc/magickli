@@ -226,7 +226,7 @@ function Users({ templeId }: { templeId: string }) {
           <TableHead>
             <TableRow>
               <TableCell width={50}>Grade</TableCell>
-              <TableCell>Name</TableCell>
+              <TableCell>{useMotto ? "Motto" : "Name"}</TableCell>
               <TableCell>Added</TableCell>
               <TableCell></TableCell>
             </TableRow>

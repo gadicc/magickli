@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+import { useGongoSub, useGongoOne, db } from "gongo-client-react";
+import { useRouter } from "next/navigation";
+
 import {
   Button,
   Checkbox,
@@ -10,11 +13,12 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useGongoSub, useGongoOne, db } from "gongo-client-react";
+import { DatePicker } from "@mui/x-date-pickers";
 
 import { useForm } from "@/lib/forms";
 import { TempleMembership, templeMembershipSchema } from "@/schemas";
-import { useRouter } from "next/navigation";
+import dayjs, { Dayjs } from "dayjs";
+import { useWatch } from "react-hook-form";
 
 export default function TemplesAdminEditMembershipPage({
   params: { _id, membershipId },
@@ -55,9 +59,16 @@ export default function TemplesAdminEditMembershipPage({
     membership: TempleMembership,
     _event?: React.BaseSyntheticEvent
   ) {
-    console.log("submit", membership);
+    // console.log("submit", membership);
 
     const { _id, userId, templeId, addedAt, ...$set } = membership;
+
+    if ($set.memberSince instanceof dayjs)
+      $set.memberSince = ($set.memberSince as unknown as Dayjs).toDate();
+
+    // console.log("$set", $set);
+    // return;
+
     db.collection("templeMemberships").update(membershipId, { $set });
 
     const event = _event as
@@ -68,13 +79,15 @@ export default function TemplesAdminEditMembershipPage({
     if (dest === "back") router.back();
   }
 
+  const onErrors = (errors) => console.error(errors);
+
   return (
     <Container sx={{ my: 2 }}>
       <Typography variant="h5">Edit Membership</Typography>
       {user?.displayName} in {temple?.name} Temple
       <br />
       <br />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onErrors)}>
         <TextField
           {...fr("motto")}
           label="Motto"
@@ -108,6 +121,27 @@ export default function TemplesAdminEditMembershipPage({
             )}
           />
         </Stack>
+        <Controller
+          rules={{ required: true }}
+          control={control}
+          name="memberSince"
+          render={({ field, fieldState }) => (
+            <DatePicker
+              label="Member since"
+              value={field.value ? dayjs(field.value) : null}
+              onChange={field.onChange}
+              sx={{ marginBottom: 2 }}
+              slotProps={{
+                field: {
+                  clearable: true,
+                },
+                textField: {
+                  helperText: fieldState.error?.message,
+                },
+              }}
+            />
+          )}
+        />
         <Stack spacing={1} direction="row">
           <Button
             variant="outlined"
