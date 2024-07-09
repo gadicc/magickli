@@ -1,5 +1,14 @@
+"use client";
+
+/*
+WHERE?
+You are loading @emotion/react when it is already loaded. Running multiple
+instances may cause problems. This can happen if multiple versions are used,
+or if multiple builds of the same version are used.
+*/
+
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGongoSub, useGongoOne } from "gongo-client-react";
 
 import {
@@ -28,16 +37,18 @@ import {
   ArrowUpward as ArrowUpwardIcon,
 } from "@mui/icons-material";
 
-import DocContext from "../../src/doc/context";
-import AppBar from "../../components/AppBar";
-import { Render } from "../../src/doc/blocks";
-import "../../public/fonts/FrankRuehlCLM-stylesheet.css";
+import DocContext from "@/doc/context";
+import { Render } from "@/doc/blocks";
+import "@/../public/fonts/FrankRuehlCLM-stylesheet.css";
 
-import { prepare } from "../../src/doc/prepare";
+import { prepare } from "@/doc/prepare";
 // import neophyte from "../../src/doc/neophyte.yaml";
-import _neophyte from "!!raw-loader!../../src/doc/0=0.jade";
+// @ts-expect-error: ok
+import _neophyte from "!!raw-loader!@/doc/0=0.jade";
 // import _neophyteM from "!!raw-loader!../../src/doc/0=0m.jade";
-import _zelator from "!!raw-loader!../../src/doc/1=10.jade";
+// @ts-expect-error: ok
+import _zelator from "!!raw-loader!@/doc/1=10.jade";
+import { DocNode } from "@/schemas";
 // import _healing from "!!raw-loader!../../src/doc/healing.jade";
 // import _chesedTalisman from "!!raw-loader!../../src/doc/chesed-talisman.jade";
 
@@ -176,6 +187,7 @@ function ShowVars({ vars, context }) {
                   label={v.label}
                   value={context.vars[v.name].value}
                   onChange={(e) => context.vars[v.name].set(e.target.value)}
+                  sx={{ minWidth: 200 }}
                 >
                   {v.children.map((option) => (
                     <MenuItem key={option.value} value={option.value}>
@@ -318,12 +330,9 @@ function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
   );
 }
 
-function DocLoader() {
-  const router = useRouter();
-  const _id = router.query._id;
-
+function DocLoader({ params: { _id } }: { params: { _id: string } }) {
   const builtinDoc = docs[_id];
-  useGongoSub("doc", !builtinDoc && { _id });
+  useGongoSub(!builtinDoc && "doc", { _id });
   const dbDoc = useGongoOne(
     (db) => !builtinDoc && db.collection("docs").find({ _id })
   );
@@ -336,10 +345,14 @@ function DocLoader() {
 }
 
 // Ok for whatever reason this stops the error but doesn't "catch" it (i.e. no logs)
-class ErrorBoundary extends React.Component {
+class ErrorBoundary extends React.Component<{
+  fallback?: React.ReactElement;
+  children: React.ReactElement;
+}> {
+  state = { hasError: false };
+
   constructor(props) {
     super(props);
-    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error) {
@@ -361,28 +374,42 @@ class ErrorBoundary extends React.Component {
     // console.log(this.state);
     if (this.state.hasError) {
       // You can render any custom fallback UI
-      return this.props.fallback;
+      return this.props.fallback || "ErrorBoundary";
     }
 
     return this.props.children;
   }
 }
 
-function Doc({ doc }) {
+function Doc({ doc }: { doc: DocNode }) {
   // console.log({ doc });
   const router = useRouter();
+  const searchParams = useSearchParams();
   //const doc = { children: [{ type: "text", value: "hi" }] };
   //const [doc, setDoc] = React.useState(origDoc);
 
-  const titles = doc.children
-    .filter((c) => c.type === "title")
-    .map((b) => b.text);
+  const titles =
+    doc.children?.filter((c) => c.type === "title").map((b) => b.text) || [];
 
-  const vars = doc.children.filter((c) => c.type === "declareVar");
+  type VarDesc = {
+    type: "declareVar";
+    name: string;
+    default: string;
+    collapsable?: boolean;
+  };
+  const vars = React.useMemo(
+    () =>
+      (doc.children?.filter((c) => c.type === "declareVar") || []) as VarDesc[],
+    [doc.children]
+  );
 
   const [sdOpen, setSdOpen] = React.useState(false);
-  const [tocAnchorEl, setTocAnchorEl] = React.useState(null);
-  const [zoomAnchorEl, setZoomAnchorEl] = React.useState(null);
+  const [tocAnchorEl, setTocAnchorEl] = React.useState<
+    (EventTarget & HTMLDivElement) | null
+  >(null);
+  const [zoomAnchorEl, setZoomAnchorEl] = React.useState<
+    (EventTarget & HTMLDivElement) | null
+  >(null);
 
   const navParts = [{ title: "Rituals", url: "/hogd/rituals" }];
   const [fontSize, setFontSize] = React.useState(100);
@@ -390,26 +417,28 @@ function Doc({ doc }) {
   const context = { vars: {}, roles };
   for (const varDesc of vars) {
     // const [value, set] = React.useState(varDesc.default);
-    const value =
-      router.query[varDesc.name] === undefined
-        ? varDesc.default
-        : router.query[varDesc.name];
-    const set = (value) =>
-      router.replace(
-        { query: { ...router.query, [varDesc.name]: value } },
-        undefined,
-        {
-          scroll: false,
-          shallow: true,
-        }
-      );
+    const value = searchParams?.get(varDesc.name) || varDesc.default;
+    const set = (value) => {
+      const newParams = new URLSearchParams(searchParams || {});
+      newParams.set(varDesc.name, value);
+      const url =
+        location.href.substring(0, -location.search.length) +
+        "?" +
+        newParams.toString();
+
+      router.replace(url, {
+        scroll: false,
+        // shallow: true,
+      });
+    };
     context.vars[varDesc.name] = { value, set };
   }
+  // console.log("context", context);
 
   const [alwaysVars, collapsableVars] = React.useMemo(() => {
     // console.log(vars);
-    const alwaysVars = [],
-      collapsableVars = [];
+    const alwaysVars: VarDesc[] = [],
+      collapsableVars: VarDesc[] = [];
     for (const variable of vars)
       if (variable.collapsable) collapsableVars.push(variable);
       else alwaysVars.push(variable);
@@ -418,7 +447,7 @@ function Doc({ doc }) {
 
   const [nextPos, setNextPos] = React.useState(0);
   const [currentPos, setCurrentPos] = React.useState(0);
-  const jumped = React.useRef();
+  const jumped = React.useRef<number | false>(false);
 
   React.useEffect(() => {
     function scrollListener(event) {
@@ -428,20 +457,30 @@ function Doc({ doc }) {
 
       // TODO, re-implement with binary search.
       // const start = Date.now();
-      for (let i = 0; i < doc.children.length; i++) {
-        const node = doc.children[i];
-        if (node.type !== "task") continue;
-        if (node.forMe && !nextPosSet && node.ref.current.offsetTop > bottom) {
-          nextPosSet = true;
-          setNextPos(i);
-        } else {
-          if (!currentPosSet && node.ref.current.offsetTop > bottom) {
-            currentPosSet = true;
-            setCurrentPos(i - 1);
+      if (doc.children)
+        for (let i = 0; i < doc.children.length; i++) {
+          const node = doc.children[i];
+          if (node.type !== "task") continue;
+          if (
+            node.forMe &&
+            !nextPosSet &&
+            node?.ref?.current &&
+            node.ref.current.offsetTop > bottom
+          ) {
+            nextPosSet = true;
+            setNextPos(i);
+          } else {
+            if (
+              !currentPosSet &&
+              node?.ref?.current &&
+              node.ref.current.offsetTop > bottom
+            ) {
+              currentPosSet = true;
+              setCurrentPos(i - 1);
+            }
           }
+          if (nextPosSet && currentPosSet) break;
         }
-        if (nextPosSet && currentPosSet) break;
-      }
       // console.log("diff " + (Date.now() - start) + "ms");
       // console.log(window.pageYOffset);
     }
@@ -453,14 +492,7 @@ function Doc({ doc }) {
 
   return (
     <>
-      <HideOnScroll>
-        <div style={{ position: "fixed", width: "100%", zIndex: 1000 }}>
-          <AppBar title={router.query._id} navParts={navParts} />
-        </div>
-      </HideOnScroll>
-      <Box
-        sx={{ background: "#efeae2", p: 2, pt: 10, fontSize: fontSize + "%" }}
-      >
+      <Box sx={{ background: "#efeae2", p: 2, fontSize: fontSize + "%" }}>
         <div>
           <ShowVars vars={alwaysVars} context={context} />
           <details>
@@ -511,7 +543,7 @@ function Doc({ doc }) {
             icon=<ArrowUpwardIcon />
             tooltipTitle="Jump Back"
             onClick={() => {
-              window.scrollTo(0, jumped.current);
+              if (jumped.current) window.scrollTo(0, jumped.current);
               jumped.current = false;
             }}
           />
@@ -521,7 +553,7 @@ function Doc({ doc }) {
             tooltipTitle="Jump to Next"
             onClick={() => {
               jumped.current = window.pageYOffset;
-              doc.children[nextPos].ref.current.scrollIntoView(false);
+              doc.children?.[nextPos]?.ref?.current?.scrollIntoView(false);
             }}
           />
         )}
