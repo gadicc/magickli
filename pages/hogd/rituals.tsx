@@ -70,7 +70,7 @@ function DocAdmin() {
       createdAt: new Date(),
     } as {
       title: string;
-      doc: { children: [] }; // TODO
+      doc: { type: "root"; children: [] }; // TODO
       userId: string;
       groupId?: string;
       createdAt: Date;

@@ -10,7 +10,7 @@ export interface Doc {
   [key: string]: unknown;
   _id: string;
   title: string;
-  doc: DocNode[];
+  doc: DocNode;
   userId: string;
   groupId?: string;
   templeId?: string;
