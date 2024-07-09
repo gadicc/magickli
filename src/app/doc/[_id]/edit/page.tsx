@@ -115,7 +115,7 @@ export default function DocEdit({
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
       setDoc(prepare(value) as unknown as DocNode);
-    }, 500);
+    }, 300);
   }, []);
 
   React.useEffect(() => {
@@ -123,6 +123,7 @@ export default function DocEdit({
   }, [dbDoc, doc]);
 
   const { setContainer, state, view, setState } = useCodeMirror({
+    theme: "dark",
     extensions,
     onChange,
   });
