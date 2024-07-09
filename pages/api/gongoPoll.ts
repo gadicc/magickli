@@ -359,9 +359,9 @@ if (gs.dba) {
   }
 
   const docs = db.collection("docs");
-  docs.allow("insert", userIsGroupAdmin);
-  docs.allow("update", userIsGroupAdmin);
-  docs.allow("remove", userIsGroupAdmin);
+  docs.allow("insert", userIsTempleAdmin);
+  docs.allow("update", userIsTempleAdmin);
+  docs.allow("remove", userIsTempleAdmin);
 
   const temples = db.collection("temples");
   temples.allow("insert", userIsTempleAdmin);

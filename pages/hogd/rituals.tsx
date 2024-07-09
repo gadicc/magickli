@@ -32,6 +32,7 @@ import AppBar from "../../components/AppBar";
 import Data from "../../data/data";
 import Link from "../../src/Link";
 import { prepare } from "../../src/doc/prepare";
+import { Doc, Temple } from "@/schemas";
 
 const builtInDocs = [
   {
@@ -77,7 +78,6 @@ function DocAdmin() {
     if (!groupId || groupId === "" || groupId === "public") delete doc.groupId;
 
     console.log(doc);
-    // @ts-expect-error: todo optId in gongo
     db.collection("docs").insert(doc);
     setTitle("");
   }
@@ -140,12 +140,14 @@ export default function Rituals() {
   );
 
   useGongoSub("userTemplesAndMemberships");
-  /*
-  const templeMemberships = useGongoLive((db) =>
+  const _templeMemberships = useGongoLive((db) =>
     db.collection("templeMemberships").find({ userId })
   );
-  const templeIds = templeMemberships?.map((tm) => tm.templeId);
-  */
+  const templeMemberships = React.useMemo(
+    () => Object.fromEntries(_templeMemberships.map((tm) => [tm.templeId, tm])),
+    [_templeMemberships]
+  );
+
   const _temples = useGongoLive((db) => db.collection("temples").find());
   const temples = React.useMemo(
     () => Object.fromEntries(_temples.map((t) => [t._id, t])),
@@ -159,10 +161,10 @@ export default function Rituals() {
     () => [...builtInDocs, ...dbDocs] as unknown as typeof dbDocs,
     [dbDocs]
   );
-  const docs = React.useMemo(
+  const docs: Array<Doc & { temple?: Temple }> = React.useMemo(
     () =>
       _docs.map((doc) =>
-        doc.templeId ? { ...doc, temple: temples[doc.templeId as string] } : doc
+        doc.templeId ? { ...doc, temple: temples[doc.templeId] } : doc
       ),
     [_docs, temples]
   );
@@ -191,10 +193,33 @@ export default function Rituals() {
                     <TableCell scope="row">
                       <Link href={"/doc/" + doc._id} color="secondary">
                         {doc.title}
-                      </Link>{" "}
-                      {user &&
+                      </Link>
+                      {doc.temple ? (
+                        <span
+                          style={{
+                            fontSize: "80%",
+                            margin: "0 5px 0 5px",
+                            padding: "2px 5px 2px 5px",
+                            background: "#dfdfdf",
+                            borderRadius: 5,
+                          }}
+                        >
+                          {doc.temple.slug}
+                        </span>
+                      ) : null}{" "}
+                      {doc.groupId &&
+                        user &&
                         user.groupAdminIds &&
                         user.groupAdminIds.includes(doc.groupId) && (
+                          <IconButton
+                            size="small"
+                            onClick={() => editDoc(doc._id)}
+                          >
+                            <Edit />
+                          </IconButton>
+                        )}
+                      {doc.templeId &&
+                        templeMemberships[doc.templeId]?.admin && (
                           <IconButton
                             size="small"
                             onClick={() => editDoc(doc._id)}

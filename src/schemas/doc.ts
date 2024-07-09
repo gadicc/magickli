@@ -4,6 +4,7 @@ export interface Doc {
   title: string;
   doc: Record<string, unknown>;
   userId: string;
-  groupId: string;
+  groupId?: string;
+  templeId?: string;
   createdAt: Date;
 }
