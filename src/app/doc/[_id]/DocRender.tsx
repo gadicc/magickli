@@ -323,7 +323,11 @@ class ErrorBoundary extends React.Component<{
   }
 
   static getDerivedStateFromError(error) {
-    console.error(1, error);
+    console.log("error", error);
+
+    if (error.message.match(/Rendered fewer hooks than expected/))
+      return { hasError: false };
+
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
@@ -334,7 +338,7 @@ class ErrorBoundary extends React.Component<{
     //   in ErrorBoundary (created by App)
     //   in div (created by App)
     //   in App
-    console.error(2, error, info /*.componentStack */);
+    // console.error(2, error, info /*.componentStack */);
   }
 
   render() {
