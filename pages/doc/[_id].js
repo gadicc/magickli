@@ -2,26 +2,31 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useGongoSub, useGongoOne } from "gongo-client-react";
 
-import Box from "@mui/material/Box";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import ListIcon from "@mui/icons-material/List";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import Stack from "@mui/material/Stack";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
-import Slide from "@mui/material/Slide";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import Popover from "@mui/material/Popover";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import {
+  Box,
+  Menu,
+  MenuItem,
+  IconButton,
+  Stack,
+  useScrollTrigger,
+  Slide,
+  TextField,
+  FormControl,
+  Select,
+  InputLabel,
+  SpeedDial,
+  Popover,
+  SpeedDialAction,
+} from "@mui/material";
+
+import {
+  List as ListIcon,
+  Add as AddIcon,
+  Remove as RemoveIcon,
+  ZoomIn as ZoomInIcon,
+  ArrowDownward as ArrowDownwardIcon,
+  ArrowUpward as ArrowUpwardIcon,
+} from "@mui/icons-material";
 
 import DocContext from "../../src/doc/context";
 import AppBar from "../../components/AppBar";
