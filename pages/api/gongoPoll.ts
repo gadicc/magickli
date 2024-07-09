@@ -29,11 +29,19 @@ gs.publish("docs", async (db, opts, { auth }) => {
   const user =
     userId && (await db.collection("users").findOne({ _id: userId }));
 
-  let query = { groupId: { $exists: false } } as Filter<Document>;
+  const templeMemberships =
+    userId &&
+    (await db.collection("templeMemberships").find({ userId }).toArray());
+  const templeIds = templeMemberships?.map((tm) => tm.templeId);
 
-  if (user && user.groupIds)
-    query = { $or: [query, { groupId: { $in: user.groupIds } }] };
+  const query = {
+    $or: [{ groupId: { $exists: false }, templeId: { $exists: false } }],
+  } as Filter<Document>;
 
+  if (user?.groupIds) query.$or?.push({ groupId: { $in: user.groupIds } });
+  if (templeIds) query.$or?.push({ templeId: { $in: templeIds } });
+
+  console.log(JSON.stringify(query, null, 2));
   return db.collection("docs").find(query);
 });
 

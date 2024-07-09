@@ -7,12 +7,10 @@ import {
   useGongoLive,
 } from "gongo-client-react";
 
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-
 import {
+  Box,
   Button,
+  Container,
   FormControl,
   IconButton,
   InputLabel,
@@ -26,6 +24,7 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Typography,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
 
@@ -140,11 +139,35 @@ export default function Rituals() {
     db.collection("users").find({ _id: userId })
   );
 
-  useGongoSub("docs");
-  const navParts = [{ title: "HOGD", url: "/hogd" }];
-  const dbDocs = useGongoLive((db) => db.collection("docs").find());
-  const docs = [...builtInDocs, ...dbDocs] as unknown as typeof dbDocs;
+  useGongoSub("userTemplesAndMemberships");
+  /*
+  const templeMemberships = useGongoLive((db) =>
+    db.collection("templeMemberships").find({ userId })
+  );
+  const templeIds = templeMemberships?.map((tm) => tm.templeId);
+  */
+  const _temples = useGongoLive((db) => db.collection("temples").find());
+  const temples = React.useMemo(
+    () => Object.fromEntries(_temples.map((t) => [t._id, t])),
+    [_temples]
+  );
+  // console.log("temples", temples);
 
+  useGongoSub("docs");
+  const dbDocs = useGongoLive((db) => db.collection("docs").find());
+  const _docs = React.useMemo(
+    () => [...builtInDocs, ...dbDocs] as unknown as typeof dbDocs,
+    [dbDocs]
+  );
+  const docs = React.useMemo(
+    () =>
+      _docs.map((doc) =>
+        doc.templeId ? { ...doc, temple: temples[doc.templeId as string] } : doc
+      ),
+    [_docs, temples]
+  );
+
+  const navParts = [{ title: "HOGD", url: "/hogd" }];
   return (
     <>
       <AppBar title="Rituals" navParts={navParts} />
