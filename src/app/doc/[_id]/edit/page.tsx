@@ -2,7 +2,8 @@
 import React from "react";
 import Split from "@uiw/react-split";
 import { useCodeMirror } from "@uiw/react-codemirror";
-import { EditorState } from "@codemirror/state";
+import { StreamLanguage } from "@codemirror/language";
+import { pug } from "@codemirror/legacy-modes/mode/pug";
 
 import { useGongoSub, useGongoOne } from "gongo-client-react";
 import DocRender from "../DocRender";
@@ -94,7 +95,7 @@ do(role="member")
 do(role="hierophant") ✊
 `;
 
-const extensions = [];
+const extensions = [StreamLanguage.define(pug)];
 
 let timeout;
 export default function DocEdit({
