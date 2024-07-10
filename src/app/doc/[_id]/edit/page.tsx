@@ -248,9 +248,7 @@ export default function DocEdit({
       <Split>
         <div
           style={{
-            // width: "70%",
-            // minWidth: 30,
-            width: "calc(100cq - 720px)",
+            width: "100%",
             height: "100%",
             overflow: "hidden",
           }}
