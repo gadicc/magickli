@@ -215,6 +215,8 @@ export default function DocEdit({
     theme: "dark",
     extensions,
     onChange,
+    height: "100%",
+    width: "100%",
   });
 
   React.useEffect(() => {
@@ -247,12 +249,16 @@ export default function DocEdit({
         <div
           style={{
             // width: "70%",
-            minWidth: 30,
+            // minWidth: 30,
+            width: "calc(100cq - 720px)",
             height: "100%",
-            overflow: "auto",
+            overflow: "hidden",
           }}
         >
-          <div ref={editorRef} />
+          <div
+            ref={editorRef}
+            style={{ height: "100%", width: "100%", overflow: "auto" }}
+          />
           <ShowError error={error} setError={setError} />
         </div>
         <div

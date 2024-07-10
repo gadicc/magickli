@@ -341,10 +341,11 @@ class ErrorBoundary extends React.Component<{
     //   in App
     // console.error(2, error, info /*.componentStack */);
     // this.setState({ error, info });
-    if (error.message.match(/Rendered fewer hooks than expected/)) {
+    if (error.message.match(/Rendered (more|fewer) hooks than/)) {
       setTimeout(() => {
+        console.log("setState");
         this.setState({ error: null, info: null });
-      }, 500);
+      }, 1000);
     }
   }
 
