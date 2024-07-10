@@ -9,6 +9,8 @@ import { useGongoSub, useGongoOne } from "gongo-client-react";
 import DocRender from "../DocRender";
 import { prepare } from "@/doc/prepare";
 import { DocNode } from "@/schemas";
+import { Close, ErrorOutline } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 
 const starterDoc = `declareVar(
   name="myRole",
@@ -97,6 +99,42 @@ do(role="hierophant") ✊
 
 const extensions = [StreamLanguage.define(pug)];
 
+function ShowError({
+  error,
+  setError,
+}: {
+  error: Error | null;
+  setError: (error: Error | null) => void;
+}) {
+  return (
+    <div
+      style={{
+        display: error ? "block" : "none",
+        position: "absolute",
+        left: 25,
+        bottom: 15,
+        borderRadius: 5,
+        background: "#ff5555",
+        padding: "2px 5px 2px 10px",
+        fontWeight: 500,
+        color: "white",
+        boxShadow: "0px 5px 5px rgba(0, 0, 0, 0.25)",
+      }}
+    >
+      <ErrorOutline sx={{ verticalAlign: "middle" }} />
+      <span style={{ verticalAlign: "middle", padding: "0 5px 0 10px" }}>
+        {error?.message}
+      </span>
+      <IconButton
+        sx={{ verticalAlign: "middle" }}
+        onClick={() => setError(null)}
+      >
+        <Close />
+      </IconButton>
+    </div>
+  );
+}
+
 let timeout;
 export default function DocEdit({
   params: { _id },
@@ -107,6 +145,7 @@ export default function DocEdit({
   const dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
   const [doc, setDoc] = React.useState(dbDoc?.doc);
   const [docSrc, setDocSrc] = React.useState(starterDoc);
+  const [error, setError] = React.useState<Error | null>(null);
   const onChange = React.useCallback((value, viewUpdate) => {
     // console.log("value", value);
     // console.log("viewUpdate", viewUpdate);
@@ -114,7 +153,13 @@ export default function DocEdit({
 
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
-      setDoc(prepare(value) as unknown as DocNode);
+      try {
+        setDoc(prepare(value) as unknown as DocNode);
+        setError(null);
+      } catch (error) {
+        setError(error);
+        console.log(error);
+      }
     }, 300);
   }, []);
 
@@ -155,14 +200,16 @@ export default function DocEdit({
     <div style={{ height: "calc(100vh - 64px)", overflow: "hidden" }}>
       <Split>
         <div
-          ref={editorRef}
           style={{
             // width: "70%",
             minWidth: 30,
             height: "100%",
             overflow: "auto",
           }}
-        ></div>
+        >
+          <div ref={editorRef} />
+          <ShowError error={error} setError={setError} />
+        </div>
         <div
           style={{
             // width: "30%",
