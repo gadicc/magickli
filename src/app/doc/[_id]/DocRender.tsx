@@ -105,7 +105,7 @@ function Cross({ size, bg, fg }) {
   );
 }
 
-const roles = {
+export const roles = {
   imperator: {
     name: "Imperator",
     symbol: <Cross fg="#3f3" bg="#f33" size={14} key="symbol" />,
@@ -316,7 +316,7 @@ class ErrorBoundary extends React.Component<{
   fallback?: React.ReactElement;
   children: React.ReactElement;
 }> {
-  state = { hasError: false };
+  state = { error: null as Error | null, info: null };
 
   constructor(props) {
     super(props);
@@ -325,11 +325,12 @@ class ErrorBoundary extends React.Component<{
   static getDerivedStateFromError(error) {
     console.log("error", error);
 
-    if (error.message.match(/Rendered fewer hooks than expected/))
-      return { hasError: false };
+    if (error.message.match(/Rendered fewer hooks than expected/)) {
+      return { error: null, info: null };
+    }
 
     // Update state so the next render will show the fallback UI.
-    return { hasError: true };
+    return { error, info: null };
   }
 
   componentDidCatch(error, info) {
@@ -339,13 +340,27 @@ class ErrorBoundary extends React.Component<{
     //   in div (created by App)
     //   in App
     // console.error(2, error, info /*.componentStack */);
+    // this.setState({ error, info });
+    if (error.message.match(/Rendered fewer hooks than expected/)) {
+      setTimeout(() => {
+        this.setState({ error: null, info: null });
+      }, 500);
+    }
   }
 
   render() {
     // console.log(this.state);
-    if (this.state.hasError) {
+    if (this.state.error) {
       // You can render any custom fallback UI
-      return this.props.fallback || "ErrorBoundary";
+      return (
+        this.props.fallback || (
+          <div>
+            {this.state.error.message}
+            <br />
+            {this.state.info}
+          </div>
+        )
+      );
     }
 
     return this.props.children;

@@ -1,16 +1,20 @@
 "use client";
 import React from "react";
 import Split from "@uiw/react-split";
-import { useCodeMirror } from "@uiw/react-codemirror";
+import { EditorView, useCodeMirror } from "@uiw/react-codemirror";
 import { StreamLanguage } from "@codemirror/language";
+import { Diagnostic, setDiagnostics } from "@codemirror/lint";
 import { pug } from "@codemirror/legacy-modes/mode/pug";
-
+import pugLex from "pug-lexer";
+import pugParse from "pug-parser";
 import { useGongoSub, useGongoOne } from "gongo-client-react";
+
 import DocRender from "../DocRender";
-import { prepare } from "@/doc/prepare";
+import { prepare, toJrt } from "@/doc/prepare";
 import { DocNode } from "@/schemas";
 import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import { checkSrc } from "./checkSrc";
 
 const starterDoc = `declareVar(
   name="myRole",
@@ -135,6 +139,14 @@ function ShowError({
   );
 }
 
+function toPos(value: string, line: number, column: number) {
+  let pos = 0;
+  for (let i = 0; i < line - 1; i++) {
+    pos = value.indexOf("\n", pos) + 1;
+  }
+  return pos + column - 1;
+}
+
 let timeout;
 export default function DocEdit({
   params: { _id },
@@ -146,6 +158,7 @@ export default function DocEdit({
   const [doc, setDoc] = React.useState(dbDoc?.doc);
   const [docSrc, setDocSrc] = React.useState(starterDoc);
   const [error, setError] = React.useState<Error | null>(null);
+  const viewRef = React.useRef<EditorView | undefined>(undefined);
   const onChange = React.useCallback((value, viewUpdate) => {
     // console.log("value", value);
     // console.log("viewUpdate", viewUpdate);
@@ -154,11 +167,42 @@ export default function DocEdit({
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(() => {
       try {
-        setDoc(prepare(value) as unknown as DocNode);
+        const lexed = pugLex(value);
+        const parsed = pugParse(lexed, { src: value });
+        // console.log(parsed);
+        const errors = checkSrc(parsed).map((e) => ({
+          ...e,
+          from: toPos(value, e.from.line, e.from.column),
+          to: toPos(value, e.to.line, e.to.column),
+        }));
+        const view = viewRef.current;
+        view?.dispatch(setDiagnostics(view.state, errors));
+
+        const jrt = toJrt(parsed) as unknown as DocNode;
+        setDoc(jrt);
         setError(null);
       } catch (error) {
-        setError(error);
         console.log(error);
+        const match = error.message.match(
+          /^Pug:(?<line>\d+):(?<column>\d+)\n(?<inline>[\s\S]+?)\n\n(?<message>.+)$/
+        );
+        if (match) {
+          const { line, column, message, type } = match.groups;
+          const pos = toPos(value, Number(line), Number(column));
+          const diagnostics: Diagnostic[] = [
+            {
+              from: pos,
+              to: pos,
+              message,
+              severity: "error" as const,
+              // source: type,
+            },
+          ];
+          const view = viewRef.current;
+          view?.dispatch(setDiagnostics(view.state, diagnostics));
+        } else {
+          setError(error);
+        }
       }
     }, 300);
   }, []);
@@ -178,6 +222,7 @@ export default function DocEdit({
   }, [state]);
   React.useEffect(() => {
     console.log("view", view);
+    viewRef.current = view;
     if (view)
       view.dispatch({
         changes: {

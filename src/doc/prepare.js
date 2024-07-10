@@ -6,7 +6,7 @@ export const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
 // const tokens = lex(_neophyte);
 // const ast = parse(tokens, { src: _neophyte });
 
-function toJrt(ast) {
+export function toJrt(ast) {
   const out = {};
 
   // if (ast.type === "Block") return ast.nodes.map(toJrt);
