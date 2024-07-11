@@ -105,7 +105,7 @@ function Cross({ size, bg, fg }) {
   );
 }
 
-export const roles = {
+const _roles = {
   imperator: {
     name: "Imperator",
     symbol: <Cross fg="#3f3" bg="#f33" size={14} key="symbol" />,
@@ -133,6 +133,12 @@ export const roles = {
   aspirant: { name: "Aspirant", symbol: "🤒", color: "#fcf" },
   member: { name: "Member", color: "#ccc" },
   psaltis: { name: "Psaltis", symbol: "🎵", color: "#c55" },
+};
+export const roles = {
+  ..._roles,
+  // some useful aliases
+  hiero: _roles.hierophant,
+  pastHiero: _roles.pastHierophant,
 };
 
 function HideOnScroll(props) {
