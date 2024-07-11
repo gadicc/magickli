@@ -23,6 +23,7 @@ import { DocNode } from "@/schemas";
 import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { checkSrc } from "./checkSrc";
+import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
 
 const starterDoc = `declareVar(
   name="myRole",
@@ -109,112 +110,10 @@ do(role="member")
 do(role="hierophant") ✊
 `;
 
-const shortcutDecorators = [
-  new MatchDecorator({
-    regexp: /^\* ([A-Za-z,]+) /g,
-    // decoration: Decoration.mark({ attributes: { style: "color: cyan" } }),
-    decorate(add, from, to, match, view) {
-      add(
-        from + 2,
-        to,
-        Decoration.mark({ attributes: { style: "color: cyan" } })
-      );
-    },
-  }),
-  new MatchDecorator({
-    regexp: /^([A-Za-z,]+):/g,
-    // decoration: Decoration.mark({ attributes: { style: "color: cyan" } }),
-    decorate(add, from, to, match, view) {
-      add(
-        from,
-        to - 1,
-        Decoration.mark({ attributes: { style: "color: cyan" } })
-      );
-    },
-  }),
-];
-
-const shortcutHighlighters = shortcutDecorators.map((decorator) =>
-  ViewPlugin.fromClass(
-    class {
-      decorations: RangeSet<Decoration>;
-
-      constructor(view) {
-        this.decorations = decorator.createDeco(view);
-      }
-      update(update) {
-        this.decorations = decorator.updateDeco(update, this.decorations);
-      }
-    },
-    { decorations: (v) => v.decorations }
-  )
-);
-
 const extensions = [
   StreamLanguage.define(pug),
-  // ...shortcutHighlighters.map(Prec.highest),
+  ...shortcutHighlighters.map(Prec.highest),
 ];
-
-function shortcuts(input: string) {
-  const mappings: Record<number, [number, number, number][]> = {};
-  const lines = input.split("\n");
-  for (let line = 0; line < lines.length; line++) {
-    const lineStr = lines[line];
-    let match;
-    if ((match = lineStr.match(/^([A-Za-z,]+):/))) {
-      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
-      const pre = 'say(role="';
-      const post = '")';
-      const shortenedBy = 1; // matches that aren't kept, i.e. ":"
-      const replacement = pre + match[1].toLowerCase() + post;
-      const offset = replacement.length - match[0].length;
-
-      console.log(lines[line]);
-      lines[line] = replacement + lineStr.slice(match[0].length);
-      console.log(lines[line]);
-      lineMappings.push([0, match[0].length - 1, offset - shortenedBy]);
-      lineMappings.push([
-        match[0].length + 1, // include the ":"
-        lineStr.length,
-        offset - shortenedBy,
-      ]);
-    } else if (
-      (match = lineStr.match(/^(?<skip>\* ?)(?<role>[A-Za-z,]*)(?<rest>.*)$/))
-    ) {
-      console.log(match);
-      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
-      const { skip, role, rest } = match.groups;
-
-      if (!role) {
-        lines[line] = "";
-        continue;
-      }
-
-      const pre = 'do(role="';
-      const post = '")';
-      const replacement = pre + role.toLowerCase() + post;
-      console.log(lines[line]);
-      lines[line] = replacement + rest;
-      const offset = console.log(lines[line]);
-      lineMappings.push([
-        skip.length,
-        skip.length + role.length,
-        pre.length - skip.length,
-      ]);
-      lineMappings.push([
-        skip.length + role.length,
-        lineStr.length,
-        pre.length - skip.length,
-      ]);
-    }
-  }
-
-  const transformed = lines.join("\n");
-  return {
-    transformed,
-    mappings,
-  };
-}
 
 function ShowError({
   error,
@@ -258,11 +157,12 @@ function toPos(
   column: number,
   mappings?: Record<number, [number, number, number][]>
 ) {
-  console.log("toPos", { line, column, mappings });
+  // console.log("toPos", { line, column, mappings });
   const lineMappings = mappings && mappings[line];
   if (lineMappings) {
-    console.log("lineMappings", lineMappings);
+    // console.log("lineMappings", lineMappings);
     for (const [from, to, offset] of lineMappings) {
+      /*
       console.log({
         line,
         column,
@@ -271,8 +171,9 @@ function toPos(
         offset,
         newColumn: column,
       });
+      */
       if (column >= from + offset && column <= to + offset + 1) {
-        console.log("match");
+        // console.log("match");
         column -= offset;
         break;
       }
@@ -309,7 +210,7 @@ export default function DocEdit({
       let transformed, mappings;
       try {
         const { transformed: _transformed, mappings: _mappings } =
-          shortcuts(value);
+          transformAndMapShortcuts(value);
         // @ts-expect-error: ok
         window.transformed = transformed = _transformed;
         // @ts-expect-error: ok
