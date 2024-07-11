@@ -103,6 +103,52 @@ do(role="hierophant") ✊
 
 const extensions = [StreamLanguage.define(pug)];
 
+function shortcuts(input: string) {
+  const mappings: Record<number, [number, number, number][]> = {};
+  const lines = input.split("\n");
+  for (let line = 0; line < lines.length; line++) {
+    const lineStr = lines[line];
+    let match;
+    if ((match = lineStr.match(/^([A-Za-z,]+):/))) {
+      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
+      const pre = 'say(role="';
+      const post = '")';
+      const shortenedBy = 1; // matches that aren't kept, i.e. ":"
+      const replacement = pre + match[1].toLowerCase() + post;
+      const offset = replacement.length - match[0].length;
+
+      lines[line] = replacement + lineStr.slice(match[0].length);
+      lineMappings.push([0, match[0].length - 1, offset]);
+      lineMappings.push([
+        match[0].length - 1,
+        lineStr.length,
+        offset - shortenedBy,
+      ]);
+    } else if ((match = lineStr.match(/^\* ?([A-Za-z,]*)/))) {
+      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
+      const pre = 'do(role="';
+      const post = '")';
+      const shortenedBy = 2; // matches that aren't kept, i.e. "* "
+      const replacement = pre + match[1].toLowerCase() + post;
+      const offset = replacement.length - match[0].length;
+
+      lines[line] = replacement + lineStr.slice(match[0].length);
+      lineMappings.push([2, match[0].length - 1, offset]);
+      lineMappings.push([
+        match[0].length - 1,
+        lineStr.length,
+        offset - shortenedBy,
+      ]);
+    }
+  }
+
+  const transformed = lines.join("\n");
+  return {
+    transformed,
+    mappings,
+  };
+}
+
 function ShowError({
   error,
   setError,
@@ -139,11 +185,27 @@ function ShowError({
   );
 }
 
-function toPos(value: string, line: number, column: number) {
+function toPos(
+  value: string,
+  line: number,
+  column: number,
+  mappings?: Record<number, [number, number, number][]>
+) {
+  const lineMappings = mappings && mappings[line];
+  if (lineMappings) {
+    for (const [from, to, offset] of lineMappings) {
+      if (column >= from + offset && column < to + offset) {
+        column -= offset;
+        break;
+      }
+    }
+  }
+
   let pos = 0;
   for (let i = 0; i < line - 1; i++) {
     pos = value.indexOf("\n", pos) + 1;
   }
+
   return pos + column - 1;
 }
 
@@ -165,15 +227,22 @@ export default function DocEdit({
     // setDocSrc(value);
 
     if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
+    timeout = setTimeout(async () => {
+      let transformed, mappings;
       try {
-        const lexed = pugLex(value);
-        const parsed = pugParse(lexed, { src: value });
+        const { transformed: _transformed, mappings: _mappings } =
+          shortcuts(value);
+        // @ts-expect-error: ok
+        window.transformed = transformed = _transformed;
+        // @ts-expect-error: ok
+        window.mappings = mappings = _mappings;
+        const lexed = pugLex(transformed);
+        const parsed = pugParse(lexed, { src: transformed });
         // console.log(parsed);
         const errors = checkSrc(parsed).map((e) => ({
           ...e,
-          from: toPos(value, e.from.line, e.from.column),
-          to: toPos(value, e.to.line, e.to.column),
+          from: toPos(transformed, e.from.line, e.from.column, mappings),
+          to: toPos(transformed, e.to.line, e.to.column, mappings),
         }));
         const view = viewRef.current;
         view?.dispatch(setDiagnostics(view.state, errors));
@@ -188,7 +257,12 @@ export default function DocEdit({
         );
         if (match) {
           const { line, column, message, type } = match.groups;
-          const pos = toPos(value, Number(line), Number(column));
+          const pos = toPos(
+            transformed,
+            Number(line),
+            Number(column),
+            mappings
+          );
           const diagnostics: Diagnostic[] = [
             {
               from: pos,
