@@ -97,7 +97,8 @@ const shortcutDecorators = [
     regexp: new RegExp(shortcuts[1].regexp, "g"),
     decorate(add, from, to, match, view) {
       add(
-        from + 2,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        from + match.groups!.skip.length,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         from + match.groups!.role.length + 2,
         Decoration.mark(roleSpec)
