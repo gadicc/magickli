@@ -7,12 +7,16 @@ import {
 
 const shortcuts = [
   {
-    regexp: /^([A-Za-z,-]+):/,
+    regexp: /^([^: ]+):/,
   },
   {
-    regexp: /^(?<skip>\* ?)(?<role>[A-Za-z,-]*)(?<rest>.*)$/,
+    regexp: /^(?<skip>\* ?)(?<role>[^ ]*)(?<rest>.*)$/,
   },
 ];
+
+function lowerCaseFirstLetter(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
 
 export function transformAndMapShortcuts(input: string) {
   const mappings: Record<number, [number, number, number][]> = {};
@@ -25,7 +29,7 @@ export function transformAndMapShortcuts(input: string) {
       const pre = 'say(role="';
       const post = '")';
       const shortenedBy = 1; // matches that aren't kept, i.e. ":"
-      const replacement = pre + match[1].toLowerCase() + post;
+      const replacement = pre + lowerCaseFirstLetter(match[1]) + post;
       const offset = replacement.length - match[0].length;
 
       // console.log(lines[line]);
@@ -49,7 +53,7 @@ export function transformAndMapShortcuts(input: string) {
 
       const pre = 'do(role="';
       const post = '")';
-      const replacement = pre + role.toLowerCase() + post;
+      const replacement = pre + lowerCaseFirstLetter(role) + post;
       // console.log(lines[line]);
       lines[line] = replacement + rest;
       // console.log(lines[line]);
