@@ -321,7 +321,7 @@ export default function DocEdit({
             overflow: "auto",
           }}
         >
-          <DocRender doc={doc} />
+          <DocRender doc={doc} wrapWithErrorBoundary={true} />
         </div>
       </Split>
     </div>

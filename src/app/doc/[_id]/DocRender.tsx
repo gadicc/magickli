@@ -341,7 +341,7 @@ class ErrorBoundary extends React.Component<{
     //   in App
     // console.error(2, error, info /*.componentStack */);
     // this.setState({ error, info });
-    if (error.message.match(/Rendered (more|fewer) hooks than/)) {
+    if (error.message.match(/Rendered (more|fewer) hooks than|#300/)) {
       setTimeout(() => {
         console.log("setState");
         this.setState({ error: null, info: null });
@@ -368,7 +368,13 @@ class ErrorBoundary extends React.Component<{
   }
 }
 
-export default function DocRender({ doc }: { doc: DocNode }) {
+export default function DocRender({
+  doc,
+  wrapWithErrorBoundary,
+}: {
+  doc: DocNode;
+  wrapWithErrorBoundary?: boolean;
+}) {
   // console.log({ doc });
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -500,7 +506,7 @@ export default function DocRender({ doc }: { doc: DocNode }) {
           }
         >
           <DocContext.Provider value={context}>
-            {process.env.NODE_ENV === "development" ? (
+            {wrapWithErrorBoundary ? (
               <ErrorBoundary>
                 <Render doc={doc} />
               </ErrorBoundary>
