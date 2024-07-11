@@ -205,6 +205,8 @@ class Task extends Node {
         !role.substr(20).split(",").includes(myRole);
     else if (role.match(",")) forMe = role.split(",").includes(myRole);
 
+    /*
+    // we show this in the builtin editor now anyway
     if (!["all-officers", "all"].includes(role)) {
       const roles = role
         // all-except-XXX, all-officers-except-XXX
@@ -218,6 +220,7 @@ class Task extends Node {
             this.block
           );
     }
+    */
 
     const samePreviousRole = this.prev() && this.prev().block.role === role;
 

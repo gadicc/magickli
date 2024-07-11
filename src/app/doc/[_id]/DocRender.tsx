@@ -317,6 +317,22 @@ function TocMenu({ anchorEl, setAnchorEl, titles, onCloseExtra }) {
   );
 }
 
+const regexp =
+  /Rendered (more|fewer) hooks than|change in the order of Hooks|#300|#310/;
+
+// Based on https://stackoverflow.com/a/54549601/1839099
+if (typeof window !== "undefined") {
+  window.addEventListener("error", function (e) {
+    if (e.message.match(regexp)) {
+      // prevent React's listener from firing
+      e.stopImmediatePropagation();
+      // prevent the browser's console error message
+      e.preventDefault();
+      console.log("%c Suppresed more/fewer hooks error", "color: #ccc");
+    }
+  });
+}
+
 // Ok for whatever reason this stops the error but doesn't "catch" it (i.e. no logs)
 class ErrorBoundary extends React.Component<{
   fallback?: React.ReactElement;
@@ -329,9 +345,9 @@ class ErrorBoundary extends React.Component<{
   }
 
   static getDerivedStateFromError(error) {
-    console.log("error", error);
+    // console.log("error", error);
 
-    if (error.message.match(/Rendered fewer hooks than expected/)) {
+    if (error.message.match(regexp)) {
       return { error: null, info: null };
     }
 
@@ -347,12 +363,14 @@ class ErrorBoundary extends React.Component<{
     //   in App
     // console.error(2, error, info /*.componentStack */);
     // this.setState({ error, info });
-    if (error.message.match(/Rendered (more|fewer) hooks than|#300|#310/)) {
+    /*
+    if (error.message.match(regexp)) {
       setTimeout(() => {
         console.log("setState");
         this.setState({ error: null, info: null });
-      }, 1000);
+      }, 500);
     }
+    */
   }
 
   render() {
