@@ -341,7 +341,7 @@ class ErrorBoundary extends React.Component<{
     //   in App
     // console.error(2, error, info /*.componentStack */);
     // this.setState({ error, info });
-    if (error.message.match(/Rendered (more|fewer) hooks than|#300/)) {
+    if (error.message.match(/Rendered (more|fewer) hooks than|#300|#310/)) {
       setTimeout(() => {
         console.log("setState");
         this.setState({ error: null, info: null });
