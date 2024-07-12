@@ -197,8 +197,10 @@ export default function DocEdit({
   useGongoSub("docRevisions", { docId: _id });
   const userId = useGongoUserId();
   const dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
-  // The parsed (to jrt) doc to be rendered
-  const [doc, setDoc] = React.useState(dbDoc?.doc);
+  // The parsed (to jrt) doc to be rendered.  Clone it since docRender mutates it.
+  const [doc, setDoc] = React.useState(
+    dbDoc?.doc && JSON.parse(JSON.stringify(dbDoc.doc))
+  );
   const [error, setError] = React.useState<Error | null>(null);
   const viewRef = React.useRef<EditorView | undefined>(undefined);
   const onChange = React.useCallback((value, viewUpdate) => {
@@ -304,7 +306,13 @@ export default function DocEdit({
           { _id },
           {
             $set: {
-              doc,
+              doc: JSON.parse(
+                JSON.stringify(doc, (key, value) => {
+                  // DocRender adds ref to html nodes, which we don't want to save.
+                  if (key === "ref") return undefined;
+                  return value;
+                })
+              ),
               revisionId,
               updatedAt: new Date(),
             },
@@ -322,7 +330,7 @@ export default function DocEdit({
 
   React.useEffect(() => {
     // i.e. only do this once on load; don't retrigger on doc updates.
-    if (!doc && dbDoc) setDoc(dbDoc.doc);
+    if (!doc && dbDoc) setDoc(JSON.parse(JSON.stringify(dbDoc.doc)));
   }, [dbDoc, doc]);
 
   const { setContainer, state, view, setState } = useCodeMirror({
