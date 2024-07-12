@@ -14,5 +14,6 @@ export interface Doc {
   userId: string;
   groupId?: string;
   templeId?: string;
+  minGrade?: number;
   createdAt: Date;
 }
