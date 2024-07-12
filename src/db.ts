@@ -5,7 +5,14 @@ import { getSession } from "next-auth/react";
 import HTTPTransport from "gongo-client/lib/transports/http";
 // import GongoAuth from "gongo-client/lib/auth";
 import { StudySetStats } from "../pages/study/[_id]";
-import type { Doc, Temple, TempleMembership, User, UserGroup } from "./schemas";
+import type {
+  Doc,
+  DocRevision,
+  Temple,
+  TempleMembership,
+  User,
+  UserGroup,
+} from "./schemas";
 
 // db.extend("auth", GongoAuth);
 
@@ -79,6 +86,7 @@ db.subscribe("user");
 db.collection("users").persist();
 db.collection("userGroups").persist();
 db.collection("docs").persist();
+db.collection("docRevisions").persist();
 db.collection("temples").persist();
 db.collection("templeMemberships").persist();
 
@@ -92,6 +100,7 @@ db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 declare module "gongo-client" {
   class Database {
     collection(name: "docs"): Collection<Doc>;
+    collection(name: "docRevisions"): Collection<DocRevision>;
     collection(name: "studySet"): Collection<StudySetStats>;
     collection(name: "users"): Collection<User>;
     collection(name: "userGroups"): Collection<UserGroup>;

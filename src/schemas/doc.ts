@@ -9,6 +9,7 @@ export interface DocNode {
 export interface Doc {
   [key: string]: unknown;
   _id: string;
+  docRevisionId?: string;
   title: string;
   doc: DocNode;
   userId: string;
@@ -16,4 +17,15 @@ export interface Doc {
   templeId?: string;
   minGrade?: number;
   createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface DocRevision {
+  [key: string]: unknown;
+  _id: string;
+  docId: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  text: string;
 }

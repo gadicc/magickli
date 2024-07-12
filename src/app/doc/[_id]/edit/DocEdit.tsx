@@ -1,24 +1,21 @@
 "use client";
 import React from "react";
 import Split from "@uiw/react-split";
-import {
-  Decoration,
-  EditorView,
-  MatchDecorator,
-  Prec,
-  RangeSet,
-  ViewPlugin,
-  useCodeMirror,
-} from "@uiw/react-codemirror";
+import { EditorView, Prec, useCodeMirror } from "@uiw/react-codemirror";
 import { StreamLanguage } from "@codemirror/language";
 import { Diagnostic, setDiagnostics } from "@codemirror/lint";
 import { pug } from "@codemirror/legacy-modes/mode/pug";
 import pugLex from "pug-lexer";
 import pugParse from "pug-parser";
-import { useGongoSub, useGongoOne } from "gongo-client-react";
+import {
+  useGongoSub,
+  useGongoOne,
+  db,
+  useGongoUserId,
+} from "gongo-client-react";
 
 import DocRender from "../DocRender";
-import { prepare, toJrt } from "@/doc/prepare";
+import { toJrt } from "@/doc/prepare";
 import { DocNode } from "@/schemas";
 import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
@@ -197,9 +194,11 @@ export default function DocEdit({
   params: { _id: string };
 }) {
   useGongoSub("doc", { _id });
+  useGongoSub("docRevisions", { docId: _id });
+  const userId = useGongoUserId();
   const dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
+  // The parsed (to jrt) doc to be rendered
   const [doc, setDoc] = React.useState(dbDoc?.doc);
-  const [docSrc, setDocSrc] = React.useState(starterDoc);
   const [error, setError] = React.useState<Error | null>(null);
   const viewRef = React.useRef<EditorView | undefined>(undefined);
   const onChange = React.useCallback((value, viewUpdate) => {
@@ -252,7 +251,77 @@ export default function DocEdit({
     }, 300);
   }, []);
 
+  const handleKeyDown = React.useCallback(
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "s" && event.ctrlKey) {
+        const text = viewRef.current?.state.doc.toString() || "";
+        event.preventDefault();
+
+        if (!userId) {
+          alert("no userId");
+          return;
+        }
+        console.log("save");
+        // console.log(dbDoc);
+
+        const lastRevision = db
+          .collection("docRevisions")
+          .find({ docId: _id, userId })
+          .sort("updatedAt", -1)
+          .limit(1)
+          .toArraySync()[0];
+        // console.log({ lastRevision });
+
+        let revisionId = lastRevision?._id;
+        if (
+          !lastRevision ||
+          lastRevision.updatedAt.getTime() <
+            new Date().getTime() - 1000 * 60 * 5
+        ) {
+          const newRevision = {
+            docId: _id,
+            userId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            text,
+            __ObjectIDs: ["docId", "userId"],
+          };
+          // console.log(newRevision);
+          // TODO, gongo returned doc should not have optionalId
+          const insertedDoc = db.collection("docRevisions").insert(newRevision);
+          revisionId = insertedDoc._id as string;
+        } else {
+          const result = db
+            .collection("docRevisions")
+            .update(
+              { _id: lastRevision._id },
+              { $set: { text, updatedAt: new Date() } }
+            );
+          // console.log(result);
+        }
+
+        db.collection("docs").update(
+          { _id },
+          {
+            $set: {
+              doc,
+              revisionId,
+              updatedAt: new Date(),
+            },
+          }
+        );
+      }
+    },
+    [_id, userId, doc]
+  );
+
   React.useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
+
+  React.useEffect(() => {
+    // i.e. only do this once on load; don't retrigger on doc updates.
     if (!doc && dbDoc) setDoc(dbDoc.doc);
   }, [dbDoc, doc]);
 

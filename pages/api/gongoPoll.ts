@@ -136,7 +136,17 @@ gs.publish("doc", async (db, opts, { auth }) => {
   const doc = await db.collection("docs").findOne({ _id });
   if (!doc) return [];
 
-  if (!doc.groupId || user?.admin || user?.groupIds.includes(doc.groupId))
+  const membership = await db.collection("templeMemberships").findOne({
+    userId,
+    templeId: doc.templeId,
+  });
+
+  if (
+    user?.admin ||
+    membership?.admin ||
+    (!doc.groupId && !doc.templeId) ||
+    user?.groupIds.includes(doc.groupId)
+  )
     return [
       {
         coll: "docs",
@@ -145,6 +155,21 @@ gs.publish("doc", async (db, opts, { auth }) => {
     ];
 
   return [];
+});
+gs.publish("docRevisions", async (db, { docId }, { auth }) => {
+  const userId = await auth.userId();
+  if (!userId) return [];
+
+  const doc = await db.collection("docs").findOne({ docId });
+  if (!doc) return [];
+
+  const membership = await db.collection("templeMemberships").findOne({
+    userId,
+    templeId: doc.templeId,
+  });
+
+  if (!membership?.admin) return [];
+  return db.collection("docRevisions").find({ docId });
 });
 
 async function templeAdminHelper(auth, db, templeIdStr) {
@@ -362,6 +387,10 @@ if (gs.dba) {
   docs.allow("insert", userIsTempleAdmin);
   docs.allow("update", userIsTempleAdmin);
   docs.allow("remove", userIsTempleAdmin);
+  const docRevisions = db.collection("docRevisions");
+  docRevisions.allow("insert", userIdMatches);
+  docRevisions.allow("update", userIdMatches);
+  docRevisions.allow("remove", userIdMatches);
 
   const temples = db.collection("temples");
   temples.allow("insert", userIsTempleAdmin);
