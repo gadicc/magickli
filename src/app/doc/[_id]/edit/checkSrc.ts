@@ -136,5 +136,6 @@ export function checkSrc(node: PugBlock | PugTag) {
       }
     }
   });
+  // console.log(errors);
   return errors;
 }

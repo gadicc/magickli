@@ -173,8 +173,8 @@ function toPos(
       });
       */
       if (column >= from + offset && column <= to + offset + 1) {
-        // console.log("match");
         column -= offset;
+        // console.log("match, new column: " + column);
         break;
       }
     }
@@ -184,6 +184,8 @@ function toPos(
   for (let i = 0; i < line - 1; i++) {
     pos = value.indexOf("\n", pos) + 1;
   }
+  // console.log("pos", pos, value.substring(pos, value.indexOf("\n", pos)));
+  // console.log("return", pos + column - 1);
 
   return pos + column - 1;
 }
@@ -207,22 +209,17 @@ export default function DocEdit({
 
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(async () => {
-      let transformed, mappings;
+      const { transformed, mappings } = transformAndMapShortcuts(value);
       try {
-        const { transformed: _transformed, mappings: _mappings } =
-          transformAndMapShortcuts(value);
-        // @ts-expect-error: ok
-        window.transformed = transformed = _transformed;
-        // @ts-expect-error: ok
-        window.mappings = mappings = _mappings;
         const lexed = pugLex(transformed);
         const parsed = pugParse(lexed, { src: transformed });
         // console.log(parsed);
         const errors = checkSrc(parsed).map((e) => ({
           ...e,
-          from: toPos(transformed, e.from.line, e.from.column, mappings),
-          to: toPos(transformed, e.to.line, e.to.column, mappings),
+          from: toPos(value, e.from.line, e.from.column, mappings),
+          to: toPos(value, e.to.line, e.to.column, mappings),
         }));
+        // console.log("errors", errors);
         const view = viewRef.current;
         view?.dispatch(setDiagnostics(view.state, errors));
 
@@ -230,18 +227,13 @@ export default function DocEdit({
         setDoc(jrt);
         setError(null);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         const match = error.message.match(
           /^Pug:(?<line>\d+):(?<column>\d+)\n(?<inline>[\s\S]+?)\n\n(?<message>.+)$/
         );
         if (match) {
           const { line, column, message, type } = match.groups;
-          const pos = toPos(
-            transformed,
-            Number(line),
-            Number(column),
-            mappings
-          );
+          const pos = toPos(value, Number(line), Number(column), mappings);
           const diagnostics: Diagnostic[] = [
             {
               from: pos,
@@ -273,10 +265,10 @@ export default function DocEdit({
   });
 
   React.useEffect(() => {
-    console.log("state", state);
+    // console.log("state", state);
   }, [state]);
   React.useEffect(() => {
-    console.log("view", view);
+    // console.log("view", view);
     viewRef.current = view;
     if (view)
       view.dispatch({

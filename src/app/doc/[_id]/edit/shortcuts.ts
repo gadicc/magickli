@@ -42,7 +42,6 @@ export function transformAndMapShortcuts(input: string) {
         offset - shortenedBy,
       ]);
     } else if ((match = lineStr.match(shortcuts[1].regexp))) {
-      // console.log(match);
       const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
       const { skip, role, rest } = match.groups;
 
@@ -100,11 +99,11 @@ const shortcutDecorators = [
   new MatchDecorator({
     regexp: new RegExp(shortcuts[1].regexp, "g"),
     decorate(add, from, to, match, view) {
+      const { groups } = match;
+      if (!groups) return;
       add(
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        from + match.groups!.skip.length,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        from + match.groups!.role.length + 2,
+        from + groups.skip.length,
+        Math.min(to, from + groups.role.length + 2),
         Decoration.mark(roleSpec)
       );
     },
