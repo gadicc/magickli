@@ -17,7 +17,7 @@ export interface Doc {
   templeId?: string;
   minGrade?: number;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface DocRevision {
