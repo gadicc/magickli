@@ -29,9 +29,7 @@ import {
 import { Edit } from "@mui/icons-material";
 
 import AppBar from "../../components/AppBar";
-import Data from "../../data/data";
 import Link from "../../src/Link";
-import { prepare } from "../../src/doc/prepare";
 import { Doc, Temple } from "@/schemas";
 
 const builtInDocs = [
@@ -51,11 +49,27 @@ function DocAdmin() {
     db.collection("users").find({ _id: userId })
   );
 
+  useGongoSub("userTemplesAndMemberships");
+  const _memberships = useGongoLive((db) =>
+    db.collection("templeMemberships").find({ admin: true })
+  );
+  const temples = useGongoLive((db) => db.collection("temples").find());
+  const memberships = React.useMemo(
+    () =>
+      _memberships.map((membership) => ({
+        ...membership,
+        temple: temples.find((t) => t._id === membership.templeId),
+      })),
+    [_memberships, temples]
+  );
+
   const groups = useGongoLive((db) => db.collection("userGroups").find());
   useGongoSub("userGroups");
 
   const [title, setTitle] = React.useState("");
-  const [groupId, setGroupId] = React.useState("");
+  // const [groupId, setGroupId] = React.useState("");
+  const [templeId, setTempleId] = React.useState("");
+  const [minGrade, setMinGrade] = React.useState("0");
 
   if (!(user && user.groupAdminIds && user.groupAdminIds.length)) return null;
 
@@ -64,22 +78,30 @@ function DocAdmin() {
 
     const doc = {
       title,
-      doc: { children: [] },
+      doc: { type: "root", children: [] },
       userId,
-      groupId,
+      // groupId,
+      templeId,
+      minGrade: Number(minGrade),
       createdAt: new Date(),
     } as {
       title: string;
       doc: { type: "root"; children: [] }; // TODO
       userId: string;
-      groupId?: string;
+      // groupId?: string;
+      templeId?: string;
+      minGrade?: number;
       createdAt: Date;
     };
-    if (!groupId || groupId === "" || groupId === "public") delete doc.groupId;
+    // if (!groupId || groupId === "" || groupId === "public") delete doc.groupId;
+    if (!templeId || templeId === "" || templeId === "public")
+      delete doc.templeId;
 
     console.log(doc);
     db.collection("docs").insert(doc);
     setTitle("");
+    setTempleId("");
+    setMinGrade("0");
   }
 
   return (
@@ -95,6 +117,7 @@ function DocAdmin() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />{" "}
+        {/*
         <FormControl sx={{ minWidth: 180 }} size="small">
           <InputLabel id="select-label-groupId">Group</InputLabel>
           <Select
@@ -113,7 +136,31 @@ function DocAdmin() {
               ))}
           </Select>
         </FormControl>
-        <Button type="submit" disabled={title === ""}>
+        */}
+        <FormControl sx={{ minWidth: 180 }} size="small">
+          <InputLabel id="select-label-templeId">Temple</InputLabel>
+          <Select
+            value={templeId}
+            labelId="select-label-templeId"
+            label="Group"
+            onChange={(e) => setTempleId(e.target.value)}
+          >
+            <MenuItem value="none">None (Public)</MenuItem>
+            {memberships.map((membership) => (
+              <MenuItem key={membership.templeId} value={membership.templeId}>
+                {membership.temple?.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          label="Min Grade"
+          size="small"
+          value={minGrade}
+          onChange={(e) => setMinGrade(e.target.value)}
+          sx={{ width: 70 }}
+        />
+        <Button type="submit" disabled={title === "" || templeId === ""}>
           Add
         </Button>
       </form>
@@ -121,6 +168,7 @@ function DocAdmin() {
   );
 }
 
+/*
 async function editDoc(id) {
   const contents = prompt("Paste contents");
   if (!contents) return;
@@ -132,6 +180,7 @@ async function editDoc(id) {
     },
   });
 }
+*/
 
 export default function Rituals() {
   const userId = useGongoUserId() as string;
@@ -207,22 +256,11 @@ export default function Rituals() {
                           {doc.temple.slug}
                         </span>
                       ) : null}{" "}
-                      {doc.groupId &&
-                        user &&
-                        user.groupAdminIds &&
-                        user.groupAdminIds.includes(doc.groupId) && (
-                          <IconButton
-                            size="small"
-                            onClick={() => editDoc(doc._id)}
-                          >
-                            <Edit />
-                          </IconButton>
-                        )}
                       {doc.templeId &&
                         templeMemberships[doc.templeId]?.admin && (
                           <IconButton
                             size="small"
-                            onClick={() => editDoc(doc._id)}
+                            href={`/doc/${doc._id}/edit`}
                           >
                             <Edit />
                           </IconButton>
