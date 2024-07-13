@@ -157,6 +157,7 @@ function DocAdmin() {
           label="Min Grade"
           size="small"
           value={minGrade}
+          type="number"
           onChange={(e) => setMinGrade(e.target.value)}
           sx={{ width: 70 }}
         />
