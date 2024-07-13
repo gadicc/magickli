@@ -155,7 +155,17 @@ function Users({ templeId }: { templeId: string }) {
   const [useMotto, setUseMotto] = React.useState(false);
 
   useGongoSub("userTemplesAndMemberships");
-  useGongoSub("usersForTempleAdmin", { _id: templeId });
+  useGongoSub(
+    "usersForTempleAdmin",
+    { _id: templeId },
+    {
+      sort: ["__updatedAt", "desc"],
+      limit: 5000,
+      minInterval: 500,
+      maxInterval: 2000,
+      // persist: false,
+    }
+  );
 
   const memberships = useGongoLive((db) =>
     db.collection("templeMemberships").find({ templeId })
