@@ -327,7 +327,7 @@ class Task extends Node {
             if (!footnotes && this.footnotes) {
               footnotes = new Footnotes({ type: "footnotes" });
               footnotes.footnotes = this.footnotes;
-              console.log(2, { footnotes });
+              // console.log(2, { footnotes });
             }
 
             return footnotes && footnotes.render();
@@ -365,7 +365,7 @@ class Footnote extends Node {
         location = 0;
       }
     }
-    console.log({ footnotes });
+    // console.log({ footnotes });
 
     return <sup>{location + 1}</sup>;
   }
