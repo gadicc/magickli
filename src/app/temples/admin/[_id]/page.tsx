@@ -32,6 +32,8 @@ import {
   Edit,
   Save,
   Share,
+  Visibility,
+  VisibilityOff,
 } from "@mui/icons-material";
 import { QRCode } from "react-qrcode";
 
@@ -41,6 +43,21 @@ function JoinInfo({ temple }: { temple: Temple }) {
   const [editingJoinPass, setEditingJoinPass] = React.useState(false);
   const [joinPass, setJoinPass] = React.useState(temple.joinPass || "");
   const [justCopied, setJustCopied] = React.useState(false);
+  const [visibility, setVisibility] = React.useState(false);
+  const visibilityStyle = visibility
+    ? undefined
+    : {
+        color: "transparent",
+        textShadow: "0 0 5px rgba(0,0,0,0.5)",
+      };
+  const joinUrlText = (
+    <span>
+      <span>
+        {location.origin}/temples/join/{temple.slug}/
+      </span>
+      <span style={visibilityStyle}>{temple.joinPass}</span>
+    </span>
+  );
 
   return (
     <div>
@@ -85,9 +102,14 @@ function JoinInfo({ temple }: { temple: Temple }) {
                   </div>
                 ) : (
                   <div>
-                    {temple?.joinPass || "(none)"}
+                    <span style={visibilityStyle}>
+                      {temple?.joinPass || "(none)"}
+                    </span>
                     <IconButton onClick={() => setEditingJoinPass(true)}>
                       <Edit />
+                    </IconButton>
+                    <IconButton onClick={() => setVisibility(!visibility)}>
+                      {visibility ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </div>
                 )}
@@ -114,7 +136,7 @@ function JoinInfo({ temple }: { temple: Temple }) {
             </ul>
           </div>
           <div>
-            <a href={joinUrl}>{joinUrl}</a>
+            <a href={joinUrl}>{joinUrlText}</a>
             <IconButton
               disabled={justCopied}
               onClick={() => {
