@@ -156,9 +156,11 @@ gs.publish("doc", async (db, opts, { auth }) => {
 
   return [];
 });
-gs.publish("docRevisions", async (db, { docId }, { auth }) => {
+gs.publish("docRevisions", async (db, { docId: docIdStr }, { auth }) => {
   const userId = await auth.userId();
   if (!userId) return [];
+
+  const docId = new ObjectId(docIdStr);
 
   const doc = await db.collection("docs").findOne({ docId });
   if (!doc) return [];
