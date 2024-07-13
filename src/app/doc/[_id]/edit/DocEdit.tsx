@@ -114,10 +114,10 @@ export default function DocEdit({
   const userId = useGongoUserId();
 
   const _dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
-  const _revision = useGongoOne((db) =>
-    db.collection("docRevisions").find({ _id: _dbDoc?.docRevisionId })
-  );
   const [dbDoc, setDbDoc] = React.useState(_dbDoc);
+  const dbDocRevision = useGongoOne((db) =>
+    db.collection("docRevisions").find({ _id: dbDoc?.docRevisionId })
+  );
   const [initialValue, setInitialValue] = React.useState<string | null>(null);
 
   // We want the reactivity for first load, but never again.
@@ -131,12 +131,12 @@ export default function DocEdit({
     }
   }, [_dbDoc, dbDoc]);
   React.useEffect(() => {
-    if (_revision && initialValue === null) {
+    if (dbDocRevision && initialValue === null) {
       // console.log("Revision loaded, setting initialValue to _revision.text");
       // console.log(_revision);
-      setInitialValue(_revision.text);
+      setInitialValue(dbDocRevision.text);
     }
-  }, [_revision, initialValue]);
+  }, [dbDocRevision, initialValue]);
 
   const [doc, setDoc] = React.useState<DocNode>({ type: "root", children: [] });
   const [error, setError] = React.useState<Error | null>(null);
