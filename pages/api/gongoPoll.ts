@@ -162,7 +162,7 @@ gs.publish("docRevisions", async (db, { docId: docIdStr }, { auth }) => {
 
   const docId = new ObjectId(docIdStr);
 
-  const doc = await db.collection("docs").findOne({ docId });
+  const doc = await db.collection("docs").findOne({ _id: docId });
   if (!doc) return [];
 
   const membership = await db.collection("templeMemberships").findOne({
