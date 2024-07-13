@@ -84,6 +84,7 @@ function DocAdmin() {
       templeId,
       minGrade: Number(minGrade),
       createdAt: new Date(),
+      __ObjectIDs: ["templeId"],
     } as {
       title: string;
       doc: { type: "root"; children: [] }; // TODO

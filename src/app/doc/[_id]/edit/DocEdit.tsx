@@ -12,100 +12,16 @@ import {
   useGongoOne,
   db,
   useGongoUserId,
+  GongoClientDocument,
 } from "gongo-client-react";
 
 import DocRender from "../DocRender";
 import { toJrt } from "@/doc/prepare";
-import { DocNode } from "@/schemas";
+import { Doc, DocNode, DocRevision } from "@/schemas";
 import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { checkSrc } from "./checkSrc";
 import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
-
-const starterDoc = `declareVar(
-  name="myRole",
-  label="My role",
-  varType="select",
-  default="member",
-  collapsable=false
-)
-  option(value="imperator", label="Imperator")
-  option(value="praemonstrator", label="Praemonstrator")
-  option(value="cancellarius", label="Cancellarius")
-  option(value="hierophant", label="Hierophant")
-  option(value="pastHierophant", label="Past Hierophant")
-  option(value="hiereus", label="Hiereus")
-  option(value="hegemon", label="Hegemon")
-  option(value="keryx", label="Keryx")
-  option(value="stolistes", label="Stolistes")
-  option(value="dadouchos", label="Dadouchos")
-  option(value="sentinel", label="Sentinel")
-  option(value="candidate", label="Candidate")
-  option(value="member", label="Member")
-declareVar(
-  name="candidateName",
-  label="Candidate's Name",
-  varType="text",
-  default="(Candidate's Name)",
-  collapsable
-)
-declareVar(
-  name="candidateMotto",
-  label="Candidate's Motto",
-  varType="text",
-  default="(Candidate's Motto)",
-  collapsable
-)
-declareVar(
-  name="templeName",
-  label="Temple",
-  varType="text",
-  default="(name)",
-  collapsable
-)
-declareVar(
-  name="orderName",
-  label="Order's Name",
-  varType="text",
-  default="Order of the Stella Matutina",
-  collapsable
-)
-declareVar(
-  name="witnessed",
-  label="Witnessed/Beheld the",
-  varType="text",
-  default="Stella Matutina",
-  collapsable
-)
-title(text="Opening of the Hall of the Neophytes")
-  | Opening of the Hall of the Neophytes
-todo diagram
-todo officers, required
-note 
-  | ✊ - This sign represents one knock made by rapping the base or shaft
-  | of wand or the pommel of a sword on the table.
-do(role="hierophant")
-  | Waits until all members assembled and robed, then ✊
-do(role="member") Sit in proper places
-do(role="all-officers") Rise
-do(role="member")
-  | Do not rise except for adorations to the east or when asked for the
-  | signs.
-  br
-  br
-  | Stand when Hierophant says "Let us adore the Lord of the universe and
-  | space" and face east until end of adoration.
-  br
-  br
-  | Do not circumambulate with
-  | officers, but when moving for other purposes, do so in the direction of the sun and
-  | make the Neophyte signs on passing the Throne of the East whether the Hierophant is
-  | there or not.
-  | The sign is always made in direction of movement except:
-  | 1) When entering or leaving the hall: made towards the east.
-  | 2) When asked to give the signs: towards the altar.
-do(role="hierophant") ✊
-`;
 
 const extensions = [
   StreamLanguage.define(pug),
@@ -196,11 +112,33 @@ export default function DocEdit({
   useGongoSub("doc", { _id });
   useGongoSub("docRevisions", { docId: _id });
   const userId = useGongoUserId();
-  const dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
-  // The parsed (to jrt) doc to be rendered.  Clone it since docRender mutates it.
-  const [doc, setDoc] = React.useState(
-    dbDoc?.doc && JSON.parse(JSON.stringify(dbDoc.doc))
+
+  const _dbDoc = useGongoOne((db) => db.collection("docs").find({ _id }));
+  const _revision = useGongoOne((db) =>
+    db.collection("docRevisions").find({ _id: _dbDoc?.docRevisionId })
   );
+  const [dbDoc, setDbDoc] = React.useState(_dbDoc);
+  const [initialValue, setInitialValue] = React.useState<string | null>(null);
+
+  // We want the reactivity for first load, but never again.
+  React.useEffect(() => {
+    if (_dbDoc && !dbDoc) {
+      setDbDoc(_dbDoc);
+      if (!_dbDoc?.docRevisionId) {
+        // console.log("no docRevisionId, setting initialValue to ''");
+        setInitialValue("");
+      }
+    }
+  }, [_dbDoc, dbDoc]);
+  React.useEffect(() => {
+    if (_revision && initialValue === null) {
+      // console.log("Revision loaded, setting initialValue to _revision.text");
+      // console.log(_revision);
+      setInitialValue(_revision.text);
+    }
+  }, [_revision, initialValue]);
+
+  const [doc, setDoc] = React.useState<DocNode>({ type: "root", children: [] });
   const [error, setError] = React.useState<Error | null>(null);
   const viewRef = React.useRef<EditorView | undefined>(undefined);
   const onChange = React.useCallback((value, viewUpdate) => {
@@ -256,8 +194,12 @@ export default function DocEdit({
   const handleKeyDown = React.useCallback(
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "s" && event.ctrlKey) {
-        const text = viewRef.current?.state.doc.toString() || "";
         event.preventDefault();
+        const text = viewRef.current?.state.doc.toString();
+        if (!text) {
+          console.log("nothing to save, text is empty");
+          return;
+        }
 
         if (!userId) {
           alert("no userId");
@@ -271,14 +213,15 @@ export default function DocEdit({
           .find({ docId: _id, userId })
           .sort("updatedAt", -1)
           .limit(1)
-          .toArraySync()[0];
+          .toArraySync()[0] as DocRevision;
         // console.log({ lastRevision });
 
-        let revisionId = lastRevision?._id;
+        let docRevisionId = lastRevision?._id;
         if (
           !lastRevision ||
-          lastRevision.updatedAt.getTime() <
-            new Date().getTime() - 1000 * 60 * 5
+          (lastRevision.updatedAt &&
+            lastRevision.updatedAt.getTime() <
+              new Date().getTime() - 1000 * 60 * 5)
         ) {
           const newRevision = {
             docId: _id,
@@ -291,7 +234,7 @@ export default function DocEdit({
           // console.log(newRevision);
           // TODO, gongo returned doc should not have optionalId
           const insertedDoc = db.collection("docRevisions").insert(newRevision);
-          revisionId = insertedDoc._id as string;
+          docRevisionId = insertedDoc._id as string;
         } else {
           const result = db
             .collection("docRevisions")
@@ -299,6 +242,8 @@ export default function DocEdit({
               { _id: lastRevision._id },
               { $set: { text, updatedAt: new Date() } }
             );
+          // console.log("lastRevision", lastRevision);
+          // console.log({ $set: { text, updatedAt: new Date() } });
           // console.log(result);
         }
 
@@ -313,11 +258,20 @@ export default function DocEdit({
                   return value;
                 })
               ),
-              revisionId,
+              docRevisionId,
               updatedAt: new Date(),
             },
           }
         );
+        (function () {
+          const doc = db.collection("docs").findOne(_id) as GongoClientDocument;
+          if (
+            doc &&
+            doc.__ObjectIDs &&
+            !doc.__ObjectIDs.includes("docRevisionId")
+          )
+            doc.__ObjectIDs.push("docRevisionId");
+        })();
       }
     },
     [_id, userId, doc]
@@ -327,11 +281,6 @@ export default function DocEdit({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
-
-  React.useEffect(() => {
-    // i.e. only do this once on load; don't retrigger on doc updates.
-    if (!doc && dbDoc) setDoc(JSON.parse(JSON.stringify(dbDoc.doc)));
-  }, [dbDoc, doc]);
 
   const { setContainer, state, view, setState } = useCodeMirror({
     theme: "dark",
@@ -345,16 +294,19 @@ export default function DocEdit({
     // console.log("state", state);
   }, [state]);
   React.useEffect(() => {
-    // console.log("view", view);
-    viewRef.current = view;
-    if (view)
-      view.dispatch({
-        changes: {
-          from: 0,
-          insert: starterDoc,
-        },
-      });
-  }, [view]);
+    if (view) {
+      // console.log("view", view);
+      viewRef.current = view;
+      if (initialValue) {
+        view.dispatch({
+          changes: {
+            from: 0,
+            insert: initialValue,
+          },
+        });
+      }
+    }
+  }, [view, initialValue]);
 
   const editorRef = React.useCallback(
     (node) => {
@@ -363,7 +315,7 @@ export default function DocEdit({
     [setContainer]
   );
 
-  if (!doc) return <div>Loading or not found...</div>;
+  if (initialValue === null) return <div>Loading or not found...</div>;
 
   return (
     <div style={{ height: "calc(100vh - 64px)", overflow: "hidden" }}>
