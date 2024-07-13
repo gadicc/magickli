@@ -131,9 +131,11 @@ gs.publish("doc", async (db, opts, { auth }) => {
   const userId = await auth.userId();
   if (!userId) return [];
 
-  const _id = opts && opts._id;
+  const _idStr = opts && opts._id;
   const user = await db.collection("users").findOne({ _id: userId });
-  const doc = await db.collection("docs").findOne({ _id });
+  const doc = await db
+    .collection("docs")
+    .findOne({ _id: new ObjectId(_idStr) });
   if (!doc) return [];
 
   const membership = await db.collection("templeMemberships").findOne({
@@ -146,13 +148,14 @@ gs.publish("doc", async (db, opts, { auth }) => {
     membership?.admin ||
     (!doc.groupId && !doc.templeId) ||
     user?.groupIds.includes(doc.groupId)
-  )
+  ) {
     return [
       {
         coll: "docs",
         entries: [doc],
       },
     ];
+  }
 
   return [];
 });
