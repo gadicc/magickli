@@ -1,5 +1,6 @@
 import pugInlineTags from "pug-parser/lib/inline-tags";
 import { roles } from "../DocRender";
+import { SourceMapConsumer } from "source-map";
 
 interface PugAttribute {
   column: number;
@@ -47,16 +48,20 @@ interface CheckSrcError {
   severity: "error" | "warning";
 }
 
-export function checkSrc(node: PugBlock | PugTag) {
+export function checkSrc(node: PugBlock | PugTag, consumer: SourceMapConsumer) {
   const errors: CheckSrcError[] = [];
   nodeWalker(node, (node) => {
     if (node.type === "Tag") {
       if (!allowedTags.includes(node.name)) {
+        const { line, column } = consumer.originalPositionFor({
+          line: node.line,
+          column: node.column || 0,
+        });
         errors.push({
           from: { line: node.line, column: node.column || 0 },
           to: {
             line: node.line,
-            column: (node.column || 0) + node.name.length,
+            column: (column || node.column || 0) + node.name.length,
           },
           message: "Unrecognized tag: " + node.name,
           severity: "warning" as const,
@@ -69,7 +74,21 @@ export function checkSrc(node: PugBlock | PugTag) {
         const roleAttr = node.attrs.find((a) => a.name === "role");
         if (!roleAttr) return;
 
+        const { line, column } = consumer.originalPositionFor({
+          line: roleAttr.line,
+          column: (roleAttr.column || 0) + roleAttr.name.length + '="'.length,
+        });
+        if (line === null) {
+          console.error("no line");
+          return;
+        }
+        if (column === null) {
+          console.error("no column");
+          return;
+        }
+
         const role = roleAttr?.val.replace(/^["']|["']$/g, "");
+        if (role === "") return;
         let valid = false;
         if (role) {
           if (roles[role]) valid = true;
@@ -87,21 +106,12 @@ export function checkSrc(node: PugBlock | PugTag) {
                   if (!roles[role]) {
                     errors.push({
                       from: {
-                        line: roleAttr.line,
-                        column:
-                          (roleAttr.column || 0) +
-                          roleAttr.name.length +
-                          1 +
-                          start,
+                        line,
+                        column: column + start,
                       },
                       to: {
-                        line: roleAttr.line,
-                        column:
-                          (roleAttr.column || 0) +
-                          roleAttr.name.length +
-                          1 +
-                          start +
-                          role.length,
+                        line,
+                        column: column + start + role.length,
                       },
                       message: "Unrecognized role: " + role,
                       severity: "warning" as const,

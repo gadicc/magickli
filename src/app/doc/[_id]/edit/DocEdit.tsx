@@ -14,6 +14,9 @@ import {
   useGongoUserId,
   GongoClientDocument,
 } from "gongo-client-react";
+import sourceMap, { SourceMapConsumer } from "source-map";
+// @ts-expect-error: no types
+import sourceMapMappings from "arraybuffer-loader!source-map/lib/mappings.wasm";
 
 import DocRender from "../DocRender";
 import { toJrt } from "@/doc/prepare";
@@ -22,6 +25,11 @@ import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { checkSrc } from "./checkSrc";
 import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
+
+// @ts-expect-error: not in spec but exists
+SourceMapConsumer.initialize({
+  "lib/mappings.wasm": sourceMapMappings,
+});
 
 const extensions = [
   StreamLanguage.define(pug),
@@ -64,42 +72,11 @@ function ShowError({
   );
 }
 
-function toPos(
-  value: string,
-  line: number,
-  column: number,
-  mappings?: Record<number, [number, number, number][]>
-) {
-  // console.log("toPos", { line, column, mappings });
-  const lineMappings = mappings && mappings[line];
-  if (lineMappings) {
-    // console.log("lineMappings", lineMappings);
-    for (const [from, to, offset] of lineMappings) {
-      /*
-      console.log({
-        line,
-        column,
-        from: from + offset,
-        to: to + offset,
-        offset,
-        newColumn: column,
-      });
-      */
-      if (column >= from + offset && column <= to + offset + 1) {
-        column -= offset;
-        // console.log("match, new column: " + column);
-        break;
-      }
-    }
-  }
-
+function toPos(value: string, line: number, column: number) {
   let pos = 0;
   for (let i = 0; i < line - 1; i++) {
     pos = value.indexOf("\n", pos) + 1;
   }
-  // console.log("pos", pos, value.substring(pos, value.indexOf("\n", pos)));
-  // console.log("return", pos + column - 1);
-
   return pos + column - 1;
 }
 
@@ -148,15 +125,25 @@ export default function DocEdit({
 
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(async () => {
-      const { transformed, mappings } = transformAndMapShortcuts(value);
+      const { transformed, sourceMap } = transformAndMapShortcuts(value);
+      const consumer = await new SourceMapConsumer(sourceMap);
+      /*
+      console.log(value);
+      console.log(transformed);
+      consumer.eachMapping((m) => console.log(m));
+      window.value = value;
+      window.transformed = transformed;
+      window.consumer = consumer;
+      */
+
       try {
         const lexed = pugLex(transformed);
         const parsed = pugParse(lexed, { src: transformed });
         // console.log(parsed);
-        const errors = checkSrc(parsed).map((e) => ({
+        const errors = checkSrc(parsed, consumer).map((e) => ({
           ...e,
-          from: toPos(value, e.from.line, e.from.column, mappings),
-          to: toPos(value, e.to.line, e.to.column, mappings),
+          from: toPos(value, e.from.line, e.from.column),
+          to: toPos(value, e.to.line, e.to.column),
         }));
         // console.log("errors", errors);
         const view = viewRef.current;
@@ -171,8 +158,13 @@ export default function DocEdit({
           /^Pug:(?<line>\d+):(?<column>\d+)\n(?<inline>[\s\S]+?)\n\n(?<message>.+)$/
         );
         if (match) {
-          const { line, column, message, type } = match.groups;
-          const pos = toPos(value, Number(line), Number(column), mappings);
+          const { message, type } = match.groups;
+          let line = Number(match.groups.line);
+          let column = Number(match.groups.column);
+          const orig = consumer.originalPositionFor({ line, column });
+          if (orig.line !== null) line = orig.line;
+          if (orig.column !== null) column = orig.column;
+          const pos = toPos(value, line, column);
           const diagnostics: Diagnostic[] = [
             {
               from: pos,

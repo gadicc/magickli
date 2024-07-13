@@ -4,13 +4,70 @@ import {
   ViewPlugin,
   RangeSet,
 } from "@uiw/react-codemirror";
+import { SourceMapGenerator } from "source-map";
+
+function posToLineCol(str: string, pos: number) {
+  const lines = str.slice(0, pos).split("\n");
+  return { line: lines.length, column: lines[lines.length - 1].length };
+}
 
 const shortcuts = [
   {
-    regexp: /^([^: ]+):/,
+    regexp: /^\b([^: ]+):/gm,
+    transform(input: string, generator: SourceMapGenerator) {
+      return input.replaceAll(this.regexp, (_match, role, offset) => {
+        const { line, column } = posToLineCol(input, offset);
+        // 0 2 4 6 8 10 13 16 19
+        // Hiero: hi there
+        //    \......,\......,
+        // say(role="hiero") hi there
+        const pre = 'say(role="';
+        const post = '")';
+        const replacement = pre + lowerCaseFirstLetter(role) + post;
+
+        generator.addMapping({
+          source: ".",
+          original: { line, column },
+          generated: { line, column: column + pre.length },
+        });
+        generator.addMapping({
+          source: ".",
+          original: { line, column: role.length + 1 /* ":" */ },
+          generated: { line, column: column + replacement.length + 1 },
+        });
+
+        return replacement;
+      });
+    },
   },
   {
-    regexp: /^(?<skip>\* ?)(?<role>[^ ]*)(?<rest>.*)$/,
+    regexp: /^(?<skip>\* ?)(?<role>[^ ]*)/gm,
+    transform(input: string, generator: SourceMapGenerator) {
+      return input.replaceAll(this.regexp, (_match, skip, role, offset) => {
+        const { line, column } = posToLineCol(input, offset);
+        // 0 2 4 6 8 10 13 16 19
+        // * Hiero does something.
+        //   \......,\.......
+        // do(role="hiero") does something
+        const pre = 'do(role="';
+        const post = '")';
+        const replacement = pre + lowerCaseFirstLetter(role) + post;
+
+        generator.addMapping({
+          source: ".",
+          original: { line, column: column + skip.length },
+          generated: { line, column: column + pre.length },
+        });
+        if (role.length)
+          generator.addMapping({
+            source: ".",
+            original: { line, column: skip.length + role.length },
+            generated: { line, column: column + replacement.length },
+          });
+
+        return replacement;
+      });
+    },
   },
 ];
 
@@ -19,62 +76,18 @@ function lowerCaseFirstLetter(string) {
 }
 
 export function transformAndMapShortcuts(input: string) {
-  const mappings: Record<number, [number, number, number][]> = {};
-  const lines = input.split("\n");
-  for (let line = 0; line < lines.length; line++) {
-    const lineStr = lines[line];
-    let match;
-    if ((match = lineStr.match(shortcuts[0].regexp))) {
-      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
-      const pre = 'say(role="';
-      const post = '")';
-      const shortenedBy = 1; // matches that aren't kept, i.e. ":"
-      const replacement = pre + lowerCaseFirstLetter(match[1]) + post;
-      const offset = replacement.length - match[0].length;
+  let transformed = input;
+  const generator = new SourceMapGenerator();
 
-      // console.log(lines[line]);
-      lines[line] = replacement + lineStr.slice(match[0].length);
-      // console.log(lines[line]);
-      lineMappings.push([0, match[0].length - 1, offset - shortenedBy]);
-      lineMappings.push([
-        match[0].length + 1, // include the ":"
-        lineStr.length,
-        offset - shortenedBy,
-      ]);
-    } else if ((match = lineStr.match(shortcuts[1].regexp))) {
-      const lineMappings = mappings[line + 1] || (mappings[line + 1] = []);
-      const { skip, role, rest } = match.groups;
+  for (const shortcut of shortcuts)
+    transformed = shortcut.transform(transformed, generator);
 
-      if (!role) {
-        lines[line] = "";
-        continue;
-      }
-
-      const pre = 'do(role="';
-      const post = '")';
-      const replacement = pre + lowerCaseFirstLetter(role) + post;
-      // console.log(lines[line]);
-      lines[line] = replacement + rest;
-      // console.log(lines[line]);
-      lineMappings.push([
-        skip.length,
-        skip.length + role.length,
-        pre.length - skip.length,
-      ]);
-      lineMappings.push([
-        skip.length + role.length,
-        lineStr.length,
-        pre.length - skip.length,
-      ]);
-    }
-  }
-
-  const transformed = lines.join("\n");
   return {
     transformed,
-    mappings,
+    sourceMap: generator.toString(),
   };
 }
+
 const roleSpec = { attributes: { style: "color: #aaf" } };
 const restSpec = { attributes: { style: "color: #98c379" } }; // theme string color
 const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
