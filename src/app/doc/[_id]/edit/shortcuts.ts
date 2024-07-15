@@ -11,6 +11,14 @@ function posToLineCol(str: string, pos: number) {
   return { line: lines.length, column: lines[lines.length - 1].length };
 }
 
+function lowerCaseFirstLetter(string) {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+const roleSpec = { attributes: { style: "color: #aaf" } };
+const restSpec = { attributes: { style: "color: #98c379" } }; // theme string color
+const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
+
 const shortcuts = [
   {
     regexp: /^\b([^: ]+):/gm,
@@ -38,6 +46,19 @@ const shortcuts = [
 
         return replacement;
       });
+    },
+    decorate(add, from, to, match, view) {
+      add(from, from + match[1].length, Decoration.mark(roleSpec));
+      add(
+        from + match[1].length,
+        from + match[1].length + 1,
+        Decoration.mark(nonSpec)
+      );
+      add(
+        from + match[1].length + 1,
+        from + match.input.length,
+        Decoration.mark(restSpec)
+      );
     },
   },
   {
@@ -68,12 +89,17 @@ const shortcuts = [
         return replacement;
       });
     },
+    decorate(add, from, to, match, view) {
+      const { groups } = match;
+      if (!groups) return;
+      add(
+        from + groups.skip.length,
+        Math.min(to, from + groups.role.length + 2),
+        Decoration.mark(roleSpec)
+      );
+    },
   },
 ];
-
-function lowerCaseFirstLetter(string) {
-  return string.charAt(0).toLowerCase() + string.slice(1);
-}
 
 export function transformAndMapShortcuts(input: string) {
   let transformed = input;
@@ -88,46 +114,16 @@ export function transformAndMapShortcuts(input: string) {
   };
 }
 
-const roleSpec = { attributes: { style: "color: #aaf" } };
-const restSpec = { attributes: { style: "color: #98c379" } }; // theme string color
-const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
-
-const shortcutDecorators = [
-  new MatchDecorator({
-    regexp: new RegExp(shortcuts[0].regexp, "g"),
-    decorate(add, from, to, match, view) {
-      add(from, from + match[1].length, Decoration.mark(roleSpec));
-      add(
-        from + match[1].length,
-        from + match[1].length + 1,
-        Decoration.mark(nonSpec)
-      );
-      add(
-        from + match[1].length + 1,
-        from + match.input.length,
-        Decoration.mark(restSpec)
-      );
-    },
-  }),
-  new MatchDecorator({
-    regexp: new RegExp(shortcuts[1].regexp, "g"),
-    decorate(add, from, to, match, view) {
-      const { groups } = match;
-      if (!groups) return;
-      add(
-        from + groups.skip.length,
-        Math.min(to, from + groups.role.length + 2),
-        Decoration.mark(roleSpec)
-      );
-    },
-  }),
-  new MatchDecorator({
-    regexp: /role="([A-Za-z,-]+)"/g,
-    decorate(add, from, to, match, view) {
-      add(from + 6, to - 1, Decoration.mark(roleSpec));
-    },
-  }),
-];
+const shortcutDecorators = shortcuts
+  .map(({ regexp, decorate }) => new MatchDecorator({ regexp, decorate }))
+  .concat([
+    new MatchDecorator({
+      regexp: /role="([A-Za-z,-]+)"/g,
+      decorate(add, from, to, match, view) {
+        add(from + 6, to - 1, Decoration.mark(roleSpec));
+      },
+    }),
+  ]);
 
 export const shortcutHighlighters = shortcutDecorators.map((decorator) =>
   ViewPlugin.fromClass(
