@@ -1,6 +1,6 @@
 import pugInlineTags from "pug-parser/lib/inline-tags";
 import { roles } from "../DocRender";
-import { SourceMapConsumer } from "source-map";
+import type { SourceMapConsumer } from "source-map";
 
 interface PugAttribute {
   column: number;

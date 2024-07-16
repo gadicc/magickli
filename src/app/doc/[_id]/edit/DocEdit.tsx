@@ -14,9 +14,6 @@ import {
   useGongoUserId,
   GongoClientDocument,
 } from "gongo-client-react";
-import sourceMap, { SourceMapConsumer } from "source-map";
-// @ts-expect-error: no types
-import sourceMapMappings from "arraybuffer-loader!source-map/lib/mappings.wasm";
 
 import DocRender from "../DocRender";
 import { toJrt } from "@/doc/prepare";
@@ -25,11 +22,7 @@ import { Close, ErrorOutline } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { checkSrc } from "./checkSrc";
 import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
-
-// @ts-expect-error: not in spec but exists
-SourceMapConsumer.initialize({
-  "lib/mappings.wasm": sourceMapMappings,
-});
+import SourceMapConsumer from "./SourceMapConsumer";
 
 const extensions = [
   StreamLanguage.define(pug),
@@ -125,16 +118,9 @@ export default function DocEdit({
 
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(async () => {
-      const { transformed, sourceMap } = transformAndMapShortcuts(value);
+      const { transformed, sourceMap } = await transformAndMapShortcuts(value);
+      // @ts-expect-error: it's ok
       const consumer = await new SourceMapConsumer(sourceMap);
-      /*
-      console.log(value);
-      console.log(transformed);
-      consumer.eachMapping((m) => console.log(m));
-      window.value = value;
-      window.transformed = transformed;
-      window.consumer = consumer;
-      */
 
       try {
         const lexed = pugLex(transformed);

@@ -4,7 +4,9 @@ import {
   ViewPlugin,
   RangeSet,
 } from "@uiw/react-codemirror";
-import { SourceMapGenerator } from "source-map";
+import SourceMapConsumer from "./SourceMapConsumer";
+import remapping from "@ampproject/remapping";
+import MagicString from "magic-string";
 
 function posToLineCol(str: string, pos: number) {
   const lines = str.slice(0, pos).split("\n");
@@ -22,8 +24,12 @@ const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
 const shortcuts = [
   {
     regexp: /^\b([^: ]+):/gm,
-    transform(input: string, generator: SourceMapGenerator) {
-      return input.replaceAll(this.regexp, (_match, role, offset) => {
+    transform(input: string, s: MagicString, source: string) {
+      // return input.replaceAll(this.regexp, (_match, role, offset) => {
+      const matches = input.matchAll(this.regexp);
+      for (const match of matches) {
+        const offset = match.index;
+        const [_match, role] = match;
         const { line, column } = posToLineCol(input, offset);
         // 0 2 4 6 8 10 13 16 19
         // Hiero: hi there
@@ -33,19 +39,28 @@ const shortcuts = [
         const post = '")';
         const replacement = pre + lowerCaseFirstLetter(role) + post;
 
+        s.update(offset, offset + role.length, lowerCaseFirstLetter(role));
+        s.remove(offset + role.length, offset + role.length + 1); // ":"
+        s.appendRight(offset + role.length, post);
+        s.prependLeft(offset, pre); /* },
+
+        /*
         generator.addMapping({
-          source: ".",
+          source,
           original: { line, column },
           generated: { line, column: column + pre.length },
         });
         generator.addMapping({
-          source: ".",
-          original: { line, column: role.length + 1 /* ":" */ },
+          source,
+          original: { line, column: role.length + 1 /* ":" */ /*
           generated: { line, column: column + replacement.length + 1 },
         });
 
         return replacement;
-      });
+        */
+      }
+
+      return s.toString();
     },
     decorate(add, from, to, match, view) {
       add(from, from + match[1].length, Decoration.mark(roleSpec));
@@ -63,8 +78,12 @@ const shortcuts = [
   },
   {
     regexp: /^(?<skip>\* ?)(?<role>[^ ]*)/gm,
-    transform(input: string, generator: SourceMapGenerator) {
-      return input.replaceAll(this.regexp, (_match, skip, role, offset) => {
+    transform(input: string, s: MagicString, source: string) {
+      // return input.replaceAll(this.regexp, (_match, skip, role, offset) => {
+      const matches = input.matchAll(this.regexp);
+      for (const match of matches) {
+        const offset = match.index;
+        const [_match, skip, role] = match;
         const { line, column } = posToLineCol(input, offset);
         // 0 2 4 6 8 10 13 16 19
         // * Hiero does something.
@@ -74,20 +93,32 @@ const shortcuts = [
         const post = '")';
         const replacement = pre + lowerCaseFirstLetter(role) + post;
 
+        s.update(
+          offset + skip.length,
+          offset + skip.length + role.length,
+          lowerCaseFirstLetter(role)
+        );
+        s.appendRight(offset + skip.length + role.length, post);
+        s.remove(offset, offset + skip.length);
+        s.prependLeft(offset, pre);
+
+        /*
         generator.addMapping({
-          source: ".",
+          source,
           original: { line, column: column + skip.length },
           generated: { line, column: column + pre.length },
         });
         if (role.length)
           generator.addMapping({
-            source: ".",
+            source,
             original: { line, column: skip.length + role.length },
             generated: { line, column: column + replacement.length },
           });
 
         return replacement;
-      });
+        */
+      }
+      return s.toString();
     },
     decorate(add, from, to, match, view) {
       const { groups } = match;
@@ -99,23 +130,94 @@ const shortcuts = [
       );
     },
   },
+  {
+    regexp: /^( *)(.*)\b(\d{1,2}=\d{1,2})\b/gm,
+    transform(input: string, s: MagicString, source: string) {
+      // return input.replaceAll(
+      //  this.regexp,
+      //  (_match, indent, pre, grade, offset) => {
+      const matches = input.matchAll(this.regexp);
+      for (const match of matches) {
+        const offset = match.index;
+        const [_match, indent, pre, grade] = match;
+        const { line, column } = posToLineCol(input, offset);
+        const out =
+          indent +
+          pre +
+          ["", "|", `grade(grade="${grade}")`, "|", "| "].join(
+            "\n" + indent + "  "
+          );
+
+        s.appendRight(
+          offset + indent.length + pre.length + grade.length,
+          ['")', "|", "|"].join("\n" + indent + "  ")
+        );
+        s.prependLeft(
+          offset + indent.length + pre.length,
+          ["", "|", 'grade(grade="'].join("\n" + indent + "  ")
+        );
+
+        /*
+          generator.addMapping({
+            source,
+            original: { line, column: column + indent.length + pre.length },
+            generated: { line: line + 2, column: indent.length + 13 },
+          });
+          generator.addMapping({
+            source,
+            original: {
+              line,
+              column: column + indent.length + pre.length + grade.length,
+            },
+            generated: { line: line + 4, column: indent.length + 2 },
+          });
+          return out;
+          */
+      }
+      return s.toString();
+    },
+  },
 ];
 
-export function transformAndMapShortcuts(input: string) {
+export async function trace(sourceMaps, line, column) {
+  let pos = { line, column };
+  for (const sourceMap of sourceMaps.toReversed()) {
+    const consumer = await new SourceMapConsumer(sourceMap);
+    pos = consumer.originalPositionFor(pos);
+  }
+  return pos;
+}
+
+export async function transformAndMapShortcuts(input: string) {
   let transformed = input;
-  const generator = new SourceMapGenerator();
 
-  for (const shortcut of shortcuts)
-    transformed = shortcut.transform(transformed, generator);
+  let prev;
+  const sourceMaps: string[] = [];
+  for (let i = 1; i < shortcuts.length; i++) {
+    // for (let i = 2; i < 3; i++) {
+    const file = "result" + i + ".pug";
+    if (!prev) prev = "source.pug";
+    const s = new MagicString(transformed);
+    transformed = shortcuts[i].transform(transformed, s, prev);
+    // console.log("transformed", transformed);
+    sourceMaps.push(
+      s.generateMap({ source: prev, file, hires: true }).toString()
+    );
+    prev = file;
+  }
 
+  const remapped = remapping(sourceMaps.toReversed(), () => null);
   return {
     transformed,
-    sourceMap: generator.toString(),
+    sourceMap: remapped,
+    // sourceMaps,
   };
 }
 
 const shortcutDecorators = shortcuts
+  .filter(({ decorate }) => decorate)
   .map(({ regexp, decorate }) => new MatchDecorator({ regexp, decorate }))
+  .filter(Boolean)
   .concat([
     new MatchDecorator({
       regexp: /role="([A-Za-z,-]+)"/g,
