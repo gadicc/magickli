@@ -25,12 +25,10 @@ const shortcuts = [
   {
     regexp: /^\b([^: ]+):/gm,
     transform(input: string, s: MagicString, source: string) {
-      // return input.replaceAll(this.regexp, (_match, role, offset) => {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
         const [_match, role] = match;
-        const { line, column } = posToLineCol(input, offset);
         // 0 2 4 6 8 10 13 16 19
         // Hiero: hi there
         //    \......,\......,
@@ -42,24 +40,8 @@ const shortcuts = [
         s.update(offset, offset + role.length, lowerCaseFirstLetter(role));
         s.remove(offset + role.length, offset + role.length + 1); // ":"
         s.appendRight(offset + role.length, post);
-        s.prependLeft(offset, pre); /* },
-
-        /*
-        generator.addMapping({
-          source,
-          original: { line, column },
-          generated: { line, column: column + pre.length },
-        });
-        generator.addMapping({
-          source,
-          original: { line, column: role.length + 1 /* ":" */ /*
-          generated: { line, column: column + replacement.length + 1 },
-        });
-
-        return replacement;
-        */
+        s.prependLeft(offset, pre);
       }
-
       return s.toString();
     },
     decorate(add, from, to, match, view) {
@@ -79,19 +61,16 @@ const shortcuts = [
   {
     regexp: /^(?<skip>\* ?)(?<role>[^ ]*)/gm,
     transform(input: string, s: MagicString, source: string) {
-      // return input.replaceAll(this.regexp, (_match, skip, role, offset) => {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
         const [_match, skip, role] = match;
-        const { line, column } = posToLineCol(input, offset);
         // 0 2 4 6 8 10 13 16 19
         // * Hiero does something.
         //   \......,\.......
         // do(role="hiero") does something
         const pre = 'do(role="';
         const post = '")';
-        const replacement = pre + lowerCaseFirstLetter(role) + post;
 
         s.update(
           offset + skip.length,
@@ -101,22 +80,6 @@ const shortcuts = [
         s.appendRight(offset + skip.length + role.length, post);
         s.remove(offset, offset + skip.length);
         s.prependLeft(offset, pre);
-
-        /*
-        generator.addMapping({
-          source,
-          original: { line, column: column + skip.length },
-          generated: { line, column: column + pre.length },
-        });
-        if (role.length)
-          generator.addMapping({
-            source,
-            original: { line, column: skip.length + role.length },
-            generated: { line, column: column + replacement.length },
-          });
-
-        return replacement;
-        */
       }
       return s.toString();
     },
@@ -133,14 +96,10 @@ const shortcuts = [
   {
     regexp: /^( *)(.*)\b(\d{1,2}=\d{1,2})\b/gm,
     transform(input: string, s: MagicString, source: string) {
-      // return input.replaceAll(
-      //  this.regexp,
-      //  (_match, indent, pre, grade, offset) => {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
         const [_match, indent, pre, grade] = match;
-        const { line, column } = posToLineCol(input, offset);
         const out =
           indent +
           pre +
@@ -156,23 +115,6 @@ const shortcuts = [
           offset + indent.length + pre.length,
           ["", "|", 'grade(grade="'].join("\n" + indent + "  ")
         );
-
-        /*
-          generator.addMapping({
-            source,
-            original: { line, column: column + indent.length + pre.length },
-            generated: { line: line + 2, column: indent.length + 13 },
-          });
-          generator.addMapping({
-            source,
-            original: {
-              line,
-              column: column + indent.length + pre.length + grade.length,
-            },
-            generated: { line: line + 4, column: indent.length + 2 },
-          });
-          return out;
-          */
       }
       return s.toString();
     },
@@ -193,7 +135,7 @@ export async function transformAndMapShortcuts(input: string) {
 
   let prev;
   const sourceMaps: string[] = [];
-  for (let i = 1; i < shortcuts.length; i++) {
+  for (let i = 0; i < shortcuts.length; i++) {
     // for (let i = 2; i < 3; i++) {
     const file = "result" + i + ".pug";
     if (!prev) prev = "source.pug";
