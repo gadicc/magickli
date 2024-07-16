@@ -14,7 +14,10 @@ function posToLineCol(str: string, pos: number) {
 }
 
 function lowerCaseFirstLetter(string) {
-  return string.charAt(0).toLowerCase() + string.slice(1);
+  return string
+    .split(",")
+    .map((s) => s.charAt(0).toLowerCase() + s.slice(1))
+    .join(",");
 }
 
 const roleSpec = { attributes: { style: "color: #aaf" } };
