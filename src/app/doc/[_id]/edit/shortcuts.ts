@@ -103,6 +103,7 @@ const shortcuts = [
       for (const match of matches) {
         const offset = match.index;
         const [_match, indent, pre, grade] = match;
+        if (pre.endsWith('grade(grade="')) return input;
         const out =
           indent +
           pre +
@@ -133,13 +134,12 @@ export async function trace(sourceMaps, line, column) {
   return pos;
 }
 
-export async function transformAndMapShortcuts(input: string) {
+export function transformAndMapShortcuts(input: string) {
   let transformed = input;
 
   let prev;
   const sourceMaps: string[] = [];
   for (let i = 0; i < shortcuts.length; i++) {
-    // for (let i = 2; i < 3; i++) {
     const file = "result" + i + ".pug";
     if (!prev) prev = "source.pug";
     const s = new MagicString(transformed);
@@ -151,7 +151,9 @@ export async function transformAndMapShortcuts(input: string) {
     prev = file;
   }
 
-  const remapped = remapping(sourceMaps.toReversed(), () => null);
+  // NB: reverse() mutates, in case we need it again.
+  // toReversed() not common in older node versions.
+  const remapped = remapping(sourceMaps.reverse(), () => null);
   return {
     transformed,
     sourceMap: remapped,
