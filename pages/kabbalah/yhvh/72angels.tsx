@@ -23,7 +23,7 @@ import { ExpandMore } from "@mui/icons-material";
 
 import AppBar from "../../../components/AppBar";
 
-import angels, { Angel } from "../../../data/kabbalah/SeventyTwoAngels";
+import angels, { type Angel } from "../../../data/kabbalah/SeventyTwoAngels";
 import angelicOrders from "../../../data/kabbalah/AngelicOrders";
 import zodiacs from "../../../data/astrology/Zodiac";
 

@@ -98,7 +98,7 @@ db.collection("templeMemberships").persist();
 db.collection("studySet" /*{ isLocalCollection: true }*/).persist();
 
 declare module "gongo-client" {
-  class Database {
+  interface Database {
     collection(name: "docs"): Collection<Doc>;
     collection(name: "docRevisions"): Collection<DocRevision>;
     collection(name: "studySet"): Collection<StudySetStats>;

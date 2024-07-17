@@ -18,7 +18,7 @@ import Typography from "@mui/material/Typography";
 import Link from "../../src/Link";
 import AppBar from "../../components/AppBar";
 
-import getSet, { StudyCard, StudySet } from "../../src/study/sets";
+import getSet, { StudyCard, type StudySet } from "../../src/study/sets";
 import db from "../../src/db";
 import { Stack } from "@mui/material";
 import { StudyCardDataItem } from "../../src/study/sets";

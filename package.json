@@ -93,7 +93,7 @@
     "@types/jest": "^29.2.6",
     "@types/pdf-parse": "^1.1.4",
     "@types/slug": "^5.0.8",
-    "@typescript-eslint/eslint-plugin": "5.60.0",
+    "@typescript-eslint/eslint-plugin": "7.16.1",
     "eslint": "8.10.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^8.5.0",
@@ -105,7 +105,7 @@
     "pug-lexer": "^5.0.1",
     "pug-parser": "^6.0.0",
     "raw-loader": "^4.0.2",
-    "typescript": "5.1.3"
+    "typescript": "5.5.3"
   },
   "resolutions": {
     "corpora": "https://github.com/dariusk/corpora/tarball/ff1941630dc5a7aa3d4459fc038cb7a04ec93cb0"
