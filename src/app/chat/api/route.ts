@@ -66,7 +66,7 @@ const answerPrompt = PromptTemplate.fromTemplate(ANSWER_TEMPLATE);
 export interface ChatMessageMetaData {
   sources: {
     pageContent: string;
-    metadata: Record<string, any>;
+    metadata: Record<string, unknown>;
   }[];
 }
 
@@ -97,11 +97,18 @@ export async function POST(req: Request) {
     // const vectorStore = createVectorStore();
 
     // Uses PINECONE_API_KEY and PINECONE_ENVIRONMENT
+    const { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } = process.env;
+    if (!PINECONE_INDEX_NAME || !PINECONE_NAME_SPACE) {
+      return NextResponse.json(
+        { message: "Missing PINECONE_INDEX_NAME or PINECONE_NAME_SPACE" },
+        { status: 500 }
+      );
+    }
     const pinecone = new Pinecone();
-    const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME!);
+    const pineconeIndex = pinecone.Index(PINECONE_INDEX_NAME);
     const vectorStore = await PineconeStore.fromExistingIndex(
       new OpenAIEmbeddings(),
-      { pineconeIndex, namespace: process.env.PINECONE_NAME_SPACE! }
+      { pineconeIndex, namespace: PINECONE_NAME_SPACE }
     );
 
     /**
