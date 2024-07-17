@@ -282,7 +282,17 @@ class Task extends Node {
               content: "*";
             }
             .role {
-              word-break: break-word;
+              height: 1.5em;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+            .role > div {
+              height: 100%;
+              display: inline-block;
+            }
+            .roleName {
+              vertical-align: top;
             }
             .pg {
               position: absolute;
@@ -293,11 +303,26 @@ class Task extends Node {
           `}</style>
           {
             /* role !== myRole && */ !samePreviousRole && (
-              <span className="role" style={{ color: roles[role]?.color }}>
-                {roles[role]
-                  ? [roles[role].symbol, " ", roles[role].name]
-                  : role.substr(0, 1).toUpperCase() + role.substr(1)}
-              </span>
+              <div className="role">
+                <div className="roleSymbol">
+                  {role.split(",").map((role, i) => (
+                    <span key={i} style={{ marginRight: 3 }}>
+                      {roles[role]?.symbol}
+                    </span>
+                  ))}
+                </div>{" "}
+                <div className="roleName">
+                  {role.split(",").map((role, i) => (
+                    <span
+                      key={i}
+                      style={{ color: roles[role]?.color, marginRight: 3 }}
+                    >
+                      {role?.name ||
+                        role.substr(0, 1).toUpperCase() + role.substr(1)}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )
           }
           <span className="pg">{key}</span>

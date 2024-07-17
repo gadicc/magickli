@@ -40,6 +40,7 @@ import {
 import DocContext from "@/doc/context";
 import { Render } from "@/doc/blocks";
 import "@/../public/fonts/FrankRuehlCLM-stylesheet.css";
+import Lamen from "@/app/gd/components/lamen";
 
 // Note: make sure not to export anything except the react component
 // in this file, otherwise React Fast Refresh will need to do a
@@ -108,27 +109,63 @@ function Cross({ size, bg, fg }) {
 const _roles = {
   imperator: {
     name: "Imperator",
-    symbol: <Cross fg="#3f3" bg="#f33" size={14} key="symbol" />,
+    symbol: <Lamen officer="imperator" height="100%" />,
     color: "red",
   },
   praemonstrator: {
     name: "Praemonstrator",
-    symbol: <PraemonstratorWand size={13} key="symbol" />,
+    symbol: <Lamen officer="praemonstrator" height="100%" />,
     color: "blue",
   },
   cancellarius: {
     name: "Cancellarius",
-    symbol: "✡︎",
+    symbol: <Lamen officer="cancellarius" height="100%" />,
     color: "#ca0",
   },
-  hierophant: { name: "Hierophant", symbol: "🕈", color: "red" },
-  pastHierophant: { name: "Past Hierophant", symbol: "(🕈)", color: "red" },
-  hiereus: { name: "Hiereus", symbol: "▲", color: "black" },
-  hegemon: { name: "Hegemon", symbol: "✝", color: "#aaa" },
-  keryx: { name: "Keryx", symbol: "☤", color: "#c55" },
-  stolistes: { name: "Stolistes", symbol: "🏆", color: "#55c" },
-  dadouchos: { name: "Dadouchos", symbol: "卍", color: "#cc5" },
-  sentinel: { name: "Sentinel", symbol: "𓂀", color: "#777" },
+  hierophant: {
+    name: "Hierophant",
+    symbol: <Lamen officer="hierophant" height="100%" />,
+    color: "red",
+  },
+  pastHierophant: {
+    name: "Past Hierophant",
+    symbol: (
+      <span>
+        (<Lamen officer="hierophant" height="100%" />)
+      </span>
+    ),
+    color: "red",
+  },
+  hiereus: {
+    name: "Hiereus",
+    symbol: <Lamen officer="hiereus" height="100%" />,
+    color: "black",
+  },
+  hegemon: {
+    name: "Hegemon",
+    symbol: <Lamen officer="hegemon" height="100%" />,
+    color: "#aaa",
+  },
+  keryx: {
+    name: "Keryx",
+    symbol: <Lamen officer="keryx" height="100%" />,
+    color: "#c55",
+  },
+  stolistes: {
+    name: "Stolistes",
+    symbol: <Lamen officer="stolistes" height="100%" />,
+    color: "#55c",
+  },
+  dadouchos: {
+    name: "Dadouchos",
+    symbol: <Lamen officer="dadouchos" height="100%" />,
+    color: "#cc5",
+  },
+  sentinel: {
+    name: "Sentinel",
+    symbol: <Lamen officer="sentinel" height="100%" />,
+    color: "#777",
+  },
   candidate: { name: "Candidate", symbol: "🤠", color: "#fcf" },
   aspirant: { name: "Aspirant", symbol: "🤒", color: "#fcf" },
   member: { name: "Member", color: "#ccc" },
