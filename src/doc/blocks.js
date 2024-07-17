@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import DocContext from "../../src/doc/context.js";
+import { roleAliases } from "@/app/doc/[_id]/DocRender";
 
 class Title extends Node {
   render(key) {
@@ -189,7 +190,10 @@ class Task extends Node {
       } else
         throw new Error("Unknown role type: " + JSON.stringify(block.role));
       */
-    const myRole = vars.myRole.value; // "hierophant"
+    const myRole = (function () {
+      const role = vars.myRole.value; // "hierophant"
+      return roleAliases[role] || role;
+    })();
 
     let forMe,
       role = block.role;
@@ -282,7 +286,6 @@ class Task extends Node {
               content: "*";
             }
             .role {
-              height: 1.5em;
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
@@ -318,7 +321,7 @@ class Task extends Node {
                       key={i}
                       style={{ color: roles[role]?.color, marginRight: 3 }}
                     >
-                      {role?.name ||
+                      {roles[role]?.name ||
                         role.substr(0, 1).toUpperCase() + role.substr(1)}
                     </span>
                   ))}
