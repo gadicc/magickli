@@ -1,7 +1,11 @@
 import pugLex from "pug-lexer";
 import pugParse from "pug-parser";
+import { transformAndMapShortcuts } from "@/app/doc/[_id]/edit/shortcuts";
 
-export const prepare = (src) => toJrt(pugParse(pugLex(src), { src }));
+export function prepare(src) {
+  const { transformed } = transformAndMapShortcuts(src);
+  return toJrt(pugParse(pugLex(transformed), { src: transformed }));
+}
 
 // const tokens = lex(_neophyte);
 // const ast = parse(tokens, { src: _neophyte });
