@@ -286,6 +286,7 @@ class Task extends Node {
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              margin-bottom: 5px;
             }
             .role > div {
               height: 100%;
