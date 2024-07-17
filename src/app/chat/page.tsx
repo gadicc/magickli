@@ -185,14 +185,17 @@ export default function Chat() {
                               {" "}
                               <i>
                                 {source.metadata["pdf.info.Title"] ||
-                                  source.metadata.pdf.info.Title}
+                                  // @ts-expect-error: ok for now
+                                  source.metadata.pdf?.info?.Title}
                               </i>
                               ,{" "}
                               {source.metadata["pdf.info.Author"] ||
-                                source.metadata.pdf.info.Author}
+                                // @ts-expect-error: ok for now
+                                source.metadata.pdf?.info?.Author}
                               , page{" "}
                               {source.metadata["loc.pageNumber"] ||
-                                source.metadata.loc.pageNumber}
+                                // @ts-expect-error: ok for now
+                                source.metadata.loc?.pageNumber}
                               .
                             </summary>
                             <p style={{ fontSize: "75%" }}>
