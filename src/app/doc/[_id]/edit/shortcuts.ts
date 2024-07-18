@@ -123,6 +123,45 @@ const shortcuts = [
       return s.toString();
     },
   },
+  {
+    regexp: /^(?<indent> *)(?<pre>.*)\$\{(?<varName>\w+)\}(?<space> )?/gm,
+    transform(input: string, s: MagicString, source: string) {
+      const matches = input.matchAll(this.regexp);
+      for (const match of matches) {
+        const offset = match.index;
+        const [_match, indent, pre, varName, space] = match;
+        s.remove(
+          // }
+          offset + indent.length + pre.length + varName.length + 2,
+          offset + indent.length + pre.length + varName.length + 3
+        );
+        s.appendRight(
+          offset + indent.length + pre.length + varName.length + 2,
+          ['")', "|", space && "|"].join("\n" + indent + "  ")
+        );
+        s.prependLeft(
+          offset + indent.length + pre.length,
+          ["", "|", 'var(name="'].join("\n" + indent + "  ")
+        );
+        s.remove(
+          // ${
+          offset + indent.length + pre.length,
+          offset + indent.length + pre.length + 2
+        );
+      }
+      return s.toString();
+    },
+    decorate(add, from, to, match, view) {
+      const { groups } = match;
+      if (!groups) return;
+      add(
+        from + groups.indent.length + groups.pre.length,
+        to,
+        // theme "var" token color
+        Decoration.mark({ attributes: { style: "color: #c678dd" } })
+      );
+    },
+  },
 ];
 
 export async function trace(sourceMaps, line, column) {
@@ -162,9 +201,9 @@ export function transformAndMapShortcuts(input: string) {
 }
 
 const shortcutDecorators = shortcuts
+  .toReversed()
   .filter(({ decorate }) => decorate)
   .map(({ regexp, decorate }) => new MatchDecorator({ regexp, decorate }))
-  .filter(Boolean)
   .concat([
     new MatchDecorator({
       regexp: /role="([A-Za-z,-]+)"/g,
