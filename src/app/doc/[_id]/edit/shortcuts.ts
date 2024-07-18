@@ -26,7 +26,7 @@ const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
 
 const shortcuts = [
   {
-    regexp: /^\b([^: ]+):/gm,
+    regexp: /^\b([\w,-]+):/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
@@ -62,7 +62,7 @@ const shortcuts = [
     },
   },
   {
-    regexp: /^(?<skip>\* ?)(?<role>[^ ]*)/gm,
+    regexp: /^(?<skip>\* ?)(?<role>[\w,-]*)/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
