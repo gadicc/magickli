@@ -295,6 +295,10 @@ class Task extends Node {
               height: 100%;
               display: inline-block;
             }
+            .roleSymbol > * {
+              margin-right: 3px;
+              vertical-align: top;
+            }
             .roleName {
               vertical-align: top;
             }
@@ -310,9 +314,7 @@ class Task extends Node {
               <div className="role">
                 <div className="roleSymbol">
                   {role.split(",").map((role, i) => (
-                    <span key={i} style={{ marginRight: 3 }}>
-                      {roles[role]?.symbol}
-                    </span>
+                    <span key={i}>{roles[role]?.symbol}</span>
                   ))}
                 </div>{" "}
                 <div className="roleName">
