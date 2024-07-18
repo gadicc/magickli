@@ -191,7 +191,7 @@ class Task extends Node {
         throw new Error("Unknown role type: " + JSON.stringify(block.role));
       */
     const myRole = (function () {
-      const role = vars.myRole.value; // "hierophant"
+      const role = vars.myRole?.value; // "hierophant"
       return roleAliases[role] || role;
     })();
 
