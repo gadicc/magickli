@@ -76,11 +76,17 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
 
   if (!labels)
     labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
-      dotProp.get(_sephirot[i], field)
+      field
+        .split(",")
+        .map((field) => dotProp.get(_sephirot[i], field))
+        .join(" ")
     );
 
   topText = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
-    dotProp.get(_sephirot[i], topText)
+    topText
+      .split(",")
+      .map((path) => dotProp.get(_sephirot[i], path))
+      .join(" ")
   );
   bottomText = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) =>
     bottomText
