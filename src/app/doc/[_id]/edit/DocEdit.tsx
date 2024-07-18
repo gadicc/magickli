@@ -23,6 +23,7 @@ import { IconButton } from "@mui/material";
 import { checkSrc } from "./checkSrc";
 import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
 import SourceMapConsumer from "./SourceMapConsumer";
+import scripts from "./scripts";
 
 const extensions = [
   StreamLanguage.define(pug),
@@ -73,6 +74,14 @@ function toPos(value: string, line: number, column: number) {
   return pos + column - 1;
 }
 
+export type ScriptProps = {
+  onChange: (value: string, viewUpdate?: unknown) => void;
+  value: string;
+  transformed: string;
+  run: (script: string) => void;
+  view: EditorView;
+};
+
 let timeout;
 export default function DocEdit({
   params: { _id },
@@ -111,7 +120,23 @@ export default function DocEdit({
   const [doc, setDoc] = React.useState<DocNode>({ type: "root", children: [] });
   const [error, setError] = React.useState<Error | null>(null);
   const viewRef = React.useRef<EditorView | undefined>(undefined);
+  const windowDocRef = React.useRef<Partial<ScriptProps>>({});
+  if (window !== undefined) {
+    // @ts-expect-error: it's ok
+    window.doc = windowDocRef.current;
+  }
+  windowDocRef.current.run = function run(scriptName: string) {
+    const script = scripts[scriptName];
+    if (!script) {
+      console.log(Object.keys(scripts).join(", "));
+      throw new Error(`Script ${scriptName} not found in scripts.ts`);
+    }
+    script(windowDocRef.current as ScriptProps);
+  };
+  windowDocRef.current.view = viewRef.current;
+
   const onChange = React.useCallback((value, viewUpdate) => {
+    windowDocRef.current.value = value;
     // console.log("value", value);
     // console.log("viewUpdate", viewUpdate);
     // setDocSrc(value);
@@ -119,6 +144,8 @@ export default function DocEdit({
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(async () => {
       const { transformed, sourceMap } = await transformAndMapShortcuts(value);
+      windowDocRef.current.transformed = transformed;
+
       // @ts-expect-error: it's ok
       const consumer = await new SourceMapConsumer(sourceMap);
 
@@ -168,6 +195,7 @@ export default function DocEdit({
       }
     }, 300);
   }, []);
+  windowDocRef.current.onChange = onChange;
 
   const handleKeyDown = React.useCallback(
     function handleKeyDown(event: KeyboardEvent) {
