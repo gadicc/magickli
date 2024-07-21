@@ -141,7 +141,9 @@ const shortcuts = [
         );
         s.appendRight(
           offset + indent.length + pre.length + varName.length + 2,
-          ['")', "|", space && "|"].join("\n" + (indent || "  "))
+          ['")', space && "|", "| "]
+            .filter(Boolean)
+            .join("\n" + (indent || "  "))
         );
         s.prependLeft(
           offset + indent.length + pre.length,
