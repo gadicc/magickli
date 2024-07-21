@@ -26,6 +26,7 @@ const nonSpec = { attributes: { style: "color: rgb(171, 178, 191)" } };
 
 const shortcuts = [
   {
+    name: "say",
     regexp: /^\b([\w,-]+):/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
@@ -62,6 +63,7 @@ const shortcuts = [
     },
   },
   {
+    name: "do",
     regexp: /^(?<skip>\* ?)(?<role>[\w,-]*)/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
@@ -97,6 +99,7 @@ const shortcuts = [
     },
   },
   {
+    name: "grade",
     regexp: /^( *)(.*)\b(\d{1,2}=\d{1,2})\b/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
@@ -124,16 +127,23 @@ const shortcuts = [
     },
   },
   {
-    regexp: /^(?<indent> *)(?<pre>.*)\$\{(?<varName>\w+)\}(?<space> )?/gm,
+    name: "var",
+    regexp:
+      /^(?<indent> *)(?<pre>.*)\$\{(?<varName>\w+);?(?<args>[\w,=]*)\}(?<space> )?/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
-        const [_match, indent, pre, varName, space] = match;
+        const [_match, indent, pre, varName, args, space] = match;
         s.remove(
           // }
           offset + indent.length + pre.length + varName.length + 2,
-          offset + indent.length + pre.length + varName.length + 3
+          offset +
+            indent.length +
+            pre.length +
+            varName.length +
+            (args.length ? args.length + 1 : 0) +
+            3
         );
         s.appendRight(
           offset + indent.length + pre.length + varName.length + 2,
@@ -141,7 +151,10 @@ const shortcuts = [
         );
         s.prependLeft(
           offset + indent.length + pre.length,
-          ["", "|", 'var(name="'].join("\n" + indent + "  ")
+          (args === "b"
+            ? ["", "|", "b", '  var(name="']
+            : ["", "|", 'var(name="']
+          ).join("\n" + indent + "  ")
         );
         s.remove(
           // ${
