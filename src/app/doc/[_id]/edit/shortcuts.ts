@@ -106,21 +106,15 @@ const shortcuts = [
       for (const match of matches) {
         const offset = match.index;
         const [_match, indent, pre, grade] = match;
-        if (pre.endsWith('grade(grade="')) return input;
-        const out =
-          indent +
-          pre +
-          ["", "|", `grade(grade="${grade}")`, "|", "| "].join(
-            "\n" + indent + "  "
-          );
+        if (pre.endsWith('grade(grade="')) continue;
 
         s.appendRight(
           offset + indent.length + pre.length + grade.length,
-          ['")', "|", "|"].join("\n" + indent + "  ")
+          ['")', "|", "|"].join("\n" + (indent || "  "))
         );
         s.prependLeft(
           offset + indent.length + pre.length,
-          ["", "|", 'grade(grade="'].join("\n" + indent + "  ")
+          ["", "|", 'grade(grade="'].join("\n" + (indent || "  "))
         );
       }
       return s.toString();
@@ -147,14 +141,14 @@ const shortcuts = [
         );
         s.appendRight(
           offset + indent.length + pre.length + varName.length + 2,
-          ['")', "|", space && "|"].join("\n" + indent + "  ")
+          ['")', "|", space && "|"].join("\n" + (indent || "  "))
         );
         s.prependLeft(
           offset + indent.length + pre.length,
           (args === "b"
-            ? ["", "|", "b", '  var(name="']
-            : ["", "|", 'var(name="']
-          ).join("\n" + indent + "  ")
+            ? [pre && "", pre && "|", "b", '  var(name="']
+            : [pre && "", pre && "|", 'var(name="']
+          ).join("\n" + (indent || "  "))
         );
         s.remove(
           // ${
