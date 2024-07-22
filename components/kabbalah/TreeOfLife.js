@@ -64,6 +64,7 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
     activePath,
     flip,
     showDaat,
+    fontSize,
   },
   ref
 ) {
@@ -102,7 +103,8 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
     "name.roman": 12,
     "godName.name.he": 20,
   };
-  const fontSize = fontSizeFromFieldName[field] || 10;
+
+  if (!fontSize) fontSize = fontSizeFromFieldName[field] || 10;
 
   const constructRadius = 128.5;
   const intersectionOffset = (constructRadius / 2) * Math.sqrt(3);
@@ -432,29 +434,41 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                 </text>
               </g>
             ) : (
-              <text
-                key={i}
-                x={s.x}
-                y={s.y}
-                // We repeat in "style" to override a:visited * { color }
-                style={{ fill: s.textColor || "black" }}
-                fill={s.textColor || "black"}
-                fillOpacity={sephirahOpacity(s)}
-                stroke="none"
-                strokeLinecap="butt"
-                strokeLinejoin="miter"
-                strokeOpacity="1"
-                strokeWidth="0.8"
-                fontSize={fontSize}
-                fontStyle="normal"
-                fontWeight="normal"
-                letterSpacing="0"
-                wordSpacing="0"
-                textAnchor="middle"
-                dominantBaseline="middle"
-              >
-                {s.text}
-              </text>
+              (function () {
+                const texts = s.text.split(" ").filter((s) => s !== "");
+                const style = {
+                  // We repeat in "style" to override a:visited * { color }
+                  style: { fill: s.textColor || "black" },
+                  fill: s.textColor || "black",
+                  fillOpacity: sephirahOpacity(s),
+                  textAnchor: "middle",
+                  dominantBaseline: "middle",
+                  stroke: "none",
+                  fontSize: fontSize,
+                  fontStyle: "normal",
+                  fontWeight: "normal",
+                  letterSpacing: 0,
+                  wordSpacing: 0,
+                };
+                if (texts.length > 1) {
+                  return (
+                    <g>
+                      <text x={s.x} y={s.y - 11} {...style}>
+                        {texts[0]}
+                      </text>
+                      <text x={s.x} y={s.y + 11} {...style}>
+                        {texts[1]}
+                      </text>
+                    </g>
+                  );
+                } else {
+                  return (
+                    <text key={i} x={s.x} y={s.y} {...style}>
+                      {s.text}
+                    </text>
+                  );
+                }
+              })()
             )}
 
             {(function () {

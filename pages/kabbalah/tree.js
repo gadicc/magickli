@@ -43,6 +43,7 @@ function TreeOfLife() {
     letterAttr: "hermetic",
     flip: false,
     showDaat: false,
+    fontSize: 10,
   };
 
   for (let key of Object.keys(defaults))
@@ -228,6 +229,7 @@ function TreeOfLife() {
             letterAttr={opts.letterAttr}
             flip={opts.flip}
             showDaat={opts.showDaat}
+            fontSize={opts.fontSize}
             ref={ref}
           />
 
