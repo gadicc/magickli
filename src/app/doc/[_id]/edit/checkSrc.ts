@@ -54,15 +54,18 @@ export function checkSrc(node: PugBlock | PugTag, consumer: SourceMapConsumer) {
   nodeWalker(node, (node) => {
     if (node.type === "Tag") {
       if (!allowedTags.includes(node.name)) {
-        const { line, column } = consumer.originalPositionFor({
+        let { line, column } = consumer.originalPositionFor({
           line: node.line,
           column: node.column || 0,
         });
+        if (line === null) line = node.line;
+        if (column === null) column = node.column || 0;
+
         errors.push({
-          from: { line: node.line, column: node.column || 0 },
+          from: { line, column },
           to: {
-            line: node.line,
-            column: (column || node.column || 0) + node.name.length,
+            line,
+            column: column + node.name.length,
           },
           message: "Unrecognized tag: " + node.name,
           severity: "warning" as const,
