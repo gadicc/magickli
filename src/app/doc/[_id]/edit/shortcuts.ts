@@ -107,6 +107,7 @@ const shortcuts = [
         const offset = match.index;
         const [_match, indent, pre, grade] = match;
         if (pre.endsWith('grade(grade="')) continue;
+        if (pre.match(/["(]+/)) continue;
 
         s.appendRight(
           offset + indent.length + pre.length + grade.length,
