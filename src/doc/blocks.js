@@ -126,6 +126,12 @@ class li extends Node {
   }
 }
 
+class hr extends Node {
+  render(key) {
+    return <hr />;
+  }
+}
+
 class Var extends Node {
   render(key) {
     // eslint-disable-next-line
@@ -460,7 +466,7 @@ class Span extends Node {
   }
 }
 
-const blocks = {
+export const blocks = {
   b: B,
   i: I,
   br: Br,
@@ -468,6 +474,7 @@ const blocks = {
   ul,
   ol,
   li,
+  hr,
   span: Span,
   stylesheet: Stylesheet,
 

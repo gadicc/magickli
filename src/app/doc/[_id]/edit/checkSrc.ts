@@ -1,6 +1,7 @@
 import pugInlineTags from "pug-parser/lib/inline-tags";
 import { roles } from "../DocRender";
 import type { SourceMapConsumer } from "source-map";
+import { blocks } from "@/doc/blocks";
 
 interface PugAttribute {
   column: number;
@@ -37,9 +38,9 @@ function nodeWalker(
   }
 }
 
-const allowedTags = ["declareVar", "title", "do", "say", "todo", "note"].concat(
-  pugInlineTags
-);
+const allowedTags = Object.keys(blocks)
+  .concat(["say", "do"])
+  .concat(pugInlineTags);
 
 interface CheckSrcError {
   from: { line: number; column: number };
