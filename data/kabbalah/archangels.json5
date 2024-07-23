@@ -62,4 +62,32 @@
       roman: "Uriel",
     },
   },
+  tzaphkiel: {
+    id: "tzaphkiel",
+    name: {
+      he: "צַפְקִיאֵל",
+      roman: "Tzaphkiel",
+    },
+  },
+  khamael: {
+    id: "khamael",
+    name: {
+      he: "חמאל",
+      roman: "Khamael",
+    },
+  },
+  tzadkiel: {
+    id: "tzadkiel",
+    name: {
+      he: "צדקיאל",
+      roman: "Tzadkiel",
+    },
+  },
+  haniel: {
+    id: "haniel",
+    name: {
+      he: "הניאל",
+      roman: "Haniel",
+    },
+  },
 }
