@@ -457,7 +457,7 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                         {texts[0]}
                       </text>
                       <text x={s.x} y={s.y + 11} {...style}>
-                        {texts[1]}
+                        {texts.slice(1).join(" ")}
                       </text>
                     </g>
                   );
