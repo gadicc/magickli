@@ -5,7 +5,7 @@ import Image from "next/image";
 import Tiles from "@/components/Tiles";
 
 import GDLogoSquished from "@/goldendawn-logo-squished.svg";
-import GeomanticFigures from "@/geomancy/Geomantic_figures.svg";
+import GeomanticFigures from "@/app/geomancy/Geomantic_figures.svg";
 import MagicalTemple from "./img/magical-temple.webp";
 import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import {

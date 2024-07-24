@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Box,
@@ -13,13 +14,12 @@ import {
   Typography,
 } from "@mui/material";
 
-import AppBar from "../../components/AppBar";
-import Tetragram from "../../components/geomancy/Tetragram";
-import { compute } from "../../src/geomancy/tetragrams";
+import Tetragram from "../Tetragram";
+import { compute } from "../tetragrams";
 import {
   tetragram as tetragrams,
   geomanicHouse as houses,
-} from "../../data/data";
+} from "@/../data/data";
 
 // https://stackoverflow.com/a/57518703/1839099
 const english_ordinal_rules = new Intl.PluralRules("en", { type: "ordinal" });
@@ -261,11 +261,6 @@ function GeomancyReading() {
 
   return (
     <>
-      <AppBar
-        title="Reading"
-        navParts={[{ title: "Geomancy", url: "/geomancy" }]}
-      />
-
       <Container sx={{ my: 1, textAlign: "center" }}>
         <Select
           labelId="house-select-label"

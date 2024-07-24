@@ -1,9 +1,8 @@
 import React from "react";
 //import Link from '@mui/material/Link';
 
-import AppBar from "../../components/AppBar";
-import Tiles from "../../components/Tiles";
-import GeomanticFigures from "../../src/geomancy/Geomantic_figures.svg";
+import Tiles from "@/components/Tiles";
+import GeomanticFigures from "./Geomantic_figures.svg";
 
 const tiles = [
   {
@@ -18,13 +17,12 @@ const tiles = [
   },
 ];
 
-function Kabbalah() {
+function GeomancyPage() {
   return (
     <>
-      <AppBar title="Kabbalah" />
       <Tiles tiles={tiles} />
     </>
   );
 }
 
-export default Kabbalah;
+export default GeomancyPage;

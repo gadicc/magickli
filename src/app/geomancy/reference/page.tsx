@@ -1,11 +1,10 @@
 import React from "react";
 
-import AppBar from "../../components/AppBar";
 import {
   tetragram as tetragrams,
   geomanicHouse as houses,
-} from "../../data/data";
-import Tetragram from "../../components/geomancy/Tetragram";
+} from "@/../data/data";
+import Tetragram from "../Tetragram";
 import Typography from "@mui/material/Typography";
 import { Container, Grid, Stack } from "@mui/material";
 
@@ -25,11 +24,6 @@ const nth = (n) =>
 export default function Geomancy() {
   return (
     <>
-      <AppBar
-        title="Reference"
-        navParts={[{ title: "Geomancy", url: "/geomancy" }]}
-      />
-
       <Container sx={{ my: 1 }}>
         <p>
           In great appreciation of
