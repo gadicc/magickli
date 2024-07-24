@@ -30,6 +30,8 @@ interface Planet {
   godNameId: GodNameId;
   archangelId: ArchangelId;
   archangel?: Archangel;
+  intelligenceId?: string;
+  spiritId?: string;
 }
 
 type Planets = {

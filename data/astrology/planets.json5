@@ -58,6 +58,8 @@
     },
     godNameId: "yhvh-eloha-vedaat",
     archangelId: "michael",
+    intelligenceId: "nakhiel",
+    spiritId: "sorath",
   },
 
   mercury: {
@@ -75,6 +77,8 @@
     },
     godNameId: "elohim-tzvaot",
     archangelId: "raphael",
+    intelligenceId: "tiriel",
+    spiritId: "taphthartharath",
   },
 
   venus: {
@@ -92,6 +96,8 @@
     },
     godNameId: "yhvh-tzvaot",
     archangelId: "anael",
+    intelligenceId: "hagiel",
+    spiritId: "qedemel",
   },
 
   earth: {
@@ -120,6 +126,8 @@
     },
     godNameId: "shaddai-el-chai",
     archangelId: "gabriel",
+    intelligenceId: "shelachel",
+    spiritId: "chasmodai",
   },
 
   mars: {
@@ -137,6 +145,8 @@
     },
     godNameId: "elohim-gibor",
     archangelId: "zamael",
+    intelligenceId: "graphiel",
+    spiritId: "bartzabel",
   },
 
   jupiter: {
@@ -155,6 +165,8 @@
     },
     godNameId: "el",
     archangelId: "sachiel",
+    intelligenceId: "iophiel",
+    spiritId: "hismael",
   },
 
   saturn: {
@@ -172,6 +184,8 @@
     hebrewLetterId: "tav",
     godNameId: "yhvh-elohim",
     archangelId: "cassiel",
+    intelligenceId: "agiel",
+    spiritId: "zazel",
   },
 
   uranus: {
