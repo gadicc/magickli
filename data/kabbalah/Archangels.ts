@@ -20,9 +20,7 @@ interface Archangel {
   sephirahId?: string;
 }
 
-type Archangels = {
-  [key in ArchangelId]: Archangel;
-};
+type Archangels = Record<ArchangelId, Archangel>;
 
 const archangels: Archangels = require("./archangels.json5").default;
 

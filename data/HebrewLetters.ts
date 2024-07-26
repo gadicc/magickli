@@ -40,9 +40,7 @@ interface HebrewLetter {
   };
 }
 
-type HebrewLetters = {
-  [key in HebrewLetterId]: HebrewLetter;
-};
+type HebrewLetters = Record<HebrewLetterId, HebrewLetter>;
 
 const hebrewLetters: HebrewLetters = require("./hebrewLetters.json5").default;
 

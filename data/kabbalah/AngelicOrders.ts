@@ -17,9 +17,7 @@ interface AngelicOrder {
   name: LangObject;
 }
 
-type AngelicOrders = {
-  [key in AngelicOrderId]: AngelicOrder;
-};
+type AngelicOrders = Record<AngelicOrderId, AngelicOrder>;
 
 const angelicOrders: AngelicOrders = require("./angelicOrders.json5").default;
 

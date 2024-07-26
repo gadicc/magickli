@@ -19,9 +19,7 @@ interface GodName {
   name: LangObject;
 }
 
-type GodNames = {
-  [key in GodNameId]: GodName;
-};
+type GodNames = Record<GodNameId, GodName>;
 
 const godNames: GodNames = require("./godNames.json5").default;
 

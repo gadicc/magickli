@@ -13,9 +13,7 @@ interface Kerub {
   element?: Element;
 }
 
-type Kerubim = {
-  [key in KerubId]: Kerub;
-};
+type Kerubim = Record<KerubId, Kerub>;
 
 const kerubim: Kerubim = require("./kerubim.json5").default;
 

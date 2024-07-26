@@ -7,9 +7,7 @@ interface FourWorld {
   residentsTitle: { en: string };
 }
 
-type FourWorlds = {
-  [key in FourWorldId]: FourWorld;
-};
+type FourWorlds = Record<FourWorldId, FourWorld>;
 
 const fourWorlds: FourWorlds = require("./fourWorlds.json5").default;
 

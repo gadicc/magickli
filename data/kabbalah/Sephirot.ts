@@ -47,9 +47,7 @@ interface Sephirah {
   prev?: string;
 }
 
-type Sephirot = {
-  [key in SephirahId]: Sephirah;
-};
+type Sephirot = Record<SephirahId, Sephirah>;
 
 const sephirot: Sephirot = require("./sephirot.json5").default;
 

@@ -19,9 +19,7 @@ interface TribeOfIsrael {
   name: LangObject;
 }
 
-type TribesOfIsrael = {
-  [key in TribeOfIsraelId]: TribeOfIsrael;
-};
+type TribesOfIsrael = Record<TribeOfIsraelId, TribeOfIsrael>;
 
 const tribesOfIsrael: TribesOfIsrael =
   require("./tribesOfIsrael.json5").default;
