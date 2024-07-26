@@ -17,6 +17,7 @@ interface Archangel {
   name: LangObject;
   planetId: PlanetId;
   planet?: Planet;
+  sephirahId?: string;
 }
 
 type Archangels = {

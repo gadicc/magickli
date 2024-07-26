@@ -9,6 +9,7 @@ import archangel from "./kabbalah/Archangels";
 import godName from "./kabbalah/GodNames";
 import kerub from "./kabbalah/Kerubim";
 import fourWorlds from "./kabbalah/FourWorlds";
+import sephirah from "./kabbalah/Sephirot";
 
 import alchemySymbol from "./alchemy/Symbols";
 import alchemyTerm from "./alchemy/Terms";
@@ -40,7 +41,7 @@ const allData = {
   fourWorlds,
   godName,
   kerub,
-  sephirah: require("./kabbalah/sephirot.json5").default,
+  sephirah,
   tolPath: require("./kabbalah/paths.json5").default,
   soul: require("./kabbalah/souls.json5").default,
 

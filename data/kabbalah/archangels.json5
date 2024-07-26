@@ -30,6 +30,7 @@
       roman: "Michael",
     },
     planetId: "sol",
+    sephirahId: "hod",
   },
   anael: {
     id: "anael",
@@ -46,14 +47,17 @@
       roman: "Raphael",
     },
     planetId: "mercury",
+    sephirahId: "raphael",
   },
   gabriel: {
     id: "gabriel",
     name: {
       he: "גבריאל",
-      roman: "Gabriel",
+      roman: "Gavriel",
+      en: "Gabriel",
     },
     planetId: "luna",
+    sephirahId: "yesod",
   },
   uriel: {
     id: "uriel",
@@ -68,6 +72,7 @@
       he: "צַפְקִיאֵל",
       roman: "Tzaphkiel",
     },
+    sephirahId: "binah",
   },
   khamael: {
     id: "khamael",
@@ -75,6 +80,7 @@
       he: "חמאל",
       roman: "Khamael",
     },
+    sephirahId: "gevurah",
   },
   tzadkiel: {
     id: "tzadkiel",
@@ -82,6 +88,7 @@
       he: "צדקיאל",
       roman: "Tzadkiel",
     },
+    sephirahId: "chesed",
   },
   haniel: {
     id: "haniel",
@@ -90,4 +97,5 @@
       roman: "Haniel",
     },
   },
+  sephirahId: "netzach",
 }
