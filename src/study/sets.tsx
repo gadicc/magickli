@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 
 import data from "../../data/data";
-import Tetragram from "../../components/geomancy/Tetragram";
+import Tetragram from "@/app/geomancy/Tetragram";
 import { AlchemyTerms } from "../../data/alchemy/Terms";
 import enochianFont from "../enochian/enochianFont";
 
@@ -307,7 +307,7 @@ const sets: Record<string, StudySetData<unknown>> = {
     answer: "godName.name.roman",
     gdGrade: "1=10",
     tags: ["kabbalah"],
-  } as StudySetData<typeof data.sephirah>,
+  } as StudySetData<typeof data.sephirah.keter>,
   "alchemy-basic-terms": {
     id: "alchemy-basic-terms",
     question: "question",
@@ -405,20 +405,11 @@ const sets: Record<string, StudySetData<unknown>> = {
       if (sephirah?.tenHeavens?.en)
         return sephirah.tenHeavens.en + " / " + sephirah.tenHeavens.roman;
       const planet = sephirah?.planet;
-      return (
-        "Sphere of " +
-        (planet.id === "sol"
-          ? "Sol"
-          : planet.id === "luna"
-          ? "Luna"
-          : planet.name.en.en) +
-        " / " +
-        planet.name.he.roman
-      );
+      return "Sphere of " + planet?.name.en.en + " / " + planet?.name.he.roman;
     },
     gdGrade: "1=10",
     tags: ["kabbalah"],
-  } as StudySetData<typeof data.sephirah>,
+  } as StudySetData<typeof data.sephirah.keter>,
   "sephirot-stones": {
     id: "sephirot-stones",
     data: omit("daat", data.sephirah),
