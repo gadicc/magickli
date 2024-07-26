@@ -60,6 +60,9 @@
     archangelId: "michael",
     intelligenceId: "nakhiel",
     spiritId: "sorath",
+    magickTypes: {
+      en: "Career success and progression, establishing harmony, healing and improving health, leadership skills, acquiring money and resources, promotion, strengthening willpower",
+    },
   },
 
   mercury: {
@@ -79,6 +82,9 @@
     archangelId: "raphael",
     intelligenceId: "tiriel",
     spiritId: "taphthartharath",
+    magickTypes: {
+      en: "Business success, improving communication skills, developing knowledge and memory, diplomacy, exam success, divination, developing influence, protection when traveling by air and land, learning music",
+    },
   },
 
   venus: {
@@ -97,7 +103,10 @@
     godNameId: "yhvh-tzvaot",
     archangelId: "anael",
     intelligenceId: "hagiel",
-    spiritId: "qedemel",
+    spiritId: "kedemel",
+    magickTypes: {
+      en: "Increasing attractiveness and self-confidence, beauty and passion, enhancing creativity, improving fertility, developing friendships, obtaining love",
+    },
   },
 
   earth: {
@@ -116,7 +125,7 @@
     hebrewLetterId: "gimel",
     name: {
       en: {
-        en: "Moon",
+        en: "Luna",
       },
       he: {
         he: "לבנה",
@@ -128,6 +137,9 @@
     archangelId: "gabriel",
     intelligenceId: "shelachel",
     spiritId: "chasmodai",
+    magickTypes: {
+      en: "Developing clairvoyance and other psychic skills, ensuring safe childbirth, divination, glamour and illusions, lucid dreaming, protection when traveling by sea",
+    },
   },
 
   mars: {
@@ -147,6 +159,9 @@
     archangelId: "zamael",
     intelligenceId: "graphiel",
     spiritId: "bartzabel",
+    magickTypes: {
+      en: "Controlling anger, increasing courage, enhancing energy and passion, increasing vigour and sex drive",
+    },
   },
 
   jupiter: {
@@ -167,6 +182,9 @@
     archangelId: "sachiel",
     intelligenceId: "iophiel",
     spiritId: "hismael",
+    magickTypes: {
+      en: "Career success, developing ambition and enthusiasm, improving fortune and luck, general health, acquiring honour, improving sense of humour, legal matters and dealing with the establishment, developing leadership skills",
+    },
   },
 
   saturn: {
@@ -186,6 +204,9 @@
     archangelId: "cassiel",
     intelligenceId: "agiel",
     spiritId: "zazel",
+    magickTypes: {
+      en: "Performing duty, establishing balance and equilibrium, dispelling illusions, protecting the home, legal matters, developing patience and self-discipline",
+    },
   },
 
   uranus: {

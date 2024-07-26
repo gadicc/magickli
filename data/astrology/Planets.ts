@@ -32,6 +32,9 @@ interface Planet {
   archangel?: Archangel;
   intelligenceId?: string;
   spiritId?: string;
+  magickTypes?: {
+    en: string;
+  };
 }
 
 type Planets = {
