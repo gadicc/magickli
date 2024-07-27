@@ -302,12 +302,13 @@ function GeomancyReading() {
                   display: inline-block;
                   text-align: left;
                   color: #aaa;
+                  font-size: 15px;
                 }
               `}</style>
-              <span style={{ width: 25 }}></span>
-              <span style={{ width: 100 }}>Planet</span>
-              <span style={{ width: 120 }}>Intelligence</span>
-              <span style={{ width: 140 }}>Spirit</span>
+              <span style={{ width: 20 }}>&nbsp;</span>
+              <span style={{ width: 75 }}>Planet</span>
+              <span style={{ width: 95 }}>Intelligence</span>
+              <span style={{ width: 115 }}>Spirit</span>
             </div>
           </ListSubheader>
           {Object.values(planets)
@@ -319,6 +320,7 @@ function GeomancyReading() {
                     span {
                       display: inline-block;
                       text-align: left;
+                      font-size: 15px;
                     }
                   `}</style>
                   <span
@@ -326,11 +328,11 @@ function GeomancyReading() {
                   >
                     {planet.symbol}
                   </span>
-                  <span style={{ width: 100 }}>{planet.name.en.en}</span>
-                  <span style={{ width: 120 }}>
+                  <span style={{ width: 75 }}>{planet.name.en.en}</span>
+                  <span style={{ width: 90 }}>
                     {capitalizeFirstLetter(planet.intelligenceId as string)}
                   </span>
-                  <span style={{ width: 140 }}>
+                  <span style={{ width: 120 }}>
                     {capitalizeFirstLetter(planet.spiritId as string)}
                   </span>
                   {planetHint && (
@@ -352,10 +354,21 @@ function GeomancyReading() {
               </MenuItem>
             ))}
         </Select>
-        <FormGroup sx={{ fontSize: "80%", color: "#aaa" }}>
+        <FormGroup>
           <FormControlLabel
             label="Show planetary effect hints"
-            sx={{ justifyContent: "center", marginTop: 1 }}
+            componentsProps={{
+              typography: {
+                sx: {
+                  fontSize: "80%",
+                  color: "#aaa",
+                },
+              },
+            }}
+            sx={{
+              justifyContent: "center",
+              marginTop: 1,
+            }}
             control={
               <Switch
                 size="small"
@@ -412,6 +425,17 @@ function GeomancyReading() {
           Spirit of this working -- the Spirit{" "}
           <u>{planet.spiritId?.toLocaleUpperCase()}</u>. Come forth I say and
           invest this working with the truth of what I perceive.
+        </div>
+        <div style={{ opacity: 0.5, fontSize: "70%", marginTop: 5 }}>
+          Adapted from the Hensen&apos;s &quot;Geomancy in the Golden Dawn&quot;
+          as published in{" "}
+          <a
+            target="_blank"
+            href="https://www.amazon.co.uk/Golden-Dawn-Journal-Divination-Bk-1/dp/1567188508"
+          >
+            The Golden Dawn Journal, Book 1: Divination
+          </a>
+          .
         </div>
         <br />
         <Typography variant="h6">Mothers</Typography>
