@@ -124,40 +124,37 @@ const shortcuts = [
   {
     name: "var",
     regexp:
-      /^(?<indent> *)(?<pre>.*)\$\{(?<varName>\w+);?(?<args>[\w,=]*)\}(?<space> )?/gm,
+      // /^(?<indent> *)(?<pre>.*)\$\{(?<varName>\w+);?(?<args>[\w,=]*)\}(?<space> )?/gm,
+      /\$\{(?<varName>\w+);?(?<args>[\w,=]*)\}(?<space> )?/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
-        const [_match, indent, pre, varName, args, space] = match;
+        const [_match, varName, args, space] = match;
+        const lineStartIdx = input.lastIndexOf("\n", offset) + 1;
+        const lineStart = input.substring(lineStartIdx, offset);
+        const indent = lineStart.match(/^( *)/)?.[0] || "";
+
         s.remove(
           // }
-          offset + indent.length + pre.length + varName.length + 2,
-          offset +
-            indent.length +
-            pre.length +
-            varName.length +
-            (args.length ? args.length + 1 : 0) +
-            3
+          offset + varName.length + 2,
+          offset + varName.length + (args.length ? args.length + 1 : 0) + 3
         );
         s.appendRight(
-          offset + indent.length + pre.length + varName.length + 2,
+          offset + varName.length + 2,
           ['")', space && "|", "| "]
             .filter(Boolean)
             .join("\n" + (indent || "  "))
         );
         s.prependLeft(
-          offset + indent.length + pre.length,
+          offset,
           (args === "b"
-            ? [pre && "", pre && "|", "b", '  var(name="']
-            : [pre && "", pre && "|", 'var(name="']
+            ? ["", "|", "b", '  var(name="']
+            : ["", "|", 'var(name="']
           ).join("\n" + (indent || "  "))
         );
-        s.remove(
-          // ${
-          offset + indent.length + pre.length,
-          offset + indent.length + pre.length + 2
-        );
+
+        s.remove(offset, offset + 2); // ${
       }
       return s.toString();
     },
@@ -165,7 +162,7 @@ const shortcuts = [
       const { groups } = match;
       if (!groups) return;
       add(
-        from + groups.indent.length + groups.pre.length,
+        from,
         to,
         // theme "var" token color
         Decoration.mark({ attributes: { style: "color: #c678dd" } })
