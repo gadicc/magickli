@@ -103,11 +103,11 @@ note
 note 
   | ✊ - This sign represents one knock made by rapping the base or shaft
   | of wand or the pommel of a sword on the table.
-do(role="hierophant")
+* Hierophant
   | Waits until all members assembled and robed, then ✊
-do(role="member") Sit in proper places
-do(role="all-officers") Rise
-do(role="member")
+* Member Sit in proper places
+* All-officers Rise
+* Member
   | Do not rise except for adorations to the east or when asked for the
   | signs.
   br
@@ -123,92 +123,79 @@ do(role="member")
   | The sign is always made in direction of movement except:
   | 1) When entering or leaving the hall: made towards the east.
   | 2) When asked to give the signs: towards the altar.
-do(role="hierophant") ✊
-do(role="keryx")
+* Hierophant ✊
+* Keryx
   | On hearing the ✊, goes to the northeast, to the Hierophant's right, facing west,
   | and raises lamp and wand
-say(role="keryx")
+Keryx:
   summary(summary="Hekas! Hekas! Este bebeloi!")
     | "Begone! Begone! Ye profane ones!" in Greek. Traditionally announced
     | that the ancient Greek Mysteries were about to be celebrated.
-do(role="keryx") Returns to his/her place
-do(role="hierophant") Rises and ✊
-say(role="hierophant")
-  | Fratres and sorores of the
-  |
-  var(name="templeName")
-  |
-  | Temple of the
-  |
-  var(name="orderName")
-  | , assist me to open the hall of the Neophytes. Frater Keryx, see that the hall is
+* Keryx Returns to his/her place
+* Hierophant Rises and ✊
+Hierophant:
+  | Fratres and sorores of the ${templeName} Temple of the ${orderName}, assist
+  | me to open the hall of the Neophytes. Frater Keryx, see that the hall is
   | properly guarded.
-do(role="keryx") Goes to the door and ✊
-do(role="sentinel") Replies with ✊
-say(role="keryx") Very honoured Hierophant, the hall is properly guarded.
-do(role="keryx") Salutes the Hierophant's throne and remains by the door
-say(role="hierophant")
+* Keryx Goes to the door and ✊
+* Sentinel Replies with ✊
+Keryx: Very honoured Hierophant, the hall is properly guarded.
+* Keryx Salutes the Hierophant's throne and remains by the door
+Hierophant:
   | Honoured Hiereus, guard the hither side of the portal and assure yourself that
-  | all present have witnessed the
-  |
-  var(name="witnessed")
-  | .
-do(role="hiereus") Goes to the door and stands before it with sword erect
-do(role="keryx") Stands to the right of Hiereus with with lamp and wand
-say(role="hiereus")
-  | Fratres and Sorores of the
-  |
-  var(name="orderName")
-  | , give the signs of a Neophyte.
-do(role="all") Give Neophyte signs
-do(role="hiereus") Give the signs towards Hierophant
-say(role="hiereus") Very honoured Hierophant, all present have been so honoured.
-do(role="hiereus,keryx") Return to your place
-do(role="hierophant")
+  | all present have witnessed the ${witnessed}.
+* Hiereus Goes to the door and stands before it with sword erect
+* Keryx Stands to the right of Hiereus with with lamp and wand
+Hiereus: Fratres and Sorores of the ${orderName}, give the signs of a Neophyte.
+* All Give Neophyte signs
+* Hiereus Give the signs towards Hierophant
+Hiereus: Very honoured Hierophant, all present have been so honoured.
+* Hiereus,Keryx return to their places.
+* Hierophant
   | Give Sign of the Enterer towards the west, but not the Sign of Silence.
-say(role="hierophant")
+Hierophant:
   | Let the number of officers in this degree and the nature of their offices be
   | proclaimed once again, that the powers whose images they are may be reawakened in
   | the spheres of those present and in the sphere of this order, for by names and
   | images are all powers awakened and reawakened.
-do(role="hierophant") Make the Sign of Silence
-say(role="hierophant")
+* Hierophant Make the Sign of Silence
+Hierophant:
   | Honoured Hiereus, how many chief officers are there in this grade?
-say(role="hiereus")
+Hiereus:
   | There are three chief officers: the Hierophant, the Hiereus, and the Hegemon
-say(role="hierophant") Is there any pecularity in these names?
-say(role="hiereus") They all commence with the letter "H".
-say(role="hierophant") Of what is this letter a symbol?
-say(role="hiereus")
+Hierophant: Is there any pecularity in these names?
+Hiereus: They all commence with the letter "H".
+Hierophant: Of what is this letter a symbol?
+Hiereus:
   | Of life, because the letter "H" is our mode of representing the ancient Greek
   | aspirate or breathing, and breath is the evidence of life.
-say(role="hierophant") How many lesser officers are there?
-say(role="hiereus")
+Hierophant: How many lesser officers are there?
+Hiereus:
   | There are three beside the Sentinal: the Kerux, the Stolistes, and the
   | Dadouchos. The Sentinel is without the portal of the hall and has a sword in
   | his hand to keep out intruders. It is his duty to prepare the candidate.
-say(role="hierophant") Frater Dadouchos, your station and duties?
-say(role="dadouchos")
+Hierophant: Frater Dadouchos, your station and duties?
+Dadouchos:
   | My station is in the south to symbolise heat and dryness, and my duty is to see
   | that the lamps and fires of the temple are ready at the opening, to watch over
   | the censer and the incense and to consecrate the hall and the fratres and
   | sorores and the candidate with fire.
-say(role="hierophant") Frater Stolistes, your station and duties?
-say(role="stolistes")
+Hierophant: Frater Stolistes, your station and duties?
+Stolistes:
   | My station is in the north to symbolise cold and moisture, and my duties are to
   | see that robes and collars and insignia of the officers are ready at the
   | opening, to watch over the cup of lustral water, and to purify the hall and the
   | fratres and sorores and the candidate with water.
-say(role="hierophant") Frater Kerux, your station and duties?
-say(role="keryx")
+Hierophant: Frater Kerux, your station and duties?
+Keryx:
   | My place is within the portal. My duties are to see that the furniture of the
   | hall is properly arranged at the opening, to guard the inner side of the portal,
   | to admit the fratres and sorores, and to watch over the reception of the
   | candidate; to lead all mystic circumambulations carrying the lamp of my office,
   | and to make all reports and announcements. My lamp is the symbol of the hidden
   | knowledge, and my wand is the symbol of its directing power.
-say(role="hierophant") Honoured Hegemon, your station and duties?
-say(role="hegemon")
+Hierophant: Honoured Hegemon, your station and duties?
+Hegemon:
   | My station is between the two pillars of Hermes and Solomon and my face is
   | towards the cubical Altar of the Universe. My duty is to watch over the gateway
   | of the hidden knowledge, for I am the reconciler between light and darkness. I
@@ -217,9 +204,9 @@ say(role="hegemon")
   | my robe is the colour of purity, my ensign of office is a mitre-headed sceptre
   | to symbolise religion which guides and regulates life, and my office symbolises
   | those higher aspirations of the soul which guide its action.
-say(role="hierophant") Honoured Hiereus, your station and duties?
-do(role="hiereus") Holds sword and banner
-say(role="hiereus")
+Hierophant: Honoured Hiereus, your station and duties?
+* Hiereus Holds sword and banner
+Hiereus:
   | My station is on the Throne of the West and is a symbol of increase of Darkness
   | and decrease of Light and I am the Master of Darkness. I keep the Gateway of
   | the West and watch over the reception of the Candidate and over the lesser
@@ -227,8 +214,8 @@ say(role="hiereus")
   | that was upon the face of the Waters. I carry the Sword of Judgement and the
   | Banner of the Evening Twilight, which is the Banner of the West, and I am called
   | Fortitude by the Unhappy.
-do(role="hierophant") Stand holding the sceptre and Banner of the East
-say(role="hierophant")
+* Hierophant Stand holding the sceptre and Banner of the East
+Hierophant:
   | My Station is on the Throne of the East, in the place where the Sun rises,
   | and I am the Master of the Hall, governing it according to the laws of
   | the Order, as He whose image I am, is the Master of all who work for
@@ -236,55 +223,55 @@ say(role="hierophant")
   | Created Fire, and I hold the Banner of the Morning Light which is the
   | Banner of the East. I am called Power and Mercy and Light and Abundance,
   | and I am the expounder of the Mysteries.
-do(role="hierophant") Sits down
-say(role="hierophant")
+* Hierophant Sits down
+Hierophant:
   | Frater Stolistes and Frater Dadouchos, I command you to purify and consecrate
   | the Hall with Water and Fire.
-do(role="stolistes,dadouchos")
+* Stolistes,Dadouchos
   | Perform your respective tasks below simultaneously.
-do(role="stolistes")
+* Stolistes
   | Goes to the east, faces Hierophant, and making a cross in the air with his cup,
   | sprinkles a few drops of water three times towards the east. Passes to the
   | south, west and north, repeating the purification in each quarter, then returns
   | to the east to complete the circle.
-do(role="stolistes") Holds the cup high
-say(role="stolistes") I purify with water.
-do(role="dadouchos")
+* Stolistes Holds the cup high
+Stolistes: I purify with water.
+* Dadouchos
   | Follows Stolistes when he goes to the east, and when Stolistes has gone to
   | the south, Dadouchos
   | faces east, raises his censer, and swings thrice towards the east. Then goes
   | south, west and north, repeating the cesnsing at each quarter, and returns to
   | the east to complete the circle.
-do(role="dadouchos") Raises the censer
-say(role="dadouchos") I consecrate with fire.
-do(role="stolistes,dadouchos") Return to their places
-say(role="hierophant")
+* Dadouchos Raises the censer
+Dadouchos: I consecrate with fire.
+* Stolistes,Dadouchos Return to their places
+Hierophant:
   | Let the Mystic Circumambulation take place in the Pathway of Light.
-do(role="hierophant")
+* Hierophant
   | Stands holding the sceptre in his right hand, the Banner of the East in his
   | left.
-do(role="keryx") Goes to the northeast with lamp and wand
-do(role="hegemon") Follows
-do(role="hiereus") Follows with banner and sword
-do(role="stolistes") Follows with cup
-do(role="dadouchos") Follows with censer
-do(role="sentinel") Follows with sword
-do(role="keryx")
+* Keryx Goes to the northeast with lamp and wand
+* Hegemon Follows
+* Hiereus Follows with banner and sword
+* Stolistes Follows with cup
+* Dadouchos Follows with censer
+* Sentinel Follows with sword
+* Keryx
   | Leads procession past Hierophant, making the signs of Horus and Harpocrates as
   | he passes.
-do(role="hegemon,hiereus,stolistes,dadouchos") Follows, doing the same
-do(role="hiereus") Falls out as soon as he reaches his throne
-do(role="hegemon") Returns to his place after passing Hierophant twice
-do(role="stolistes,dadouchos,sentinel,keryx")
+* Hegemon,Hiereus,Stolistes,Dadouchos Follows, doing the same
+* Hiereus Falls out as soon as he reaches his throne
+* Hegemon Returns to his place after passing Hierophant twice
+* Stolistes,Dadouchos,Sentinel,Keryx
   | Passes the Hierophant 3 times and then take their place as they come to them.
-say(role="hierophant")
+Hierophant:
   | The Mystical Circumambulation symbolical of the Rise of Light is
   | accomplished. Let us adore the Lord of the Universe and Space.
-do(role="all")
+* All
   | Stand, face east and make the saluting of the enterer (Horus) sign
   | following the lead of Hierophant. The Sign of Silence is made at the
   | end of the prayer.
-say(role="all")
+All:
   | Holy art Thou, Lord of the Universe! (salute)
   br
   | Holy art Thou, Whom nature hath not formed! (salute)
@@ -292,118 +279,93 @@ say(role="all")
   | Holy art Thou, the vast and the mighty one! (salute)
   br
   | Lord of the light and of the darkness! (Sign of Silence)
-do(role="hierophant,hiereus,hegemon")
+* Hierophant,Hiereus,Hegemon
   | Raise wands / sword in salute, and sink them.
-do(role="all") Face as usual but remain standing
-say(role="hierophant")
+* All Face as usual but remain standing
+Hierophant:
   | Frater Keryx, in the name of the Lord of the Universe, I command you to declare
   | that I have opened the hall of the Neophytes.
-do(role="keryx") Goes northeast, faces west, and raises wand
-say(role="keryx")
+* Keryx Goes northeast, faces west, and raises wand
+Keryx:
   | In the name of the Lord of the Universe, who works in silence and whom naught
   | but silence can express, I declare that the sun has arisen and the shadows flee
   | away.
-do(role="keryx") Returns to his place
-do(role="hierophant") ✊
-do(role="hiereus") ✊
-do(role="hegemon") ✊
+* Keryx Returns to his place
+* Hierophant ✊
+* Hiereus ✊
+* Hegemon ✊
 note The ✊'s are given before the words are said.
-say(role="hierophant") (✊) Khabs.
-say(role="hiereus") (✊) Am.
-say(role="hegemon") (✊) Pekht.
-say(role="hiereus") (✊) Konx.
-say(role="hegemon") (✊) Om.
-say(role="hierophant") (✊) Pax.
-say(role="hegemon") (✊) Light.
-say(role="hierophant") (✊) In.
-say(role="hiereus") (✊) Extension.
-do(role="all") Make signs towards the altar and sit down
-do(role="keryx")
+Hierophant: (✊) Khabs.
+Hiereus: (✊) Am.
+Hegemon: (✊) Pekht.
+Hiereus: (✊) Konx.
+Hegemon: (✊) Om.
+Hierophant: (✊) Pax.
+Hegemon: (✊) Light.
+Hierophant: (✊) In.
+Hiereus: (✊) Extension.
+* All Make signs towards the altar and sit down
+* Keryx
   | Removes the rose, cup, paten of bread and salt, and the lamp from the altar,
   | leaving the cross and triangle only. He sees that a hassock is in readiness at
   | the west for the candidate to kneel on.
 title(text="Initiation of the 0=0 Grade")
-  | Initiation of the
-  |
-  grade(grade="0=0")
-  |
-  | Grade
-say(role="hierophant")
-  | Fratres and sorores of the
-  |
-  var(name="templeName")
-  |
-  | Temple of the
-  |
-  var(name="orderName")
-  | , I have received a Dispensation from the Greatly Honoured Chiefs of the
-  | Second Order, to admit
-  |
-  b
-    var(name="candidateName")
-  |
-  | to the
-  |
-  grade(grade="0=0")
-  |
-  | degree of Neophyte. Honoured Hegemon, bid the Candidate prepare
-  | for the Ceremony of his admission, and superintend his preparation.
-do(role="hegemon")
+  | Initiation of the 0=0  Grade
+Hierophant:
+  | Fratres and sorores of the ${templeName} Temple of the ${orderName},
+  | I have received a Dispensation from the Greatly Honoured Chiefs of the
+  | Second Order, to admit ${candidateName;b} to the 0=0 degree of Neophyte.
+  | Honoured Hegemon, bid the Candidate prepare for the Ceremony of his
+  | admission, and superintend his preparation.
+* Hegemon
   | Rises and removes his chair from between the Pillars and goes out.
-do(role="sentinel") Follows carrying the Hoodwink and Rope
-do(role="hegemon")
+* Sentinel Follows carrying the Hoodwink and Rope
+* Hegemon
   | Sees that the candidate is properly robed and hoodwinked and that the rope goes
   | three times around his waist. He then leads the candidate to the door and gives
   | one ✊
-do(role="keryx") One ✊ from within
-say(role="keryx") The Candidate seeks for entrance.
-say(role="hierophant")
-  | I give permission to admit
-  |
-  b
-    var(name="candidateName")
-  |
-  | who now loses his name and will henceforth be known among us as
-  |
-  b
-    var(name="candidateMotto")
-  | . Let the Stolistes and the Dadouchos assist in the reception.
-do(role="keryx") Faces the entrances, ready to open the door
-do(role="stolistes,dadouchos") Stands behind Keryx
-do(role="candidate") Enters (to well within the hall)
-do(role="stolistes,dadouchos,keryx")
+* Keryx One ✊ from within
+Keryx: The Candidate seeks for entrance.
+Hierophant:
+  | I give permission to admit ${candidateName;b} who now loses his name and
+  | will henceforth be known among us as ${candidateMotto;b}.  Let the
+  | Stolistes and the Dadouchos assist in the reception.
+* Keryx Faces the entrances, ready to open the door
+* Stolistes,Dadouchos Stands behind Keryx
+* Candidate Enters (to well within the hall)
+* Stolistes,Dadouchos,Keryx
   | Stands before candidate in triangular formation.
-do(role="sentinel") Stands behind candidate.
-say(role="hegemon") Inheritor of a Dying world, arise and enter the Darkness.
-say(role="stolistes") The Mother of Darkness hath blinded him with her hair.
-say(role="dadouchos") The Father of Darkness hath hidden him under his wings.
-say(role="hierophant") His limbs are still weary from the wars which were in heaven.
-say(role="keryx") Unpurified and Unconsecrated, thou canst not enter our Sacred Hall.
-do(role="stolistes")
+* Sentinel Stands behind candidate.
+Hegemon: Inheritor of a Dying world, arise and enter the Darkness.
+Stolistes: The Mother of Darkness hath blinded him with her hair.
+Dadouchos: The Father of Darkness hath hidden him under his wings.
+Hierophant: His limbs are still weary from the wars which were in heaven.
+Keryx: Unpurified and Unconsecrated, thou canst not enter our Sacred Hall.
+* Stolistes
   | Comes forward and dipping his thumb in the lustral water, makes with it
   | a cross on the Candidate's brow and sprinkles him three times.
-say(role="stolistes") I purify thee with Water.
-do(role="dadouchos")
+Stolistes: I purify thee with Water.
+* Dadouchos
   | Comes forward and makes a cross over Candidate with his censer,
   | and waves it 3 times.
-say(role="dadouchos") I consecrate thee with Fire.
-say(role="hierophant")
+Dadouchos: I consecrate thee with Fire.
+Hierophant:
   | Conduct the candidate to the foot of the altar. Inheritor of a
   | Dying World, why seekest thou to enter our Scared Hall? Why
   | seekest thou admission to our Order?
-do(role="hegemon") Speaks for candidate.
-say(role="hegemon")
+* Hegemon Speaks for candidate.
+Hegemon:
   | My Soul wanders in Darkness and seeks the Light of the Hidden Knowledge,
   | and I believe that in this Order, Knowledge of that Light may be
   | obtained.
-say(role="hierophant")
+Hierophant:
   | We hold your signed pledge to keep secret everything that relates to
   | this Order. I now ask you, are you willing to take a solemn
   | Obligation in the presence of this Assembly, to keep the secrets and
   | mysteries of our Order inviolate?
-do(role="hegemon") Prompts candidate to say: "I am"
-say(role="candidate") I am.
-say(role="hierophant")
+* Hegemon Prompts candidate to say: "I am"
+Candidate: I am.
+Hierophant:
   | There is nothing contrary to your civil, moral or religious duties
   | in this Obligation. Although the Magical virtues can indeed awaken
   | into momentary life in the wicked and foolish hearts, they cannot
@@ -411,65 +373,57 @@ say(role="hierophant")
   | throne. He who is the Fountain of the Spirit of Man and of Things,
   | came not to break, but to fulfill the law. Are you ready to take
   | this Oath?
-do(role="hegemon") Prompts candidate.
-say(role="candidate") I am ready.
-say(role="hierophant") Then you will kneel on both your knees.
-do(role="hierophant") Comes to east of the altar with sceptre.
-do(role="hegemon") Assists candidate to kneel and stands right of candidate.
-do(role="hiereus") Stands to the left.
-do(role="keryx,stolistes,dadouchos") Complete the hexagram of officers.
+* Hegemon Prompts candidate.
+Candidate: I am ready.
+Hierophant: Then you will kneel on both your knees.
+* Hierophant Comes to east of the altar with sceptre.
+* Hegemon Assists candidate to kneel and stands right of candidate.
+* Hiereus Stands to the left.
+* Keryx,Stolistes,Dadouchos Complete the hexagram of officers.
 note
   | Hexagram of officers
   img(src="/pics/candidate-hexagram.svg")
-say(role="hierophant")
+Hierophant:
   | Give me your right hand which I place upon this holy symbol.
   | Place your left hand in mine, bow your head, repeat your full
   | name by which you are known on Earth, and say after me:
-do(role="hierophant") Prompts candidate
-say(role="candidate,hierophant")
-  | I,
-  |
-  b
-    var(name="candidateName")
-  | , in the presence of the Lord of the Universe, Who works in Silence
-  | and whom naught but Silence can express, and in this hall of the
-  |
-  | Neophytes of the
-  |
-  var(name="orderName")
-  | , regularly assembled under Warrant
-  | from the Greatly Honoured Chiefs of the Second Order, do, of my own
-  | free will, hereby and hereon, most solemnly promise to keep secret
-  | this Order, its Name, the Names of its Members, and the proceedings
-  | that take place at its meetings, from every person in the world who
-  | has not been initiated into it; nor will I discuss them with any Member
-  | who has not the Password for the time being, or who has resigned,
+* Hierophant Prompts candidate
+Candidate,Hierophant:
+  | I, ${candidateName;b}, in the presence of the Lord of the Universe,
+  | Who works in Silence and whom naught but Silence can express, and in
+  | this hall of the Neophytes of the ${orderName}, regularly assembled
+  | under Warrant from the Greatly Honoured Chiefs of the Second Order,
+  | do, of my own free will, hereby and hereon, most solemnly promise to
+  | keep secret this Order, its Name, the Names of its Members, and the
+  | proceedings that take place at its meetings, from every person in the
+  | world who has not been initiated into it; nor will I discuss them with
+  | any Member who has not the Password for the time being, or who has resigned,
   | demitted, or been expelled.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I undertake to maintain a kindly and benevolent relation with all
   | the Fratres and Sorores of this Order.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I solemnly promise to keep secret any information I may have
   | gathered concerning this Order before taking this Oath.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I solemnly promise that any ritual or lecture placed in my care or
   | any cover containing them shall bear the official label of this
   | Order.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I will neither copy, nor allow to be copied, any manuscript, until
   | I have obtained permission of the Second Order, lest our Secret
   | Knowledge be revealed through my neglect.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I solemnly promise not to suffer myself to be placed in such a
   | state of passivity, that any unitiated person or power may cause
   | me to lose control of my words or actions.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I solemnly promise to persevere with courage and determination
   | in the labours of the Divine Science, even as I shall persevere
   | with courage and determination through this Ceremony which is
   | their Image - and I will not debase my mystical knowledge in the
   | labour of Evil Magic at any time tried or under any temptation.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | I swear upon this Holy Symbol to observe all these things without
   | evasion, equivocation, or mental reservation, under the penalty of
   | being expelled from this Order for my perjury and my offense.
@@ -477,135 +431,127 @@ say(role="candidate,hierophant")
   | myself, by my own consent, to a Stream of Power, set in motion by
   | the Divine Guardians of this Order, Who live in the Light of their
   | Perfect Justice, and before Whom my Soul now stands.
-do(role="all") Whisper close to Candidate.
-say(role="all")
+* All Whisper close to Candidate.
+All:
   | They journey as upon the winds—
   br
   | They strike where no man strikes—
   br
   | They slay where no man slays—
-do(role="hiereus")
+* Hiereus
   | At words "bow my neck" below, places the flat of his sword
   | on the nape of the candidate's neck.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | and, as I bow my neck under the Sword of the Hiereus, so do I commit
   | myself unto their hands for vengence or reward.
-say(role="candidate,hierophant")
+Candidate,Hierophant:
   | So help me my Mighty and Secret soul, and the Father of my Soul
   | Who works in Silence and Whom naught but Silence can express.
-say(role="hierophant")
-  | Rise, Neophyte, of the
-  |
-  grade(grade="0=0")
-  |
-  | grade of the
-  |
-  var(name="orderName")
-  | .
-do(role="hierophant") Returns to his throne
-do(role="hiereus") Removes hassock and returns to his throne
-do(role="hegemon") Assists candidate to rise
-do(role="stolistes,dadouchos,keryx") Resume their seats
-say(role="hierophant")
+Hierophant: Rise, Neophyte, of the 0=0 grade of the ${orderName}.
+* Hierophant Returns to his throne
+* Hiereus Removes hassock and returns to his throne
+* Hegemon Assists candidate to rise
+* Stolistes,Dadouchos,Keryx Resume their seats
+Hierophant:
   | Honoured Hegemon, you will now place the Neophyte
   | in the Northern part of the Hall - the place of Forgetfulness, Dumbness,
   | and Necessity, and of the Greatest symbolical Darkness.
-do(role="hegemon") Takes candidate to the North and faces him East
-do(role="keryx") Goes with lamp and wand to the northeast
-do(role="stolistes,dadouchos") Stand ready to follow the procession
-say(role="hierophant")
+* Hegemon Takes candidate to the North and faces him East
+* Keryx Goes with lamp and wand to the northeast
+* Stolistes,Dadouchos Stand ready to follow the procession
+Hierophant:
   | The voice of my Undying and Secret Soul said unto me:
   | "Let me enter the Path of Darkness and, peradventure, there shall I
   | find the Light. I am the only Being in an Abyss of Darkness; from
   | an Abyss of Darkness came I forth ere my birth, from the Silence of a
   | Primal Sleep."
-say(role="hierophant")
+Hierophant:
   | And the Voice of the Ages answered to my Soul:
   | "I am He who formulates in Darkness —
   | the Light that shineth in Darkness, yet the Darkness comprehendeth it not."
-say(role="hierophant")
+Hierophant:
   | Let the Mystical Circumambulation take place in the Path of Knowledge that
   | leadeth unto Light, with the Lamp of Hidden Knowledge to guide us.
-do(role="keryx") Leads forward
-do(role="hegemon") Follows leading Candidate
-do(role="candidate") Follows.
-do(role="stolistes,dadouchos") Follow
-do(role="hierophant") ✊ just as candidate passes
-do(role="keryx,hegemon,stolistes,dadouchos") Pass on by the south, west
-do(role="hiereus") ✊ as candidate passes
-do(role="keryx,hegemon,stolistes,dadouchos") Pass on by the north, east
-do(role="hierophant") ✊ as candidate passes
-do(role="keryx")
+* Keryx Leads forward
+* Hegemon Follows leading Candidate
+* Candidate Follows.
+* Stolistes,Dadouchos Follow
+* Hierophant ✊ just as candidate passes
+* Keryx,Hegemon,Stolistes,Dadouchos Pass on by the south, west
+* Hiereus ✊ as candidate passes
+* Keryx,Hegemon,Stolistes,Dadouchos Pass on by the north, east
+* Hierophant ✊ as candidate passes
+* Keryx
   | Stops in the south after second passing of Hierophant and bars
   | the way with his Wand.
-say(role="keryx")
+Keryx:
   | Unpurified and Unconsecrated, thou canst not enter the Path of the West!
-do(role="stolistes")
+* Stolistes
   | Comes forward and, dipping his thumb in water, makes a cross
   | on Candidate's brow and sprikles three times
-say(role="stolistes") I purify thee with water.
-do(role="dadouchos")
+Stolistes: I purify thee with water.
+* Dadouchos
   | Comes forward, censes in the form of a cross, waves incense three times
-say(role="dadouchos")
+Dadouchos:
   | I concecrate thee with fire.
-do(role="stolistes,dadouchos") Step back to their places in the procession
-say(role="hegemon")
+* Stolistes,Dadouchos Step back to their places in the procession
+Hegemon:
   | Child of Earth, twice purified and twice consecrated, thou mayest
   | approach the Gateway of the West.
-do(role="keryx") Leads the procession to throne of Hiereus
-do(role="hegemon") Raises the hoodwink for a moment
-do(role="hiereus") Stands threatening with his Sword
-say(role="hiereus")
+* Keryx Leads the procession to throne of Hiereus
+* Hegemon Raises the hoodwink for a moment
+* Hiereus Stands threatening with his Sword
+Hiereus:
   | Thou canst not pass by me, saith the Guardian of the West,
   | unless thou canst tell me my Name.
-say(role="hegemon")
+Hegemon:
   | Darkness is thy Name, thou Great One of the Paths of the Shades.
-say(role="hiereus")
+Hiereus:
   | Thou hast known me now, so pass thou on.
   | Fear is failure so be thou without fear.
   | For he who trembles at the Flame and at the Flood and at the Shadows
   | of the Air, hath no part in God.
-do(role="keryx") Leads on
-do(role="hegemon,candidate,stolistes,dadouchos") Follows
-do(role="hierophant") ✊ as they pass
-do(role="hiereus") ✊ as they pass
-do(role="keryx") Halts in the North and raises his Wand
-say(role="keryx")
+* Keryx Leads on
+* Hegemon,Candidate,Stolistes,Dadouchos Follows
+* Hierophant ✊ as they pass
+* Hiereus ✊ as they pass
+* Keryx Halts in the North and raises his Wand
+Keryx:
   | Unpurified and Unconsecrated, thou canst not enter the
   | Path of the East!
-do(role="stolistes") Cross and sprinkling as before
-say(role="stolistes") I purify thee with water.
-do(role="dadouchos") Cross and censing as before
-say(role="dadouchos") I consecrate thee with fire.
-say(role="hegemon")
+* Stolistes Cross and sprinkling as before
+Stolistes: I purify thee with water.
+* Dadouchos Cross and censing as before
+Dadouchos: I consecrate thee with fire.
+Hegemon:
   | Child of Earth, thrice purified and thrice consecrated,
   | thou mayest approach the Gateway of the East!
-do(role="keryx") Leads the procession forward to Hierophant
-do(role="hegemon,candidate,stolistes,dadouchos") follows
-do(role="hierophant") Stands threatening with his Sceptre
-do(role="hegemon") Raises the hoodwink for a moment
-say(role="hierophant")
+* Keryx Leads the procession forward to Hierophant
+* Hegemon,Candidate,Stolistes,Dadouchos follows
+* Hierophant Stands threatening with his Sceptre
+* Hegemon Raises the hoodwink for a moment
+Hierophant:
   | Thou canst not pass by me, saith the Guardian of the
   | East, unless thou canst tell me my Name.
-say(role="hegemon")
+Hegemon:
   | Light dawning in Darkness is thy Name, the Light of a Golden Day!
-say(role="hierophant")
+Hierophant:
   | Unbalaced Power is the ebbing away of Life.
   | Unbalanced Mercy is weakness and the fading out of Will.
   | Unbalanced Severity is cruelty and the barrenness of Mind.
   | Thou hast known me now, so pass thou on to the Cubical Altar of
   | the Universe.
-do(role="hegemon") Replaces hoodwink
-do(role="keryx") Leads processing to the Altar
-do(role="hegemon") Place candidate exactly west of the altar
-do(role="hegemon") Stands to the right of the candidate
-do(role="hiereus") Stands to the left of the candidate
-do(role="keryx,stolistes,dadouchos") Form a supporting triangle behind Candidate.
-do(role="hierophant")
+* Hegemon Replaces hoodwink
+* Keryx Leads processing to the Altar
+* Hegemon Place candidate exactly west of the altar
+* Hegemon Stands to the right of the candidate
+* Hiereus Stands to the left of the candidate
+* Keryx,Stolistes,Dadouchos Form a supporting triangle behind Candidate.
+* Hierophant
   | Holds Sceptre in his right hand and the Banner of the East
   | in his left, advances between the Pillars and comes to the
   | East of the Altar.
-say(role="hierophant")
+Hierophant:
   | I come in the Power of the Light.
   br
   | I come in the Light of Wisdom.
@@ -613,16 +559,16 @@ say(role="hierophant")
   | I come in the Mercy of the Light.
   br
   | The Light hath Healing in its Wings.
-do(role="all-officers") Form a hexagram round the altar
-do(role="hiereus")
+* All-officers Form a hexagram round the altar
+* Hiereus
   | Holds his sword in his right hand,
   | the Banner of the West in his left
-do(role="all-officers-except-hierophant") Kneel down
-do(role="hegemon") Assists candidate to kneel
-do(role="hierophant")
+* All-officers-except-hierophant Kneel down
+* Hegemon Assists candidate to kneel
+* Hierophant
   | Stands, raising his hands, holding sceptre and
   | Banner for the Invocation as follows
-say(role="hierophant")
+Hierophant:
   | Lord of the Universe - the Vast and the Mighty One!
   | Ruler of the light and of the Darkness!
   | We adore Thee and we invoke Thee!
@@ -630,78 +576,65 @@ say(role="hierophant")
   | and grant Thine aid unto the higher aspirations of his Soul,
   | so that he may prove a true and faithful Frater Neophyte among us.
   | To the glory of Thine Ineffable name. Amen!
-do(role="all") Rise
-do(role="hegemon") Assists candidate to rise, brings close to the altar
-do(role="hierophant,hiereus,hegemon")
+* All Rise
+* Hegemon Assists candidate to rise, brings close to the altar
+* Hierophant,Hiereus,Hegemon
   | Raise their wands and sword to touch
   | each other over the head of the candidate.
-say(role="hegemon")
+Hegemon:
   | Inheritor of a Dying World, we call thee to the Living Beauty.
-do(role="keryx") At the word "darkness" (below), removes the hoodwink.
-say(role="hiereus")
+* Keryx At the word "darkness" (below), removes the hoodwink.
+Hiereus:
   | Wanderer in the Wild Darkness, we call thee to the Gentle Light.
-do(role="keryx")
+* Keryx
   | Removes the hoodwink (at the word "darkness", above)
-say(role="hierophant") Long hast thou dwelt in Darkness —
+Hierophant: Long hast thou dwelt in Darkness —
   | quit the Night and seek the Day.
-say(role="hierophant,hegemon,hiereus") (Together)
+Hierophant,Hegemon,Hiereus: (Together)
   |
-  | We receive thee into the
-  |
-  var(name="orderName")
-  | .
-say(role="hierophant") Khabs.
-say(role="hiereus") Am.
-say(role="hegemon") Pekht.
-say(role="hiereus") Konx.
-say(role="hegemon") Om.
-say(role="hierophant") Pax.
-say(role="hegemon") Light.
-say(role="hierophant") In.
-say(role="hiereus") Extension.
-do(role="all-officers") Take down their Sceptres and Sword.
-do(role="keryx") Moves to North East of the Altar and raises his Lamp.
-do(role="hierophant") Points to the lamp to direct Candidate's attention.
-say(role="hierophant")
+  | We receive thee into the ${orderName}.
+Hierophant: Khabs.
+Hiereus: Am.
+Hegemon: Pekht.
+Hiereus: Konx.
+Hegemon: Om.
+Hierophant: Pax.
+Hegemon: Light.
+Hierophant: In.
+Hiereus: Extension.
+* All-officers Take down their Sceptres and Sword.
+* Keryx Moves to North East of the Altar and raises his Lamp.
+* Hierophant Points to the lamp to direct Candidate's attention.
+Hierophant:
   | In all thy wandering in Darkness, the Lamp of the
   | Keryx went before thee, though it was not seen by thine eyes. It
   | is a Symbol of the Light of the Hidden Knowledge.
-do(role="hiereus,keryx,stolistes,dadouchos") Return to their places.
-do(role="hierophant") Returns to his throne.
-do(role="hegemon,candidate") Remain West of the altar.
-say(role="hierophant") Let the Neophyte be led to the East of the Altar.
-do(role="hegemon")
+* Hiereus,Keryx,Stolistes,Dadouchos Return to their places.
+* Hierophant Returns to his throne.
+* Hegemon,Candidate Remain West of the altar.
+Hierophant: Let the Neophyte be led to the East of the Altar.
+* Hegemon
   | Places him to the East, near but not between the Pillars,
   | and he takes his place outside the White Pillar.
-say(role="hierophant")
+Hierophant:
   | Honoured Hiereus, give the Neophyte the secret signs,
   | token, and words, together with the present password of the
-  |
-  grade(grade="0=0")
-  |
-  | grade of the
-  |
-  var(name="orderName")
-  | . Place him between the Mystical Pillars and superintend his fourth
+  | 0=0 grade of the ${orderName}.
+  | Place him between the Mystical Pillars and superintend his fourth
   | and final consecration.
-do(role="hiereus")
+* Hiereus
   | Passes by the North to the Black Pillar, comes round to the East.
-do(role="hegemon")
+* Hegemon
   | Advances to meet Hiereus and take from him his Sword and Banner.
-do(role="hiereus")
+* Hiereus
   | Gives Sword and Banner to Hegemon and steps between the
   | Pillars, facing the Candidate.
-say(role="hiereus") Frater
-  |
-  |
-  b
-    var(name="candidateMotto")
-  | , I shall now proceed to instruct you in the secret Step, Signs,
-  | Grip and Words of this Grade.
-say(role="hiereus")
+Hiereus: Frater ${candidateMotto;b}, I shall now proceed to instruct you
+  | in the secret Step, Signs, Grip and Words of this Grade.
+Hiereus:
   | Firstly, advance your left foot a short space, as if entering a portal.
   | This is the Step.
-say(role="hiereus")
+Hiereus:
   | The Signs are two. The First or Saluting Sign is given
   | thus: Lean forward and stretch both arms out thus:
   |
@@ -715,12 +648,12 @@ say(role="hiereus")
   | and it alludes to the silence you have sworn to maintain concerning
   | everything connected with this Order. The first sign is always answered
   | by the second.
-say(role="hiereus")
+Hiereus:
   | The Grip or Token is given thus: advance your left foot touching mine,
   | toe and heel, extend your right hand to grasp mine, fail, try again,
   | and then succeed in touching the fingers only. It alludes to the
   | seeking guidance in darkness.
-say(role="hiereus")
+Hiereus:
   | The Grand Word is Har-Par-Krat, and it is whispered in this position
   | mouth to ear, in syllables.
   |
@@ -728,84 +661,84 @@ say(role="hiereus")
   |
   | It is the Egyptian Name for the God of Silence, and should always
   | remind you of the strict silence you have sworn to maintain.
-say(role="hiereus")
+Hiereus:
   | The Password is
   |
   i (word)
   | . It is periodically changed each Equinox, so that a Member who has
   | resigned, demitted, or been expelled, may be in ignorance of the
   | existing Password.
-say(role="hiereus")
+Hiereus:
   i
     | I now place you between the two Pillars of Hermes and of Solomon
     | in the symbolical Gateway of Occult Wisdom.
-do(role="hegemon")
+* Hegemon
   | Ready the Hiereus' sword to give back to him
-do(role="hiereus")
+* Hiereus
   | Leads Neophyte forward and then takes back the Sword and Banner.
   | He stands North East of the Black Pillar and says:
-say(role="hiereus")
+Hiereus:
   | Let the final consecration take place.
 
-do(role="stolistes,dadouchos") Come forward and purify and consecrate
+* Stolistes,Dadouchos Come forward and purify and consecrate
   | the hall as in the opening
-do(role="stolistes") On returning East, turns round to Neophyte,
+* Stolistes On returning East, turns round to Neophyte,
   | makes a cross of water on his brow, and sprinkles three times
-say(role="stolistes") I purify thee with water.
-do(role="dadouchos")
+Stolistes: I purify thee with water.
+* Dadouchos
   | Turns round from the east, makes a cross and censes 3 times
-say(role="dadouchos") I consecrate thee with fire.
-do(role="stolistes,dadouchos") Return to their places
+Dadouchos: I consecrate thee with fire.
+* Stolistes,Dadouchos Return to their places
 
-say(role="hierophant")
+Hierophant:
   | Honoured Hegemon, I command you to remove the Rope,
   | last remaining symbol of the Path of Darkness, and to invest our
   | Frater with the Badge of this Degree.
-do(role="hiereus") Ready to receive Hegemon's sceptre and ritual
-do(role="hegemon")
+* Hiereus Ready to receive Hegemon's sceptre and ritual
+* Hegemon
   | Comes forward and hands his sceptre and ritual to
   | Hiereus. Removes the rope and puts on the sash over the left
   | shoulder
-say(role="hegemon")
+Hegemon:
   | By command of the Very Honoured Hierophant, I invest
   | you with the Badge of this degree. It symbolises Light dawning in
   | Darkness.
-do(role="hiereus") Returns Sceptre, etc, to Hegemon
-do(role="hegemon") Takes Sceptre, etc, and returns to White Pillar
+* Hiereus Returns Sceptre, etc, to Hegemon
+* Hegemon Takes Sceptre, etc, and returns to White Pillar
 
-say(role="hierophant")
+Hierophant:
   | Let the Mystical Circumambulation take place in the Pathway of Light.
-do(role="keryx") Goes to the North East
-do(role="hegemon")
+* Keryx Goes to the North East
+* Hegemon
   | Takes Candidate behind the Black Pillar, and stands behind Keryx
-do(role="hiereus,stolistes,dadouchos") Follow
-do(role="hierophant") Stands holding Sceptre and Banner as in the opening
-do(role="keryx") Leads off
-do(role="all-except-hierophant") Salute on passing Hierophant
-do(role="hiereus") Drops out on reaching his throne
-do(role="hegemon")
+* Hiereus,Stolistes,Dadouchos Follow
+* Hierophant Stands holding Sceptre and Banner as in the opening
+* Keryx Leads off
+* All-except-hierophant Salute on passing Hierophant
+* Hiereus Drops out on reaching his throne
+* Hegemon
   | Returns to between the Pillars after passing Hierophant
   | twice. Directs Neophyte to follow Keryx
 note Remaining officers pass the Hierophant thrice.
-do(role="hierophant") Waits for third passing
-say(role="hierophant") Take your place North West of the Stolistes.
-do(role="keryx") Indicates this and goes on
-do(role="stolistes")
+* Hierophant Waits for third passing
+Hierophant: Take your place North West of the Stolistes.
+* Keryx Indicates this and goes on
+* Stolistes
   | Follows and falls out in the north and returns to his place
-do(role="hegemon") Replaces his chair between the Pillars and sits down
-do(role="keryx")
+* Hegemon Replaces his chair between the Pillars and sits down
+* Keryx
   | Replaces the Rose, Lamp, Cup and Paten in their proper places on the altar.
-do(role="all") Take their seats.
+* All Take their seats.
 
-do(role="hierophant") Stands.
-say(role="hierophant")
+* Hierophant Stands.
+Hierophant:
   | The Threefold Cord bound about your waist was an image of the
   | threefold bondage of Mortality, which amongst the Initiated is
   | called earthly or material inclination, that has bound into a
   | narrow place the once far-wondering Soul; and the Hoodwink was an
   | image of the Darkness, of Ignorance, of Morality that has blinded
   | men to the Happiness and Beauty their eyes once looked upon.
-say(role="hierophant")
+Hierophant:
   | The Double Cubical Altar in the centre of the Hall is an emblem of
   | visible Nature or the Material Universe, concealing within herself
   | the mysteries of all dimensions, while revealing her surface to the
@@ -824,25 +757,25 @@ say(role="hierophant")
   | "an Abyss of the North" and "an Abyss of the South". The altar is
   | Black because, unlike Divine Beings who unfold in the Element of Light,
   | the Fires of Created Beings arise from Darkness and Obscurity.
-say(role="hierophant")
+Hierophant:
   | On the Altar is a White Triangle to be the Image of that Immortal
   | Light, that Triune Light, which moved in Darkness and formed the
   | world of Darkness and out of Darkness. There are two contending
   | Forces and One always uniting them; and these Three have their
   | Image in the threefold Flame of our Being and in the threefold wave
   | of the sensual world.
-do(role="hierophant") Stands in the form of a cross.
-say(role="hierophant")
+* Hierophant Stands in the form of a cross.
+Hierophant:
   | Glory be to Thee, Father of the undying.
   | For Thy glory flows out rejoicing to the ends of the earth!
-do(role="hierophant") Reseats himself.
+* Hierophant Reseats himself.
 
-say(role="hierophant")
+Hierophant:
   | The Red Cross above the White Triangle is an Image of Him Who was
   | unfolded in the Light. At its East, South, West and North angles
   | are a Rose, Fire, Cup of Wine, and Bread and Salt. These allude to
   | the Four Elements: Air, Fire, Water, Earth.
-say(role="hierophant")
+Hierophant:
   | The Mystical Words —
   |
   i
@@ -852,118 +785,98 @@ say(role="hierophant")
   | which was uttered at the Eleusinian Mysteries. A literal translation
   | would be "Light Rushing Out In One Ray", and they signify the same
   | form of Light as that symbolized by the Staff of the Keryx.
-say(role="hierophant")
+Hierophant:
   | East of the Double Cubical Altar of created things are the Pillars
   | of Hermes and of Solomon. On these are painted certain Hieroglyphics
   | from the 17th and the 125th chapters of the Book of the Dead. They
   | are the symbols of the two powers of Day and Night, Love and Hate,
   | Work and Rest, the subtle force of the Lodestone and the Eternal
   | outpouring and inpouring of the Heart of God.
-say(role="hierophant")
+Hierophant:
   | The Lamps that burn, though with a veiled light, upon their summits
   | show that the Pathway to Hidden Knowledge, unlike the Pathway of
   | Nature — which is a continual undulation, the winding hither and
   | tither of the Serpent — is the straight and narrow way between them.
-say(role="hierophant")
+Hierophant:
   | It was because of this that I passed between them, when you came
   | to the Light, and it was because of this that you were placed between
   | them to receive the final consecration.
-say(role="hierophant")
+Hierophant:
   | Two contending Forces and one which unites them externally.
   | Two basal angles of the triangle and one which forms the apex.
   | Such is the origin of Creation — it is the Triad of Life.
-say(role="hierophant")
+Hierophant:
   | My throne at the Gate of the East is the Place of the Guardian of
   | the Dawning Sun.
-say(role="hierophant")
+Hierophant:
   | The Throne of the Hiereus at the Gate of the West is the Place of
   | the Guardian Against the Multitudes that sleep through the Light and
   | awaken at the Twilight.
-say(role="hierophant")
+Hierophant:
   | The Throne of the Hegemon seated between the Columns is the Place of
   | Balanced Power, between the ultimate Light and the ultimate Darkness.
   | These meanings are shown in detail and by the colour of our Tabards.
-say(role="hierophant")
+Hierophant:
   | The Wand of the Keryx is the Beam of Light from the Hidden Wisdom,
   | and his Lamp is an emblem of the Ever-burning Lamp of the Guardian
   | of the Mysteries.
-say(role="hierophant")
+Hierophant:
   | The Seat of the Stolistes at the Gate of the North is the Place
   | of the Guardian of the Couldron and the Well of Water - of Cold
   | and Moisture. The Seat of the Dadouchos at the Gate of the South is
   | the Place of the Guardian of the Lake of Fire and the Burning Bush.
 
-say(role="hierophant")
+Hierophant:
   | Frater Keryx, I command you to declare that the Neophyte has been
-  | initiated into the Mysteries of the
-  |
-  grade(grade="0=0")
-  |
-  | Grade.
-do(role="keryx") Advances to the North East, faces West and raises his Wand.
-say(role="keryx")
+  | initiated into the Mysteries of the 0=0 Grade.
+* Keryx Advances to the North East, faces West and raises his Wand.
+Keryx:
   | In the Name of the Lord of the Universe, Who works in
   | Silence and Whom naught but Silence can express, and by command of
   | the Very Honoured Hierophant, hear ye all, that I proclaim that
-  |
-  b
-    var(name="candidateName")
-  | , who will henceforth be known to you by the Motto
-  |
-  b
-    var(name="candidateMotto")
-  | , has been duly admitted to the
-  |
-  grade(grade="0=0")
-  |
-  | Grade as a Neophyte of the
-  |
-  var(name="orderName")
-  | .
-do(role="keryx") Returns to his place.
+  | ${candidateName;b}, who will henceforth be known to you by the Motto
+  | ${candidateMotto;b}, has been duly admitted to the 0=0 Grade as a
+  | Neophyte of the ${orderName}.
+* Keryx returns to his place.
 
-say(role="hierophant")
+Hierophant:
   | Honoured Hiereus, I delegate to you the duty of
   | pronouncing a short address to our Frater on his admission.
-say(role="hiereus") Frater
-  |
-  |
-  b
-    var(name="candidateMotto")
-  | , it is my duty to deliver this exhortation to you.
+Hiereus: Frater ${candidateMotto;b}, it is my duty to deliver this
+  | exhortation to you.
   | Remember your Obligation in this Order to secrecy — for
   | Strength is in Silence, and the Seed of Wisdom is sown in Silence
   | and grows in Darkness and Mystery.
-say(role="hiereus")
+Hiereus:
   | Remember that you hold all Religions in reverence, for there is
   | none but contain a Ray from the Ineffable Light that you are
   | seeking. Remember the penalty that awaits the breaker of his
   | Oath. Remember the Mystery that you have received, and that the
   | Secret of Wisdom can be discerned only from the place of Balanced
   | Powers.
-say(role="hiereus")
+Hiereus:
   | Study well the Great Arcanum of the proper equilibrium of Severity
   | and Mercy, for either unbalanced is not good. Unbalanced Severity
   | is cruelty and opression; unbalanced Mercy is but weakness and
   | would permit Evil to exist unchecked, thus making itself, as it
   | were, the accomplice of Evil.
-say(role="hiereus")
+Hiereus:
   | Remember that things Divine are not attained by mortals who understand
   | the Body alone, for only those who are lightly armed can attain the summit.
-say(role="hiereus")
+Hiereus:
   | Remember that God alone is our Light and the Bestower of Perfect
   | Wisdom, and that no mortal power can do more than bring you to the
   | Pathway of that Wisdom, which He could, if it so pleased Him, put into
   | the heart of a child. For as the whole is greater than the part, so
   | are we but Sparks from the unsupportable Light which is in Him.
-say(role="hiereus")
+Hiereus:
   | The ends of the Earth are swept by the Borders of His Garment of
   | Flame — from Him all things proceed, and unto Him all things return.
-say(role="hiereus")
+Hiereus:
   | Therefore, we invoke Him. Therefore even the Banner of the East falls
   | in adoration before Him.
 
-say(role="hierophant")
+Hierophant:
   | Before you can ask to pass to a higher Grade, you will have to commit
   | certain rudiments of Occult Knowledge to memory. A manuscript lecture
   | in these subjects will be supplied to you by the Chief in whose charge
@@ -974,10 +887,10 @@ say(role="hierophant")
   | Degree. Remember, that without a Dispensation from the Second Order, no
   | person can be admitted or advance to a Grade of the First Order.
 
-do(role="keryx")
+* Keryx
   | Conducts Neophyte to his table and gives him one of the small dishes
   | of solution to hold
-say(role="keryx")
+Keryx:
   | Nature is harmonious in all her workings, and that which is above is
   | as that which is below. Thus also, the Truths which by material
   | Science we investigate, are but special examples of the all-pervading
@@ -988,9 +901,9 @@ say(role="keryx")
   | forgotten, and the solemn pledge broken, then that which is secret
   | shall be revealed, even as this pure fluid reveals the semblance of
   | blood.
-do(role="keryx")
+* Keryx
   | Adds fluid from the other dish
-say(role="keryx")
+Keryx:
   | Let this remind thee ever, O Neophyte, how easily by a careless or
   | unthinking word, thou mayst betray that which thou hast sworn to
   | keep secret and mayst reveal the Hidden Knowledge imparted to thee,
@@ -1000,99 +913,87 @@ say(role="keryx")
   | penalty exacted by the Guardians of the Hidden Knowledge from those
   | who will wilfully betray their trust.
 
-do(role="hierophant") Comes to the table
+* Hierophant Comes to the table
 note The register is signed.
-say(role="hierophant")
+Hierophant:
   | Resume your seat, and remember that your admission
   | to this Order does not give you the right to initiate any other person
   | without a dispensation from the greatly honoured chiefs of the
   | Second Order.
-do(role="keryx") Directs Neophyte to his seat
-do(role="hierophant") Returns to the dais
+* Keryx Directs Neophyte to his seat
+* Hierophant Returns to the dais
 
 title(text="Closing of the 0=0 Grade")
-  | Closing of the
-  |
-  grade(grade="0=0")
-  |
-  | Grade
+  | Closing of the 0=0 Grade
 
-do(role="hierophant") ✊
-do(role="keryx") Goes to the North East, faces West, raises Lamp and Wand.
-say(role="keryx") Hekas! Hekas! Esti bebeloi.
-do(role="keryx") Returns to place.
+* Hierophant ✊
+* Keryx Goes to the North East, faces West, raises Lamp and Wand.
+Keryx: Hekas! Hekas! Esti bebeloi.
+* Keryx Returns to place.
 
-say(role="hierophant")
-  | Fratres and sorores of the
-  |
-  var(name="templeName")
-  |
-  | Temple of the
-  |
-  var(name="orderName")
-  | , assist me to close the hall of the Neophytes.
-do(role="all") Rise.
-do(role="stolistes") Directs Neophyte to rise
-do(role="candidate") Rises
+Hierophant:
+  | Fratres and sorores of the ${templeName} Temple of the ${orderName},
+  | assist me to close the hall of the Neophytes.
+* All Rise.
+* Stolistes Directs Neophyte to rise
+* Candidate Rises
 
-do(role="hiereus") ✊
-do(role="hegemon") ✊
-do(role="keryx") ✊
-do(role="sentinel") ✊
+* Hiereus ✊
+* Hegemon ✊
+* Keryx ✊
+* Sentinel ✊
 
-say(role="hierophant") Frater Keryx, see that the Hall is properly guarded.
-say(role="keryx") The Hall is properly guarded, Very Honoured Hierophant.
-say(role="hierophant")
+Hierophant: Frater Keryx, see that the Hall is properly guarded.
+Keryx: The Hall is properly guarded, Very Honoured Hierophant.
+Hierophant:
   | Honoured Hiereus, assure yourself that all present have beheld the
-  |
-  var(name="witnessed")
-  | .
+  | ${witnessed}.
 
-say(role="hiereus") Fratres and Sorores, give the signs.
-do(role="all-except-hierophant") Perform signs.
-say(role="hiereus")
+Hiereus: Fratres and Sorores, give the signs.
+* All-except-hierophant Perform signs.
+Hiereus:
   | Very Honoured Hierophant, all present have been so honoured.
-say(role="hierophant") Let the Hall be purified by Water and by Fire.
+Hierophant: Let the Hall be purified by Water and by Fire.
 
-do(role="stolistes") Purifies as in the opening.
-say(role="stolistes") I purify with water.
-do(role="dadouchos") Consecrates as in the opening.
-say(role="dadouchos") I consecrate with fire.
+* Stolistes Purifies as in the opening.
+Stolistes: I purify with water.
+* Dadouchos Consecrates as in the opening.
+Dadouchos: I consecrate with fire.
 
-say(role="hierophant")
+Hierophant:
   | Let the Mystical Reverse Circumambulation take place
   | in the Pathway of Light.
-do(role="keryx") Goes by the South to the South East.
-do(role="hegemon")
+* Keryx Goes by the South to the South East.
+* Hegemon
   | Goes to the North and leads the new Neophyte by the
   | West and South, directing him to follow behind.
-do(role="hiereus") Follows Neophyte.
-do(role="stolistes") Follows Hiereus.
-do(role="dadouchos") Accompanies or follows Stolistes.
-do(role="sentinel") Ends the procession.
-do(role="hierophant")
+* Hiereus Follows Neophyte.
+* Stolistes Follows Hiereus.
+* Dadouchos Accompanies or follows Stolistes.
+* Sentinel Ends the procession.
+* Hierophant
   | Stands and holds the Banner of the East in his left
   | hand, Sceptre in his right.
-do(role="all-except-hierophant")
+* All-except-hierophant
   | Make the Neophyte signs when passing the Hierophant.
-do(role="hiereus") Drops out when his throne is reached.
-do(role="hegemon")
+* Hiereus Drops out when his throne is reached.
+* Hegemon
   | Passes Hierophant twice and then takes his place
   | between the pillars, directing Neophyte to follow Keryx.
-do(role="keryx")
+* Keryx
   | After the third passing of the Hierophant, directs
   | Neophyte to his seat.
-do(role="all-except-hierophant,hiereus,hegemon,keryx")
+* All-except-hierophant,Hiereus,Hegemon,Keryx
   | Drop out as their places reached.
 
-say(role="hierophant")
+Hierophant:
   | The Mystical Circumambulation is accomplished. It is
   | the symbol of Fading Light. Let us adore the Lord of the Universe.
-do(role="all") Turn East.
-do(role="stolistes") Directs Neophyte to rise and face East.
-do(role="hierophant") Faces East, making salute at each adoration.
-do(role="all-except-hierophant") Repeat after Hierophant.
-say(role="all")
+* All Turn East.
+* Stolistes Directs Neophyte to rise and face East.
+* Hierophant Faces East, making salute at each adoration.
+* All-except-hierophant Repeat after Hierophant.
+All:
   | Holy art Thou, Lord of the Universe! (salute)
   br
   | Holy art Thou, Whom nature hath not formed! (salute)
@@ -1101,93 +1002,93 @@ say(role="all")
   br
   | Lord of the light and the darkness! (Sign of Silence)
 
-say(role="hierophant")
+Hierophant:
   | Nothing now remains but to partake together in silence, of the Mystic
   | Repast, composed of the symbols of the Four Elements, and to remember
   | our pledge of secrecy.
-do(role="all") Are seated.
-do(role="hierophant")
+* All Are seated.
+* Hierophant
   | Puts down his sceptre and returns the Banner of the
   | East to its place. He goes to the west of the Altar and facing East
   | gives the Saluting Sign but not the Sign of Silence, and takes up the
   | Rose
-say(role="hierophant")
+Hierophant:
   | I invite you to inhale with me the perfume of this
   | Rose, as a symbol of Air.
-do(role="hierophant") Smells rose
-say(role="hierophant") To feel with me the warmth of this sacred Fire.
-do(role="hierophant") Spreads his hands over it.
-say(role="hierophant") To eat with me this bread and salt as types of Earth.
-do(role="hierophant") Dips bread in salt and eats.
-say(role="hierophant")
+* Hierophant Smells rose
+Hierophant: To feel with me the warmth of this sacred Fire.
+* Hierophant Spreads his hands over it.
+Hierophant: To eat with me this bread and salt as types of Earth.
+* Hierophant Dips bread in salt and eats.
+Hierophant:
   | And finally to drink with me this Wine, the
   | consecrated emblem of Elemental Water.
-do(role="hierophant") Makes a Cross with the cup and drinks.
-do(role="hierophant")
+* Hierophant Makes a Cross with the cup and drinks.
+* Hierophant
   | Puts down the Cup between Cross and Triangle.
   | Comes East of the Altar and faces West.
 
-do(role="praemonstrator")
+* Praemonstrator
   | Comes to the west of the altar and makes the saluting sign.
-do(role="hierophant")
+* Hierophant
   | Replies with Sign of Silence.
-do(role="hierophant") Gives Praemonstrator the Rose
-do(role="praemonstrator") Smells and returns Rose
-do(role="praemonstrator") Feels the warmth of the Lamp
-do(role="praemonstrator") Eats the Bread and Salt
-do(role="hierophant") Gives Praemonstrator the Cup
-do(role="praemonstrator") Takes Cup and makes a Cross, drinks and returns it
-do(role="hierophant") Passes by West and South to his throne
-do(role="praemonstrator") Comes to the East of the Altar
-do(role="imperator")
+* Hierophant Gives Praemonstrator the Rose
+* Praemonstrator Smells and returns Rose
+* Praemonstrator Feels the warmth of the Lamp
+* Praemonstrator Eats the Bread and Salt
+* Hierophant Gives Praemonstrator the Cup
+* Praemonstrator Takes Cup and makes a Cross, drinks and returns it
+* Hierophant Passes by West and South to his throne
+* Praemonstrator Comes to the East of the Altar
+* Imperator
   | Comes to the West, exchanges Signs and partakes.
   | Returns to his place after serving Cancellarius
-do(role="cancellarius") Repeat and serve Past Hierophant
-do(role="pastHierophant") Repeat and serve Hiereus
-do(role="hiereus") Repeat and serve Hegemon
-do(role="hegemon") Repeat and serve Stolistes
-do(role="stolistes") Repeat and serve Dadouchos
-do(role="dadouchos")
+* Cancellarius Repeat and serve Past Hierophant
+* PastHierophant Repeat and serve Hiereus
+* Hiereus Repeat and serve Hegemon
+* Hegemon Repeat and serve Stolistes
+* Stolistes Repeat and serve Dadouchos
+* Dadouchos
   | Repeat and serve remaining Inner Order members in
   | order of seniority
 note Remaining Inner Order members in order of seniority partake but
   |
   | without waiting for instruction. If there is a pause, one comes
   | forward.
-do(role="hegemon")
+* Hegemon
   | (Or other appointed officer) Ready to pilot Neophytes in next step.
 note Repeated by members of the Outer Order in the same manner.
   |
   | Philosophi, Practici, Theorici, Zelatores, Neophytes.
-do(role="hegemon") Directs Neophyte to return to his place as soon
+* Hegemon Directs Neophyte to return to his place as soon
   | as Keryx takes the Cup (in next step)
-do(role="keryx") Waits for last Neophyte to stand East of the Altar,
+* Keryx Waits for last Neophyte to stand East of the Altar,
   | comes to the West, exchanges the Signs and partakes.
-do(role="keryx") Receives Cup, drains it and inverts it.
-say(role="keryx") It is finished!
-do(role="keryx") Replaces his Cup and returns to his place.
-do(role="all") Rise
+* Keryx Receives Cup, drains it and inverts it.
+Keryx: It is finished!
+* Keryx Replaces his Cup and returns to his place.
+* All Rise
 
-say(role="hierophant") ✊ Tetelestai!
-do(role="hiereus") ✊
-do(role="hegemon") ✊
-say(role="hierophant") ✊ Khabs
-say(role="hiereus") ✊ Am.
-say(role="hegemon") ✊ Pekht.
-say(role="hiereus") ✊ Konx.
-say(role="hegemon") ✊ Om.
-say(role="hierophant") ✊ Pax.
-say(role="hegemon") ✊ Light.
-say(role="hierophant") ✊ In.
-say(role="hiereus") ✊ Extension.
-do(role="all") Make Signs towards the Altar.
+Hierophant: ✊ Tetelestai!
+* Hiereus ✊
+* Hegemon ✊
+Hierophant: ✊ Khabs
+Hiereus: ✊ Am.
+Hegemon: ✊ Pekht.
+Hiereus: ✊ Konx.
+Hegemon: ✊ Om.
+Hierophant: ✊ Pax.
+Hegemon: ✊ Light.
+Hierophant: ✊ In.
+Hiereus: ✊ Extension.
+* All Make Signs towards the Altar.
 
-say(role="hierophant")
+Hierophant:
   | May what we have partaken maintain us in our search for the
   | Quintessence, the Stone of the Philosophers, True Wisdom,
   | Perfect Happinesss, the Summum Bonum.
   summary(summary="Ⓘ")
     | Latin, "sum of good".
 
-do(role="keryx") Leads out the Neophyte
-do(role="all-officers-except-keryx") Remain in the temple
+* Keryx Leads out the Neophyte
+* All-officers-except-keryx Remain in the temple
