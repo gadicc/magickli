@@ -100,21 +100,35 @@ const shortcuts = [
   },
   {
     name: "grade",
-    regexp: /^( *)(.*)\b(\d{1,2}=\d{1,2})\b/gm,
+    // regexp: /^( *)(.*)\b(\d{1,2}=\d{1,2})\b/gm,
+    regexp: /\b(?<grade>\d{1,2}=\d{1,2})\b(?<space> )?/gm,
     transform(input: string, s: MagicString, source: string) {
       const matches = input.matchAll(this.regexp);
       for (const match of matches) {
         const offset = match.index;
-        const [_match, indent, pre, grade] = match;
-        if (pre.endsWith('grade(grade="')) continue;
-        if (pre.match(/["(]+/)) continue;
+        const [_match, grade, space] = match;
+
+        const gradePre = 'grade(grade="';
+        if (input.substring(offset - gradePre.length, offset) === gradePre)
+          continue;
+
+        const lineStartIdx = input.lastIndexOf("\n", offset) + 1;
+        const lineStart = input.substring(lineStartIdx, offset);
+
+        // if (pre.match(/["(]+/)) continue;
+        const quotesCount = (lineStart.match(/"/g) || []).length;
+        if (quotesCount % 2) continue;
+
+        const indent = lineStart.match(/^( *)/)?.[0] || "";
 
         s.appendRight(
-          offset + indent.length + pre.length + grade.length,
-          ['")', "|", "|"].join("\n" + (indent || "  "))
+          offset + grade.length,
+          ['")', space && "|", "|"]
+            .filter(Boolean)
+            .join("\n" + (indent || "  "))
         );
         s.prependLeft(
-          offset + indent.length + pre.length,
+          offset,
           ["", "|", 'grade(grade="'].join("\n" + (indent || "  "))
         );
       }
