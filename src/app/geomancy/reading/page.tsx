@@ -30,6 +30,12 @@ import { SephirahId } from "../../../../data/kabbalah/Sephirot";
 import { Arch } from "aws-sdk/clients/ecr";
 import { ArchangelId } from "../../../../data/kabbalah/Archangels";
 import PlanetarySpirit from "@/components/astrology/planetarySpirits";
+import useGeoIP from "@/useGeoIP";
+import {
+  formatFromTo,
+  upcomingHoursForPlanetAtLocation,
+} from "../../../../pages/astrology/planetary-hours";
+import { format } from "date-fns";
 
 const { planet: planets, archangel: archangels, sephirah: sephirot } = data;
 
@@ -205,6 +211,24 @@ function TetragramStack({
 function GeomancyReading() {
   const [planetId, setPlanetId] = React.useState<PlanetId>("luna");
   const [planetHint, setPlanetHint] = React.useState(false);
+  const [planetaryHour, setPlanetaryHour] = React.useState(-1);
+  const geo = useGeoIP();
+  const planetaryHours = React.useMemo(() => {
+    if (!geo) return [];
+    console.log({ geo });
+    return upcomingHoursForPlanetAtLocation(planetId, geo).map(
+      ({ from, to }, i) => ({
+        value: i,
+        // label: formatFromTo(from, to),
+        labels: [
+          format(from, "ccc"),
+          format(from, "LLL do"),
+          format(from, "h:mm aaa"),
+          format(to, "h:mm aaa"),
+        ],
+      })
+    );
+  }, [planetId, geo]);
 
   const [houseNoStr, setHouseNoStr] = React.useState("1");
   const [mothers, setMothers] = React.useState<TetraRow[]>([
@@ -378,7 +402,72 @@ function GeomancyReading() {
             }
           />
         </FormGroup>
-        <br />
+        <Select
+          size="small"
+          value={planetaryHour}
+          onChange={(e) => setPlanetaryHour(e.target.value as number)}
+          sx={{
+            marginTop: 2,
+            marginBottom: 2,
+            fontSize: "90%",
+            textAlign: "center",
+          }}
+        >
+          <MenuItem value={-1}>
+            <div style={{ width: "100%", textAlign: "center" }}>
+              Planetary Hour
+            </div>
+          </MenuItem>
+          {planetaryHours.map(({ value, labels }) => (
+            <MenuItem key={value} value={value}>
+              <div
+                style={{
+                  display: "inline-block",
+                  textAlign: "center",
+                  width: 50,
+                }}
+              >
+                {labels[0]}
+              </div>
+              <div
+                style={{
+                  display: "inline-block",
+                  textAlign: "center",
+                  width: 100,
+                }}
+              >
+                {labels[1]}
+              </div>
+              <div
+                style={{
+                  display: "inline-block",
+                  textAlign: "center",
+                  width: 100,
+                }}
+              >
+                {labels[2]}
+              </div>
+              <div
+                style={{
+                  display: "inline-block",
+                  textAlign: "center",
+                  width: 5,
+                }}
+              >
+                -
+              </div>
+              <div
+                style={{
+                  display: "inline-block",
+                  textAlign: "center",
+                  width: 100,
+                }}
+              >
+                {labels[3]}
+              </div>
+            </MenuItem>
+          ))}
+        </Select>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ position: "relative" }}>
             <svg
@@ -412,8 +501,7 @@ function GeomancyReading() {
             />
           </div>
         </div>
-        <br />
-        <div style={{ textAlign: "justify" }}>
+        <div style={{ textAlign: "justify", marginTop: 6 }}>
           In the Divine Name of ADONAI HA-ARETZ (אֲדוֹנָי הָאָרֶץ), I invoke the
           mighty and power angel URIEL (אוּרִיאֵל), come forth and invest this
           diviation with Truth. I invoke thee, choir of Angels known as ASHIM
