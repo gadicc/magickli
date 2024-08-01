@@ -38,13 +38,13 @@ const chaldean = [
   "saturn", // ♄
   "jupiter", // ♃
   "mars", // ♂
-  "sun", // ☉
+  "sol", // ☉
   "venus", // ♀
   "mercury", // ☿
-  "moon", // ☽
+  "luna", // ☽
 ];
 
-const start = ["sun", "moon", "mars", "mercury", "jupiter", "venus", "saturn"];
+const start = ["sol", "luna", "mars", "mercury", "jupiter", "venus", "saturn"];
 
 interface PlanetaryHour {
   date: Date;
@@ -60,9 +60,11 @@ interface PlanetaryHoursMeta {
 
 type PlanetaryHours = PlanetaryHour[] & { meta: PlanetaryHoursMeta };
 
+const DAY_IN_MS = 60_000 * 60 * 24;
+
 function calcPlanetaryHoursForDayAndLocation(date, geo) {
   const solar = SunCalc.getTimes(date, geo.latitude, geo.longitude);
-  const nextDay = new Date(date.getTime() + 60_000 * 60 * 24);
+  const nextDay = new Date(date.getTime() + DAY_IN_MS);
   const solarNext = SunCalc.getTimes(nextDay, geo.latitude, geo.longitude);
   const dayOfWeek = getDay(date); // 0-6 where 0=Sunday.
   const chaldeanStartPos = chaldean.indexOf(start[dayOfWeek]);
@@ -118,6 +120,32 @@ const sxNowRow = {
   },
 };
 
+export function upcomingHoursForPlanetAtLocation(planet, geo) {
+  const now = new Date();
+  const week = [0, 1, 2, 3, 4, 5, 6].map(
+    (d, i) => new Date(now.getTime() + d * DAY_IN_MS)
+  );
+
+  const hours = [] as { from: Date; to: Date }[];
+  for (const date of week) {
+    const dayHours = calcPlanetaryHoursForDayAndLocation(date, geo);
+    for (const entry of dayHours.filter((hour) => hour.planet === planet)) {
+      hours.push({
+        from: entry.date,
+        to: new Date(
+          entry.date.getTime() +
+            (entry.date.getHours() < 12
+              ? dayHours.meta.dayHourInMinutes
+              : dayHours.meta.nightHourInMinutes) *
+              60_000
+        ),
+      });
+    }
+  }
+
+  return hours;
+}
+
 function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
   const hours = calcPlanetaryHoursForDayAndLocation(date, geo);
   const now = new Date();
@@ -164,22 +192,42 @@ function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
   );
 }
 
+export const formatFromTo = (from, to) =>
+  format(from, "ccc LLL do h:mm") + " - " + format(to, "h:mm aaa");
+
+export const UpcomingHours = ({ hours }) => {
+  return (
+    <ul>
+      {hours.map(({ from, to }, i) => (
+        <li key={i}>{formatFromTo(from, to)}</li>
+      ))}
+    </ul>
+  );
+};
+
 export default function PlanetaryHours() {
   const geo = useGeoIP();
   const [planet, setPlanet] = React.useState("");
+  const [upcomingHours, setUpcomingHours] = React.useState<
+    { from: Date; to: Date }[]
+  >([]);
+
+  React.useEffect(() => {
+    if (!geo) return;
+    setUpcomingHours(upcomingHoursForPlanetAtLocation(planet, geo));
+  }, [geo, planet]);
 
   if (!geo) return "Loading location...";
 
   const navParts = [{ title: "Astrology", url: "/astrology" }];
   const now = new Date();
-  const hoursInDay = 60_000 * 60 * 24;
   const week = [0, 1, 2, 3, 4, 5, 6].map(
-    (d, i) => new Date(now.getTime() + d * hoursInDay)
+    (d, i) => new Date(now.getTime() + d * DAY_IN_MS)
   );
 
   const planetSelect = [
     {
-      value: "sun",
+      value: "sol",
       label:
         "temporal wealth, hope, gain, fortune, divination, the favour of princes, to dissolve hostile feeling, to make friends",
     },
@@ -194,7 +242,7 @@ export default function PlanetaryHours() {
         "eloquence and intelligence; promptitude in business; science and divination; wonders; apparitions; and answers regarding the future. Thou canst also operate under this Planet for thefts; writings; deceit; and merchandise.",
     },
     {
-      value: "moon",
+      value: "luna",
       label:
         "embassies; voyages envoys; messages; navigation; reconciliation; love; and the acquisition of merchandise by water.",
     },
@@ -252,6 +300,7 @@ export default function PlanetaryHours() {
             ))}
           </Select>
         </FormControl>
+        {/* planet && <UpcomingHours hours={upcomingHours} /> */}
         <Box sx={{ mt: 1 }}>
           {week.map((date, i) => (
             <Accordion key={i} defaultExpanded={i === 0}>
