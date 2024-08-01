@@ -18,8 +18,8 @@ import {
 import DocRender from "../DocRender";
 import { toJrt } from "@/doc/prepare";
 import { Doc, DocNode, DocRevision } from "@/schemas";
-import { Close, ErrorOutline } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import { Close, ErrorOutline, Save, SaveAs } from "@mui/icons-material";
+import { Badge, IconButton, Tooltip } from "@mui/material";
 import { checkSrc } from "./checkSrc";
 import { shortcutHighlighters, transformAndMapShortcuts } from "./shortcuts";
 import SourceMapConsumer from "./SourceMapConsumer";
@@ -119,6 +119,7 @@ export default function DocEdit({
 
   const [doc, setDoc] = React.useState<DocNode>({ type: "root", children: [] });
   const [error, setError] = React.useState<Error | null>(null);
+  const [lastSavedValue, setLastSavedValue] = React.useState("");
   const viewRef = React.useRef<EditorView | undefined>(undefined);
   const windowDocRef = React.useRef<Partial<ScriptProps>>({});
   if (window !== undefined) {
@@ -134,6 +135,8 @@ export default function DocEdit({
     script(windowDocRef.current as ScriptProps);
   };
   windowDocRef.current.view = viewRef.current;
+
+  const isDirty = windowDocRef.current.value !== lastSavedValue;
 
   const onChange = React.useCallback((value, viewUpdate) => {
     windowDocRef.current.value = value;
@@ -197,90 +200,93 @@ export default function DocEdit({
   }, []);
   windowDocRef.current.onChange = onChange;
 
+  const save = React.useCallback(() => {
+    if (!isDirty) return;
+
+    const text = viewRef.current?.state.doc.toString();
+    if (!text) {
+      console.log("nothing to save, text is empty");
+      return;
+    }
+
+    if (!userId) {
+      alert("no userId");
+      return;
+    }
+    console.log("save");
+    // console.log(dbDoc);
+
+    const lastRevision = db
+      .collection("docRevisions")
+      .find({ docId: _id, userId })
+      .sort("updatedAt", -1)
+      .limit(1)
+      .toArraySync()[0] as DocRevision;
+    // console.log({ lastRevision });
+
+    let docRevisionId = lastRevision?._id;
+    if (
+      !lastRevision ||
+      (lastRevision.updatedAt &&
+        lastRevision.updatedAt.getTime() < new Date().getTime() - 1000 * 60 * 5)
+    ) {
+      const newRevision = {
+        docId: _id,
+        userId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        text,
+        __ObjectIDs: ["docId", "userId"],
+      };
+      // console.log(newRevision);
+      // TODO, gongo returned doc should not have optionalId
+      const insertedDoc = db.collection("docRevisions").insert(newRevision);
+      docRevisionId = insertedDoc._id as string;
+    } else {
+      const result = db
+        .collection("docRevisions")
+        .update(
+          { _id: lastRevision._id },
+          { $set: { text, updatedAt: new Date() } }
+        );
+      // console.log("lastRevision", lastRevision);
+      // console.log({ $set: { text, updatedAt: new Date() } });
+      // console.log(result);
+    }
+
+    db.collection("docs").update(
+      { _id },
+      {
+        $set: {
+          doc: JSON.parse(
+            JSON.stringify(doc, (key, value) => {
+              // DocRender adds ref to html nodes, which we don't want to save.
+              if (key === "ref") return undefined;
+              return value;
+            })
+          ),
+          docRevisionId,
+          updatedAt: new Date(),
+        },
+      }
+    );
+    (function () {
+      const doc = db.collection("docs").findOne(_id) as GongoClientDocument;
+      if (doc && doc.__ObjectIDs && !doc.__ObjectIDs.includes("docRevisionId"))
+        doc.__ObjectIDs.push("docRevisionId");
+    })();
+
+    setLastSavedValue(text);
+  }, [_id, userId, doc, isDirty]);
+
   const handleKeyDown = React.useCallback(
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "s" && event.ctrlKey) {
         event.preventDefault();
-        const text = viewRef.current?.state.doc.toString();
-        if (!text) {
-          console.log("nothing to save, text is empty");
-          return;
-        }
-
-        if (!userId) {
-          alert("no userId");
-          return;
-        }
-        console.log("save");
-        // console.log(dbDoc);
-
-        const lastRevision = db
-          .collection("docRevisions")
-          .find({ docId: _id, userId })
-          .sort("updatedAt", -1)
-          .limit(1)
-          .toArraySync()[0] as DocRevision;
-        // console.log({ lastRevision });
-
-        let docRevisionId = lastRevision?._id;
-        if (
-          !lastRevision ||
-          (lastRevision.updatedAt &&
-            lastRevision.updatedAt.getTime() <
-              new Date().getTime() - 1000 * 60 * 5)
-        ) {
-          const newRevision = {
-            docId: _id,
-            userId,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            text,
-            __ObjectIDs: ["docId", "userId"],
-          };
-          // console.log(newRevision);
-          // TODO, gongo returned doc should not have optionalId
-          const insertedDoc = db.collection("docRevisions").insert(newRevision);
-          docRevisionId = insertedDoc._id as string;
-        } else {
-          const result = db
-            .collection("docRevisions")
-            .update(
-              { _id: lastRevision._id },
-              { $set: { text, updatedAt: new Date() } }
-            );
-          // console.log("lastRevision", lastRevision);
-          // console.log({ $set: { text, updatedAt: new Date() } });
-          // console.log(result);
-        }
-
-        db.collection("docs").update(
-          { _id },
-          {
-            $set: {
-              doc: JSON.parse(
-                JSON.stringify(doc, (key, value) => {
-                  // DocRender adds ref to html nodes, which we don't want to save.
-                  if (key === "ref") return undefined;
-                  return value;
-                })
-              ),
-              docRevisionId,
-              updatedAt: new Date(),
-            },
-          }
-        );
-        (function () {
-          const doc = db.collection("docs").findOne(_id) as GongoClientDocument;
-          if (
-            doc &&
-            doc.__ObjectIDs &&
-            !doc.__ObjectIDs.includes("docRevisionId")
-          )
-            doc.__ObjectIDs.push("docRevisionId");
-        })();
+        save();
       }
     },
-    [_id, userId, doc]
+    [save]
   );
 
   React.useEffect(() => {
@@ -304,6 +310,7 @@ export default function DocEdit({
       // console.log("view", view);
       viewRef.current = view;
       if (initialValue) {
+        setLastSavedValue(initialValue);
         view.dispatch({
           changes: {
             from: 0,
@@ -331,6 +338,7 @@ export default function DocEdit({
             width: "100%",
             height: "100%",
             overflow: "hidden",
+            position: "relative",
           }}
         >
           <div
@@ -338,6 +346,26 @@ export default function DocEdit({
             style={{ height: "100%", width: "100%", overflow: "auto" }}
           />
           <ShowError error={error} setError={setError} />
+          <Tooltip title="Save (Ctrl+S)">
+            <IconButton
+              sx={{
+                position: "absolute",
+                right: 10,
+                top: 10,
+                color: "#aaa",
+                opacity: isDirty ? 1 : 0.2,
+              }}
+              onClick={save}
+            >
+              <Badge
+                color={isDirty ? "error" : "success"}
+                variant="dot"
+                // invisible={!isDirty}
+              >
+                <Save />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </div>
         <div
           style={{
