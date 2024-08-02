@@ -442,6 +442,25 @@ class Stylesheet extends Node {
   }
 }
 
+class A extends Node {
+  render(key) {
+    const valid = this.block.href && this.block.href.startsWith("http");
+    return valid ? (
+      <a key={key} href={this.block.href}>
+        {this.renderChildren()}
+      </a>
+    ) : (
+      <span
+        key={key}
+        style={{ textDecoration: "red underline" }}
+        title={"Blocked href to " + this.block.href}
+      >
+        {this.renderChildren()}
+      </span>
+    );
+  }
+}
+
 class Span extends Node {
   render(key) {
     const { type, children, ..._attrs } = this.block;
@@ -467,6 +486,7 @@ class Span extends Node {
 }
 
 export const blocks = {
+  a: A,
   b: B,
   i: I,
   br: Br,
