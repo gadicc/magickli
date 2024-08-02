@@ -1,15 +1,19 @@
 type TetragramID =
-  | "via"
-  | "cauda_draconis"
-  | "puer"
-  | "fortuna_minor"
-  | "puella"
-  | "carcer"
-  | "laetitia"
-  | "caput_draconis"
-  | "conjunctio"
   | "acquisitio"
+  | "amissio"
+  | "albus"
   | "rubeus"
+  | "puella"
+  | "puer"
+  | "laetitia"
+  | "tristitia"
+  | "caput_draconis"
+  | "cauda_draconis"
+  | "populus"
+  | "via"
+  | "conjunctio"
+  | "carcer"
+  | "fortuna_minor"
   | "fortuna_major";
 
 type LangObject = { en: string };
