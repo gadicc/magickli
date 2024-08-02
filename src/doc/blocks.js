@@ -446,7 +446,7 @@ class A extends Node {
   render(key) {
     const valid = this.block.href && this.block.href.startsWith("http");
     return valid ? (
-      <a key={key} href={this.block.href}>
+      <a key={key} href={this.block.href} target="_blank">
         {this.renderChildren()}
       </a>
     ) : (
