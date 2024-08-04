@@ -1,13 +1,32 @@
 "use client";
 import React from "react";
 
-import {
+import data, {
   tetragram as _tetragrams,
   geomanicHouse as houses,
 } from "@/../data/data";
 import Tetragram from "../Tetragram";
 import Typography from "@mui/material/Typography";
-import { Container, Grid, MenuItem, Select, Stack } from "@mui/material";
+import {
+  Container,
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { capitalizeFirstLetter } from "@/lib/utils";
+import PlanetarySpirit from "@/components/astrology/planetarySpirits";
+import { PlanetId } from "../../../../data/astrology/Planets";
 
 /*
 function id2title(str: string) {
@@ -25,9 +44,11 @@ const nth = (n) =>
 const rowsToBinary = (rows: (1 | 2)[]) =>
   parseInt(rows.map((r) => (r === 1 ? "0" : "1")).join(""), 2);
 export default function Geomancy() {
+  const [showAssoc, setShowAssoc] = React.useState(false);
   const [sortBy, setSortBy] = React.useState<"alpha" | "pairs" | "binary">(
     "pairs"
   );
+
   const tetragrams = React.useMemo(() => {
     if (sortBy === "pairs") {
       const t = _tetragrams;
@@ -85,6 +106,18 @@ export default function Geomancy() {
             <MenuItem value="pairs">sort by meaning pairs</MenuItem>
             <MenuItem value="binary">sort by binary value</MenuItem>
           </Select>
+          <br />
+          <FormGroup sx={{ alignItems: "center" }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={showAssoc}
+                  onChange={() => setShowAssoc(!showAssoc)}
+                />
+              }
+              label="show associations"
+            />
+          </FormGroup>
         </div>
         <br />
 
@@ -105,12 +138,84 @@ export default function Geomancy() {
                   <br />({tetragram.translation.en})
                 </Grid>
                 <Grid item xs={4}>
-                  <Tetragram rows={tetragram.rows} />
+                  <Stack direction="row" spacing={1}>
+                    <Tetragram rows={tetragram.rows} />
+                    {showAssoc && (
+                      <div
+                        style={{
+                          paddingTop: 3,
+                          fontSize: "90%",
+                          textAlign: "center",
+                          lineHeight: "1em",
+                        }}
+                      >
+                        {tetragram.zodiacId &&
+                          (Array.isArray(tetragram.zodiacId)
+                            ? tetragram.zodiacId
+                                .map((z) => data.zodiac[z].symbol)
+                                .join("/")
+                            : data.zodiac[tetragram.zodiacId].symbol)}
+                        <br />
+                        {data.element[tetragram.elementId]?.symbol}
+                        <br />
+                        {/* tetragram.rulerId */}
+                        {Array.isArray(tetragram.planetId)
+                          ? tetragram.planetId
+                              .map((p) => data.planet[p].symbol)
+                              .join("/")
+                          : data.planet[tetragram.planetId].symbol}
+                      </div>
+                    )}
+                  </Stack>
                 </Grid>
               </Grid>
             </Grid>
           ))}
         </Grid>
+        <br />
+
+        <Typography variant="h4" sx={{ my: 2 }} style={{ textAlign: "center" }}>
+          Planets, Spirits and Rulers
+        </Typography>
+
+        <TableContainer component={Paper}>
+          <Table aria-label="planets, spirits, rulers, sigils">
+            <TableHead>
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell align="center">Planet</TableCell>
+                <TableCell align="center">Intelligence</TableCell>
+                <TableCell align="center">Spirit / Ruler</TableCell>
+                <TableCell align="center">Ruler&apos;s Sigil</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {["sol", "mercury", "venus", "luna", "mars", "jupiter", "saturn"]
+                .map((planetId: PlanetId) => data.planet[planetId])
+                .map((planet) => (
+                  <TableRow
+                    key={planet.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {planet.symbol}
+                    </TableCell>
+                    <TableCell align="center">{planet.name.en.en}</TableCell>
+                    <TableCell align="center">
+                      {capitalizeFirstLetter(planet.intelligenceId || "")}
+                    </TableCell>
+                    <TableCell align="center">
+                      {capitalizeFirstLetter(planet.spiritId || "")}
+                    </TableCell>
+                    <TableCell align="center">
+                      <PlanetarySpirit id={planet.spiritId} height="1em" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <br />
 
         <Typography variant="h4" sx={{ my: 2 }} style={{ textAlign: "center" }}>
           Geomanic Houses

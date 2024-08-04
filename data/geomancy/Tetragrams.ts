@@ -1,3 +1,7 @@
+import { ElementId } from "../alchemy/Elements";
+import { PlanetId } from "../astrology/Planets";
+import { ZodiacId } from "../astrology/Zodiac";
+
 type TetragramID =
   | "acquisitio"
   | "amissio"
@@ -25,6 +29,10 @@ interface Tetragram {
   translation: LangObject;
   meaning: LangObject;
   meanings: LangObject[];
+  zodiacId: ZodiacId | ZodiacId[] | null;
+  elementId: ElementId;
+  rulerId: string | string[]; // TODO
+  planetId: PlanetId | PlanetId[];
 }
 
 type Tetragrams = {
