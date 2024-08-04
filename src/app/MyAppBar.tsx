@@ -18,18 +18,42 @@ import { AccountCircle, Login, Home, Share } from "@mui/icons-material";
 
 // import Link from "@/lib/link";
 import db, { enableNetwork } from "@/db";
-import pathnames from "./pathnames";
+import pathnames, { PathnameValue } from "./pathnames";
+import NextLink from "next/link";
 // import { SITE_TITLE } from "@/api-lib/consts";
 const SITE_TITLE = "Magick.ly";
 
-export default function ButtonAppBar() {
+function usePathnameInfo() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  let title = SITE_TITLE;
-  const pnt = pathname && pathnames[pathname];
-  if (pnt)
-    title = typeof pnt === "function" ? pnt({ pathname, searchParams }) : pnt;
+  const navParts: { title: string; url: string }[] = [];
+  if (!pathname) return { title: SITE_TITLE, navParts };
+  // if (pathnames[pathname]) return { title: pathnames[pathname], navParts };
+
+  let navPath = "";
+
+  let value: typeof pathnames | PathnameValue | string = pathnames;
+  const parts = pathname.split("/").filter(Boolean);
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    value = value[part];
+    if (typeof value === "string") break;
+    if (i === parts.length - 1) break;
+    navPath += "/" + part;
+    navParts.push({ url: navPath, title: value["/"] as string });
+  }
+
+  if (typeof value === "function")
+    value = value({ pathname, searchParams }) as string;
+  else if (typeof value === "object") value = value["/"];
+
+  return { navParts, title: value as unknown as string };
+}
+
+export default function ButtonAppBar() {
+  const { title, navParts } = usePathnameInfo();
+  console.log(navParts);
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -80,6 +104,19 @@ export default function ButtonAppBar() {
             <Home />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {navParts &&
+              navParts.map((part) => (
+                <span key={part.url}>
+                  <NextLink
+                    href={part.url}
+                    style={{ color: "inherit" /*, textDecoration: "none" */ }}
+                  >
+                    {part.title}
+                  </NextLink>{" "}
+                  &gt;{" "}
+                </span>
+              ))}
+
             {title}
           </Typography>
           {/* <Button color="inherit">Login</Button> */}
