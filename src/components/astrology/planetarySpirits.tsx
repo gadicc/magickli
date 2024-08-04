@@ -30,7 +30,7 @@ export default function PlanetarySpirit(props) {
         ...rest,
       }}
     >
-      <Spirit height="100%" width />
+      <Spirit height="100%" width={undefined} />
     </div>
   );
 }
