@@ -13,8 +13,17 @@ import {
   IconButton,
   MenuItem,
   Menu,
+  styled,
+  alpha,
+  InputBase,
 } from "@mui/material";
-import { AccountCircle, Login, Home, Share } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Login,
+  Home,
+  Share,
+  Search as SearchIcon,
+} from "@mui/icons-material";
 
 // import Link from "@/lib/link";
 import db, { enableNetwork } from "@/db";
@@ -51,9 +60,52 @@ function usePathnameInfo() {
   return { navParts, title: value as unknown as string };
 }
 
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("xs")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  width: "100%",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("xs")]: {
+      width: 0,
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
 export default function ButtonAppBar() {
   const { title, navParts } = usePathnameInfo();
-  console.log(navParts);
+  const [search, setSearch] = React.useState("");
+  const [searchOpen, setSearchOpen] = React.useState(false);
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -103,7 +155,20 @@ export default function ButtonAppBar() {
           >
             <Home />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              flexGrow: 1,
+              width: searchOpen ? 0 : undefined,
+              transition: "width 0.5s",
+              display: "inline-block",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              height: "1.5em",
+              whiteSpace: "nowrap",
+            }}
+          >
             {navParts &&
               navParts.map((part) => (
                 <span key={part.url}>
@@ -119,76 +184,102 @@ export default function ButtonAppBar() {
 
             {title}
           </Typography>
-          {/* <Button color="inherit">Login</Button> */}
-          <IconButton
-            color="inherit"
-            aria-label="share"
-            onClick={share}
-            size="large"
+          <Search
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => setSearchOpen(false)}
+            sx={{
+              backgroundColor: searchOpen ? undefined : "transparent",
+            }}
           >
-            <Share />
-          </IconButton>
-          {userId ? (
-            <div>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleUserMenu}
-                color="inherit"
-              >
-                {avatarSrc ? (
-                  <Avatar
-                    alt={
-                      typeof user?.displayName === "string"
-                        ? user.displayName
-                        : "avatar"
-                    }
-                    src={avatarSrc}
-                    imgProps={{ referrerPolicy: "no-referrer" }}
-                  />
-                ) : (
-                  <AccountCircle />
-                )}
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleUserClose}
-              >
-                <MenuItem
-                  onClick={() => {
-                    signOut();
-                    handleUserClose();
-                  }}
-                >
-                  Logout
-                </MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <Button
-              variant="text"
-              sx={{ color: "white" }}
-              onClick={() => {
-                if (!network) enableNetwork();
-                signIn();
-              }}
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              // placeholder="Search…"
+              placeholder="Coming Soon"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <div
+            style={{
+              flexGrow: 1,
+              width: searchOpen ? 0 : 128,
+              transition: "width 0.5s",
+              display: "inline-block",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <IconButton
+              color="inherit"
+              aria-label="share"
+              onClick={share}
+              size="large"
             >
-              <Login />
-            </Button>
-          )}
+              <Share />
+            </IconButton>
+            {userId ? (
+              <span>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleUserMenu}
+                  color="inherit"
+                >
+                  {avatarSrc ? (
+                    <Avatar
+                      alt={
+                        typeof user?.displayName === "string"
+                          ? user.displayName
+                          : "avatar"
+                      }
+                      src={avatarSrc}
+                      imgProps={{ referrerPolicy: "no-referrer" }}
+                    />
+                  ) : (
+                    <AccountCircle />
+                  )}
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleUserClose}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      signOut();
+                      handleUserClose();
+                    }}
+                  >
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </span>
+            ) : (
+              <Button
+                variant="text"
+                sx={{ color: "white" }}
+                onClick={() => {
+                  if (!network) enableNetwork();
+                  signIn();
+                }}
+              >
+                <Login />
+              </Button>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
     </div>
