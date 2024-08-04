@@ -175,18 +175,16 @@ export default function Geomancy() {
         <br />
 
         <Typography variant="h4" sx={{ my: 2 }} style={{ textAlign: "center" }}>
-          Planets, Spirits and Rulers
+          Spirits and Rulers
         </Typography>
 
         <TableContainer component={Paper}>
           <Table aria-label="planets, spirits, rulers, sigils">
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
                 <TableCell align="center">Planet</TableCell>
                 <TableCell align="center">Intelligence</TableCell>
                 <TableCell align="center">Spirit / Ruler</TableCell>
-                <TableCell align="center">Ruler&apos;s Sigil</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -197,18 +195,19 @@ export default function Geomancy() {
                     key={planet.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      {planet.symbol}
+                    <TableCell align="center">
+                      {planet.symbol} {planet.name.en.en}
                     </TableCell>
-                    <TableCell align="center">{planet.name.en.en}</TableCell>
                     <TableCell align="center">
                       {capitalizeFirstLetter(planet.intelligenceId || "")}
                     </TableCell>
                     <TableCell align="center">
-                      {capitalizeFirstLetter(planet.spiritId || "")}
-                    </TableCell>
-                    <TableCell align="center">
-                      <PlanetarySpirit id={planet.spiritId} height="1em" />
+                      {capitalizeFirstLetter(planet.spiritId || "")}{" "}
+                      <PlanetarySpirit
+                        id={planet.spiritId}
+                        height="1em"
+                        display="inline-block"
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
