@@ -198,7 +198,6 @@ function GeomancyReading() {
   const geo = useGeoIP();
   const planetaryHours = React.useMemo(() => {
     if (!geo) return [];
-    console.log({ geo });
     return upcomingHoursForPlanetAtLocation(planetId, geo).map(
       ({ from, to }, i) => ({
         value: i,
@@ -631,8 +630,8 @@ function GeomancyReading() {
         <div style={{ color: "#aaa", fontSize: "80%", marginBottom: 10 }}>
           Adjust the thumbs up/down if we did not guess correctly.
         </div>
-        {interpretations.map((interpretation) => (
-          <>
+        {interpretations.map((interpretation, i) => (
+          <React.Fragment key={i}>
             <div>
               <b>
                 {interpretation.title} ({interpretation.tetragram?.title.en}) in{" "}
@@ -662,7 +661,7 @@ function GeomancyReading() {
             </ToggleButtonGroup>
             <br />
             <br />
-          </>
+          </React.Fragment>
         ))}
         <div>
           <b>Interpretation</b>
