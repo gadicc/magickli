@@ -49,12 +49,14 @@ function usePathnameInfo() {
     value = value[part];
     if (typeof value === "string") break;
     if (i === parts.length - 1) break;
+    if (value === undefined) break;
     navPath += "/" + part;
-    navParts.push({ url: navPath, title: value["/"] as string });
+    navParts.push({ url: navPath, title: value["/"] });
   }
 
   if (typeof value === "function")
     value = value({ pathname, searchParams }) as string;
+  else if (value === undefined) value = SITE_TITLE;
   else if (typeof value === "object") value = value["/"];
 
   return { navParts, title: value as unknown as string };
