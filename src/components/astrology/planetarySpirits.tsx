@@ -23,7 +23,7 @@ export default function PlanetarySpirit(props) {
   return (
     <div
       style={{
-        padding: "1%",
+        // padding: "0.1em",
         display: "flex",
         alignContent: "center",
         justifyContent: "center",

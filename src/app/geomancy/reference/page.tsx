@@ -202,10 +202,10 @@ export default function Geomancy() {
                       {capitalizeFirstLetter(planet.intelligenceId || "")}
                     </TableCell>
                     <TableCell align="center">
-                      {capitalizeFirstLetter(planet.spiritId || "")}{" "}
+                      {capitalizeFirstLetter(planet.spiritId || "")} &nbsp;
                       <PlanetarySpirit
                         id={planet.spiritId}
-                        height="1em"
+                        height="1.1em"
                         display="inline-block"
                       />
                     </TableCell>
