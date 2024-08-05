@@ -187,7 +187,8 @@ const shortcuts = [
 
 export async function trace(sourceMaps, line, column) {
   let pos = { line, column };
-  for (const sourceMap of sourceMaps.toReversed()) {
+  const reversedSourceMaps = [...sourceMaps].reverse();
+  for (const sourceMap of reversedSourceMaps /*.toReversed()*/) {
     const consumer = await new SourceMapConsumer(sourceMap);
     pos = consumer.originalPositionFor(pos);
   }
@@ -221,8 +222,9 @@ export function transformAndMapShortcuts(input: string) {
   };
 }
 
-const shortcutDecorators = shortcuts
-  .toReversed()
+const reversedShortcuts = [...shortcuts].reverse();
+const shortcutDecorators = reversedShortcuts
+  // .toReversed()
   .filter(({ decorate }) => decorate)
   .map(({ regexp, decorate }) => new MatchDecorator({ regexp, decorate }))
   .concat([
