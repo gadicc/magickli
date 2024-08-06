@@ -224,14 +224,14 @@ function GeomancyReading() {
 
   const interpretations = [
     {
-      title: "Right Witness",
-      tetragram: tetragramFromRows(witnesses[1]),
+      title: "1st (Right) Witness",
+      tetragram: tetragramFromRows(witnesses[0]),
       goodState: React.useState(true),
       hint: "the beginning of the matter",
     },
     {
-      title: "Left Witness",
-      tetragram: tetragramFromRows(witnesses[0]),
+      title: "2nd (Left) Witness",
+      tetragram: tetragramFromRows(witnesses[1]),
       goodState: React.useState(true),
       hint: "the way in which the matter progreses",
     },
@@ -641,6 +641,28 @@ function GeomancyReading() {
               <div style={{ color: "#aaa", fontSize: "80%", marginBottom: 5 }}>
                 {interpretation.hint}
               </div>
+              {(() => {
+                if (interpretation.title !== "Judge") return null;
+                const tetragram = interpretation.tetragram;
+                if (!tetragram) return null;
+                return (
+                  <div style={{ fontSize: "80%" }}>
+                    {tetragram.zodiacId &&
+                      (Array.isArray(tetragram.zodiacId)
+                        ? tetragram.zodiacId
+                            .map((z) => data.zodiac[z].symbol)
+                            .join("/")
+                        : data.zodiac[tetragram.zodiacId].symbol)}
+                    {data.element[tetragram.elementId]?.symbol}
+                    {/* tetragram.rulerId */}
+                    {Array.isArray(tetragram.planetId)
+                      ? tetragram.planetId
+                          .map((p) => data.planet[p].symbol)
+                          .join("/")
+                      : data.planet[tetragram.planetId].symbol}
+                  </div>
+                );
+              })()}
               {interpretation.tetragram?.meanings[parseInt(houseNoStr)].en}
             </div>
             <ToggleButtonGroup
