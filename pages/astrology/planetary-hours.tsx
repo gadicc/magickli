@@ -129,17 +129,20 @@ export function upcomingHoursForPlanetAtLocation(planet, geo) {
   const hours = [] as { from: Date; to: Date }[];
   for (const date of week) {
     const dayHours = calcPlanetaryHoursForDayAndLocation(date, geo);
-    for (const entry of dayHours.filter((hour) => hour.planet === planet)) {
-      hours.push({
-        from: entry.date,
-        to: new Date(
-          entry.date.getTime() +
-            (entry.date.getHours() < 12
-              ? dayHours.meta.dayHourInMinutes
-              : dayHours.meta.nightHourInMinutes) *
-              60_000
-        ),
-      });
+    for (let i = 0; i < 24; i++) {
+      const entry = dayHours[i];
+      if (entry.planet === planet && now < entry.date) {
+        hours.push({
+          from: entry.date,
+          to: new Date(
+            entry.date.getTime() +
+              (i < 12
+                ? dayHours.meta.dayHourInMinutes
+                : dayHours.meta.nightHourInMinutes) *
+                60_000
+          ),
+        });
+      }
     }
   }
 
