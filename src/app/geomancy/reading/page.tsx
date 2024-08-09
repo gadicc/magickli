@@ -397,7 +397,7 @@ function GeomancyReading() {
         >
           <MenuItem value={-1}>
             <div style={{ width: "100%", textAlign: "center" }}>
-              Planetary Hour
+              Planetary Hour for {planet.name.en.en} in {geo?.city}
             </div>
           </MenuItem>
           {planetaryHours.map(({ value, labels }) => (
@@ -486,7 +486,7 @@ function GeomancyReading() {
         <div style={{ textAlign: "justify", marginTop: 6 }}>
           In the Divine Name of ADONAI HA-ARETZ (אֲדוֹנָי הָאָרֶץ), I invoke the
           mighty and power angel URIEL (אוּרִיאֵל), come forth and invest this
-          diviation with Truth. I invoke thee, choir of Angels known as ASHIM
+          divination with Truth. I invoke thee, choir of Angels known as ASHIM
           (אֲשִׁים), thou Souls of Flame, I invoke thee{" "}
           <u>{archangel.name.roman.toUpperCase()}</u>, thou Archangel (of
           Malkuth?) who rules the day and hour of the Planet{" "}
