@@ -406,7 +406,7 @@ class Footnote extends Node {
     }
     // console.log({ footnotes });
 
-    return <sup>{location + 1}</sup>;
+    return <sup key={key}>{location + 1}</sup>;
   }
 }
 
