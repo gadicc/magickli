@@ -198,46 +198,55 @@ function HideOnScroll(props) {
   );
 }
 
+function ShowVar({ v, ctxVar }) {
+  const timeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [value, setValue] = React.useState(ctxVar.value);
+  const set = React.useCallback(
+    (value: string) => {
+      setValue(value);
+      if (timeout.current) clearTimeout(timeout.current);
+      timeout.current = setTimeout(() => ctxVar.set(value), 1000);
+    },
+    [ctxVar, timeout]
+  );
+
+  return (
+    <span key={v.name}>
+      {v.varType === "select" && (
+        <FormControl>
+          <InputLabel id={"input-" + v.name + "-label"}>{v.label}</InputLabel>
+          <Select
+            labelId={"input-" + v.name + "-label"}
+            label={v.label}
+            value={value}
+            onChange={(e) => set(e.target.value)}
+            sx={{ minWidth: 200 }}
+          >
+            {v.children.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
+      {v.varType === "text" && (
+        <TextField
+          label={v.label}
+          value={value}
+          onChange={(e) => set(e.target.value)}
+        />
+      )}
+      <br />
+      <br />
+    </span>
+  );
+}
+
 function ShowVars({ vars, context }) {
   return vars
     .filter((v) => !v.hidden)
-    .map((v) => (
-      <span key={v.name}>
-        {(function () {
-          if (v.varType === "select")
-            return (
-              <FormControl>
-                <InputLabel id={"input-" + v.name + "-label"}>
-                  {v.label}
-                </InputLabel>
-                <Select
-                  labelId={"input-" + v.name + "-label"}
-                  label={v.label}
-                  value={context.vars[v.name].value}
-                  onChange={(e) => context.vars[v.name].set(e.target.value)}
-                  sx={{ minWidth: 200 }}
-                >
-                  {v.children.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            );
-          if (v.varType === "text")
-            return (
-              <TextField
-                label={v.label}
-                value={context.vars[v.name].value}
-                onChange={(e) => context.vars[v.name].set(e.target.value)}
-              />
-            );
-        })()}
-        <br />
-        <br />
-      </span>
-    ));
+    .map((v) => <ShowVar key={v.name} v={v} ctxVar={context.vars[v.name]} />);
 }
 
 function ZoomMenu({
@@ -475,7 +484,7 @@ export default function DocRender({
   const context = { vars: {}, roles };
   for (const varDesc of vars) {
     // const [value, set] = React.useState(varDesc.default);
-    const value = searchParams?.get(varDesc.name) || varDesc.default;
+    const value = searchParams?.get(varDesc.name) ?? varDesc.default;
     const set = (value) => {
       const newParams = new URLSearchParams(searchParams || {});
       newParams.set(varDesc.name, value);
