@@ -42,8 +42,15 @@ function downloadSVG(event, element, filename) {
 async function downloadPNG(event, element, filename) {
   // No event.preventDefault() since we want to download the new URL.
 
-  const canvas = await drawnCanvas(element);
+  let canvas;
+  try {
+    canvas = await drawnCanvas(element);
+  } catch (error) {
+    toast("❌ Could not draw canvas");
+    return;
+  }
   if (!canvas) return;
+
   const pngBlob: Blob | null = await new Promise((resolve) =>
     canvas.toBlob(resolve, "image/png", 0.9)
   );
@@ -84,7 +91,7 @@ async function copySVG(event, ref) {
       document.body.removeChild(textarea);
       //if (result === "unsuccessful") {
       if (!result) {
-        return toast("Failed to Copy to Clipboard :(");
+        return toast("❌ Failed to Copy to Clipboard :(");
       }
     } else {
       throw err;
@@ -125,8 +132,15 @@ async function drawnCanvas(element) {
 async function copyPNG(event, element) {
   event.preventDefault();
 
-  const canvas = await drawnCanvas(element);
+  let canvas;
+  try {
+    canvas = await drawnCanvas(element);
+  } catch (error) {
+    toast("❌ Could not draw canvas");
+    return;
+  }
   if (!canvas) return alert("No Canvas");
+
   const pngBlob: Blob | null = await new Promise((resolve) =>
     canvas.toBlob(resolve, "image/png", 0.9)
   );
