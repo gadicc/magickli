@@ -37,6 +37,8 @@ import {
 } from "../../../../pages/astrology/planetary-hours";
 import { format } from "date-fns";
 import { capitalizeFirstLetter, ordinal } from "@/lib/utils";
+import AstroGeomancyChart from "./AstroGeomancyChart";
+import CopyPasteExport, { ToastContainer } from "@/copyPasteExport";
 
 const { planet: planets, archangel: archangels, sephirah: sephirot } = data;
 
@@ -192,6 +194,7 @@ function TetragramStack({
 }
 
 function GeomancyReading() {
+  const ref = React.useRef(null);
   const [planetId, setPlanetId] = React.useState<PlanetId>("luna");
   const [planetHint, setPlanetHint] = React.useState(false);
   const [planetaryHour, setPlanetaryHour] = React.useState(-1);
@@ -220,7 +223,17 @@ function GeomancyReading() {
     [1, 2, 1, 2],
   ]);
 
-  const { daughters, nephews, witnesses, judges } = compute(mothers);
+  const { daughters, nephews, witnesses, judges } = React.useMemo(
+    () => compute(mothers),
+    [mothers]
+  );
+  const allFigures = React.useMemo(
+    () =>
+      [...mothers, ...daughters, ...nephews, ...witnesses, ...judges].map(
+        tetragramFromRows
+      ),
+    [mothers, daughters, nephews, witnesses, judges]
+  );
 
   const interpretations = [
     {
@@ -690,6 +703,20 @@ function GeomancyReading() {
           <br />
           {interpretationText(interpretationId)}
         </div>
+        <br />
+        <AstroGeomancyChart ref={ref} tetragrams={allFigures} width="80%" />
+        <CopyPasteExport ref={ref} filename={`astroGeomancy`} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={1500}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover
+        />
       </Container>
     </>
   );

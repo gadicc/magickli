@@ -1,0 +1,170 @@
+[
+  {
+    index: 1,
+    zodiacId: "aries",
+    motto: {
+      la: "Vita",
+      en: "Life",
+    },
+    name: {
+      en: "House of Self",
+    },
+    interpretation: {
+      en: "Physical appearance, identity and characteristics. Resourcefulness. Outlook and impressions. Ego/personality. Goals. Determination. Beginnings and initiatives.",
+    },
+  },
+  {
+    index: 2,
+    zodiacId: "taurus",
+    motto: {
+      la: "Lucrum",
+      en: "Gain",
+    },
+    name: {
+      en: "House of Value",
+    },
+    interpretation: {
+      en: "Material and immaterial things of certain value. Money. Possessions and acquisitions. Cultivation. Perseverance. Substance. Self-worth.",
+    },
+  },
+  {
+    index: 3,
+    zodiacId: "gemini",
+    motto: {
+      la: "Fratres",
+      en: "Order",
+    },
+    name: {
+      en: "House of Sharing",
+    },
+    interpretation: {
+      en: "Communication. Distribution/generosity. Intelligence/development. Siblings, cousins. Locomotion and transportation. Ephemera.",
+    },
+  },
+  {
+    index: 4,
+    zodiacId: "cancer",
+    motto: {
+      la: "Genitor",
+      en: "Parent",
+    },
+    name: {
+      en: "House of Home and Family",
+    },
+    interpretation: {
+      en: "Ancestry, heritage, roots. Foundation and environment. Mother or caretaker. Housing and the household. Neighborhood matters. Comfort, security/safety. Tidiness. Pets.",
+    },
+  },
+  {
+    index: 5,
+    zodiacId: "leo",
+    motto: {
+      la: "Nati",
+      en: "Children",
+    },
+    name: {
+      en: "House of Pleasure",
+    },
+    interpretation: {
+      en: "Recreational and leisure activities. Things which make for enjoyment and entertainment. Games/gambling/risk. Romance and limerence. Children/fertility. Self-expression. Courage.",
+    },
+  },
+  {
+    index: 6,
+    zodiacId: "virgo",
+    motto: {
+      la: "Valetudo",
+      en: "Health",
+    },
+    name: {
+      en: "House of Health",
+    },
+    interpretation: {
+      en: "Routine tasks and duties. Skills or training acquired. Employment (job). Service and being served. Strength, vitality. Wellness and healthcare.",
+    },
+  },
+  {
+    index: 7,
+    zodiacId: "libra",
+    motto: {
+      la: "Uxor",
+      en: "Spouse",
+    },
+    name: {
+      en: "House of Balance",
+    },
+    interpretation: {
+      en: "Partnerships. Marriage and business matters. Diplomacy. Agreements, contracts and all things official. Equilibrium.",
+    },
+  },
+  {
+    index: 8,
+    zodiacId: "scorpio",
+    motto: {
+      la: "Mors",
+      en: "Death",
+    },
+    name: {
+      en: "House of Transformation",
+    },
+    interpretation: {
+      en: "Cycles of deaths and rebirth. Sexual relationships and commitments of all kinds. Joint funds, finances. Other person's resource. Karma and debt (judgment). Regeneration. Self-transformation.",
+    },
+  },
+  {
+    index: 9,
+    zodiacId: "sagittarius",
+    motto: {
+      la: "Iter",
+      en: "Passage",
+    },
+    name: {
+      en: "House of Purpose",
+    },
+    interpretation: {
+      en: "Travel and foreign affairs. Culture. Expansion. Law and ethics. Education/learning/knowledge. Philosophical interests, belief systems. Experience through exploration. Things long-term.",
+    },
+  },
+  {
+    index: 10,
+    zodiacId: "capricorn",
+    motto: {
+      la: "Regnum",
+      en: "Kingdom",
+    },
+    name: {
+      en: "House of Enterprise",
+    },
+    interpretation: {
+      en: "Ambitions. Motivations. Career, achievements. Society and government. Father or authority. Notoriety. Advantage.",
+    },
+  },
+  {
+    index: 11,
+    zodiacId: "aquarius",
+    motto: {
+      la: "Benefacta",
+      en: "Support",
+    },
+    name: {
+      en: "House of Blessings",
+    },
+    interpretation: {
+      en: "Benefits from effort. Friends and acquaintances of like-minded attitudes. Belonging. Groups, communities, and associations. Charity. Connectedness/networking. Love. Wish fulfillment. Wealth.",
+    },
+  },
+  {
+    index: 12,
+    zodiacId: "pisces",
+    motto: {
+      la: "Carcer",
+      en: "Rehabilitation",
+    },
+    name: {
+      en: "House of Sacrifice",
+    },
+    interpretation: {
+      en: "Privacy, refuge; seclusion and retreating. Creativity. Clandestiny↔Revelation. Intuition. Extremes/abundance, but also addictions. Luck, miracles. Releasing/relinquishing, healing/cleansing/rejuvenation, forgiveness, and peacefulness. Finality/completion/conclusion.",
+    },
+  },
+]

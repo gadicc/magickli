@@ -1,5 +1,6 @@
 import planet from "./astrology/Planets";
 import zodiac from "./astrology/Zodiac";
+import house from "./astrology/Houses";
 
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
@@ -22,6 +23,7 @@ const allData = {
   // ASTROLOGY
   planet, // : require("./astrology/planets.json5").default,
   zodiac, // : require("./astrology/zodiac.json5").default,
+  house,
 
   hebrewLetter, // : require("./hebrewLetters.json5").default,
 

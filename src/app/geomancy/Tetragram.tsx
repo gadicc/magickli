@@ -4,20 +4,28 @@ function Tetragram({
   id,
   width,
   height,
+  x,
+  y,
 }: {
   id: string;
   width?: number;
   height?: number;
+  x?: number;
+  y?: number;
 });
 
 function Tetragram({
   rows,
   width,
   height,
+  x,
+  y,
 }: {
   rows: (1 | 2)[];
   width?: number;
   height?: number;
+  x?: number;
+  y?: number;
 });
 
 function Tetragram({
@@ -25,11 +33,15 @@ function Tetragram({
   rows,
   width,
   height = 50,
+  x,
+  y,
 }: {
   id?: string;
   rows?: (1 | 2)[];
   width?: number;
   height?: number;
+  x?: number;
+  y?: number;
 }) {
   if (!(rows || id))
     throw new Error("Tetragram, either `id` or `rows` must be specified");
@@ -56,6 +68,8 @@ function Tetragram({
       viewBox={`-${viewBoxWidth / 2} 0 ${viewBoxWidth} ${viewBoxHeight}`}
       width={width}
       height={height}
+      x={x}
+      y={y}
       // style={{ border: "1px solid black" }}
     >
       {rows.map((n, i) =>

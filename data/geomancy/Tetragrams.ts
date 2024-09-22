@@ -29,7 +29,7 @@ interface Tetragram {
   translation: LangObject;
   meaning: LangObject;
   meanings: LangObject[];
-  zodiacId: ZodiacId | ZodiacId[] | null;
+  zodiacId: ZodiacId | null;
   elementId: ElementId;
   rulerId: string | string[]; // TODO
   planetId: PlanetId | PlanetId[];
