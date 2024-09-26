@@ -3,6 +3,7 @@ import React from "react";
 import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
 
 import {
+  Button,
   Checkbox,
   Container,
   FormControl,
@@ -13,6 +14,7 @@ import {
   Paper,
   Radio,
   RadioGroup,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -175,6 +177,11 @@ function JoinInfo({ temple }: { temple: Temple }) {
 function Users({ templeId }: { templeId: string }) {
   const [sortBy, setSortBy] = React.useState("addedAt");
   const [useMotto, setUseMotto] = React.useState(false);
+  const [discourseSyncResult, setDiscourseSyncResult] = React.useState({
+    success: true,
+    color: "",
+    message: "",
+  });
 
   useGongoSub("userTemplesAndMemberships");
   useGongoSub(
@@ -226,6 +233,23 @@ function Users({ templeId }: { templeId: string }) {
     return users;
   }, [_users, sortBy, useMotto]);
 
+  const discourseSync = React.useCallback(async () => {
+    setDiscourseSyncResult({
+      color: "orange",
+      success: false,
+      message: "Syncing...",
+    });
+    const response = await fetch("/api/discourseSync?templeId=" + templeId);
+    const _result = await response.json();
+    console.log(_result);
+    const result = {
+      success: _result.success as boolean,
+      message: _result.message as string,
+      color: (_result.color as string) || (_result.success ? "green" : "red"),
+    };
+    setDiscourseSyncResult(result);
+  }, [templeId]);
+
   return (
     <div>
       <Typography variant="h6">Users</Typography>
@@ -258,6 +282,14 @@ function Users({ templeId }: { templeId: string }) {
           label="Motto"
         />
       </FormGroup>
+
+      <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
+        <Button onClick={discourseSync}>Discourse Sync</Button>
+        <div style={{ color: discourseSyncResult.color }}>
+          {discourseSyncResult.message}
+        </div>
+      </Stack>
+
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
