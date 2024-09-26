@@ -256,6 +256,7 @@ export default function GongoAuthAdapter(
       const userId = _id(id);
       const m = await db;
       await Promise.all([
+        // @ts-expect-error: another day (multiple ObjectId types)
         m.A.deleteMany({ userId: userId }),
         m.S.deleteMany({ userId: userId }),
         m.U.deleteOne({ _id: userId }),

@@ -1,7 +1,6 @@
 import React from "react";
 import { Container, Typography } from "@mui/material";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/../pages/api/auth/[...nextauth]";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { headers as _headers } from "next/headers";
 import { db, ObjectId } from "@/api-lib/db";
@@ -21,7 +20,7 @@ export default async function TemplesJoinPage({
 }: {
   params: { slug: string; pass: string };
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   console.log({ session });
 
   if (!session) {
