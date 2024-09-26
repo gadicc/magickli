@@ -15,18 +15,28 @@ if (typeof window !== "object") {
 // taken from gongo;
 // TODO: export a method like this from gongo-server, that accepts x-fw number.
 function ipFromReq(req: NextApiRequest | NextRequest) {
-  if ("ip" in req) {
+  if ("ip" in req && req.ip) {
+    console.log("req.ip", (req as NextRequest).ip);
     return (req as NextRequest).ip;
   }
 
   // TODO, doesn't work on edge.
   let ip;
-  if (req.headers["x-forwarded-for"]) {
+  if (req.headers instanceof Headers) {
+    ip = req.headers.get("x-forwarded-for");
+    if (ip) ip = ip.split(",")[0].trim();
+  } else if (req.headers["x-forwarded-for"]) {
     if (typeof req.headers["x-forwarded-for"] === "string")
       ip = req.headers["x-forwarded-for"].split(",")[0].trim();
     else ip = req.headers["x-forwarded-for"][0];
-  } else {
-    ip = (req.socket || req.connection)?.remoteAddress;
+  } else if ("socket" in req && req.socket.remoteAddress) {
+    ip = req.socket.remoteAddress;
+  } else if (
+    "connection" in req &&
+    req.connection !== null &&
+    typeof req.connection === "object"
+  ) {
+    ip = req.connection.remoteAddress;
   }
   if (!ip)
     throw new Error("Could not get IP from req.{headers,socket,connection}");
