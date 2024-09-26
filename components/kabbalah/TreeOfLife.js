@@ -283,13 +283,18 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                 </text>
                 */}
               <title>
-                Letter: {path[letterAttr]?.hebrewLetter?.letter?.he}
-                {letterAttr === "hermetic" &&
-                  path.hermetic &&
-                  ", pathNo: " +
-                    path.hermetic.pathNo +
-                    ", tarotId: " +
-                    path.hermetic.tarotId}
+                {(function () {
+                  // React is super strict that we'll only return ONE thing here.
+                  let out =
+                    "Letter: " + path[letterAttr]?.hebrewLetter?.letter?.he;
+                  if (letterAttr === "hermetic" && path.hermetic)
+                    out +=
+                      ", pathNo: " +
+                      (path.hermetic.pathNo ?? "?") +
+                      ", tarotId: " +
+                      (path.hermetic.tarotId ?? "?");
+                  return out;
+                })()}
               </title>
             </a>
           );
