@@ -1,5 +1,8 @@
 import { DefaultSession } from "next-auth";
+import type { User } from "@/schemas/user";
+import { EnhancedOmit } from "gongo-server-db-mongo/lib/collection";
 
+// https://authjs.dev/getting-started/typescript
 declare module "next-auth" {
   /**
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
@@ -9,7 +12,8 @@ declare module "next-auth" {
     userAgent?: string | null;
     user: {
       id: string;
-    } & DefaultSession["user"];
+    } & DefaultSession["user"] &
+      EnhancedOmit<User, "_id">;
   }
 
   /**

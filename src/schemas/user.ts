@@ -6,6 +6,7 @@ export interface User {
     value: string;
     verified?: boolean;
   }>;
+  admin?: boolean;
   groupIds: string[];
   groupAdminIds: string[];
 }
