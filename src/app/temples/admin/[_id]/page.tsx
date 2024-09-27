@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
+import trpc from "@/lib/trpc";
 
 import {
   Button,
@@ -233,23 +234,13 @@ function Users({ templeId }: { templeId: string }) {
   }, [_users, sortBy, useMotto]);
 
   const discourseSync = React.useCallback(async () => {
-    setDiscourseSyncResult({
-      color: "orange",
-      message: "Syncing...",
-    });
-    const response = await fetch("/api/discourseSync?templeId=" + templeId);
-    const _result = await response.json();
-    console.log(_result);
-    const result = {
-      message:
-        (_result.message as string) ||
-        _result.$error?.mesage ||
-        _result.$error?.code ||
-        _result.$success?.message ||
-        "Unknown error",
-      color: (_result.color as string) || (_result.$error ? "red" : "green"),
-    };
-    setDiscourseSyncResult(result);
+    const iterator = await trpc.discourseSync.mutate({ templeId });
+    for await (const value of iterator) {
+      setDiscourseSyncResult({
+        message: value.message,
+        color: /* value?.color || */ "",
+      });
+    }
   }, [templeId]);
 
   return (
