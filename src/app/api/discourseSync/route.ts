@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 import Discourse from "discourse2";
 
 const discourse = new Discourse("https://forums.magick.ly", {
@@ -7,6 +8,11 @@ const discourse = new Discourse("https://forums.magick.ly", {
 });
 
 export async function GET(req: NextRequest) {
+  const session = await auth();
+  if (!session) return NextResponse.json({ $error: { code: "NOT_LOGGED_IN" } });
+  if (!session.user.admin)
+    return NextResponse.json({ $error: { code: "NOT_ADMIN" } });
+
   return NextResponse.json({ $error: { code: "NOT_IMPLEMENTED" } });
 } /*
 

@@ -178,7 +178,6 @@ function Users({ templeId }: { templeId: string }) {
   const [sortBy, setSortBy] = React.useState("addedAt");
   const [useMotto, setUseMotto] = React.useState(false);
   const [discourseSyncResult, setDiscourseSyncResult] = React.useState({
-    success: true,
     color: "",
     message: "",
   });
@@ -236,16 +235,19 @@ function Users({ templeId }: { templeId: string }) {
   const discourseSync = React.useCallback(async () => {
     setDiscourseSyncResult({
       color: "orange",
-      success: false,
       message: "Syncing...",
     });
     const response = await fetch("/api/discourseSync?templeId=" + templeId);
     const _result = await response.json();
     console.log(_result);
     const result = {
-      success: _result.success as boolean,
-      message: _result.message as string,
-      color: (_result.color as string) || (_result.success ? "green" : "red"),
+      message:
+        (_result.message as string) ||
+        _result.$error?.mesage ||
+        _result.$error?.code ||
+        _result.$success?.message ||
+        "Unknown error",
+      color: (_result.color as string) || (_result.$error ? "red" : "green"),
     };
     setDiscourseSyncResult(result);
   }, [templeId]);
