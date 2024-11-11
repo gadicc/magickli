@@ -16,7 +16,10 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 
 import { useForm } from "@/lib/forms";
-import { TempleMembership, templeMembershipSchema } from "@/schemas";
+import {
+  TempleMembershipClient,
+  templeMembershipClientSchema,
+} from "@/schemas";
 import dayjs, { Dayjs } from "dayjs";
 import { useWatch } from "react-hook-form";
 
@@ -40,9 +43,9 @@ export default function TemplesAdminEditMembershipPage({
 
   //console.log({ temple, membership, user });
 
-  const useFormProps = useForm<TempleMembership>({
+  const useFormProps = useForm<TempleMembershipClient>({
     values: membership || undefined,
-    schema: templeMembershipSchema,
+    schema: templeMembershipClientSchema,
     defaultValues: {},
   });
   const {
@@ -56,7 +59,7 @@ export default function TemplesAdminEditMembershipPage({
   } = useFormProps;
 
   function onSubmit(
-    membership: TempleMembership,
+    membership: TempleMembershipClient,
     _event?: React.BaseSyntheticEvent
   ) {
     // console.log("submit", membership);

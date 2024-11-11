@@ -9,7 +9,7 @@ import type {
   Doc,
   DocRevision,
   Temple,
-  TempleMembership,
+  TempleMembershipClient,
   User,
   UserGroup,
 } from "./schemas";
@@ -105,7 +105,7 @@ declare module "gongo-client" {
     collection(name: "users"): Collection<User>;
     collection(name: "userGroups"): Collection<UserGroup>;
     collection(name: "temples"): Collection<Temple>;
-    collection(name: "templeMemberships"): Collection<TempleMembership>;
+    collection(name: "templeMemberships"): Collection<TempleMembershipClient>;
   }
 }
 
