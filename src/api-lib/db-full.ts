@@ -4,7 +4,7 @@ import Auth from "gongo-server/lib/auth-class";
 import Database, { /* Collection, */ ObjectId } from "gongo-server-db-mongo";
 import { MongoClient } from "mongodb";
 
-import type { User } from "../schemas";
+import type { UserServer } from "../schemas";
 
 const env = process.env;
 const MONGO_URL = env.MONGO_URL || "mongodb://127.0.0.1";
@@ -16,5 +16,5 @@ const gs = new GongoServer({
 const db = gs.dba;
 const dba = gs.dba;
 
-export { db, dba, Auth, Database, ObjectId, User };
+export { db, dba, Auth, Database, ObjectId, UserServer };
 export default gs;

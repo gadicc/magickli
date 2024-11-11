@@ -16,7 +16,7 @@ import {
   EnhancedOmit,
 } from "gongo-server-db-mongo/lib/collection";
 import { WithId } from "gongo-client/lib/browser/Collection";
-import { User } from "../schemas";
+import { UserServer } from "../schemas";
 
 type ServerDocument<T> = GongoDocument &
   EnhancedOmit<T, "_id"> & { _id: ObjectId };
@@ -173,7 +173,7 @@ export default function GongoAuthAdapter(
       if (!account) {
         // Try old scheme... TODO, migrate!
         const user = await gs.dba
-          .collection<ServerDocument<User>>("users")
+          .collection<ServerDocument<UserServer>>("users")
           .findOne({
             "services.service": provider_providerAccountId.provider,
             "services.id": provider_providerAccountId.providerAccountId,

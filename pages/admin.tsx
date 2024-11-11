@@ -17,7 +17,7 @@ import {
 import { AdminPanelSettings } from "@mui/icons-material";
 
 import AppBar from "../components/AppBar";
-import { User, UserGroup } from "../src/schemas";
+import { UserClient, UserGroup } from "../src/schemas";
 
 function Groups({ groups }: { groups: UserGroup[] }) {
   const [groupName, setGroupName] = React.useState("");
@@ -57,7 +57,7 @@ function UserRow({
   selected,
   toggleRow,
 }: {
-  user: User;
+  user: UserClient;
   selected: boolean;
   toggleRow: (string) => void;
 }) {
@@ -79,16 +79,19 @@ function UserRow({
         />
       </TableCell>
       <TableCell>
-        {user.displayName as string}
+        {user.displayName}
         <br />
         {user.emails?.[0]?.value}
       </TableCell>
       <TableCell>
         {user.groupIds &&
           user.groupIds.map((groupId) => {
+            const group =
+              groupId && db.collection("userGroups").findOne(groupId);
+            const groupName = group ? group.name : "Unknown";
             return (
               <>
-                {db.collection("userGroups").findOne(groupId)?.name}{" "}
+                {groupName}{" "}
                 {user.groupAdminIds && user.groupAdminIds.includes(groupId) && (
                   <AdminPanelSettings />
                 )}
@@ -106,7 +109,7 @@ function addTo(
   groupId: string
 ) {
   for (const id of selected) {
-    // @ts-expect-error: for another day
+    // @ts-expect-error: this is not sustainable!
     db.collection("users").update(id, {
       $push: {
         [field]: groupId,
@@ -137,7 +140,7 @@ function Users({
   selected,
   setSelected,
 }: {
-  users: User[];
+  users: UserClient[];
   groups: UserGroup[];
   selected: string[];
   setSelected: React.Dispatch<React.SetStateAction<string[]>>;
