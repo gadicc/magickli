@@ -1,19 +1,36 @@
 import React from "react";
+import Image from "next/image";
 //import Link from '@mui/material/Link';
 
 import Tiles from "@/components/Tiles";
-import GeomanticFigures from "./Geomantic_figures.svg";
+
+import ReadingImgTile from "./img/reading.webp";
+import ReferenceImgTile from "./img/reference.webp";
 
 const tiles = [
   {
-    Component: () => <GeomanticFigures width="100%" />,
-    title: "Reference",
-    to: "/geomancy/reference",
-  },
-  {
-    Component: () => <GeomanticFigures width="100%" />,
     title: "Reading",
     to: "/geomancy/reading",
+    Component: () => (
+      <Image
+        src={ReadingImgTile}
+        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+        alt="Geomancy Reading"
+        sizes="(max-width: 1200px) 300px"
+      />
+    ),
+  },
+  {
+    title: "Reference",
+    to: "/geomancy/reference",
+    Component: () => (
+      <Image
+        src={ReferenceImgTile}
+        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+        alt="Geomancy Reference"
+        sizes="(max-width: 1200px) 300px"
+      />
+    ),
   },
 ];
 
