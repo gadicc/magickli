@@ -34,16 +34,30 @@ function Tiles({ tiles, classes }) {
         {tiles.map((tile) => (
           <ImageListItem key={tile.to} component={Link} href={tile.to}>
             {tile.Component ? (
-              <tile.Component
-                height="100%"
-                className="MuiGridListTile-imgFullHeight"
-              />
+              <div
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                  overflow: "hidden",
+                }}
+              >
+                <tile.Component
+                  height="100%"
+                  // className="MuiGridListTile-imgFullHeight"
+                />
+              </div>
             ) : (
               // eslint-disable-next-line
               <img
                 className={classes.img} // eslint-disable-line
                 src={typeof tile.img === "object" ? tile.img.src : tile.img}
                 alt={tile.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
               />
             )}
             <ImageListItemBar className={classes.tileBar} title={tile.title} />

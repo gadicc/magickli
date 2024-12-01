@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Image from "next/image";
 //import Link from '@mui/material/Link';
 
@@ -58,14 +58,12 @@ const tiles = [
     title: "Temples",
     to: "/temples",
     Component: () => (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
-        <Image
-          src={MagicalTemple}
-          fill={true}
-          alt="A Magical Temple"
-          sizes="(max-width: 1200px) 300px"
-        />
-      </div>
+      <Image
+        src={MagicalTemple}
+        style={{ objectFit: "cover", width: "100%", height: "100%" }}
+        alt="A Magical Temple"
+        sizes="(max-width: 1200px) 300px"
+      />
     ),
   },
 ];
