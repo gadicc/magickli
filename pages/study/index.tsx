@@ -98,7 +98,9 @@ export default function Study() {
         .filter((key) => gdGrade === "all" || allSets[key].gdGrade === gdGrade)
         .filter(
           (key) =>
-            !tags || tags.every((tag) => allSets[key].tags?.includes(tag))
+            !tags ||
+            tags[0] === "all" ||
+            tags.every((tag) => allSets[key].tags?.includes(tag))
         )
         .filter((setId) => !currentSetIds.includes(setId))
         .map((setId) => allSets[setId]),
