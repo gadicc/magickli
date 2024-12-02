@@ -114,6 +114,7 @@ export default function ButtonAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            LinkComponent={NextLink}
             href="/"
           >
             <Home />
