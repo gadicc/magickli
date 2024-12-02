@@ -16,6 +16,8 @@ import {
   styled,
   alpha,
   InputBase,
+  Box,
+  InputAdornment,
 } from "@mui/material";
 import {
   AccountCircle,
@@ -23,6 +25,7 @@ import {
   Home,
   Share,
   Search as SearchIcon,
+  Close,
 } from "@mui/icons-material";
 
 // import Link from "@/lib/link";
@@ -61,48 +64,6 @@ function usePathnameInfo() {
 
   return { navParts, title: value as unknown as string };
 }
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("xs")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("xs")]: {
-      width: 0,
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
 
 export default function ButtonAppBar() {
   const { title, navParts } = usePathnameInfo();
@@ -162,8 +123,6 @@ export default function ButtonAppBar() {
             component="div"
             sx={{
               flexGrow: 1,
-              width: searchOpen ? 0 : undefined,
-              transition: "width 0.5s",
               display: "inline-block",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -186,32 +145,68 @@ export default function ButtonAppBar() {
 
             {title}
           </Typography>
-          <Search
-            onFocus={() => setSearchOpen(true)}
-            onBlur={() => setSearchOpen(false)}
-            sx={{
-              backgroundColor: searchOpen ? undefined : "transparent",
-            }}
-          >
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              // placeholder="Search…"
-              placeholder="Coming Soon"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
           <div
             style={{
-              flexGrow: 1,
-              width: searchOpen ? 0 : 128,
-              transition: "width 0.5s",
               display: "inline-block",
               overflow: "hidden",
               whiteSpace: "nowrap",
             }}
           >
+            <div
+              style={{
+                display: "inline-block",
+                width: 48 + 8,
+              }}
+            >
+              <Box
+                // Could try merge this with below.
+                sx={{
+                  display: "block",
+                  position: "absolute",
+                  // top: 6,
+                  marginTop: -2.6,
+                  right: 145,
+                  left: searchOpen ? 16 : "calc(100% - 145px - 57px)",
+                  transition: "0.5s",
+                  background: searchOpen ? "#80a6f1" : undefined,
+                  "&:hover": {
+                    background: "#80a6f1",
+                  },
+                  borderRadius: 10,
+                }}
+              >
+                <InputBase
+                  id="searchInput"
+                  placeholder="Coming soon…"
+                  inputProps={{ "aria-label": "search" }}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onFocus={() => !searchOpen && setSearchOpen(true)}
+                  onBlur={() => searchOpen && setSearchOpen(false)}
+                  sx={{
+                    paddingLeft: 1,
+                    color: "white",
+                    width: "100%",
+                  }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        sx={{ color: "white" }}
+                        aria-label="toggle search box"
+                        onClick={() => {
+                          setSearchOpen(!searchOpen);
+                          if (!searchOpen) {
+                            document.getElementById("searchInput")?.focus();
+                          }
+                        }}
+                      >
+                        {searchOpen ? <Close /> : <SearchIcon />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </Box>
+            </div>
             <IconButton
               color="inherit"
               aria-label="share"
