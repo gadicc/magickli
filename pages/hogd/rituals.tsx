@@ -228,7 +228,10 @@ export default function Rituals() {
         <Box>
           <p>
             A collection of well publicized documents, remodelled for clearer
-            visibility and various form factors (e.g. mobile).
+            visibility and various form factors (e.g. mobile), with additional
+            helpful features. See a{" "}
+            <a href="https://www.youtube.com/watch?v=iEFiXtxPxu0">short demo</a>
+            .
           </p>
           <TableContainer component={Paper}>
             <Table aria-label="simple table">
