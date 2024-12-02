@@ -168,7 +168,7 @@ export default function ButtonAppBar() {
                   marginTop: -2.6,
                   right: 145,
                   left: searchOpen ? 16 : "calc(100% - 145px - 57px)",
-                  transition: "0.5s",
+                  transition: "left 0.5s, background 0.2s",
                   background: searchOpen ? "#80a6f1" : undefined,
                   "&:hover": {
                     background: "#80a6f1",
