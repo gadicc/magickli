@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import Image from "next/image";
 
 import withStyles from "@mui/styles/withStyles";
 import ImageList from "@mui/material/ImageList";
@@ -47,19 +47,28 @@ function Tiles({ tiles, classes }) {
                   // className="MuiGridListTile-imgFullHeight"
                 />
               </div>
-            ) : (
-              // eslint-disable-next-line
-              <img
-                className={classes.img} // eslint-disable-line
-                src={typeof tile.img === "object" ? tile.img.src : tile.img}
-                alt={tile.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-            )}
+            ) : null}
+            {tile.img ? (
+              typeof tile.img === "string" ? (
+                // eslint-disable-next-line
+                <img
+                  src={typeof tile.img === "object" ? tile.img.src : tile.img}
+                  alt={tile.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <Image
+                  src={tile.img}
+                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
+                  alt={tile.alt}
+                  sizes="(max-width: 1200px) 300px"
+                />
+              )
+            ) : null}
             <ImageListItemBar className={classes.tileBar} title={tile.title} />
           </ImageListItem>
         ))}

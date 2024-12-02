@@ -1,18 +1,14 @@
 import React from "react";
-import Image from "next/image";
 import { useGongoOne, useGongoUserId } from "gongo-client-react";
 
-import {
-  AdminPanelSettings,
-  AdminPanelSettingsTwoTone,
-} from "@mui/icons-material";
+import { AdminPanelSettingsTwoTone } from "@mui/icons-material";
 //import Link from '@mui/material/Link';
 
 import Tiles from "@/components/Tiles";
 import GDLogoSquished from "@/goldendawn-logo-squished.svg";
-import GeomanticFigures from "@/app/geomancy/Geomantic_figures.svg";
 import MagicalTemple from "./img/magical-temple.webp";
 import GeomancyImg from "@/app/img/geomancy.webp";
+import StudyImg from "@/app/img/study.webp";
 
 const tiles = [
   {
@@ -33,14 +29,8 @@ const tiles = [
   {
     title: "Geomancy",
     to: "/geomancy/",
-    Component: () => (
-      <Image
-        src={GeomancyImg}
-        style={{ objectFit: "cover", width: "100%", height: "100%" }}
-        alt="A shaman pokes holes in the sand"
-        sizes="(max-width: 1200px) 300px"
-      />
-    ),
+    img: GeomancyImg,
+    alt: "A shaman pokes holes in the sand",
   },
   {
     Component: () => <GDLogoSquished width="100%" />,
@@ -58,21 +48,16 @@ const tiles = [
     to: "https://majou.app/",
   },
   {
-    img: "/pics/study.jpg",
     title: "Study",
     to: "/study",
+    img: StudyImg,
+    alt: "Student Studying Magick",
   },
   {
     title: "Temples",
     to: "/temples",
-    Component: () => (
-      <Image
-        src={MagicalTemple}
-        style={{ objectFit: "cover", width: "100%", height: "100%" }}
-        alt="A Magical Temple"
-        sizes="(max-width: 1200px) 300px"
-      />
-    ),
+    img: MagicalTemple,
+    alt: "A Magical Temple",
   },
 ];
 
