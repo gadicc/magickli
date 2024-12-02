@@ -107,13 +107,12 @@ export default function ButtonAppBar() {
   return (
     <div>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar disableGutters={true} sx={{ px: 2 }}>
           <IconButton
-            size="large"
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ mr: 0.5 }}
             LinkComponent={NextLink}
             href="/"
           >
@@ -147,6 +146,7 @@ export default function ButtonAppBar() {
             {title}
           </Typography>
           <div
+            // Container for search, share and user buttons.
             style={{
               display: "inline-block",
               overflow: "hidden",
@@ -156,7 +156,9 @@ export default function ButtonAppBar() {
             <div
               style={{
                 display: "inline-block",
-                width: 48 + 8,
+                width: 25,
+                paddingLeft: 8,
+                paddingRight: 8,
               }}
             >
               <Box
@@ -166,8 +168,11 @@ export default function ButtonAppBar() {
                   position: "absolute",
                   // top: 6,
                   marginTop: -2.6,
-                  right: 145,
-                  left: searchOpen ? 16 : "calc(100% - 145px - 57px)",
+                  // Each is width 25 + padding 16 = 41, x2 = 82
+                  right: 82 + 16,
+                  left: searchOpen
+                    ? 14
+                    : "calc(100% - 82px - 16px - 25px - 16px - 16px)",
                   transition: "left 0.5s, background 0.2s",
                   background: searchOpen ? "#80a6f1" : undefined,
                   "&:hover": {
@@ -208,18 +213,12 @@ export default function ButtonAppBar() {
                 />
               </Box>
             </div>
-            <IconButton
-              color="inherit"
-              aria-label="share"
-              onClick={share}
-              size="large"
-            >
+            <IconButton color="inherit" aria-label="share" onClick={share}>
               <Share />
             </IconButton>
             {userId ? (
               <span>
                 <IconButton
-                  size="large"
                   aria-label="account of current user"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
@@ -266,8 +265,7 @@ export default function ButtonAppBar() {
                 </Menu>
               </span>
             ) : (
-              <Button
-                variant="text"
+              <IconButton
                 sx={{ color: "white" }}
                 onClick={() => {
                   if (!network) enableNetwork();
@@ -275,7 +273,7 @@ export default function ButtonAppBar() {
                 }}
               >
                 <Login />
-              </Button>
+              </IconButton>
             )}
           </div>
         </Toolbar>
