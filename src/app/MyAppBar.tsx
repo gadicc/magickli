@@ -167,18 +167,21 @@ export default function ButtonAppBar() {
                   display: "block",
                   position: "absolute",
                   // top: 6,
-                  marginTop: -2.6,
+                  marginTop: -3.1,
+                  // This will get much easier once CSS anchor() is baseline
                   // Each is width 25 + padding 16 = 41, x2 = 82
-                  right: 82 + 16,
+                  right: 82 + 16 + (avatarSrc ? 20 : 0),
                   left: searchOpen
                     ? 14
-                    : "calc(100% - 82px - 16px - 25px - 16px - 16px)",
+                    : "calc(100% - 82px - 16px - 25px - 16px - 16px" +
+                      (avatarSrc ? " - 20px" : "") +
+                      ")",
                   transition: "left 0.5s, background 0.2s",
                   background: searchOpen ? "#80a6f1" : undefined,
                   "&:hover": {
                     background: "#80a6f1",
                   },
-                  borderRadius: 10,
+                  borderRadius: 3,
                 }}
               >
                 <InputBase
@@ -190,6 +193,8 @@ export default function ButtonAppBar() {
                   onFocus={() => !searchOpen && setSearchOpen(true)}
                   onBlur={() => searchOpen && setSearchOpen(false)}
                   sx={{
+                    paddingTop: 0.5,
+                    paddingBottom: 0.5,
                     paddingLeft: 1,
                     color: "white",
                     width: "100%",
@@ -197,9 +202,12 @@ export default function ButtonAppBar() {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
-                        sx={{ color: "white" }}
+                        sx={{
+                          color: "white",
+                          pointerEvents: searchOpen ? "auto" : "none",
+                        }}
                         aria-label="toggle search box"
-                        onClick={() => {
+                        onClick={(e) => {
                           setSearchOpen(!searchOpen);
                           if (!searchOpen) {
                             document.getElementById("searchInput")?.focus();
@@ -233,7 +241,11 @@ export default function ButtonAppBar() {
                           : "avatar"
                       }
                       src={avatarSrc}
-                      imgProps={{ referrerPolicy: "no-referrer" }}
+                      slotProps={{
+                        img: {
+                          referrerPolicy: "no-referrer",
+                        },
+                      }}
                     />
                   ) : (
                     <AccountCircle />
