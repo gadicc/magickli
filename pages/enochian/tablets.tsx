@@ -37,7 +37,25 @@ const elementColors = {
   air: "yellow",
   water: "#59f",
   fire: "#f55",
-  earth: "white",
+  earth: "black",
+};
+
+const tabletColors = {
+  earth: {
+    color: {
+      default: "black",
+      earth: "white",
+    },
+    background: "black",
+    borderCross: "white",
+  },
+  air: {
+    color: {
+      default: "black",
+      air: "brown",
+    },
+    background: "#fff100",
+  },
 };
 
 function EarthSymbol() {
@@ -123,7 +141,10 @@ function Grid({
         row.map((letter, x) => {
           const element = elementFromPosition(x, y);
           const isCross = isCrossFromPosition(x, y);
-          const color = !isCross && elementColors[element];
+          const fill = tabletColors[id]?.background || elementColors[element];
+          const color =
+            tabletColors[id]?.color?.[element] || elementColors[element];
+          console.log(id, element, color);
 
           return (
             <React.Fragment key={"grid-" + x + "," + y}>
@@ -135,8 +156,10 @@ function Grid({
                 height={size}
                 style={{
                   strokeWidth: 1.2,
-                  stroke: color ? "white" : "black",
-                  fill: color ? "black" : "white",
+                  stroke: isCross
+                    ? tabletColors[id]?.border || "black"
+                    : tabletColors[id]?.borderCross || "black",
+                  fill: isCross ? "white" : fill,
                 }}
               />
               <text
@@ -147,7 +170,7 @@ function Grid({
                   fontWeight: enochianFont ? "bold" : undefined,
                   fontSize: size - 2 - (enochianFont ? 4 : 0),
                   textAnchor: "middle",
-                  fill: color || undefined,
+                  fill: isCross ? "black" : color || undefined,
                   ...(enochianFont ? EnochianFont.style : {}),
                 }}
               >
@@ -190,7 +213,7 @@ const Tablet = React.forwardRef(function Tablet(
       ref={ref}
     >
       <g transform="translate(-31.5,-5) scale(0.3)">
-        <EarthSymbol />
+        {id === "earth" && <EarthSymbol />}
       </g>
       <g transform="translate(-94.5,48) scale(0.9)">
         <Grid id={id} enochianFont={enochianFont} />
@@ -219,6 +242,7 @@ export default function Tablets() {
             onChange={(e) => setElementId(e.target.value)}
           >
             <MenuItem value="earth">Earth</MenuItem>
+            <MenuItem value="air">Air</MenuItem>
           </Select>
         </FormControl>
         <Button onClick={() => setEnochianFont(!enochianFont)}>
