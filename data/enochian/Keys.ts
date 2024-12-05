@@ -1,4 +1,3 @@
-import Enochian from "../../pages/enochian/index";
 const keys = [
   [
     // 0
