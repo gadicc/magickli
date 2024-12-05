@@ -22,16 +22,14 @@ export default function OpenSource({
         <a href={url(href)}>{href.split("/").pop()}</a>
       ) : (
         files!.map((file, i) => (
-          <>
-            <a key={file} href={url(file)}>
-              {file}
-            </a>
+          <React.Fragment key={file}>
+            <a href={url(file)}>{file}</a>
             {i === files!.length - 2
               ? " and "
               : i === files!.length - 1
               ? ""
               : ", "}
-          </>
+          </React.Fragment>
         ))
       )}
       .
