@@ -17,6 +17,13 @@ const pathnames: {
   about: "About",
   admin: "Admin",
   chat: "MagickGPT",
+  enochian: {
+    "/": "Enochian",
+    dictionary: "Dictionary",
+    keys: "Keys",
+    oration: "Oration",
+    tablets: "Tablets",
+  },
   gd: {
     "/": "Golden Dawn",
   },

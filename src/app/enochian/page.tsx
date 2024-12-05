@@ -1,14 +1,13 @@
 import React from "react";
 
-import AppBar from "../../components/AppBar";
-import Tiles from "../../components/Tiles";
-
-//import aethyrs from './enochian/30aethyrs.jpg';
-import orationThumb from "../../src/enochian/img/oration-thumb.jpg";
-import firstKey from "../../src/enochian/img/enochianFirstKey.png";
-import enochianAbc from "../../src/enochian/img/enochianAbc.png";
-import dictionaryImg from "../../src/enochian/img/dictionary.jpg";
 import { Box } from "@mui/material";
+
+import Tiles from "@/components/Tiles";
+//import aethyrs from './enochian/30aethyrs.jpg';
+import orationThumb from "./img/oration-thumb.jpg";
+import firstKey from "./img/enochianFirstKey.png";
+import enochianAbc from "./img/enochianAbc.png";
+import dictionaryImg from "./img/dictionary.jpg";
 
 const tiles = [
   {
@@ -39,12 +38,7 @@ const tiles = [
 ];
 
 function Enochian() {
-  return (
-    <>
-      <AppBar title="Enochian" />
-      <Tiles tiles={tiles} />
-    </>
-  );
+  return <Tiles tiles={tiles} />;
 }
 
 export default Enochian;

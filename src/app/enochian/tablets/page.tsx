@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import {
@@ -9,10 +10,9 @@ import {
   Select,
 } from "@mui/material";
 
-import AppBar from "../../components/AppBar";
-import enochianTablets, { EnochianTablet } from "../../data/enochian/Tablets";
-import useEnochianFont, { EnochianFont } from "./useEnochianFont";
-import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
+import enochianTablets, { EnochianTablet } from "@/../data/enochian/Tablets";
+import useEnochianFont, { EnochianFont } from "../useEnochianFont";
+import CopyPasteExport, { ToastContainer } from "@/copyPasteExport";
 import OpenSource from "@/OpenSource";
 
 const navParts = [{ title: "Enochian", url: "/enochian" }];
@@ -256,8 +256,6 @@ export default function Tablets() {
 
   return (
     <>
-      <AppBar title="Tablets" navParts={navParts} />
-
       <Container sx={{ p: 2 }}>
         <FormControl>
           <InputLabel id="demo-simple-select-label">Tablet</InputLabel>

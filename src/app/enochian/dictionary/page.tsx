@@ -1,10 +1,10 @@
+"use client";
 import React from "react";
 
 import { Box, Stack, TextField } from "@mui/material";
 
-import AppBar from "../../components/AppBar";
-import EnochianFont from "../../src/enochian/enochianFont";
-import dictionary from "../../data/enochian/Dictionary";
+import EnochianFont from "../enochianFont";
+import dictionary from "@/../data/enochian/Dictionary";
 const enochianWords = Object.keys(dictionary);
 
 const navParts = [{ title: "Enochian", url: "/enochian" }];
@@ -111,7 +111,6 @@ export default function Dictionary() {
 
   return (
     <>
-      <AppBar title="Dictionary" navParts={navParts} />
       <div style={s.searchDiv}>
         <TextField
           placeholder="ABC"

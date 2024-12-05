@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 import {
@@ -16,10 +17,9 @@ import {
 } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 
-import AppBar from "../../components/AppBar";
-import keys, { EnochianKey } from "../../data/enochian/Keys";
-import dictionary from "../../data/enochian/Dictionary";
-import useEnochianFont, { EnochianFont } from "./useEnochianFont";
+import keys, { EnochianKey } from "@/../data/enochian/Keys";
+import dictionary from "@/../data/enochian/Dictionary";
+import useEnochianFont, { EnochianFont } from "../useEnochianFont";
 
 const s = {
   keyParagraph: {
@@ -201,8 +201,6 @@ export default function Keys() {
 
   return (
     <>
-      <AppBar title="Keys / Calls" navParts={navParts} />
-
       <Container sx={{ background: "#fafafa" }}>
         <FormControl>
           {/*
