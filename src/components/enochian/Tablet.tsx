@@ -1,7 +1,7 @@
 import React from "react";
 
 import enochianTablets, { EnochianTablet } from "@/../data/enochian/Tablets";
-import { EnochianFont } from "@/app/enochian/useEnochianFont";
+import EnochianFont from "./enochianFont";
 
 function isCrossFromPosition(x: number, y: number) {
   if (x === 2 || x === 5 || x === 6 || x === 9) return true;
@@ -210,9 +210,13 @@ const Tablet = React.forwardRef(function Tablet(
   {
     id,
     enochianFont = false,
+    width,
+    height,
   }: {
     id: string;
     enochianFont?: boolean;
+    width?: string | number;
+    height?: string | number;
   },
   ref: React.Ref<SVGSVGElement>
 ) {
@@ -222,6 +226,8 @@ const Tablet = React.forwardRef(function Tablet(
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="-105 0 210 297"
+      width={width}
+      height={height}
       style={{ border: "1px solid black" }}
       ref={ref}
     >

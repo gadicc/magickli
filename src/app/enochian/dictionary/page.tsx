@@ -3,7 +3,7 @@ import React from "react";
 
 import { Box, Stack, TextField } from "@mui/material";
 
-import EnochianFont from "../enochianFont";
+import EnochianFont from "../../../components/enochian/enochianFont";
 import dictionary from "@/../data/enochian/Dictionary";
 const enochianWords = Object.keys(dictionary);
 

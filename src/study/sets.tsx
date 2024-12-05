@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import data from "../../data/data";
 import Tetragram from "@/app/geomancy/Tetragram";
 import { AlchemyTerms } from "../../data/alchemy/Terms";
-import enochianFont from "@/app/enochian/enochianFont";
+import enochianFont from "@/components/enochian/enochianFont";
 
 // https://stackoverflow.com/a/56773391/1839099
 function omit(key, obj) {

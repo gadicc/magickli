@@ -1,6 +1,6 @@
 import React from "react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import EnochianFont from "./enochianFont";
+import EnochianFont from "@/components/enochian/enochianFont";
 
 function EnochianFontToggleBase({
   enochianFont,
