@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import EnochianFont from "../../src/enochian/enochianFont";
 
 function EnochianFontToggleBase({
@@ -10,18 +10,24 @@ function EnochianFontToggleBase({
   setEnochianFont: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <Button onClick={() => setEnochianFont(!enochianFont)}>
-      <span style={enochianFont ? {} : { color: "red" }}>A</span>
-      &nbsp;
-      <span
-        style={{
-          color: enochianFont ? "red" : undefined,
-          ...EnochianFont.style,
-        }}
+    <ToggleButtonGroup
+      exclusive
+      value={enochianFont}
+      sx={{ m: 1 }}
+      size="small"
+      onChange={() => setEnochianFont(!enochianFont)}
+    >
+      <ToggleButton value={false} aria-label="latin">
+        A
+      </ToggleButton>
+      <ToggleButton
+        value={true}
+        aria-label="enochian"
+        style={EnochianFont.style}
       >
         A
-      </span>
-    </Button>
+      </ToggleButton>
+    </ToggleButtonGroup>
   );
 }
 
