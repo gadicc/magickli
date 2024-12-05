@@ -19,7 +19,7 @@ import { ExpandMore } from "@mui/icons-material";
 import AppBar from "../../components/AppBar";
 import keys, { EnochianKey } from "../../data/enochian/Keys";
 import dictionary from "../../data/enochian/Dictionary";
-import EnochianFont from "../../src/enochian/enochianFont";
+import useEnochianFont, { EnochianFont } from "./useEnochianFont";
 
 const s = {
   keyParagraph: {
@@ -193,7 +193,7 @@ const navParts = [{ title: "Enochian", url: "/enochian" }];
 
 export default function Keys() {
   const [lang, setLang] = React.useState<EnochianLang>("english");
-  const [enochianFont, setEnochianFont] = React.useState<boolean>(false);
+  const { enochianFont, EnochianFontToggle } = useEnochianFont();
   const [selectedKey, setSelectedKey] = React.useState<{
     key: number;
     subkey: number;
@@ -227,20 +227,7 @@ export default function Keys() {
               label="Enochian"
             />
             <FormControlLabel value="both" control={<Radio />} label="Both" />
-            {["enochian", "both"].includes(lang) && (
-              <Button onClick={() => setEnochianFont(!enochianFont)}>
-                <span style={enochianFont ? {} : { color: "red" }}>A</span>
-                &nbsp;
-                <span
-                  style={{
-                    color: enochianFont ? "red" : undefined,
-                    ...EnochianFont.style,
-                  }}
-                >
-                  A
-                </span>
-              </Button>
-            )}
+            {["enochian", "both"].includes(lang) && <EnochianFontToggle />}
           </RadioGroup>
         </FormControl>
       </Container>

@@ -11,7 +11,7 @@ import {
 
 import AppBar from "../../components/AppBar";
 import enochianTablets, { EnochianTablet } from "../../data/enochian/Tablets";
-import EnochianFont from "../../src/enochian/enochianFont";
+import useEnochianFont, { EnochianFont } from "./useEnochianFont";
 import CopyPasteExport, { ToastContainer } from "../../src/copyPasteExport";
 import OpenSource from "@/OpenSource";
 
@@ -251,7 +251,7 @@ const Tablet = React.forwardRef(function Tablet(
 
 export default function Tablets() {
   const [elementId, setElementId] = React.useState<string>("earth");
-  const [enochianFont, setEnochianFont] = React.useState<boolean>(false);
+  const { EnochianFontToggle, enochianFont } = useEnochianFont();
   const ref = React.useRef<SVGSVGElement>(null);
 
   return (
@@ -272,18 +272,7 @@ export default function Tablets() {
             <MenuItem value="air">Air</MenuItem>
           </Select>
         </FormControl>
-        <Button onClick={() => setEnochianFont(!enochianFont)}>
-          <span style={enochianFont ? {} : { color: "red" }}>A</span>
-          &nbsp;
-          <span
-            style={{
-              color: enochianFont ? "red" : undefined,
-              ...EnochianFont.style,
-            }}
-          >
-            A
-          </span>
-        </Button>
+        <EnochianFontToggle />
         <br />
         <br />
 
