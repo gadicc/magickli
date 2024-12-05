@@ -49,7 +49,8 @@ export default function Tablets() {
         <br />
         <OpenSource
           files={[
-            "/pages/enochian/tablets.tsx",
+            "/src/app/enochian/tablets/page.tsx",
+            "/src/components/enochian/Tablet.tsx",
             "/data/enochian/tablets.json5",
           ]}
         />
