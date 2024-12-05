@@ -8,6 +8,7 @@ import orationThumb from "./img/oration-thumb.jpg";
 import firstKey from "./img/enochianFirstKey.png";
 import enochianAbc from "./img/enochianAbc.png";
 import dictionaryImg from "./img/dictionary.jpg";
+import Tablet from "@/components/enochian/Tablet";
 
 const tiles = [
   {
@@ -31,9 +32,13 @@ const tiles = [
     to: "/enochian/dictionary",
   },
   {
-    Component: () => <Box>Tablets</Box>,
     title: "Tablets",
     to: "/enochian/tablets",
+    Component: () => (
+      <Box height="100%" textAlign="center" marginTop={1}>
+        <Tablet id="earth" height="100%" />
+      </Box>
+    ),
   },
 ];
 
