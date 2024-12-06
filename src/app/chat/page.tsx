@@ -47,6 +47,101 @@ function metaMessage(message: Message) {
   };
 }
 
+function Source({
+  source,
+  cheatModeEnabled,
+}: {
+  source: ChatMessageMetaData["sources"][0];
+  cheatModeEnabled: boolean;
+}) {
+  const meta = source.metadata;
+  const { title, author, pageNumber, identifier } = (() => {
+    if (meta["pdf.info.Title"]) {
+      return {
+        title: meta["pdf.info.Title"] as string,
+        author: meta["pdf.info.Author"] as string,
+        pageNumber: meta["loc.pageNumber"] as number,
+        identifier: meta["pdf.metadata._metadata.xmp:identifier"] as string,
+      };
+    } else if (meta.pdf) {
+      return {
+        title: meta.pdf.info.Title,
+        author: meta.pdf.info.Author,
+        pageNumber: meta.loc?.pageNumber,
+        identifier: "TODO",
+      };
+    } else {
+      return {
+        title: "Unknown",
+        author: "Unknown",
+        pageNumber: 0,
+        identifier: "",
+      };
+    }
+  })();
+
+  const amazon =
+    typeof identifier === "string" && identifier.match(/asin(\w{10,10})/)?.[1];
+
+  // console.log(identifier, amazon);
+
+  const attribution = (
+    <>
+      {title}, {author}, page {pageNumber}
+      {amazon && (
+        <>
+          ; available from{" "}
+          <a
+            href={`https://www.amazon.com/dp/${amazon}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ opacity: 0.3 }}
+          >
+            Amazon
+          </a>
+        </>
+      )}
+      .
+    </>
+  );
+
+  return (
+    <li>
+      {cheatModeEnabled ? (
+        <details>
+          <summary>{attribution}</summary>
+          <p style={{ fontSize: "75%" }}>{source.pageContent}</p>
+        </details>
+      ) : (
+        attribution
+      )}
+    </li>
+  );
+}
+
+function Sources({
+  sources,
+  cheatModeEnabled,
+}: {
+  sources: ChatMessageMetaData["sources"];
+  cheatModeEnabled: boolean;
+}) {
+  return (
+    <details>
+      <summary>Sources</summary>
+      <div style={{ fontSize: "80%", marginTop: 4 }}>
+        The following sources may (or may not) have been used to generate this
+        response and may (or may not) provide additional details.
+      </div>
+      <ol>
+        {sources.map((source, i) => (
+          <Source key={i} source={source} cheatModeEnabled={cheatModeEnabled} />
+        ))}
+      </ol>
+    </details>
+  );
+}
+
 export default function Chat() {
   const ref = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -223,51 +318,10 @@ export default function Chat() {
                   {m.content}
                 </ReactMarkdown>
                 {m.meta?.sources ? (
-                  <details>
-                    <summary>Sources</summary>
-                    <div style={{ fontSize: "80%", marginTop: 4 }}>
-                      The following sources may (or may not) have been used to
-                      generate this response and may (or may not) provide
-                      additional details.
-                    </div>
-                    <ol>
-                      {m.meta.sources.map((source, i) => (
-                        <li key={i}>
-                          {(() => {
-                            const attribution = source.metadata[
-                              "pdf.info.Title"
-                            ] ? (
-                              <>
-                                <i>
-                                  {source.metadata["pdf.info.Title"] as string}
-                                </i>
-                                , {source.metadata["pdf.info.Author"] as string}
-                                , page{" "}
-                                {source.metadata["loc.pageNumber"] as string}
-                              </>
-                            ) : source.metadata.pdf ? (
-                              <>
-                                <i>{source.metadata.pdf.info.Title}</i>,{" "}
-                                {source.metadata.pdf.info.Author}, page{" "}
-                                {source.metadata.loc?.pageNumber}
-                              </>
-                            ) : null;
-
-                            return cheatModeEnabled ? (
-                              <details>
-                                <summary>{attribution}</summary>
-                                <p style={{ fontSize: "75%" }}>
-                                  {source.pageContent}
-                                </p>
-                              </details>
-                            ) : (
-                              attribution
-                            );
-                          })()}
-                        </li>
-                      ))}
-                    </ol>
-                  </details>
+                  <Sources
+                    sources={m.meta.sources}
+                    cheatModeEnabled={cheatModeEnabled}
+                  />
                 ) : null}
               </div>
             </div>
