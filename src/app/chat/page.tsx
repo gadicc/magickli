@@ -15,6 +15,7 @@ import { Document as LangChainDocument } from "@langchain/core/documents";
 import { UserAvatar } from "../MyAppBar";
 import type { ChatMessageMetaData } from "./api/route";
 import AndroidMagicianAvatar from "@/app/img/android-magician-avatar.png";
+import { useCodeMirror } from "@uiw/react-codemirror";
 
 import {
   Autorenew,
@@ -224,6 +225,11 @@ export default function Chat() {
                 {m.meta?.sources ? (
                   <details>
                     <summary>Sources</summary>
+                    <div style={{ fontSize: "80%", marginTop: 4 }}>
+                      The following sources may (or may not) have been used to
+                      generate this response and may (or may not) provide
+                      additional details.
+                    </div>
                     <ol>
                       {m.meta.sources.map((source, i) => (
                         <li key={i}>
