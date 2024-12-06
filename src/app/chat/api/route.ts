@@ -66,7 +66,18 @@ const answerPrompt = PromptTemplate.fromTemplate(ANSWER_TEMPLATE);
 export interface ChatMessageMetaData {
   sources: {
     pageContent: string;
-    metadata: Record<string, unknown>;
+    metadata: {
+      [key: string]: unknown;
+      pdf?: {
+        info: {
+          Author: string;
+          Title: string;
+        };
+      };
+      loc?: {
+        pageNumber: number;
+      };
+    };
   }[];
 }
 
