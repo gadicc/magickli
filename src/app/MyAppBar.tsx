@@ -65,6 +65,35 @@ function usePathnameInfo() {
   return { navParts, title: value as unknown as string };
 }
 
+export function UserAvatar({
+  sx,
+}: {
+  sx?: Parameters<typeof Avatar>[0]["sx"];
+}) {
+  const userId = useGongoUserId();
+  const user = useGongoOne((db) =>
+    db.collection("users").find({ _id: userId })
+  );
+  const avatarSrc = user?.image || user?.photos?.[0]?.value;
+
+  return avatarSrc ? (
+    <Avatar
+      alt={typeof user?.displayName === "string" ? user.displayName : "avatar"}
+      src={avatarSrc}
+      sx={sx}
+      slotProps={{
+        img: {
+          referrerPolicy: "no-referrer",
+        },
+      }}
+    />
+  ) : (
+    <Avatar sx={sx}>
+      <AccountCircle />
+    </Avatar>
+  );
+}
+
 export default function ButtonAppBar() {
   const { title, navParts } = usePathnameInfo();
   const [search, setSearch] = React.useState("");
@@ -233,23 +262,7 @@ export default function ButtonAppBar() {
                   onClick={handleUserMenu}
                   color="inherit"
                 >
-                  {avatarSrc ? (
-                    <Avatar
-                      alt={
-                        typeof user?.displayName === "string"
-                          ? user.displayName
-                          : "avatar"
-                      }
-                      src={avatarSrc}
-                      slotProps={{
-                        img: {
-                          referrerPolicy: "no-referrer",
-                        },
-                      }}
-                    />
-                  ) : (
-                    <AccountCircle />
-                  )}
+                  <UserAvatar />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
