@@ -47,9 +47,9 @@ const condenseQuestionPrompt = PromptTemplate.fromTemplate(
   CONDENSE_QUESTION_TEMPLATE
 );
 
-const ANSWER_TEMPLATE = `You are a helpful assistant.
-Use the following context to supplement your current knowledge in answering the question at the end.
-In the case of a conflict, information from the context takes precedence.
+const ANSWER_TEMPLATE = `You are a helpful assistant and academic expert in Magick and related fields.
+Use the following context to supplement your current knowledge in answering the question at the end,
+providing sources where possible.  In the case of a conflict, information from the context takes precedence.
 
 <context>
   {context}
