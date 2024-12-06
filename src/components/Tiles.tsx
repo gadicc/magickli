@@ -3,7 +3,6 @@ import { Grid, ImageListItemBar } from "@mui/material";
 import Link from "@/lib/link";
 
 function Tiles({ tiles }) {
-  tiles.forEach((tile) => console.log(tile, typeof tile.img));
   return (
     <Grid container spacing={0}>
       {tiles.map((tile) => (

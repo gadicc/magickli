@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { Message, useChat } from "ai/react";
+import Image from "next/image";
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -9,7 +10,10 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ToastContainer, toast } from "react-toastify";
 import { Document as LangChainDocument } from "@langchain/core/documents";
+
+import { UserAvatar } from "../MyAppBar";
 import type { ChatMessageMetaData } from "./api/route";
+import AndroidMagicianAvatar from "@/app/img/android-magician-avatar.png";
 
 import {
   Autorenew,
@@ -20,6 +24,7 @@ import {
 } from "@mui/icons-material";
 
 import {
+  Avatar,
   Chip,
   CircularProgress,
   IconButton,
@@ -48,7 +53,7 @@ export default function Chat() {
   >({});
 
   const {
-    messages,
+    messages: _messages,
     setMessages,
     input,
     handleInputChange,
@@ -66,6 +71,23 @@ export default function Chat() {
   });
   // console.log({ messages, input, isLoading, sourcesForMessages });
   const autoscroll = React.useRef(true);
+
+  const messages =
+    _messages.length > 0
+      ? _messages
+      : ([
+          {
+            id: "START",
+            createdAt: new Date(),
+            content:
+              "Hi, I'm your friendly Magician's Assistant.  Ask me anything " +
+              "about Magick, but please remember that I'm not perfect and " +
+              "can make mistakes.",
+            role: "assistant",
+          },
+        ] as Message[]);
+
+  console.log({ messages });
 
   React.useEffect(() => {
     if (autoscroll.current) window.scrollTo(0, document.body.scrollHeight);
@@ -103,15 +125,15 @@ export default function Chat() {
             >
               <div style={{ width: "50px", marginTop: "19px" }}>
                 {m.role === "user" ? (
-                  <Person />
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src="/pentagram.png"
-                    alt="AI User"
-                    width="32px"
-                    height="32px"
+                  <UserAvatar
+                    sx={{ width: 32, height: 32, border: "1px solid #888" }}
                   />
+                ) : (
+                  <Avatar
+                    sx={{ width: 32, height: 32, border: "1px solid #888" }}
+                  >
+                    <Image src={AndroidMagicianAvatar} fill alt="Assistant" />
+                  </Avatar>
                 )}
               </div>
               <style>{`

@@ -9,6 +9,7 @@ import GDLogoSquished from "@/goldendawn-logo-squished.svg";
 import MagicalTemple from "./img/magical-temple.webp";
 import GeomancyImg from "@/app/img/geomancy.webp";
 import StudyImg from "@/app/img/study.webp";
+import AndroidMagician from "@/app/img/android-magician.png";
 
 const tiles = [
   {
@@ -20,6 +21,11 @@ const tiles = [
     img: "/pics/astrology.jpg",
     title: "Astrology",
     to: "/astrology",
+  },
+  {
+    img: AndroidMagician,
+    title: "Chat (MagickGPT)",
+    to: "/chat",
   },
   {
     img: "/pics/30aethyrs.jpg",
