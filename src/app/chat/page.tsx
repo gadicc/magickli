@@ -9,6 +9,7 @@ import rehypeAddClasses from "rehype-add-classes";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Document as LangChainDocument } from "@langchain/core/documents";
 
 import { UserAvatar } from "../MyAppBar";
@@ -48,6 +49,9 @@ function metaMessage(message: Message) {
 export default function Chat() {
   const ref = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
+  const [cheatModeEnabled, setCheatModeEnabled] = React.useState(false);
+  const [cheatModeCount, setCheatModeCount] = React.useState(0);
+  const [cheatModeLast, setCheatModeLast] = React.useState(0);
   const [sourcesForMessages, setSourcesForMessages] = React.useState<
     Record<string, LangChainDocument[]>
   >({});
@@ -63,11 +67,7 @@ export default function Chat() {
     stop,
   } = useChat({
     api: "/chat/api",
-    onError: (e) => {
-      toast(e.message, {
-        theme: "dark",
-      });
-    },
+    onError: (e) => toast(e.message),
   });
   // console.log({ messages, input, isLoading, sourcesForMessages });
   const autoscroll = React.useRef(true);
@@ -87,8 +87,6 @@ export default function Chat() {
           },
         ] as Message[]);
 
-  console.log({ messages });
-
   React.useEffect(() => {
     if (autoscroll.current) window.scrollTo(0, document.body.scrollHeight);
     // ref.current?.scrollIntoViewIfNeeded();
@@ -106,6 +104,27 @@ export default function Chat() {
     document.addEventListener("scrollend", checkScroll);
     return () => document.removeEventListener("scrollend", checkScroll);
   }, []);
+
+  const CheatModeCounter = React.useCallback(() => {
+    const now = Date.now();
+    setCheatModeLast(now);
+    if (cheatModeLast + 1000 < now) {
+      setCheatModeCount(0);
+    } else {
+      if (cheatModeCount < 5) {
+        setCheatModeCount(cheatModeCount + 1);
+        return;
+      }
+
+      if (cheatModeEnabled) {
+        toast("Cheat Mode disabled");
+      } else {
+        toast("Cheat Mode enabled");
+      }
+      setCheatModeEnabled(!cheatModeEnabled);
+      setCheatModeCount(0);
+    }
+  }, [cheatModeCount, setCheatModeCount, cheatModeLast, setCheatModeLast]);
 
   return (
     <>
@@ -131,8 +150,14 @@ export default function Chat() {
                 ) : (
                   <Avatar
                     sx={{ width: 32, height: 32, border: "1px solid #888" }}
+                    onClick={CheatModeCounter}
                   >
-                    <Image src={AndroidMagicianAvatar} fill alt="Assistant" />
+                    <Image
+                      src={AndroidMagicianAvatar}
+                      width={32}
+                      height={32}
+                      alt="Assistant"
+                    />
                   </Avatar>
                 )}
               </div>
@@ -202,28 +227,37 @@ export default function Chat() {
                     <ol>
                       {m.meta.sources.map((source, i) => (
                         <li key={i}>
-                          <details>
-                            <summary>
-                              {" "}
-                              <i>
-                                {source.metadata["pdf.info.Title"] ||
-                                  // @ts-expect-error: ok for now
-                                  source.metadata.pdf?.info?.Title}
-                              </i>
-                              ,{" "}
-                              {source.metadata["pdf.info.Author"] ||
-                                // @ts-expect-error: ok for now
-                                source.metadata.pdf?.info?.Author}
-                              , page{" "}
-                              {source.metadata["loc.pageNumber"] ||
-                                // @ts-expect-error: ok for now
-                                source.metadata.loc?.pageNumber}
-                              .
-                            </summary>
-                            <p style={{ fontSize: "75%" }}>
-                              {source.pageContent}
-                            </p>
-                          </details>
+                          {(() => {
+                            const attribution = source.metadata[
+                              "pdf.info.Title"
+                            ] ? (
+                              <>
+                                <i>
+                                  {source.metadata["pdf.info.Title"] as string}
+                                </i>
+                                , {source.metadata["pdf.info.Author"] as string}
+                                , page{" "}
+                                {source.metadata["loc.pageNumber"] as string}
+                              </>
+                            ) : source.metadata.pdf ? (
+                              <>
+                                <i>{source.metadata.pdf.info.Title}</i>,{" "}
+                                {source.metadata.pdf.info.Author}, page{" "}
+                                {source.metadata.loc?.pageNumber}
+                              </>
+                            ) : null;
+
+                            return cheatModeEnabled ? (
+                              <details>
+                                <summary>{attribution}</summary>
+                                <p style={{ fontSize: "75%" }}>
+                                  {source.pageContent}
+                                </p>
+                              </details>
+                            ) : (
+                              attribution
+                            );
+                          })()}
                         </li>
                       ))}
                     </ol>
@@ -250,7 +284,7 @@ export default function Chat() {
         {messages.length > 1 && !isLoading && (
           <div
             style={{
-              bottom: 80,
+              bottom: 66,
               left: 0,
               position: "fixed",
               padding: "10px",
@@ -339,10 +373,12 @@ export default function Chat() {
             Send
           </button>
         </form>
+        {/*
         <div style={{ fontSize: "50%", marginTop: "5px" }}>
           Do not rely on these answers, this is a PRIVATE EXPERIMENT (you should
           know Gadi or Aaron).
         </div>
+        */}
       </div>
       <ToastContainer
         position="bottom-center"
