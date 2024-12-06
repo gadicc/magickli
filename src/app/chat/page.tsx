@@ -146,8 +146,8 @@ export default function Chat() {
   const ref = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
   const [cheatModeEnabled, setCheatModeEnabled] = React.useState(false);
-  const [cheatModeCount, setCheatModeCount] = React.useState(0);
-  const [cheatModeLast, setCheatModeLast] = React.useState(0);
+  const cheatModeCount = React.useRef(0);
+  const cheatModeLast = React.useRef(0);
   const [sourcesForMessages, setSourcesForMessages] = React.useState<
     Record<string, LangChainDocument[]>
   >({});
@@ -203,24 +203,29 @@ export default function Chat() {
 
   const CheatModeCounter = React.useCallback(() => {
     const now = Date.now();
-    setCheatModeLast(now);
-    if (cheatModeLast + 1000 < now) {
-      setCheatModeCount(0);
-    } else {
-      if (cheatModeCount < 5) {
-        setCheatModeCount(cheatModeCount + 1);
-        return;
-      }
+    const last = cheatModeLast.current;
+    cheatModeLast.current = now;
 
-      if (cheatModeEnabled) {
-        toast("Cheat Mode disabled");
-      } else {
-        toast("Cheat Mode enabled");
-      }
-      setCheatModeEnabled(!cheatModeEnabled);
-      setCheatModeCount(0);
+    if (now - last > 1_000) {
+      cheatModeCount.current = 0;
     }
-  }, [cheatModeCount, setCheatModeCount, cheatModeLast, setCheatModeLast]);
+
+    // console.log(cheatModeCount.current);
+
+    // Starts from 0, so 4 means 5 clicks
+    if (cheatModeCount.current < 4) {
+      cheatModeCount.current++;
+      return;
+    }
+
+    if (cheatModeEnabled) {
+      toast("Cheat Mode disabled");
+    } else {
+      toast("Cheat Mode enabled");
+    }
+    setCheatModeEnabled(!cheatModeEnabled);
+    cheatModeCount.current = 0;
+  }, [cheatModeCount, cheatModeLast, cheatModeEnabled, setCheatModeEnabled]);
 
   return (
     <>
