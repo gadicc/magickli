@@ -25,16 +25,13 @@ import data, {
   tetragram as tetragrams,
   geomanicHouse as houses,
 } from "@/../data/data";
-import { PlanetId } from "../../../../data/astrology/Planets";
-import { SephirahId } from "../../../../data/kabbalah/Sephirot";
-import { Arch } from "aws-sdk/clients/ecr";
-import { ArchangelId } from "../../../../data/kabbalah/Archangels";
+import { PlanetId } from "@/../data/astrology/Planets";
 import PlanetarySpirit from "@/components/astrology/planetarySpirits";
 import useGeoIP from "@/useGeoIP";
 import {
   formatFromTo,
   upcomingHoursForPlanetAtLocation,
-} from "../../../../pages/astrology/planetary-hours";
+} from "@/app/astrology/planetary-hours/utils";
 import { format } from "date-fns";
 import { capitalizeFirstLetter, ordinal } from "@/lib/utils";
 import AstroGeomancyChart from "./AstroGeomancyChart";
