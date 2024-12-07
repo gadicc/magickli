@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import SunCalc from "suncalc";
 import { differenceInMinutes, getDay, format } from "date-fns";
@@ -23,10 +24,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import AppBar from "../../components/AppBar";
-import useGeoIP from "../../src/useGeoIP";
+import useGeoIP from "@/useGeoIP";
 import { ExpandMore } from "@mui/icons-material";
-import OpenSource from "../../src/OpenSource";
+import OpenSource from "@/OpenSource";
 
 // Useful Resources:
 // https://plentifulearth.com/calculate-planetary-hours/
@@ -194,20 +194,6 @@ function PlanetaryHoursForDayAndLocation({ date, geo, planet }) {
     </div>
   );
 }
-
-export const formatFromTo = (from, to) =>
-  format(from, "ccc LLL do h:mm") + " - " + format(to, "h:mm aaa");
-
-export const UpcomingHours = ({ hours }) => {
-  return (
-    <ul>
-      {hours.map(({ from, to }, i) => (
-        <li key={i}>{formatFromTo(from, to)}</li>
-      ))}
-    </ul>
-  );
-};
-
 export default function PlanetaryHours() {
   const geo = useGeoIP();
   const [planet, setPlanet] = React.useState("");
@@ -267,74 +253,69 @@ export default function PlanetaryHours() {
   ];
 
   return (
-    <>
-      <AppBar title="Plantary Hours" navParts={navParts} />
-      <Container sx={{ my: 1 }}>
-        <Box sx={{ my: 2 }}>
-          {geo.city}, {geo.country}{" "}
-          <span style={{ color: "#aaa" }}>
-            ({geo.longitude}, {geo.latitude})
-          </span>
-        </Box>
-        <FormControl fullWidth>
-          <InputLabel id="select-planet-label">Planet</InputLabel>
-          <Select
-            label="Planet"
-            id="select-planet"
-            labelId="select-planet-label"
-            value={planet}
-            onChange={(event: SelectChangeEvent) =>
-              setPlanet(event.target.value)
-            }
-          >
-            {planetSelect.map((ps) => (
-              <MenuItem key={ps.value} value={ps.value}>
-                <div
-                  style={{
-                    textAlign: "center",
-                    width: "100%",
-                    whiteSpace: "normal",
-                  }}
-                >
-                  <b>{ps.value[0].toUpperCase() + ps.value.substring(1)}</b>:{" "}
-                  {ps.label}
-                </div>
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {/* planet && <UpcomingHours hours={upcomingHours} /> */}
-        <Box sx={{ mt: 1 }}>
-          {week.map((date, i) => (
-            <Accordion key={i} defaultExpanded={i === 0}>
-              <AccordionSummary
-                expandIcon={<ExpandMore />}
-                sx={
-                  {
-                    // "& .MuiAccordionSummary-content": { margin: 0 },
-                  }
-                }
+    <Container sx={{ my: 1 }}>
+      <Box sx={{ my: 2 }}>
+        {geo.city}, {geo.country}{" "}
+        <span style={{ color: "#aaa" }}>
+          ({geo.longitude}, {geo.latitude})
+        </span>
+      </Box>
+      <FormControl fullWidth>
+        <InputLabel id="select-planet-label">Planet</InputLabel>
+        <Select
+          label="Planet"
+          id="select-planet"
+          labelId="select-planet-label"
+          value={planet}
+          onChange={(event: SelectChangeEvent) => setPlanet(event.target.value)}
+        >
+          {planetSelect.map((ps) => (
+            <MenuItem key={ps.value} value={ps.value}>
+              <div
+                style={{
+                  textAlign: "center",
+                  width: "100%",
+                  whiteSpace: "normal",
+                }}
               >
-                <Typography>{format(date, "cccc (LLL d)")}</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={{ pt: 0, m: 0 }}>
-                <PlanetaryHoursForDayAndLocation
-                  date={date}
-                  geo={geo}
-                  planet={planet}
-                />
-              </AccordionDetails>
-            </Accordion>
+                <b>{ps.value[0].toUpperCase() + ps.value.substring(1)}</b>:{" "}
+                {ps.label}
+              </div>
+            </MenuItem>
           ))}
-        </Box>
-        <br />
-        <Box>
-          Planetary influences sourced from The Key of Solomon,{" "}
-          <a href="https://sacred-texts.com/grim/kos/kos07.htm">chapter 2</a>{" "}
-          (MacGregor Mathers, 1888).
-        </Box>
-        <OpenSource href="/pages/astrology/planetary-hours.tsx" />
-      </Container>
-    </>
+        </Select>
+      </FormControl>
+      {/* planet && <UpcomingHours hours={upcomingHours} /> */}
+      <Box sx={{ mt: 1 }}>
+        {week.map((date, i) => (
+          <Accordion key={i} defaultExpanded={i === 0}>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              sx={
+                {
+                  // "& .MuiAccordionSummary-content": { margin: 0 },
+                }
+              }
+            >
+              <Typography>{format(date, "cccc (LLL d)")}</Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={{ pt: 0, m: 0 }}>
+              <PlanetaryHoursForDayAndLocation
+                date={date}
+                geo={geo}
+                planet={planet}
+              />
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </Box>
+      <br />
+      <Box>
+        Planetary influences sourced from The Key of Solomon,{" "}
+        <a href="https://sacred-texts.com/grim/kos/kos07.htm">chapter 2</a>{" "}
+        (MacGregor Mathers, 1888).
+      </Box>
+      <OpenSource files={["/src/app/astrology/planetary-hours/page.tsx"]} />
+    </Container>
   );
 }

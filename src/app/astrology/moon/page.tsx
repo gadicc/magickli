@@ -1,13 +1,9 @@
+"use client";
 import React from "react";
 import lune from "lune";
 import { DateTime } from "luxon";
 
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-
-import AppBar from "../../components/AppBar";
-import MoonDrawing from "../../components/astrology/Moon";
+import MoonDrawing from "@/components/astrology/Moon";
 
 // https://www.unicode.org/L2/L2017/17304-moon-var.pdf
 function uniMoon(moon, north = true, invert = true) {
@@ -19,11 +15,6 @@ function uniMoon(moon, north = true, invert = true) {
 }
 
 export default function Moon() {
-  const navParts = [
-    { title: "Astrology", url: "/astrology" },
-    { title: "Planets", url: "/astrology/planets" },
-  ];
-
   const now = new Date();
   const hunt = lune.phase_hunt(now);
   const huntNext = lune.phase_hunt(
@@ -39,11 +30,7 @@ export default function Moon() {
     { title: "🌗 Third Quarter 🌗", date: hunt.q3_date },
     { title: "🌑 Next New Moon 🌑", date: hunt.nextnew_date },
     { title: "🌕 Next Full Moon 🌕", date: huntNext.full_date },
-  ];
-
-  data.forEach((row) => {
-    if (row.date < now) row.inPast = true;
-  });
+  ].map((row) => ({ ...row, inPast: row.date < now }));
 
   return (
     <>
@@ -68,7 +55,6 @@ export default function Moon() {
           color: white;
         }
       `}</style>
-      <AppBar title="Moon" navParts={navParts} />
 
       <div id="page">
         <div style={{ height: "155px" }}>

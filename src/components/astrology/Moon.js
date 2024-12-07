@@ -1,7 +1,7 @@
 import React from "react";
 import lune from "lune";
 
-import useGeoIP from "../../src/useGeoIP";
+import useGeoIP from "@/useGeoIP";
 
 const moonMeanInclination = 5.15; // in degrees
 

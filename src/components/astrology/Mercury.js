@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 import { DateTime } from "luxon";
 import Image from "next/legacy/image";
 
-import retrogrades from "../../data/astrology/retrograde.json5";
+import retrogrades from "@/../data/astrology/retrograde.json5";
 
 function find() {
   const now = new Date();

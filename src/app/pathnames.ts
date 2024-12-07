@@ -17,7 +17,6 @@ const pathnames: {
   about: "About",
   admin: "Admin",
   astrology: {
-    // TODO, from pages router
     "/": "Astrology",
     "planetary-hours": "Planetary Hours",
     planets: "Planets",
