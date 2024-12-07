@@ -13,24 +13,28 @@ import AndroidMagician from "@/app/img/android-magician.png";
 
 const tiles = [
   {
-    img: "/pics/about.png",
     title: "About",
     to: "/about",
+    img: "/pics/about.png",
+    alt: "About Icon",
   },
   {
-    img: "/pics/astrology.jpg",
     title: "Astrology",
     to: "/astrology",
+    img: "/pics/astrology.jpg",
+    alt: "Astrology Wheel",
   },
   {
-    img: AndroidMagician,
     title: "Chat (MagickGPT)",
     to: "/chat",
+    img: AndroidMagician,
+    alt: "Android Magician",
   },
   {
-    img: "/pics/30aethyrs.jpg",
     title: "Enochian",
     to: "/enochian/",
+    img: "/pics/30aethyrs.jpg",
+    alt: "Enochian Aethyrs",
   },
   {
     title: "Geomancy",
@@ -39,19 +43,21 @@ const tiles = [
     alt: "A shaman pokes holes in the sand",
   },
   {
-    Component: () => <GDLogoSquished width="100%" />,
     title: "Golden Dawn",
     to: "/hogd/",
+    Component: () => <GDLogoSquished width="100%" />,
   },
   {
-    img: "/pics/Tree_of_Life,_Medieval.jpg",
     title: "Kabbalah",
     to: "/kabbalah",
+    img: "/pics/Tree_of_Life,_Medieval.jpg",
+    alt: "Kabbalistic Tree of Life",
   },
   {
-    img: "/pics/magic-book.jpg",
     title: "Magick Journal",
     to: "https://majou.app/",
+    img: "/pics/magic-book.jpg",
+    alt: "Glowing Magical Journal",
   },
   {
     title: "Study",
