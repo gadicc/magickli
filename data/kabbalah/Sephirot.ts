@@ -1,5 +1,3 @@
-import type { Zodiac, ZodiacId } from "../astrology/Zodiac";
-import type { Element, ElementId } from "../alchemy/Elements";
 import { GodName, GodNameId } from "./GodNames";
 import { Planet, PlanetId } from "../astrology/Planets";
 import { Archangel, ArchangelId } from "./Archangels";
@@ -24,6 +22,7 @@ interface Sephirah {
   color: {
     king: string;
     kingWeb: string;
+    kingWebText?: string;
     queen: string;
     queenWeb: string;
     queenWebText: string;
@@ -44,7 +43,8 @@ interface Sephirah {
   angelicOrderId: AngelicOrderId;
   angelicOrder?: AngelicOrder;
   gdGradeId: string;
-  prev?: string;
+  next?: SephirahId;
+  prev?: SephirahId;
 }
 
 type Sephirot = Record<SephirahId, Sephirah>;

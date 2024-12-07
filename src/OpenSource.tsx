@@ -21,16 +21,20 @@ export default function OpenSource({
       {href ? (
         <a href={url(href)}>{href.split("/").pop()}</a>
       ) : (
-        files!.map((file, i) => (
-          <React.Fragment key={file}>
-            <a href={url(file)}>{file}</a>
-            {i === files!.length - 2
-              ? " and "
-              : i === files!.length - 1
-              ? ""
-              : ", "}
-          </React.Fragment>
-        ))
+        files!.map((file, i) => {
+          // const type = file.endsWith("page.tsx") ? "page" : "component";
+          const label = file.split("/").pop();
+          return (
+            <React.Fragment key={file}>
+              <a href={url(file)}>{label}</a>
+              {i === files!.length - 2
+                ? " and "
+                : i === files!.length - 1
+                ? ""
+                : ", "}
+            </React.Fragment>
+          );
+        })
       )}
       .
     </Box>

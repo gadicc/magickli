@@ -2,14 +2,17 @@ import planet from "./astrology/Planets";
 import zodiac from "./astrology/Zodiac";
 import house from "./astrology/Houses";
 
+import gdGrade from "./gd/Grades";
+
 import tetragram from "./geomancy/Tetragrams";
 import geomanicHouse from "./geomancy/Houses";
 
 import angelicOrder from "./kabbalah/AngelicOrders";
 import archangel from "./kabbalah/Archangels";
+import fourWorlds from "./kabbalah/FourWorlds";
 import godName from "./kabbalah/GodNames";
 import kerub from "./kabbalah/Kerubim";
-import fourWorlds from "./kabbalah/FourWorlds";
+import tolPath from "./kabbalah/Paths";
 import sephirah from "./kabbalah/Sephirot";
 
 import alchemySymbol from "./alchemy/Symbols";
@@ -35,7 +38,7 @@ const allData = {
   tetragram,
   geomanicHouse,
 
-  gdGrade: require("./hogd/grades.json5").default,
+  gdGrade,
 
   // KABBALAH
   archangel,
@@ -44,7 +47,7 @@ const allData = {
   godName,
   kerub,
   sephirah,
-  tolPath: require("./kabbalah/paths.json5").default,
+  tolPath,
   soul: require("./kabbalah/souls.json5").default,
 
   chakra: require("./chakras.json5").default,

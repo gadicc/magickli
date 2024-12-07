@@ -44,7 +44,7 @@ const tiles = [
   },
   {
     title: "Golden Dawn",
-    to: "/hogd/",
+    to: "/gd/",
     Component: () => <GDLogoSquished width="100%" />,
   },
   {

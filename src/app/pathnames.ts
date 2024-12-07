@@ -26,11 +26,20 @@ const pathnames: {
   },
   gd: {
     "/": "Golden Dawn",
+    grades: "Grades",
+    rituals: "Rituals",
+    sigils: "Sigils",
+    symbols: "Symbols",
   },
   geomancy: {
     "/": "Geomancy",
     reading: "Reading",
     reference: "Reference",
+  },
+  kabbalah: {
+    "/": "Kabbalah",
+    yhvh: "Shem HaMephorash",
+    tree: "Tree of Life",
   },
   temples: {
     "/": "Temples",
