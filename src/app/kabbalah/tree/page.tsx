@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import TreeOfLife from "./tree";
 
 export const metadata = {
@@ -20,5 +20,9 @@ export const metadata = {
 };
 
 export default function TreeOfLifePage() {
-  return <TreeOfLife />;
+  return (
+    <Suspense>
+      <TreeOfLife />
+    </Suspense>
+  );
 }
