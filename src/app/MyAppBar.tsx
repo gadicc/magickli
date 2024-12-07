@@ -4,6 +4,7 @@ import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import { signIn, signOut } from "next-auth/react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import MuiLink from "@mui/material/Link";
 
 import {
   AppBar,
@@ -131,7 +132,10 @@ function MenuDrawer({
           .map(([key, value]) =>
             typeof value === "string" ? (
               <ListItem key={key} disablePadding>
-                <ListItemButton>
+                <ListItemButton
+                  component={MuiLink}
+                  href={key === "/" ? "/" : "/" + key}
+                >
                   <ListItemText
                     primary={value === "Magick.ly" ? "Home" : value}
                   />
@@ -156,8 +160,13 @@ function MenuDrawer({
                         if (typeof value !== "string") return false;
                         return true;
                       })
-                      .map(([key, value]) => (
-                        <ListItemButton key={key} sx={{ pl: 4 }}>
+                      .map(([key2, value]) => (
+                        <ListItemButton
+                          key={key2}
+                          sx={{ pl: 4 }}
+                          component={MuiLink}
+                          href={"/" + key + (key2 === "/" ? "" : "/" + key2)}
+                        >
                           <ListItemText primary={value} />
                         </ListItemButton>
                       ))}
