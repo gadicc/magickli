@@ -16,6 +16,13 @@ const pathnames: {
   "/": "Magick.ly",
   about: "About",
   admin: "Admin",
+  astrology: {
+    // TODO, from pages router
+    "/": "Astrology",
+    "planetary-hours": "Planetary Hours",
+    planets: "Planets",
+    zodiac: "Zodiac",
+  },
   chat: "Chat (MagickGPT)",
   enochian: {
     "/": "Enochian",
@@ -41,6 +48,7 @@ const pathnames: {
     yhvh: "Shem HaMephorash",
     tree: "Tree of Life",
   },
+  study: "Study", // TODO, from pages router
   temples: {
     "/": "Temples",
     admin: "Admin",
