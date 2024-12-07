@@ -3,29 +3,36 @@ import React from "react";
 import { useGongoOne, useGongoUserId } from "gongo-client-react";
 import { signIn, signOut } from "next-auth/react";
 import { usePathname, useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 import {
   AppBar,
   Avatar,
-  Button,
   Toolbar,
   Typography,
   IconButton,
   MenuItem,
   Menu,
-  styled,
-  alpha,
   InputBase,
   Box,
   InputAdornment,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Collapse,
 } from "@mui/material";
 import {
   AccountCircle,
   Login,
-  Home,
+  Menu as MenuIcon,
   Share,
   Search as SearchIcon,
   Close,
+  ExpandLess,
+  ExpandMore,
 } from "@mui/icons-material";
 
 // import Link from "@/lib/link";
@@ -94,10 +101,81 @@ export function UserAvatar({
   );
 }
 
+function MenuDrawer({
+  handleDrawerToggle,
+}: {
+  handleDrawerToggle: () => void;
+}) {
+  const [open, setOpen] = React.useState("");
+
+  return (
+    <Box onClick={handleDrawerToggle}>
+      <Typography variant="h6" sx={{ my: 2, mx: 2, textAlign: "left" }}>
+        <Image
+          src="/pentagram.png"
+          alt="Pentagram"
+          width={32}
+          height={32}
+          style={{ verticalAlign: "middle", marginRight: 12 }}
+        />
+        <span style={{ verticalAlign: "middle" }}>Magick.ly</span>
+      </Typography>
+      <Divider />
+      <List>
+        {Object.entries(pathnames)
+          .filter(([key, value]) => {
+            // TODO, hooks to check access.
+            if (key === "admin") return false;
+            return true;
+          })
+          .map(([key, value]) =>
+            typeof value === "string" ? (
+              <ListItem key={key} disablePadding>
+                <ListItemButton>
+                  <ListItemText
+                    primary={value === "Magick.ly" ? "Home" : value}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <React.Fragment key={key}>
+                <ListItemButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(key === open ? "" : key);
+                  }}
+                >
+                  <ListItemText primary={value["/"]} />
+                  {open === key ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={open === key} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {Object.entries(value)
+                      .filter(([key, value]) => {
+                        if (key === "/") return false;
+                        if (typeof value !== "string") return false;
+                        return true;
+                      })
+                      .map(([key, value]) => (
+                        <ListItemButton key={key} sx={{ pl: 4 }}>
+                          <ListItemText primary={value} />
+                        </ListItemButton>
+                      ))}
+                  </List>
+                </Collapse>
+              </React.Fragment>
+            )
+          )}
+      </List>
+    </Box>
+  );
+}
+
 export default function ButtonAppBar() {
   const { title, navParts } = usePathnameInfo();
   const [search, setSearch] = React.useState("");
   const [searchOpen, setSearchOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const userId = useGongoUserId();
   const user = useGongoOne((db) =>
@@ -114,6 +192,10 @@ export default function ButtonAppBar() {
 
   const handleUserClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
   };
 
   function share() {
@@ -142,10 +224,9 @@ export default function ButtonAppBar() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 0.5 }}
-            LinkComponent={NextLink}
-            href="/"
+            onClick={handleDrawerToggle}
           >
-            <Home />
+            <MenuIcon />
           </IconButton>
           <Typography
             variant="h6"
@@ -303,6 +384,24 @@ export default function ButtonAppBar() {
           </div>
         </Toolbar>
       </AppBar>
+      <nav>
+        <Drawer
+          variant="temporary"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: 250,
+            },
+          }}
+        >
+          <MenuDrawer handleDrawerToggle={handleDrawerToggle} />
+        </Drawer>
+      </nav>
     </div>
   );
 }

@@ -16,7 +16,7 @@ const pathnames: {
   "/": "Magick.ly",
   about: "About",
   admin: "Admin",
-  chat: "MagickGPT",
+  chat: "Chat (MagickGPT)",
   enochian: {
     "/": "Enochian",
     dictionary: "Dictionary",
