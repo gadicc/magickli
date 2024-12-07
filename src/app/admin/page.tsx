@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { db, useGongoLive, useGongoSub } from "gongo-client-react";
 
@@ -16,8 +17,7 @@ import {
 } from "@mui/material";
 import { AdminPanelSettings } from "@mui/icons-material";
 
-import AppBar from "../components/AppBar";
-import { UserClient, UserGroup } from "../src/schemas";
+import { UserClient, UserGroup } from "@/schemas";
 
 function Groups({ groups }: { groups: UserGroup[] }) {
   const [groupName, setGroupName] = React.useState("");
@@ -209,17 +209,14 @@ export default function Admin() {
   const [selectedUsers, setSelectedUsers] = React.useState<string[]>([]);
 
   return (
-    <>
-      <AppBar title="Admin" />
-      <Container sx={{ my: 1 }}>
-        <Groups groups={groups} />
-        <Users
-          users={users}
-          groups={groups}
-          selected={selectedUsers}
-          setSelected={setSelectedUsers}
-        />
-      </Container>
-    </>
+    <Container sx={{ my: 1 }}>
+      <Groups groups={groups} />
+      <Users
+        users={users}
+        groups={groups}
+        selected={selectedUsers}
+        setSelected={setSelectedUsers}
+      />
+    </Container>
   );
 }
