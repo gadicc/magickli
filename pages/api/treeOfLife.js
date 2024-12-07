@@ -3,7 +3,7 @@ import ReactDOMServer from "react-dom/server";
 import beautify from "xml-beautifier";
 import sharp from "sharp";
 
-import TreeOfLife from "../../components/kabbalah/TreeOfLife.js";
+import TreeOfLife from "@/components/kabbalah/TreeOfLife";
 
 import fs from "fs";
 import path from "path";
