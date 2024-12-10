@@ -31,6 +31,23 @@ export default function Sequence() {
           <a href="https://github.com/gadicc/magickli">
             github.com/gadicc/magickli
           </a>
+          .
+        </p>
+
+        <p>
+          Design goals:
+          <ul>
+            <li>Open source, permissive licenses wherever possible.</li>
+            <li>
+              Publish useful magick <a href="../../data">data</a> in JSON format
+              with types.
+            </li>
+            <li>
+              Publish useful magick{" "}
+              <a href="../../components">react components</a>.
+            </li>
+            <li>Images should be original, high quality vector images.</li>
+          </ul>
         </p>
 
         <p>Copyright (c) 2020 by Gadi Cohen, MIT licensed.</p>
