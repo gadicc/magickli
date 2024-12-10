@@ -9,7 +9,9 @@
     "noEmit": true,
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@magick-data/*": ["./data/*"],
+      "@magick-components/*": ["./src/components/*"]
     },
     "esModuleInterop": true,
     "module": "esnext",

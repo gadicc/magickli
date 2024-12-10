@@ -2,8 +2,17 @@ import { Box } from "@mui/material";
 import React from "react";
 
 const github = "https://github.com/gadicc/magickli/";
-const url = (str) =>
-  str.startsWith("http") ? str : github + "blob/master" + str;
+function url(str: string) {
+  if (str.startsWith("http")) return str;
+  return (
+    github +
+    "blob/master/" +
+    str
+      .replace(/^@\//, "src/")
+      .replace(/^@magick-data\//, "data/")
+      .replace(/^@magick-components\//, "src/components/")
+  );
+}
 
 export default function OpenSource({
   href,
