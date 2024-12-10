@@ -3,12 +3,12 @@ import React from "react";
 import { DateTime } from "luxon";
 import Image from "next/legacy/image";
 
-import retrogrades from "@/../data/astrology/retrograde.json5";
+import retrogrades from "@magick-data/astrology/Retrograde";
 
 function find() {
   const now = new Date();
 
-  for (let row of retrogrades.mercury) {
+  for (const row of retrogrades.mercury) {
     const start = new Date(row[0]);
     const end = new Date(row[1]);
 
@@ -59,6 +59,9 @@ function MercuryDrawing({ phase, width, height, }) {
 
 function MercuryWidget({ padding = "10px 0 18px 0" }) {
   const retrograde = find();
+  if (!retrograde)
+    return "Could not find next retrograde, sorry; please report.";
+
   const d = (d) =>
     DateTime.fromJSDate(d).toLocaleString({
       month: "short",

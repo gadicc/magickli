@@ -35,7 +35,17 @@ const namesLocal = {
 
 // Based on https://github.com/tingletech/moon-phase/blob/gh-pages/moon-phase.js
 // Reactified, added hemisphere and inclination, filters, etc.
-function MoonDrawing({ phase, width, height, northernHemisphere = true }) {
+function MoonDrawing({
+  phase,
+  width,
+  height,
+  northernHemisphere = true,
+}: {
+  phase: number;
+  width?: string | number;
+  height?: string | number;
+  northernHemisphere?: boolean;
+}) {
   let mag, sweep;
 
   // the "sweep-flag" and the direction of movement change every quarter moon
@@ -53,7 +63,7 @@ function MoonDrawing({ phase, width, height, northernHemisphere = true }) {
     sweep = [0, 1];
     mag = 20 * (phase - 0.75) * 4;
   } else {
-    return;
+    throw new Error("Invalid phase: " + phase);
   }
 
   const inclination = northernHemisphere

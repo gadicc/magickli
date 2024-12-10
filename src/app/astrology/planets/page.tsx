@@ -15,10 +15,11 @@ import Paper from "@mui/material/Paper";
 
 import Link from "@/lib/link";
 
-import MercuryWidget from "@/components/astrology/Mercury";
-import MoonWidget from "@/components/astrology/Moon";
+import MercuryWidget from "@magick-components/astrology/Mercury";
+import MoonWidget from "@magick-components/astrology/Moon";
 import Tiles from "@/components/Tiles";
 import Data from "@/../data/data";
+import OpenSource from "@/OpenSource";
 
 const useStyles = makeStyles({
   table: {
@@ -85,8 +86,15 @@ export default function Planets() {
         </TableContainer>
 
         <br />
+        <OpenSource
+          files={[
+            "@/app/astrology/planets/page.tsx",
+            "@magick-components/astrology/Moon.tsx",
+            "@magick-components/astrology/Mercury.tsx",
+          ]}
+        />
 
-        <div>
+        <div style={{ fontSize: "80%" }}>
           <b>Image credit:</b>
           <a href="https://en.wikipedia.org/wiki/File:Planets2013.svg">
             Planet2013.svg

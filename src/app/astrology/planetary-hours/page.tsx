@@ -212,7 +212,12 @@ export default function PlanetaryHours() {
         <a href="https://sacred-texts.com/grim/kos/kos07.htm">chapter 2</a>{" "}
         (MacGregor Mathers, 1888).
       </Box>
-      <OpenSource files={["/src/app/astrology/planetary-hours/page.tsx"]} />
+      <OpenSource
+        files={[
+          "/src/app/astrology/planetary-hours/page.tsx",
+          "/src/app/astrology/planetary-hours/utils.tsx",
+        ]}
+      />
     </Container>
   );
 }
