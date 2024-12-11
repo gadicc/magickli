@@ -130,14 +130,20 @@ function MenuDrawer({
             return true;
           })
           .map(([key, value]) =>
-            typeof value === "string" ? (
+            typeof value === "string" || Object.keys(value).length === 2 ? (
               <ListItem key={key} disablePadding>
                 <ListItemButton
                   component={MuiLink}
                   href={key === "/" ? "/" : "/" + key}
                 >
                   <ListItemText
-                    primary={value === "Magick.ly" ? "Home" : value}
+                    primary={
+                      value === "Magick.ly"
+                        ? "Home"
+                        : typeof value === "string"
+                        ? value
+                        : value["/"]
+                    }
                   />
                 </ListItemButton>
               </ListItem>
