@@ -1,6 +1,5 @@
+"use client";
 import React from "react";
-import { useRouter } from "next/router";
-import dynamic from "next/dynamic";
 import { supermemo } from "supermemo";
 import {
   useGongoOne,
@@ -10,18 +9,22 @@ import {
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
-import Link from "../../src/Link";
-import AppBar from "../../components/AppBar";
+import Link from "@/lib/link";
 
-import getSet, { StudyCard, type StudySet } from "../../src/study/sets";
-import db from "../../src/db";
+import getSet, { StudyCard, type StudySet } from "@/study/sets";
+import db from "@/db";
 import { Stack } from "@mui/material";
-import { StudyCardDataItem } from "../../src/study/sets";
+import { StudyCardStats, StudySetStats } from "./exports";
+import {
+  useSearchParams,
+  useSetSearchParam,
+  useRouter,
+} from "@/lib/navigation";
+import { useSession } from "next-auth/react";
 
 /*
 export async function getServerSideProps(context) {
@@ -29,35 +32,6 @@ export async function getServerSideProps(context) {
   return { props: { _id } };
 }
 */
-
-export interface StudyCardStats {
-  correct: number;
-  incorrect: number;
-  time: number;
-  dueDate: Date;
-  supermemo: {
-    interval: number;
-    repetition: number;
-    efactor: number;
-  };
-  repetition: {
-    weight: number;
-  };
-}
-
-export interface StudySetStats {
-  [key: string]: unknown;
-  _id?: string;
-  userId?: string;
-  setId: string;
-  cards: Record<string, StudyCardStats>;
-  correct: number;
-  incorrect: number;
-  time: number;
-  dueDate: Date;
-  __ObjectIDs?: string[];
-  __updatedAt?: number;
-}
 
 function newCardStats(): StudyCardStats {
   return {
@@ -86,10 +60,7 @@ function randomCard(
 
 const StudySetCol = db.collection("studySet");
 
-function newStudySetStats(set: StudySet) {
-  // @ts-expect-error: ok
-  const userId = db.auth.getUserId();
-
+function newStudySetStats(set: StudySet, userId: string) {
   const studySetStats: StudySetStats = {
     setId: set.id,
     cards: {},
@@ -187,12 +158,14 @@ function updateCardSet(
 
   // If we weren't logged in before, but are now, take this opportunity to
   // populate userId.  TODO: probably a better place to do this.
-  // @ts-expect-error: ok
-  const userId = db.auth.getUserId();
-  if (userId && !_studyData.userId) {
-    studyDataUpdate.userId = userId;
-    if (!_studyData.__ObjectIDs) _studyData.__ObjectIDs = [];
-    _studyData.__ObjectIDs.push("userId");
+  if ("auth" in db && typeof db.auth === "object" && "getUserId" in db.auth) {
+    // XXX TODO Does this still work after switching primarily to next-auth???
+    const userId = db.auth.getUserId();
+    if (userId && !_studyData.userId) {
+      studyDataUpdate.userId = userId;
+      if (!_studyData.__ObjectIDs) _studyData.__ObjectIDs = [];
+      _studyData.__ObjectIDs.push("userId");
+    }
   }
 
   // Gongo quirk: since we're updating with the same data*, it will skip.
@@ -218,15 +191,19 @@ function fetchDueCards(
   return cards;
 }
 
-function StudySetLoad() {
+export default function StudySetLoad({
+  params: { _id },
+}: {
+  params: { _id: string };
+}) {
   const router = useRouter();
-  const _id = router.query._id as undefined | string;
-  console.log({ _id, query: router.query });
+  const setSearchParam = useSetSearchParam();
+  const searchParams = useSearchParams();
+  const mode = searchParams?.get("mode") || "supermemo";
+  const session = useSession();
+  const userId = session.data?.user?.id;
 
-  // const [mode, setMode] = React.useState("supermemo");
-  const mode = router.query.mode || "supermemo";
-  const setMode = (mode) =>
-    router.replace({ query: { ...router.query, mode } });
+  const setMode = (mode) => setSearchParam("mode", mode);
 
   const isPopulated = useGongoIsPopulated();
   const set = React.useMemo(() => _id && getSet(_id), [_id]);
@@ -247,9 +224,9 @@ function StudySetLoad() {
       // so was never checked before calling the next line.  Fixed now,
       // look out for any strange behaviour.  TODO.
       if (!StudySetCol.findOne({ setId: _id }))
-        if (set) StudySetCol.insert(newStudySetStats(set));
+        if (set) StudySetCol.insert(newStudySetStats(set, userId));
     }
-  }, [studyDataExists, isPopulated, _id, set, studyData]);
+  }, [studyDataExists, isPopulated, _id, set, studyData, userId]);
 
   if (!_id || !studyData || !isPopulated) return <div>Initializing</div>;
 
@@ -262,10 +239,8 @@ function StudySetLoad() {
     console.log({ set, allCards, cards, studyData });
 
     if (cards.length === 0) {
-      const navParts = [{ title: "Study", url: "/study" }];
       return (
         <Container maxWidth="lg" sx={{ p: 0 }}>
-          <AppBar title={set.id} navParts={navParts} />
           <Box sx={{ p: 2, textAlign: "center" }}>
             <div style={{ fontSize: "500%" }}>🏆</div>
             <Typography variant="body1">
@@ -339,11 +314,8 @@ function StudySet({ set, cards, studyData, mode, setMode }) {
     }
   }
 
-  const navParts = [{ title: "Study", url: "/study" }];
-
   return (
     <Container maxWidth="lg" sx={{ p: 0 }}>
-      <AppBar title={set.id} navParts={navParts} />
       <Box sx={{ p: 2 }}>
         <Stack
           direction="row"
@@ -395,4 +367,4 @@ function StudySet({ set, cards, studyData, mode, setMode }) {
   );
 }
 
-export default dynamic(Promise.resolve(StudySetLoad), { ssr: false });
+// export default dynamic(Promise.resolve(StudySetLoad), { ssr: false });

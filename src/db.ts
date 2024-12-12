@@ -4,7 +4,7 @@ import db, { Collection } from "gongo-client";
 import { getSession } from "next-auth/react";
 import HTTPTransport from "gongo-client/lib/transports/http";
 // import GongoAuth from "gongo-client/lib/auth";
-import { StudySetStats } from "../pages/study/[_id]";
+import { StudySetStats } from "@/app/study/[_id]/exports";
 import type {
   Doc,
   DocRevision,
