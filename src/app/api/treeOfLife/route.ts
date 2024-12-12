@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOMServer from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import beautify from "xml-beautifier";
 import sharp from "sharp";
 
@@ -19,7 +19,7 @@ console.log(fs.readFileSync(fontsDir).toString());
 export default function treeOfLifeSVG(req, res) {
   let svgText =
     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
-    ReactDOMServer.renderToStaticMarkup(<TreeOfLife {...req.query} />);
+    renderToString(React.createElement(TreeOfLife, req.query));
 
   // since React doesn't support namespace tags
   svgText = svgText.replace(
