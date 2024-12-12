@@ -16,7 +16,7 @@ const fontsDir = path.resolve("public", "fonts.conf");
 process.env.FONTCONFIG_FILE = "/var/task/public/fonts.conf";
 console.log(fs.readFileSync(fontsDir).toString());
 
-export default async function treeOfLifeSVG(req, res) {
+export async function GET(req, res) {
   // https://github.com/vercel/next.js/discussions/69244
   // https://stackoverflow.com/questions/77978991/rendertostring-youre-importing-a-component-that-imports-react-dom-server
   const { renderToString } = await import("react-dom/server");
