@@ -6,15 +6,15 @@ import {
 } from "gongo-server-db-mongo/lib/collection";
 import gs, { ObjectId /* User */ } from "@/api-lib/db";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
+import { auth } from "@/auth";
 
 // TODO, later... with separate db.ts and db-full.ts and mongodb-rest-relay.
 // export const runtime = "edge";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
-gs.publish("studySet", async (db, opts, { auth }) => {
+gs.publish("studySet", async (db, _opts, { auth }) => {
   const userId = await auth.userId();
-  console.log({ userId });
   if (!userId) return [];
 
   const cursor = db
@@ -411,4 +411,4 @@ if (gs.dba) {
   templeMemberships.allow("remove", userIsTempleAdmin);
 }
 
-export const POST = gs.vercelEdgePost();
+export const POST = await auth(gs.vercelEdgePost());
