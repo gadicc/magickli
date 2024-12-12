@@ -333,9 +333,10 @@ function Users({ templeId }: { templeId: string }) {
   );
 }
 
-export default function AdminTemplesPage(props) {
+export default function AdminTemplesPage(props: {
+  params: Promise<{ _id: string }>;
+}) {
   const params = use(props.params);
-
   const { _id } = params;
 
   useGongoSub("templeForTempleAdmin", { _id });

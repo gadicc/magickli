@@ -1,9 +1,8 @@
-import React, { type JSX } from "react";
+import React from "react";
 import Paper from "@mui/material/Paper";
 
 import data from "../../data/data";
 import Tetragram from "@/app/geomancy/Tetragram";
-import { AlchemyTerms } from "../../data/alchemy/Terms";
 import enochianFont from "@/components/enochian/enochianFont";
 
 // https://stackoverflow.com/a/56773391/1839099
