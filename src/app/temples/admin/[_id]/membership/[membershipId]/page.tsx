@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useGongoSub, useGongoOne, db } from "gongo-client-react";
 import { useRouter } from "next/navigation";
 
@@ -23,14 +23,16 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import { useWatch } from "react-hook-form";
 
-export default function TemplesAdminEditMembershipPage({
-  params: { _id, membershipId },
-}: {
-  params: {
+export default function TemplesAdminEditMembershipPage(props: {
+  params: Promise<{
     _id: string;
     membershipId: string;
-  };
+  }>;
 }) {
+  const params = use(props.params);
+
+  const { _id, membershipId } = params;
+
   const router = useRouter();
 
   const temple = useGongoOne((db) => db.collection("temples").find({ _id }));

@@ -385,8 +385,8 @@ if (typeof window !== "undefined") {
 
 // Ok for whatever reason this stops the error but doesn't "catch" it (i.e. no logs)
 class ErrorBoundary extends React.Component<{
-  fallback?: React.ReactElement;
-  children: React.ReactElement;
+  fallback?: React.ReactElement<any>;
+  children: React.ReactElement<any>;
 }> {
   state = { error: null as Error | null, info: null };
 

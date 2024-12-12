@@ -15,11 +15,13 @@ function Page({ message, error }: { message: string; error?: boolean }) {
   );
 }
 
-export default async function TemplesJoinPage({
-  params: { slug, pass },
-}: {
-  params: { slug: string; pass: string };
+export default async function TemplesJoinPage(props: {
+  params: Promise<{ slug: string; pass: string }>;
 }) {
+  const params = await props.params;
+
+  const { slug, pass } = params;
+
   const session = await auth();
   console.log({ session });
 

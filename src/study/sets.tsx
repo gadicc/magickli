@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import Paper from "@mui/material/Paper";
 
 import data from "../../data/data";

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { decycle } from "cycle";
 
 import Container from "@mui/material/Container";
@@ -21,11 +21,11 @@ export function generateStaticParams() {
 }
 */
 
-export default function Sephirot({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export default function Sephirot(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
+
+  const { id } = params;
+
   if (!id) return "No id";
 
   const sephirah = sephirot.find((sephirah) => sephirah.id === id);

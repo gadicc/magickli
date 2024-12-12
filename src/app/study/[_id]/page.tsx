@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { supermemo } from "supermemo";
 import {
   useGongoOne,
@@ -191,11 +191,13 @@ function fetchDueCards(
   return cards;
 }
 
-export default function StudySetLoad({
-  params: { _id },
-}: {
-  params: { _id: string };
+export default function StudySetLoad(props: {
+  params: Promise<{ _id: string }>;
 }) {
+  const params = use(props.params);
+
+  const { _id } = params;
+
   const router = useRouter();
   const setSearchParam = useSetSearchParam();
   const searchParams = useSearchParams();

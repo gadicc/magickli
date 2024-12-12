@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useGongoSub, useGongoLive, db, useGongoOne } from "gongo-client-react";
 import trpc from "@/lib/trpc";
 
@@ -333,7 +333,11 @@ function Users({ templeId }: { templeId: string }) {
   );
 }
 
-export default function AdminTemplesPage({ params: { _id } }) {
+export default function AdminTemplesPage(props) {
+  const params = use(props.params);
+
+  const { _id } = params;
+
   useGongoSub("templeForTempleAdmin", { _id });
   const temple = useGongoOne((db) => db.collection("temples").find({ _id }));
   if (!temple) return <div>Temple loading or not found...</div>;

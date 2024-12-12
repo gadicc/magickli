@@ -153,7 +153,7 @@ async function copyPNG(event, element) {
 
 const CopyPasteExport = React.forwardRef(function CopyPasteExport(
   { filename }: { filename: string },
-  ref: React.RefObject<SVGSVGElement>
+  ref: React.RefObject<SVGSVGElement | null>
 ) {
   return (
     <div style={{ textAlign: "center", fontSize: "90%" }}>

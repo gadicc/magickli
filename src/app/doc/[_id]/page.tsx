@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useGongoSub, useGongoOne } from "gongo-client-react";
 
 import { prepare } from "@/doc/prepare";
@@ -22,7 +22,11 @@ const docs = {
   // "chesed-talisman": prepare(_chesedTalisman),
 };
 
-function DocLoader({ params: { _id } }: { params: { _id: string } }) {
+function DocLoader(props: { params: Promise<{ _id: string }> }) {
+  const params = use(props.params);
+
+  const { _id } = params;
+
   const builtinDoc = docs[_id];
   useGongoSub(!builtinDoc && "doc", { _id });
   const dbDoc = useGongoOne(

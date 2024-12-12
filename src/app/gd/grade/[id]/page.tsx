@@ -14,7 +14,10 @@ export function generateStaticParams() {
   return Object.values(grades).map(({ id }) => ({ id }));
 }
 
-export default function Planet({ params }: { params: { id: string } }) {
+export default async function Planet(props: {
+  params: Promise<{ id: string }>;
+}) {
+  const params = await props.params;
   const id = decodeURIComponent(params.id);
   if (!id) return "No id param given";
 

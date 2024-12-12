@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import Image from "next/legacy/image";
 import { decycle } from "cycle";
 
@@ -25,11 +25,11 @@ export async function getStaticProps({ params: { id } }) {
 }
 */
 
-export default function Sephirot({
-  params: { id },
-}: {
-  params: { id: string };
-}) {
+export default function Sephirot(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
+
+  const { id } = params;
+
   if (!id) return "No id";
 
   const path = paths.find((path) => path.id === id);
@@ -73,7 +73,6 @@ export default function Sephirot({
           vertical-align: middle;
         }
       `}</style>
-
       <Container maxWidth="sm">
         <Box my={4}>
           <div className="nav">
@@ -98,10 +97,10 @@ export default function Sephirot({
           <br />
 
           {/*
-    <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
-      <TreeOfLife width="80px" topText="" active={sephirah.id} />
-    </span>
-    */}
+  <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
+    <TreeOfLife width="80px" topText="" active={sephirah.id} />
+  </span>
+  */}
 
           <h1>
             Path {path.id.replace(/_/, "-")} ({from?.name.roman}-
