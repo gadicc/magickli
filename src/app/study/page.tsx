@@ -49,7 +49,7 @@ function dueCount(set: WithId<StudySetStats>) {
   return count;
 }
 
-export default function Study() {
+function StudyPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setSearchParam = useSetSearchParam();
@@ -252,5 +252,13 @@ export default function Study() {
         such data made available only to members of your order in a secure way.
       </Typography>
     </Container>
+  );
+}
+
+export default function WrappedStudyPage() {
+  return (
+    <React.Suspense>
+      <StudyPage />
+    </React.Suspense>
   );
 }
