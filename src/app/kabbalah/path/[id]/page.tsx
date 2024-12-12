@@ -98,7 +98,7 @@ export default function Sephirot(props: { params: Promise<{ id: string }> }) {
 
           {/*
 <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
-  <TreeOfLife width="80px" topText="" active={sephirah.id} />
+<TreeOfLife width="80px" topText="" active={sephirah.id} />
 </span>
 */}
 
