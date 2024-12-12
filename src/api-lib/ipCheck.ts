@@ -1,6 +1,6 @@
 // import IPData from "ipdata";
-import type { NextApiRequest } from "next";
 import type { NextRequest } from "next/server";
+import { ipAddress } from "@vercel/functions";
 
 /*
 let ipdata: IPData | null = null;
@@ -14,7 +14,9 @@ if (typeof window !== "object") {
 
 // taken from gongo;
 // TODO: export a method like this from gongo-server, that accepts x-fw number.
-function ipFromReq(req: NextApiRequest | NextRequest) {
+function ipFromReq(req: NextRequest) {
+  return ipAddress(req);
+  /*
   if ("ip" in req && req.ip) {
     console.log("req.ip", (req as NextRequest).ip);
     return (req as NextRequest).ip;
@@ -41,6 +43,7 @@ function ipFromReq(req: NextApiRequest | NextRequest) {
   if (!ip)
     throw new Error("Could not get IP from req.{headers,socket,connection}");
   return ip;
+  */
 }
 
 async function ipPass(_ip: string) {
