@@ -411,4 +411,6 @@ if (gs.dba) {
   templeMemberships.allow("remove", userIsTempleAdmin);
 }
 
-export const POST = await auth(gs.vercelEdgePost());
+// https://github.com/nextauthjs/next-auth/issues/12224
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const POST = (await auth(gs.vercelEdgePost())) as any;
