@@ -263,34 +263,34 @@ export default function Chat() {
                 )}
               </div>
               <style>{`
-              .ai_content table {
-                margin-top: 1em;
-                margin-bottom: 1em;
-                border-spacing: 0;
-                border-collapse: collapse;
-              }
-              .ai_content table tr {
-                background-color: #fff;
-                border-top: 1px solid #c6cbd1;
-              }
-              .ai_content table tbody tr:nth-child(odd) {
-                background-color: #f6f8fa;
-              }
-              .ai_content table th,
-              .ai_content table td {
-                padding: 6px 13px;
-                border: 1px solid #dfe2e5;
-              }
-              .ai_content table th {
-                font-weight: 600;
-              }
-              .ai_content li {
-                font-size: 90%;
-              }
-              .ai_content li + li {
-                margin-top: 1em;
-              }
-            `}</style>
+            .ai_content table {
+              margin-top: 1em;
+              margin-bottom: 1em;
+              border-spacing: 0;
+              border-collapse: collapse;
+            }
+            .ai_content table tr {
+              background-color: #fff;
+              border-top: 1px solid #c6cbd1;
+            }
+            .ai_content table tbody tr:nth-child(odd) {
+              background-color: #f6f8fa;
+            }
+            .ai_content table th,
+            .ai_content table td {
+              padding: 6px 13px;
+              border: 1px solid #dfe2e5;
+            }
+            .ai_content table th {
+              font-weight: 600;
+            }
+            .ai_content li {
+              font-size: 90%;
+            }
+            .ai_content li + li {
+              margin-top: 1em;
+            }
+          `}</style>
               <div
                 className="ai_content"
                 style={{ width: "50px", flexGrow: 1 }}
@@ -439,11 +439,11 @@ export default function Chat() {
           </button>
         </form>
         {/*
-        <div style={{ fontSize: "50%", marginTop: "5px" }}>
-          Do not rely on these answers, this is a PRIVATE EXPERIMENT (you should
-          know Gadi or Aaron).
-        </div>
-        */}
+      <div style={{ fontSize: "50%", marginTop: "5px" }}>
+        Do not rely on these answers, this is a PRIVATE EXPERIMENT (you should
+        know Gadi or Aaron).
+      </div>
+      */}
       </div>
       <ToastContainer
         position="bottom-center"

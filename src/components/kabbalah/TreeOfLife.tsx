@@ -375,7 +375,6 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
               strokeDasharray={s.data.color.strokeDasharray}
               opacity={sephirahOpacity(s)}
             ></circle>
-
             {(function () {
               const colors = s.color.split(",");
               if (colors.length > 1) {
@@ -411,7 +410,6 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                 return null;
               }
             })()}
-
             {field === "gdGrade.id" ? (
               <g>
                 <circle
@@ -497,7 +495,6 @@ const TreeOfLife = React.forwardRef(function TreeOfLife(
                 }
               })()
             )}
-
             {(function () {
               const diameter = 64;
               const radius = diameter / 2;

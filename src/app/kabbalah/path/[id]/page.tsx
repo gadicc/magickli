@@ -97,10 +97,10 @@ export default function Sephirot(props: { params: Promise<{ id: string }> }) {
           <br />
 
           {/*
-  <span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
-    <TreeOfLife width="80px" topText="" active={sephirah.id} />
-  </span>
-  */}
+<span style={{ right: 0, marginRight: 15, position: 'fixed' }}>
+  <TreeOfLife width="80px" topText="" active={sephirah.id} />
+</span>
+*/}
 
           <h1>
             Path {path.id.replace(/_/, "-")} ({from?.name.roman}-
