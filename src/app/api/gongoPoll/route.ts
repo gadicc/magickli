@@ -4,8 +4,11 @@ import {
   userIsAdmin,
   userIdMatches,
 } from "gongo-server-db-mongo/lib/collection";
-import gs, { ObjectId /* User */ } from "../../src/api-lib/db";
+import gs, { ObjectId /* User */ } from "@/api-lib/db";
 import { ChangeSetUpdate } from "gongo-server/lib/DatabaseAdapter";
+
+// TODO, later... with separate db.ts and db-full.ts and mongodb-rest-relay.
+// export const runtime = "edge";
 
 // gs.db.Users.ensureAdmin("dragon@wastelands.net", "initialPassword");
 
@@ -408,5 +411,4 @@ if (gs.dba) {
   templeMemberships.allow("remove", userIsTempleAdmin);
 }
 
-const handler = gs.expressPost();
-export default handler;
+export const POST = gs.vercelEdgePost();
