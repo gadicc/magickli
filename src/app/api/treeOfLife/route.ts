@@ -1,5 +1,5 @@
 import React from "react";
-import { renderToString } from "react-dom/server";
+// import { renderToString } from "react-dom/server";
 import beautify from "xml-beautifier";
 import sharp from "sharp";
 
@@ -16,7 +16,11 @@ const fontsDir = path.resolve("public", "fonts.conf");
 process.env.FONTCONFIG_FILE = "/var/task/public/fonts.conf";
 console.log(fs.readFileSync(fontsDir).toString());
 
-export default function treeOfLifeSVG(req, res) {
+export default async function treeOfLifeSVG(req, res) {
+  // https://github.com/vercel/next.js/discussions/69244
+  // https://stackoverflow.com/questions/77978991/rendertostring-youre-importing-a-component-that-imports-react-dom-server
+  const { renderToString } = await import("react-dom/server");
+
   let svgText =
     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n' +
     renderToString(React.createElement(TreeOfLife, req.query));
