@@ -34,7 +34,7 @@ export default function Sequence() {
           .
         </p>
 
-        <p>
+        <div>
           Design goals:
           <ul>
             <li>Open source, permissive licenses wherever possible.</li>
@@ -48,7 +48,7 @@ export default function Sequence() {
             </li>
             <li>Images should be original, high quality vector images.</li>
           </ul>
-        </p>
+        </div>
 
         <p>Copyright (c) 2020 by Gadi Cohen, MIT licensed.</p>
       </Box>
