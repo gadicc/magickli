@@ -16,12 +16,16 @@ const enochianFont = localFont({
   // display: "swap",
 });
 
-// @ts-expect-error: todo
-enochianFont.style.direction = "rtl";
-// @ts-expect-error: todo
-enochianFont.style.unicodeBidi = "bidi-override";
+const _enochianFont = {
+  ...enochianFont,
+  style: {
+    ...enochianFont.style,
+    fontFamily:
+      enochianFont.style.fontFamily + ", 'Enochian Plain', 'Enochian'",
+    direction: "rtl" as const,
+    unicodeBidi: "bidi-override" as const,
+  },
+};
 
-enochianFont.style.fontFamily += ", 'Enochian Plain', 'Enochian'";
-console.log({ enochianFont });
-
-export default enochianFont;
+// console.log("enochianFont", _enochianFont.style);
+export default _enochianFont;
