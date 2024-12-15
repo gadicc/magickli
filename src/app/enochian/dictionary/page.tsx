@@ -1,13 +1,11 @@
 "use client";
 import React from "react";
 
-import { Box, Stack, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 
 import EnochianFont from "../../../components/enochian/enochianFont";
 import dictionary from "@/../data/enochian/Dictionary";
 const enochianWords = Object.keys(dictionary);
-
-const navParts = [{ title: "Enochian", url: "/enochian" }];
 
 const s = {
   searchDiv: {
@@ -90,17 +88,26 @@ function WordBar({ word }) {
   );
 }
 
-function ResultRow({ word, onClick, selected }) {
+const resultRowRightStyle = { ...s.floatRight, ...EnochianFont.style };
+const ResultRow = React.memo(function ResultRow({
+  word,
+  onClick,
+  selected,
+}: {
+  word: string;
+  onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  selected: boolean;
+}) {
   return (
     <div
       onClick={onClick}
       style={selected ? s.resultsRowSelected : s.resultsRow}
     >
       <span>{word}</span>
-      <span style={{ ...s.floatRight, ...EnochianFont.style }}>{word}</span>
+      <span style={resultRowRightStyle}>{word}</span>
     </div>
   );
-}
+});
 
 export default function Dictionary() {
   const [text, setText] = React.useState("");
@@ -108,6 +115,10 @@ export default function Dictionary() {
   const matches = text
     ? enochianWords.filter((x) => x.match(text))
     : enochianWords;
+
+  const onClick = React.useCallback((event) => {
+    setSelected(event.target.innerText);
+  }, []);
 
   return (
     <>
@@ -123,13 +134,25 @@ export default function Dictionary() {
           variant="standard"
         />
         <TextField
-          placeholder="ABC"
+          // since no way to apply placeholder pseudo-selector CSS currently.
+          // placeholder="ABC"
+          placeholder="CBA"
           margin="normal"
           value={text}
           onChange={(e) => setText(e.target.value.toUpperCase())}
           style={s.searchTextFieldRight}
+          /*
           InputProps={{
-            sx: EnochianFont.style,
+            sx: {
+              "&::-moz-placeholder": { unicodeBidi: "bidi-override" },
+              "&::-ms-input-placeholder": { unicodeBidi: "bidi-override" },
+              "&::-webkit-input-placeholder": { unicodeBidi: "bidi-override" },
+            },
+          }}
+          */
+          inputProps={{
+            // unicode-bidi prop MUST be in style, can't be via CSS class.
+            style: EnochianFont.style,
           }}
           type="search"
           size="small"
@@ -143,7 +166,7 @@ export default function Dictionary() {
               key={word}
               word={word}
               selected={word === selected}
-              onClick={(event) => setSelected(event.target.innerText)}
+              onClick={onClick}
             />
           ))}
       </div>
