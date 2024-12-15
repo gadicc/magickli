@@ -5,13 +5,14 @@ import { AdminPanelSettingsTwoTone } from "@mui/icons-material";
 //import Link from '@mui/material/Link';
 
 import Tiles from "@/components/Tiles";
+import AstrologyTile from "./img/astrology.jpeg";
 import GDLogoSquished from "@/goldendawn-logo-squished.svg";
 import MagicalTemple from "./img/magical-temple.webp";
-import GeomancyImg from "@/app/img/geomancy.webp";
-import StudyImg from "@/app/img/study.webp";
-import AndroidMagician from "@/app/img/android-magician.png";
-import PortaeLucis from "@/app/img/portae_lucis_upsampled.webp";
-import MagicBook from "@/app/img/shutterstock_393367726_768x512.webp";
+import GeomancyImg from "./img/geomancy.webp";
+import StudyImg from "./img/study.webp";
+import AndroidMagician from "./img/android-magician.png";
+import PortaeLucis from "./img/portae_lucis_upsampled.webp";
+import MagicBook from "./img/shutterstock_393367726_768x512.webp";
 
 const tiles = [
   {
@@ -23,7 +24,7 @@ const tiles = [
   {
     title: "Astrology",
     to: "/astrology",
-    img: "/pics/astrology.jpg",
+    img: AstrologyTile,
     alt: "Astrology Wheel",
   },
   {
