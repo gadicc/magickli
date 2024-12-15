@@ -10,6 +10,7 @@ import MagicalTemple from "./img/magical-temple.webp";
 import GeomancyImg from "@/app/img/geomancy.webp";
 import StudyImg from "@/app/img/study.webp";
 import AndroidMagician from "@/app/img/android-magician.png";
+import PortaeLucis from "@/app/img/portae_lucis_upsampled.webp";
 
 const tiles = [
   {
@@ -50,7 +51,7 @@ const tiles = [
   {
     title: "Kabbalah",
     to: "/kabbalah",
-    img: "/pics/Tree_of_Life,_Medieval.jpg",
+    img: PortaeLucis,
     alt: "Kabbalistic Tree of Life",
   },
   {
