@@ -87,7 +87,7 @@ function Source({
 
   const attribution = (
     <>
-      {title}, {author}, page {pageNumber}
+      <i>{title}</i>, {author}, page {pageNumber}
       {amazon && (
         <>
           ; available from{" "}
