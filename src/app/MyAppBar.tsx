@@ -329,7 +329,7 @@ export default function ButtonAppBar() {
                       <IconButton
                         sx={{
                           color: "white",
-                          pointerEvents: searchOpen ? "auto" : "none",
+                          // pointerEvents: searchOpen ? "auto" : "none",
                         }}
                         aria-label="toggle search box"
                         onClick={(e) => {
