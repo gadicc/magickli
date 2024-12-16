@@ -39,12 +39,18 @@ export default function Sequence() {
           <ul>
             <li>Open source, permissive licenses wherever possible.</li>
             <li>
-              Publish useful magick <a href="../../data">data</a> in JSON format
-              with types.
+              Publish useful magick{" "}
+              <a href="https://github.com/gadicc/magickli/tree/master/data">
+                data
+              </a>{" "}
+              in JSON format with types.
             </li>
             <li>
               Publish useful magick{" "}
-              <a href="../../components">react components</a>.
+              <a href="https://github.com/gadicc/magickli/tree/master/src/components">
+                react components
+              </a>
+              .
             </li>
             <li>Images should be original, high quality vector images.</li>
           </ul>
