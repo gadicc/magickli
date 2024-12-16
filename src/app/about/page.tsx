@@ -52,7 +52,11 @@ export default function Sequence() {
               </a>
               .
             </li>
-            <li>Images should be original, high quality vector images.</li>
+            <li>
+              Images should be original, high quality vector images, and
+              constructed procedurally (i.e. with iterative math vs human
+              drawing), whenever possible.
+            </li>
           </ul>
         </div>
 
