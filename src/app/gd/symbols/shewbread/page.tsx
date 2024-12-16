@@ -23,7 +23,7 @@ export default function CandleStickPage() {
   return (
     <Container sx={{ p: 2 }}>
       <TableOfShewbread ref={ref} />
-      <CopyPasteExport ref={ref} filename="TableOfShewbread-magickli-export" />
+      <CopyPasteExport ref={ref} filename="TableOfShewbread-magickly-export" />
       <OpenSource
         files={[
           "/src/app/gd/symbols/shewbread/page.tsx",

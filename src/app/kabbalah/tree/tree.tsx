@@ -45,7 +45,7 @@ export default function TreeOfLife() {
     fontSize: 10,
   };
 
-  for (let key of Object.keys(defaults))
+  for (const key of Object.keys(defaults))
     opts[key] = searchParams?.get(key) || defaults[key];
 
   // From "true" / "false" to true / false
@@ -212,7 +212,7 @@ export default function TreeOfLife() {
           <br />
           <br />
 
-          <CopyPasteExport ref={ref} filename="TreeOfLife-magickli-export" />
+          <CopyPasteExport ref={ref} filename="TreeOfLife-magickly-export" />
           <div style={{ textAlign: "center", fontSize: "90%" }}>
             Hebrew Font:{" "}
             <a href="https://magick.ly/fonts/NotoSansHebrew-Regular.ttf">

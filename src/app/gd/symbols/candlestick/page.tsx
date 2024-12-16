@@ -25,7 +25,7 @@ export default function CandleStickPage() {
       <SevenBranchedCandleStick ref={ref} />
       <CopyPasteExport
         ref={ref}
-        filename="SevenBranchedCandleStick-magickli-export"
+        filename="SevenBranchedCandleStick-magickly-export"
       />
       <OpenSource
         files={[

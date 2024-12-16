@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const github = "https://github.com/gadicc/magickli/";
+const github = "https://github.com/gadicc/magick.ly/";
 function url(str: string) {
   if (str.startsWith("http")) return str;
   return (

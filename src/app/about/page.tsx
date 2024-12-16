@@ -28,8 +28,8 @@ export default function Sequence() {
         <p>
           For questions, comments, feature requests, source code or to get
           involved, see{" "}
-          <a href="https://github.com/gadicc/magickli">
-            github.com/gadicc/magickli
+          <a href="https://github.com/gadicc/magick.ly">
+            github.com/gadicc/magick.ly
           </a>
           .
         </p>
@@ -40,14 +40,14 @@ export default function Sequence() {
             <li>Open source, permissive licenses wherever possible.</li>
             <li>
               Publish useful magick{" "}
-              <a href="https://github.com/gadicc/magickli/tree/master/data">
+              <a href="https://github.com/gadicc/magick.ly/tree/master/data">
                 data
               </a>{" "}
               in JSON format with types.
             </li>
             <li>
               Publish useful magick{" "}
-              <a href="https://github.com/gadicc/magickli/tree/master/src/components">
+              <a href="https://github.com/gadicc/magick.ly/tree/master/src/components">
                 react components
               </a>
               .
