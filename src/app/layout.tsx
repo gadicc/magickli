@@ -15,6 +15,7 @@ const APP_TITLE_TEMPLATE = "%s - PWA App";
 const APP_DESCRIPTION = "Your Magick Toolkit";
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   applicationName: APP_NAME,
   title: {
     default: APP_DEFAULT_TITLE,
@@ -142,7 +143,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           sizes="16x16"
           href="/favicons/favicon-16x16.png"
         />
-        <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
           name="msapplication-TileImage"

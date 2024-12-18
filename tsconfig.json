@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "webworker"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -13,6 +13,7 @@
       "@magick-data/*": ["./data/*"],
       "@magick-components/*": ["./src/components/*"]
     },
+    "types": ["@serwist/next/typings"],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
