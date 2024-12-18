@@ -13,6 +13,7 @@ import StudyImg from "./img/study.webp";
 import AndroidMagician from "./img/android-magician.png";
 import PortaeLucis from "./img/portae_lucis_upsampled.webp";
 import MagicBook from "./img/shutterstock_393367726_768x512.webp";
+import EnochianAngel from "./img/enochian-angel.webp";
 
 const tiles = [
   {
@@ -36,7 +37,7 @@ const tiles = [
   {
     title: "Enochian",
     to: "/enochian/",
-    img: "/pics/30aethyrs.jpg",
+    img: EnochianAngel,
     alt: "Enochian Aethyrs",
   },
   {
