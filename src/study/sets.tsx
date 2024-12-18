@@ -179,7 +179,7 @@ const sets: Record<string, StudySetData<unknown>> = {
   } as StudySetData<typeof data.hebrewLetter.aleph>,
   "planet-signs": {
     id: "planet-signs",
-    data: data.planet,
+    data: filter(data.planet, ([id, planet]) => "symbol" in planet),
     question: "symbol",
     answer: "name.en.en",
     gdGrade: "0=0",
